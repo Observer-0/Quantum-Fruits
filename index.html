@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,14 +9,21 @@
   <!-- KaTeX for client-side formula rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);"></script>
 </head>
+
 <body>
   <header class="page-header">
     <div class="hero">
       <p class="eyebrow">Kleine Früchte. Große Physik.</p>
       <h1>Früchte &amp; Quantenmechanik</h1>
       <p class="tagline">Alles ist Projektion. Sogar diese Melone.</p>
+      <nav class="main-nav" style="margin-top: 1rem;">
+        <a href="theory.html"
+          style="color: var(--accent); text-decoration: none; font-weight: bold; border-bottom: 2px solid transparent;">&rarr;
+          Zur Theorie der Ticks</a>
+      </nav>
     </div>
   </header>
 
@@ -26,13 +34,14 @@
         <p class="qg-heading">Wie verhält sich eine Frucht in quantisierter Raumzeit?</p>
         <p class="qg-eq">G<sub>μν</sub> · A<sub>eff</sub>(σ<sub>P</sub>) = 8π (σ<sub>P</sub> c⁴ / ħ) T<sub>μν</sub></p>
         <p class="qg-eq">σ<sub>P</sub> = ℓ<sub>P</sub> t<sub>P</sub> = ħG / c⁴</p>
-        <p class="qg-eq">Z = ħ² / c  <span class="qg-note">(Dualgröße, Einheit: M²L³T⁻¹)</span></p>
+        <p class="qg-eq">Z = ħ² / c <span class="qg-note">(Dualgröße, Einheit: M²L³T⁻¹)</span></p>
         <p class="qg-eq">σ<sub>P</sub> · Z = ħ³ G / c⁵</p>
         <p class="qg-eq">g̃<sub>μν</sub>(x) = g<sub>μν</sub>(x)/(1 + (1/σ<sub>P</sub>) f(R(x)))</p>
         <p class="qg-eq">Δx Δt ≥ σ<sub>P</sub> = ℓ<sub>P</sub> t<sub>P</sub></p>
         <p class="qg-eq">Korrigierte Form (dimensionell konsistent):</p>
         <p class="qg-eq">iħ ∂<sub>t</sub>ψ = &lt; - (ħ²/2m) ∇² + V &gt; ψ,</p>
-        <p class="qg-eq">mit V = ½ m v² − ħ ∂<sub>t</sub> ln(σ<sub>P</sub>/σ₀) (Argument des Logarithmus muss dimensionslos sein)</p>
+        <p class="qg-eq">mit V = ½ m v² − ħ ∂<sub>t</sub> ln(σ<sub>P</sub>/σ₀) (Argument des Logarithmus muss
+          dimensionslos sein)</p>
         <p class="qg-eq">Λ<sub>eff</sub> = 3 / (c · R · t)</p>
         <p class="qg-note">Θ<sub>Z</sub>(M) = c³ / (8π G M k<sub>B</sub> ħ) löst das Hawking-Paradoxon.</p>
         <p class="qg-footnote">Hinweis: Information wird nicht vernichtet. Jede Frucht besitzt einen Planck-Remnant.</p>
@@ -54,7 +63,8 @@
         <p><strong>4. Hawking‑Tick:</strong></p>
         <p>$$E_H t_H=\hbar$$</p>
 
-        <p class="qg-footnote">Hinweis: $4\pi$‑Faktoren sind topologisch; die wesentliche Kopplung ist $GM^{2}/(\hbar c)$. Die Formulierungen sind kurz; ich kann gern Referenzen oder weitergehende Rechnungen ergänzen.</p>
+        <p class="qg-footnote">Hinweis: $4\pi$‑Faktoren sind topologisch; die wesentliche Kopplung ist $GM^{2}/(\hbar
+          c)$. Die Formulierungen sind kurz; ich kann gern Referenzen oder weitergehende Rechnungen ergänzen.</p>
       </div>
     </section>
 
@@ -62,7 +72,8 @@
       <div class="tools-header">
         <div>
           <h2>Quantum-Gravity Tools</h2>
-          <p>Wähle ein Werkzeug, sieh sofort welches aktiv ist und lass maximal begrenzt viele Berechnungen parallel laufen.</p>
+          <p>Wähle ein Werkzeug, sieh sofort welches aktiv ist und lass maximal begrenzt viele Berechnungen parallel
+            laufen.</p>
         </div>
         <div class="selector-state" aria-live="polite">
           <span class="label">Aktiv:</span>
@@ -125,4 +136,5 @@
 
   <script src="js/main.js"></script>
 </body>
+
 </html>
