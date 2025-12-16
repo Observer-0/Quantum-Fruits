@@ -74,31 +74,31 @@ V_{\sigma} = \sigma_{\mathrm P}^{3/2}
 
 \boxed{\sigma_P = \frac{\hbar G}{c^4}}
 
-% 1) Newtonsche Gravitationskraft (Skalare Form) F_{ij} = \frac{G, m_i, m_j}{\lVert \vec r_i - \vec r_j\rVert^2}
+1) Newtonsche Gravitationskraft (Skalare Form) F_{ij} = \frac{G, m_i, m_j}{\lVert \vec r_i - \vec r_j\rVert^2}
 
-% 1b) Vektorform (Kraft auf i durch j, anziehend) \vec F_{ij} = -G \frac{m_i m_j}{\lVert \vec r_i - \vec r_j\rVert^3};(\vec r_i - \vec r_j)
+1b) Vektorform (Kraft auf i durch j, anziehend) \vec F_{ij} = -G \frac{m_i m_j}{\lVert \vec r_i - \vec r_j\rVert^3};(\vec r_i - \vec r_j)
 
-% 1c) Gesamt-Kraft auf Körper i (Drei-Körper-Problem) \vec F_i = \sum_{j\neq i} \vec F_{ij}
+1c) Gesamt-Kraft auf Körper i (Drei-Körper-Problem) \vec F_i = \sum_{j\neq i} \vec F_{ij}
 
-% 2) Hamiltonian-Aufteilung (schematisch) H = H_{\text{frei}} + H_{\text{Wechsel}}
+2) Hamiltonian-Aufteilung (schematisch) H = H_{\text{frei}} + H_{\text{Wechsel}}
 
-% 2a) Schematischer Wechselwirkungsterm (grav., niedrigste Ordnung) H_{\text{Wechsel}} \sim \kappa_{\mathrm Z}\sum_{i<j} T^{\mu\nu}{(i)},h{\mu\nu}^{(j)}
+2a) Schematischer Wechselwirkungsterm (grav., niedrigste Ordnung) H_{\text{Wechsel}} \sim \kappa_{\mathrm Z}\sum_{i<j} T^{\mu\nu}{(i)},h{\mu\nu}^{(j)}
 
-% 3) Pfadintegral mit externen Quellen (schematisch) Z[J] = \int \mathcal D\Phi ;\exp!\Big(i S[\Phi] + i\sum_k \int d^4x;J_k(x),\Phi(x)\Big)
+3) Pfadintegral mit externen Quellen (schematisch) Z[J] = \int \mathcal D\Phi ;\exp!\Big(i S[\Phi] + i\sum_k \int d^4x;J_k(x),\Phi(x)\Big)
 
-% 3a) Für das Gravitationsfeld (Tensorquellen) Z[J^{\mu\nu}] = \int \mathcal Dh_{\alpha\beta};\exp!\Big(i S_{\text{grav}}[h] + i\sum_k \int d^4x;J^{\mu\nu}k(x),h{\mu\nu}(x)\Big)
+3a) Für das Gravitationsfeld (Tensorquellen) Z[J^{\mu\nu}] = \int \mathcal Dh_{\alpha\beta};\exp!\Big(i S_{\text{grav}}[h] + i\sum_k \int d^4x;J^{\mu\nu}k(x),h{\mu\nu}(x)\Big)
 
-% 4) Vielkörper-Wellenfunktion (schematisch) \Psi = \Psi(\vec r_1,\vec r_2,\vec r_3)
+4) Vielkörper-Wellenfunktion (schematisch) \Psi = \Psi(\vec r_1,\vec r_2,\vec r_3)
 
-% 5) Schematische Summe der Paarwechselwirkungen (aus deinem Text) \text{Gesamt-Wechselwirkung} \sim \kappa_{\mathrm Z}\Big( T(1)h(2)+T(2)h(1)+T(1)h(3)+T(3)h(1)+T(2)h(3)+T(3)h(2) \Big)
+5) Schematische Summe der Paarwechselwirkungen (aus deinem Text) \text{Gesamt-Wechselwirkung} \sim \kappa_{\mathrm Z}\Big( T(1)h(2)+T(2)h(1)+T(1)h(3)+T(3)h(1)+T(2)h(3)+T(3)h(2) \Big)
 
-% 6) Baum-Niveau Streuamplitude (schematisch für Gravitionsaustausch) \mathcal M ;\propto; \kappa_{\mathrm Z}^2; \frac{T^{\mu\nu}{(1)}(q);P{\mu\nu\rho\sigma}(q);T^{\rho\sigma}_{(2)}(-q)}{q^2}
+6) Baum-Niveau Streuamplitude (schematisch für Gravitionsaustausch) \mathcal M ;\propto; \kappa_{\mathrm Z}^2; \frac{T^{\mu\nu}{(1)}(q);P{\mu\nu\rho\sigma}(q);T^{\rho\sigma}_{(2)}(-q)}{q^2}
 
-% 7) Dimensions-Angabe (wie im Text genannt) [\kappa_{\mathrm Z}] ;\leadsto; \text{Skalenbindung mit Dimensionen } M^4 T^4 / L^4 % (Hinweis: Exakte Dimensionsanalyse hängt von Definition von κ_Z ab.)
+7) Dimensions-Angabe (wie im Text genannt) [\kappa_{\mathrm Z}] ;\leadsto; \text{Skalenbindung mit Dimensionen } M^4 T^4 / L^4 % (Hinweis: Exakte Dimensionsanalyse hängt von Definition von κ_Z ab.)
 
-% 8) Zusammenhang (konventionell, indikativ) zwischen κ und G (konventionsabhängig) \kappa \sim \sqrt{32\pi G}/c^2 \quad\text{(eine übliche Konvention in linearer Gravitation)}
+8) Zusammenhang (konventionell, indikativ) zwischen κ und G (konventionsabhängig) \kappa \sim \sqrt{32\pi G}/c^2 \quad\text{(eine übliche Konvention in linearer Gravitation)}
 
-% 9) (Optional) Austausch-Term in Feldern: Wirkungsbeitrag linearer Kopplung S_{\text{int}} \sim \kappa_{\mathrm Z}\sum_i \int d^4x;T^{\mu\nu}{(i)}(x);h{\mu\nu}(x)
+9) (Optional) Austausch-Term in Feldern: Wirkungsbeitrag linearer Kopplung S_{\text{int}} \sim \kappa_{\mathrm Z}\sum_i \int d^4x;T^{\mu\nu}{(i)}(x);h{\mu\nu}(x)
 
 
 
@@ -214,21 +214,16 @@ Die Mittelung erfolgt über den Kernel \begin{equation} K_{\sigma_P}(x,y) = \fra
 
 ---
 
-## **1. Zwei Arten von Skalen**
 
-Es gibt **zwei grundverschiedene Arten**, Naturkonstanten zu kombinieren:
 
-### **(A) PQ-Skalen (Wurzel-Formen)**
+(A) PQ-Skalen (Wurzel-Formen)
 
-Sie sind *abgeleitet*, nicht fundamental.
 
-Alle klassischen Planck-Einheiten haben die Struktur:
 
 [
 x = \sqrt{\frac{\text{quantum}}{\text{gravity}}}
 ]
 
-Beispiele:
 
 [
 M_P = \sqrt{\frac{\hbar c}{G}}, \quad
@@ -242,17 +237,11 @@ R_P = \sqrt{\frac{c^7}{\hbar G}}, \quad
 a_P = \sqrt{\frac{c^7}{\hbar G}}
 ]
 
-Diese Skalen markieren **Grenzen**, nicht Dynamik.
 
----
 
-### **(B) Lineare Skalen (ohne Wurzel)**
+ **(B) Lineare Skalen (ohne Wurzel)**
 
-Das sind die **wirklich fundamentalen** Größen.
 
----
-
-## **2. Das fundamentale Raumzeit-Quant**
 
 [
 \boxed{
@@ -442,6 +431,5 @@ Bedeutung:
 * Impedanz des Spin-2-Feldes
 * neutraler Punkt bei (\alpha_G(M_P)=1)
 
-Alle (4\pi)-Faktoren sind **topologisch**, nicht physikalisch.
 
 
