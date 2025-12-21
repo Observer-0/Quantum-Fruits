@@ -14,6 +14,15 @@ const FRUITS = [
   { name: "Melone", shape: "rund", color: "gruen", massKg: 3.0 }
 ];
 
+const REAL_BHS = [
+  { name: "Primordial BH", massKg: 1e12, type: "micro", desc: "Atom-sized, Earth-mass" },
+  { name: "Cygnus X-1", massKg: 15 * 1.989e30, type: "stellar", desc: "Classic stellar BH" },
+  { name: "GW150914 Remnant", massKg: 62 * 1.989e30, type: "stellar", desc: "Merger product" },
+  { name: "Sagittarius A*", massKg: 4.154e6 * 1.989e30, type: "supermassive", desc: "Milky Way Center" },
+  { name: "M87*", massKg: 6.5e9 * 1.989e30, type: "supermassive", desc: "The Event Horizon Image" },
+  { name: "TON 618", massKg: 66e9 * 1.989e30, type: "ultramassive", desc: "Largest known quasar" }
+];
+
 const SPECIAL_MASSES = {
   pbh: 1e12, // primordial
   stellar: 5e30,
@@ -31,8 +40,11 @@ const qgOutput = document.querySelector("#qgOutput");
 const qgChartCanvas = document.querySelector("#qgChart");
 const selectedToolLabel = document.querySelector("#selectedToolLabel");
 const limitNote = document.querySelector("#limitNote");
+const modeSelect = document.querySelector("#modeSelect");
+const fruitControls = document.querySelector("#fruitControls");
 
 let myChart = null;
+let currentMode = "fruits"; // 'fruits' or 'real'
 
 // === Utilities ===
 function capitalize(value) {
@@ -44,13 +56,34 @@ function capitalize(value) {
     .join(" ");
 }
 
+function getActiveDataset() {
+  return currentMode === 'real' ? REAL_BHS : FRUITS;
+}
+
 function renderBaseList() {
   baseList.innerHTML = "";
-  FRUITS.forEach((fruit) => {
+  const data = getActiveDataset();
+
+  data.forEach((item) => {
     const li = document.createElement("li");
-    li.textContent = capitalize(fruit.name);
-    li.dataset.shape = fruit.shape;
-    li.dataset.color = fruit.color;
+    li.textContent = currentMode === 'real'
+      ? `${item.name} (${item.type})`
+      : capitalize(item.name);
+
+    // Store metadata for filtering if needed
+    if (item.shape) li.dataset.shape = item.shape;
+    if (item.color) li.dataset.color = item.color;
+
+    // Add click handler to simulate selecting this object
+    li.style.cursor = "pointer";
+    li.title = `Mass: ${item.massKg.toExponential(1)} kg`;
+    li.addEventListener("click", () => {
+      // Quick visual check
+      drawPageCurveChart(item.massKg, item.name);
+      qgSelect.value = "smoothPage"; // fake update UI
+      selectedToolLabel.textContent = `Glatte Page-Kurve (${item.name})`;
+    });
+
     baseList.appendChild(li);
   });
 }
@@ -60,27 +93,55 @@ function filterFruits() {
   const shape = formSelect.value;
   const color = colorSelect.value;
 
-  resultList.innerHTML = "";
+  // In Real mode, shape/color are ignored or hidden
+  const isReal = currentMode === 'real';
 
-  const matches = FRUITS.filter((fruit) => {
-    const matchesQuery = fruit.name.toLowerCase().includes(query);
-    const matchesShape = shape === "alle" || fruit.shape === shape;
-    const matchesColor = color === "alle" || fruit.color === color;
+  resultList.innerHTML = "";
+  const data = getActiveDataset();
+
+  const matches = data.filter((item) => {
+    const matchesQuery = item.name.toLowerCase().includes(query);
+    if (isReal) return matchesQuery;
+
+    const matchesShape = shape === "alle" || item.shape === shape;
+    const matchesColor = color === "alle" || item.color === color;
     return matchesQuery && matchesShape && matchesColor;
   });
 
   if (!matches.length) {
     const li = document.createElement("li");
-    li.textContent = "Keine passenden Früchte gefunden.";
+    li.textContent = "Keine Objekte gefunden.";
     resultList.appendChild(li);
     return;
   }
 
-  matches.forEach((fruit) => {
+  matches.forEach((item) => {
     const li = document.createElement("li");
-    li.textContent = capitalize(fruit.name);
+    li.textContent = isReal ? item.name : capitalize(item.name);
+
+    // Add quick action button
+    const btn = document.createElement("span");
+    btn.textContent = " 📊";
+    btn.style.cursor = "pointer";
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      drawPageCurveChart(item.massKg, item.name);
+    };
+    li.appendChild(btn);
+
     resultList.appendChild(li);
   });
+}
+
+function handleModeChange() {
+  currentMode = modeSelect.value;
+  if (currentMode === 'real') {
+    fruitControls.style.display = 'none'; // Hide colors/shapes
+  } else {
+    fruitControls.style.display = 'contents';
+  }
+  renderBaseList();
+  filterFruits();
 }
 
 // === Physikfunktionen ===
@@ -107,20 +168,12 @@ function drawPageCurveChart(massKg, label) {
   qgChartCanvas.style.display = 'block';
   qgOutput.style.display = 'none';
 
-  // Perform Simulation
-  // Use Melone mass strictly for demo curve regardless of passed mass for visibility
-  // If mass is too small, lifetime is nanoseconds. If too big, infinite.
-  // We simulate a small black hole (e.g. 1e6 kg) to show the curve nicely,
-  // or use the actual fruit mass if scaling works (lifetime of fruit BH is tiny tiny).
-  // Simulate 1e10 kg for visible plot scale, or use realistic time scaling.
-  // Let's use 1e6 kg for the demo curve to represent "Fruit Logic".
-  const simMass = 1e9;
-  const data = simulatePageCurve(simMass, 100);
+  // For visualization, we need to handle extreme time scales.
+  // Real BHs live for 10^60+ years. Javascript floats can handle 1e308.
+  // But Chart.js labels might be tricky. We normalize time to t/tau (lifetime).
+  // The simulation function handles this, returning abstract time steps.
 
-  // Prepare datasets:
-  // 1. BH Entropy (falling)
-  // 2. Radiation Entropy (rising)
-  // 3. Page Curve (min of both)
+  const data = simulatePageCurve(massKg, 100);
 
   const datasetBH = data.s_bh.map((s, i) => ({ x: data.time[i], y: s }));
   const datasetRad = data.s_rad_accum.map((s, i) => ({ x: data.time[i], y: s }));
@@ -128,7 +181,6 @@ function drawPageCurveChart(massKg, label) {
     return { x: t, y: Math.min(data.s_bh[i], data.s_rad_accum[i]) };
   });
 
-  // Scale time relative to lifetime for easier reading
   const tau = data.time[data.time.length - 1];
 
   myChart = new Chart(qgChartCanvas, {
@@ -137,7 +189,7 @@ function drawPageCurveChart(massKg, label) {
       labels: data.time.map(t => (t / tau).toFixed(2)),
       datasets: [
         {
-          label: 'S_BH (Remaining Capacity)',
+          label: 'S_BH (Kapazität)',
           data: datasetBH,
           borderColor: 'rgba(255, 99, 132, 0.5)',
           borderDash: [5, 5],
@@ -145,7 +197,7 @@ function drawPageCurveChart(massKg, label) {
           borderWidth: 2
         },
         {
-          label: 'S_Rad (Accumulated Ticks)',
+          label: 'S_Rad (Ticks)',
           data: datasetRad,
           borderColor: 'rgba(54, 162, 235, 0.5)',
           borderDash: [5, 5],
@@ -153,7 +205,7 @@ function drawPageCurveChart(massKg, label) {
           borderWidth: 2
         },
         {
-          label: 'Page Curve (Unitary)',
+          label: 'Page Curve (Unitär)',
           data: datasetPage,
           borderColor: 'rgba(75, 192, 192, 1)',
           pointRadius: 1,
@@ -166,7 +218,7 @@ function drawPageCurveChart(massKg, label) {
     options: {
       responsive: true,
       animation: {
-        duration: 1000
+        duration: 800
       },
       interaction: {
         mode: 'index',
@@ -175,28 +227,28 @@ function drawPageCurveChart(massKg, label) {
       plugins: {
         title: {
           display: true,
-          text: `Unitary Evaporation: ${label} (Simulated as M ~ 10^9 kg for visual)`
+          text: `Evaporation: ${label} (M=${massKg.toExponential(1)} kg)`
         },
         subtitle: {
           display: true,
-          text: 'Entropy is count of spacetime updates (Ticks). Remnant stabilizes.'
+          text: 'Unitary tick evolution via σ_P = ħG/c^4. Remnant stable.'
         },
         tooltip: {
           callbacks: {
             label: function (context) {
-              return context.dataset.label + ': ' + Number(context.parsed.y).toExponential(2);
+              return context.dataset.label + ': ' + Number(context.parsed.y).toExponential(2) + ' J/K';
             }
           }
         }
       },
       scales: {
         x: {
-          title: { display: true, text: 'Time / Lifetime' },
+          title: { display: true, text: 'Normierte Zeit (t / τ)' },
           ticks: { maxTicksLimit: 10 }
         },
         y: {
-          title: { display: true, text: 'Entropy [J/K] (S = kB * N_ticks)' },
-          type: 'linear'
+          title: { display: true, text: 'Entropie [J/K]' },
+          type: 'linear' // Log scale breaks 0
         }
       }
     }
@@ -233,39 +285,43 @@ const toolHandlers = {
   pageFruits: () => {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
-    return FRUITS.map((fruit) => `${fruit.name}: Klassische Page-Kurve nicht verfügbar (Nutze Glatte Kurve).`).join("\n");
+    return "Bitte nutze die glatte Kurve für korrekte unitäre Physik.";
   },
   fruitEntropy: () => {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
-    return FRUITS.map(
-      (fruit) => `S_F(${fruit.name}) = ${fruchtEntropie(fruit.massKg).toExponential(3)} J/K`
+    const data = getActiveDataset();
+    return data.map(
+      (obj) => `S(${obj.name}) = ${fruchtEntropie(obj.massKg).toExponential(3)} J/K`
     ).join("\n");
   },
   fruitRs: () => {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
-    return FRUITS.map(
-      (fruit) => `R_s(${fruit.name}) = ${schwarzschildRadius(fruit.massKg).toExponential(3)} m`
+    const data = getActiveDataset();
+    return data.map(
+      (obj) => `R_s(${obj.name}) = ${schwarzschildRadius(obj.massKg).toExponential(3)} m`
     ).join("\n");
   },
   fruitHawking: () => {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
-    return FRUITS.map(
-      (fruit) => `T_H(${fruit.name}) = ${hawkingTemp(fruit.massKg).toExponential(3)} K`
+    const data = getActiveDataset();
+    return data.map(
+      (obj) => `T_H(${obj.name}) = ${hawkingTemp(obj.massKg).toExponential(3)} K`
     ).join("\n");
   },
   asciiPlot: () => {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
-    return "ASCII Plot deprecated. Use 'Glatte Page-Kurve' for visuals.";
+    return "ASCII deprecated. View graph.";
   },
   smoothPage: () => {
-    // Select the "Melone" by default for the demo
-    const fruit = FRUITS.find(f => f.name === "Melone");
-    drawPageCurveChart(fruit.massKg, fruit.name);
-    return "Rendering Chart...";
+    const data = getActiveDataset();
+    // Default to first item
+    const item = data[0];
+    drawPageCurveChart(item.massKg, item.name);
+    return `Rendering Curve for ${item.name}...`;
   }
 };
 
@@ -291,6 +347,7 @@ function handleToolChange(event) {
 }
 
 // === Init ===
+modeSelect.addEventListener("change", handleModeChange);
 renderBaseList();
 filterFruits();
 
