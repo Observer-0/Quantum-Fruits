@@ -11,6 +11,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -93,7 +94,11 @@
         </select>
       </div>
       <p class="limit-note" id="limitNote" aria-live="polite"></p>
-      <pre id="qgOutput" class="qg-output" aria-live="polite"></pre>
+      <!-- ADDED VIS CONTAINER -->
+      <div id="visContainer" style="margin-top: 1rem; position: relative;">
+          <canvas id="qgChart" style="display:none; max-height: 400px; width: 100%;"></canvas>
+          <pre id="qgOutput" class="qg-output" aria-live="polite"></pre>
+      </div>
     </section>
 
     <section class="fruit-filter">
@@ -134,7 +139,7 @@
     </section>
   </main>
 
-  <script src="js/main.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 
 </html>

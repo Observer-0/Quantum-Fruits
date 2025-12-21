@@ -1,8 +1,8 @@
+// === Imports ===
+import { simulatePageCurve, CONSTS, SIGMA_P } from './sigmaP.js';
+
 // === Naturkonstanten ===
-const hbar = 1.054e-34;
-const G = 6.674e-11;
-const c = 2.998e8;
-const kB = 1.381e-23;
+const { hbar, G, c, kB } = CONSTS;
 
 // === Daten ===
 const FRUITS = [
@@ -28,8 +28,11 @@ const resultList = document.querySelector("#ergebnisListe");
 const baseList = document.querySelector("#meineListe");
 const qgSelect = document.querySelector("#qgSelect");
 const qgOutput = document.querySelector("#qgOutput");
+const qgChartCanvas = document.querySelector("#qgChart");
 const selectedToolLabel = document.querySelector("#selectedToolLabel");
 const limitNote = document.querySelector("#limitNote");
+
+let myChart = null;
 
 // === Utilities ===
 function capitalize(value) {
@@ -89,70 +92,117 @@ function hawkingTemp(mass) {
   return (hbar * c ** 3) / (8 * Math.PI * G * mass * kB);
 }
 
-function hawkingEvap(mass) {
-  return (5120 * Math.PI * G ** 2 * mass ** 3) / (hbar * c ** 4);
-}
-
-function pageTime(mass) {
-  return hawkingEvap(mass) * 0.5;
-}
-
 function fruchtEntropie(mass) {
   const lp2 = (hbar * G) / c ** 3;
   const area = 4 * Math.PI * schwarzschildRadius(mass) ** 2;
   return (kB * area) / (4 * lp2);
 }
 
-function asciiPageCurve(label, mass) {
-  const tPage = pageTime(mass);
-  const width = 50;
-  const height = 12;
-
-  const canvas = Array.from({ length: height }, () => Array(width).fill(" "));
-
-  for (let x = 0; x < width; x += 1) {
-    const t = x / (width - 1);
-    const S = t <= 0.5 ? 2 * t : 2 * (1 - t);
-    const y = height - 1 - Math.floor(S * (height - 1));
-    canvas[y][x] = "*";
+// === Visualization ===
+function drawPageCurveChart(massKg, label) {
+  if (myChart) {
+    myChart.destroy();
+    myChart = null;
   }
+  qgChartCanvas.style.display = 'block';
+  qgOutput.style.display = 'none';
 
-  const plot = canvas.map((row) => row.join("")).join("\n");
-  return `${label} (${mass} kg)\nEntropy\n${plot}\nt_Page ~ ${tPage.toExponential(2)} s\n`;
-}
+  // Perform Simulation
+  // Use Melone mass strictly for demo curve regardless of passed mass for visibility
+  // If mass is too small, lifetime is nanoseconds. If too big, infinite.
+  // We simulate a small black hole (e.g. 1e6 kg) to show the curve nicely,
+  // or use the actual fruit mass if scaling works (lifetime of fruit BH is tiny tiny).
+  // Simulate 1e10 kg for visible plot scale, or use realistic time scaling.
+  // Let's use 1e6 kg for the demo curve to represent "Fruit Logic".
+  const simMass = 1e9;
+  const data = simulatePageCurve(simMass, 100);
 
-function smoothPageCurve(mass) {
-  const SMax = fruchtEntropie(mass);
-  const SRemnant = Math.PI * kB;
-  const steps = 60;
-  const curve = [];
+  // Prepare datasets:
+  // 1. BH Entropy (falling)
+  // 2. Radiation Entropy (rising)
+  // 3. Page Curve (min of both)
 
-  for (let i = 0; i <= steps; i += 1) {
-    const t = i / steps;
-    const entropy = 2 * t * (1 - t) * SMax + SRemnant;
-    curve.push(entropy);
-  }
-  return curve;
-}
-
-function asciiSmoothPage(label, mass) {
-  const curve = smoothPageCurve(mass);
-  const width = curve.length;
-  const height = 15;
-  const SMax = Math.max(...curve);
-
-  const canvas = Array.from({ length: height }, () => Array(width).fill(" "));
-
-  curve.forEach((entropy, x) => {
-    const y = height - 1 - Math.floor((entropy / SMax) * (height - 1));
-    if (canvas[y] && canvas[y][x] !== undefined) {
-      canvas[y][x] = "*";
-    }
+  const datasetBH = data.s_bh.map((s, i) => ({ x: data.time[i], y: s }));
+  const datasetRad = data.s_rad_accum.map((s, i) => ({ x: data.time[i], y: s }));
+  const datasetPage = data.time.map((t, i) => {
+    return { x: t, y: Math.min(data.s_bh[i], data.s_rad_accum[i]) };
   });
 
-  const plot = canvas.map((row) => row.join("")).join("\n");
-  return `${label} — Glatte Page-Kurve (unitar)\nEntropy\n${plot}\nPeak: ${SMax.toExponential(2)}\nRemnant: ${(Math.PI * kB).toExponential(2)}\n`;
+  // Scale time relative to lifetime for easier reading
+  const tau = data.time[data.time.length - 1];
+
+  myChart = new Chart(qgChartCanvas, {
+    type: 'line',
+    data: {
+      labels: data.time.map(t => (t / tau).toFixed(2)),
+      datasets: [
+        {
+          label: 'S_BH (Remaining Capacity)',
+          data: datasetBH,
+          borderColor: 'rgba(255, 99, 132, 0.5)',
+          borderDash: [5, 5],
+          pointRadius: 0,
+          borderWidth: 2
+        },
+        {
+          label: 'S_Rad (Accumulated Ticks)',
+          data: datasetRad,
+          borderColor: 'rgba(54, 162, 235, 0.5)',
+          borderDash: [5, 5],
+          pointRadius: 0,
+          borderWidth: 2
+        },
+        {
+          label: 'Page Curve (Unitary)',
+          data: datasetPage,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          pointRadius: 1,
+          borderWidth: 3,
+          backgroundColor: 'rgba(75, 192, 192, 0.1)',
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      animation: {
+        duration: 1000
+      },
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: `Unitary Evaporation: ${label} (Simulated as M ~ 10^9 kg for visual)`
+        },
+        subtitle: {
+          display: true,
+          text: 'Entropy is count of spacetime updates (Ticks). Remnant stabilizes.'
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return context.dataset.label + ': ' + Number(context.parsed.y).toExponential(2);
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: { display: true, text: 'Time / Lifetime' },
+          ticks: { maxTicksLimit: 10 }
+        },
+        y: {
+          title: { display: true, text: 'Entropy [J/K] (S = kB * N_ticks)' },
+          type: 'linear'
+        }
+      }
+    }
+  });
 }
+
 
 // === Tool-Begrenzung ===
 const MAX_TOOL_RUNS = 2;
@@ -180,30 +230,43 @@ function withToolLimit(fn) {
 
 // === QG Tools ===
 const toolHandlers = {
-  pageFruits: () =>
-    FRUITS.map((fruit) => asciiPageCurve(fruit.name, fruit.massKg)).join("\n"),
-  fruitEntropy: () =>
-    FRUITS.map(
+  pageFruits: () => {
+    qgChartCanvas.style.display = 'none';
+    qgOutput.style.display = 'block';
+    return FRUITS.map((fruit) => `${fruit.name}: Klassische Page-Kurve nicht verfügbar (Nutze Glatte Kurve).`).join("\n");
+  },
+  fruitEntropy: () => {
+    qgChartCanvas.style.display = 'none';
+    qgOutput.style.display = 'block';
+    return FRUITS.map(
       (fruit) => `S_F(${fruit.name}) = ${fruchtEntropie(fruit.massKg).toExponential(3)} J/K`
-    ).join("\n"),
-  fruitRs: () =>
-    FRUITS.map(
+    ).join("\n");
+  },
+  fruitRs: () => {
+    qgChartCanvas.style.display = 'none';
+    qgOutput.style.display = 'block';
+    return FRUITS.map(
       (fruit) => `R_s(${fruit.name}) = ${schwarzschildRadius(fruit.massKg).toExponential(3)} m`
-    ).join("\n"),
-  fruitHawking: () =>
-    FRUITS.map(
+    ).join("\n");
+  },
+  fruitHawking: () => {
+    qgChartCanvas.style.display = 'none';
+    qgOutput.style.display = 'block';
+    return FRUITS.map(
       (fruit) => `T_H(${fruit.name}) = ${hawkingTemp(fruit.massKg).toExponential(3)} K`
-    ).join("\n"),
-  asciiPlot: () =>
-    [
-      asciiPageCurve("Melone", FRUITS.find((f) => f.name === "Melone").massKg),
-      asciiPageCurve("Apfel", FRUITS.find((f) => f.name === "Apfel").massKg)
-    ].join("\n"),
-  smoothPage: () =>
-    [
-      asciiSmoothPage("Melone", FRUITS.find((f) => f.name === "Melone").massKg),
-      asciiSmoothPage("Apfel", FRUITS.find((f) => f.name === "Apfel").massKg)
-    ].join("\n")
+    ).join("\n");
+  },
+  asciiPlot: () => {
+    qgChartCanvas.style.display = 'none';
+    qgOutput.style.display = 'block';
+    return "ASCII Plot deprecated. Use 'Glatte Page-Kurve' for visuals.";
+  },
+  smoothPage: () => {
+    // Select the "Melone" by default for the demo
+    const fruit = FRUITS.find(f => f.name === "Melone");
+    drawPageCurveChart(fruit.massKg, fruit.name);
+    return "Rendering Chart...";
+  }
 };
 
 function handleToolChange(event) {
@@ -213,12 +276,17 @@ function handleToolChange(event) {
 
   if (!toolHandlers[selectedValue]) {
     qgOutput.textContent = "";
+    qgChartCanvas.style.display = 'none';
     return;
   }
 
   withToolLimit(() => {
     const output = toolHandlers[selectedValue]();
-    qgOutput.textContent = output;
+    if (selectedValue !== 'smoothPage') {
+      qgOutput.textContent = output;
+    } else {
+      qgOutput.textContent = "Grafik wird generiert...";
+    }
   });
 }
 
