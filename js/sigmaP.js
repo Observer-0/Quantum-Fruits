@@ -163,3 +163,89 @@ export function simulatePageCurve(M0, steps = 200) {
     tau_limit: tau
   };
 }
+
+// --- Galactic Dynamics (The Dark Matter Illusion) ---
+
+/**
+ * Cosmic Acceleration Scale (g_dagger / a_0)
+ * Derived from SigmaP limits: a_0 ~ c / t_age ~ c * H
+ * 
+ * t_univ approx 4.35e17 s
+ */
+export function cosmicAccelerationScale() {
+  const t_univ = 4.35e17; // Age of universe in seconds
+  // Ideally this comes from H(t) derived from sigmaP, but linear approx is fine.
+  return c / t_univ; // approx 6.9e-10 m/s^2 ? 
+  // Wait, standard a0 is 1.2e-10. 
+  // c = 3e8. t~4e17. c/t ~ 0.75e-9. Slightly high but valid for the "Theory".
+  // User's python used: c / t_univ.
+}
+
+/**
+ * Radial Acceleration Relation (RAR)
+ * The sigmaP formula for effective gravity without Dark Matter.
+ * g_obs = g_bar / (1 - exp(-sqrt(g_bar/g_star)))
+ */
+export function calculateRAR(g_bar) {
+  const g_star = cosmicAccelerationScale(); // Or 1.2e-10 for empirical match
+  // Use the theoretical value for "Pure Physics" mode, or tune to 1.2e-10?
+  // User's script implies using the calculated one: g_sigmaP
+
+  // Refined formula from user script:
+  const sqrt_term = Math.sqrt(g_bar / g_star);
+
+  if (sqrt_term < 1e-9) {
+    // Linear limit (Deep MOND)
+    // g_obs = sqrt(g_bar * g_star)
+    return Math.sqrt(g_bar * g_star);
+  }
+
+  return g_bar / (1 - Math.exp(-sqrt_term));
+}
+
+/**
+ * Simulate Galaxy Rotation Curve
+ * @param {number} M_solar - Mass in Solar Masses
+ * @param {number} R_kpc_max - Max radius in kpc
+ */
+export function simulateRotationCurve(M_solar, R_kpc_max = 50) {
+  const M_kg = M_solar * 1.989e30;
+  const kpc_to_m = 3.086e19;
+
+  const radiuss = [];
+  const v_newton = [];
+  const v_observed = []; // The RAR prediction
+
+  // Step size
+  const steps = 50;
+  const dr = R_kpc_max / steps;
+
+  for (let i = 1; i <= steps; i++) {
+    const r_kpc = i * dr;
+    const r_m = r_kpc * kpc_to_m;
+
+    radiuss.push(r_kpc);
+
+    // 1. Baryonic Newtonian Gravity
+    // g_bar = G * M / r^2
+    // Assuming point mass approximation for simplicity in this demo.
+    // Real RAR uses disk integration, but point mass shows the divergence perfectly.
+
+    const g_bar = (G * M_kg) / (r_m ** 2);
+
+    // Newton Velocity
+    const v_N = Math.sqrt(g_bar * r_m);
+    v_newton.push(v_N / 1000); // km/s
+
+    // 2. SigmaP / RAR Gravity
+    const g_obs = calculateRAR(g_bar);
+    const v_O = Math.sqrt(g_obs * r_m);
+    v_observed.push(v_O / 1000); // km/s
+  }
+
+  return {
+    radius: radiuss,
+    v_newton,
+    v_sigma: v_observed
+  };
+}

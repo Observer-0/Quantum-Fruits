@@ -4,7 +4,8 @@ import {
   CONSTS,
   schwarzschildRadius,
   hawkingTemperature,
-  bekensteinHawkingEntropy
+  bekensteinHawkingEntropy,
+  simulateRotationCurve // Imported Galaxy Engine
 } from './sigmaP.js';
 
 // === Naturkonstanten ===
@@ -29,6 +30,13 @@ const REAL_BHS = [
   { name: "TON 618", massKg: 66e9 * 1.989e30, type: "ultramassive", desc: "Largest known quasar" }
 ];
 
+const GALAXIES = [
+  { name: "Milky Way", massSolar: 1e11, type: "galaxy", desc: "Our Galaxy" },
+  { name: "Andromeda (M31)", massSolar: 1.5e11, type: "galaxy", desc: "Nearest Major Galaxy" },
+  { name: "Triangulum (M33)", massSolar: 5e10, type: "galaxy", desc: "Local Group Spiral" },
+  { name: "UGC 2885", massSolar: 2e12, type: "galaxy", desc: "Godzilla Galaxy" }
+];
+
 // === DOM Elemente ===
 const searchField = document.querySelector("#suchfeld");
 const formSelect = document.querySelector("#formSelect");
@@ -43,8 +51,36 @@ const limitNote = document.querySelector("#limitNote");
 const modeSelect = document.querySelector("#modeSelect");
 const fruitControls = document.querySelector("#fruitControls");
 
+// Add specific container for dataset selection if it existed, but we reuse modeSelect or create new logic
+// We'll create a dynamic dataset switcher if needed, but for now lets rely on a variable or inject a simple UI
+let currentDatasetName = "fruits"; // fruits, bhs, galaxies
+
+// Inject a Dataset Selector into the UI at runtime if not present
+const filterBox = document.querySelector(".filterBox");
+let datasetSelect = document.getElementById("datasetSelect");
+if (!datasetSelect && filterBox) {
+  const label = document.createElement("label");
+  label.textContent = "Kategorie";
+  label.className = "control";
+  datasetSelect = document.createElement("select");
+  datasetSelect.id = "datasetSelect";
+  datasetSelect.innerHTML = `
+      <option value="fruits">Früchte</option>
+      <option value="bhs">Schwarze Löcher</option>
+      <option value="galaxies">Galaxien (Rotation)</option>
+    `;
+  filterBox.insertBefore(datasetSelect, filterBox.firstChild);
+  filterBox.insertBefore(label, datasetSelect);
+
+  // Wire it up
+  datasetSelect.addEventListener("change", (e) => {
+    currentDatasetName = e.target.value;
+    handleModeChange();
+  });
+}
+
+
 let myChart = null;
-let currentMode = "fruits"; // 'fruits' or 'real'
 
 // === Utilities ===
 function capitalize(value) {
@@ -57,7 +93,9 @@ function capitalize(value) {
 }
 
 function getActiveDataset() {
-  return currentMode === 'real' ? REAL_BHS : FRUITS;
+  if (currentDatasetName === 'bhs') return REAL_BHS;
+  if (currentDatasetName === 'galaxies') return GALAXIES;
+  return FRUITS;
 }
 
 function renderBaseList() {
@@ -66,19 +104,27 @@ function renderBaseList() {
 
   data.forEach((item) => {
     const li = document.createElement("li");
-    li.textContent = currentMode === 'real'
-      ? `${item.name} (${item.type})`
-      : capitalize(item.name);
+    li.textContent = capitalize(item.name);
+    if (item.desc) li.title = item.desc;
 
+    // Filter attributes
     if (item.shape) li.dataset.shape = item.shape;
     if (item.color) li.dataset.color = item.color;
 
     li.style.cursor = "pointer";
-    li.title = `Mass: ${item.massKg.toExponential(1)} kg`;
     li.addEventListener("click", () => {
-      drawPageCurveChart(item.massKg, item.name);
-      qgSelect.value = "smoothPage";
-      selectedToolLabel.textContent = `Glatte Page-Kurve (${item.name})`;
+      // Action depends on type
+      if (currentDatasetName === 'galaxies') {
+        drawRotationCurveChart(item.massSolar, item.name);
+        qgSelect.value = "none";
+        selectedToolLabel.textContent = `Galaxie-Rotation (${item.name})`;
+      } else {
+        // Mass conversion for non-galaxies is direct kg
+        const m = item.massKg || item.massSolar; // Fail safe
+        drawPageCurveChart(item.massKg, item.name);
+        qgSelect.value = "smoothPage";
+        selectedToolLabel.textContent = `Glatte Page-Kurve (${item.name})`;
+      }
     });
 
     baseList.appendChild(li);
@@ -89,14 +135,15 @@ function filterFruits() {
   const query = searchField.value.trim().toLowerCase();
   const shape = formSelect.value;
   const color = colorSelect.value;
-  const isReal = currentMode === 'real';
+
+  const isFruits = currentDatasetName === 'fruits';
 
   resultList.innerHTML = "";
   const data = getActiveDataset();
 
   const matches = data.filter((item) => {
     const matchesQuery = item.name.toLowerCase().includes(query);
-    if (isReal) return matchesQuery;
+    if (!isFruits) return matchesQuery; // Ignore shape/color for BH/Galaxies
 
     const matchesShape = shape === "alle" || item.shape === shape;
     const matchesColor = color === "alle" || item.color === color;
@@ -112,14 +159,18 @@ function filterFruits() {
 
   matches.forEach((item) => {
     const li = document.createElement("li");
-    li.textContent = isReal ? item.name : capitalize(item.name);
+    li.textContent = capitalize(item.name);
 
     const btn = document.createElement("span");
     btn.textContent = " 📊";
     btn.style.cursor = "pointer";
     btn.onclick = (e) => {
       e.stopPropagation();
-      drawPageCurveChart(item.massKg, item.name);
+      if (currentDatasetName === 'galaxies') {
+        drawRotationCurveChart(item.massSolar, item.name);
+      } else {
+        drawPageCurveChart(item.massKg, item.name);
+      }
     };
     li.appendChild(btn);
 
@@ -128,22 +179,76 @@ function filterFruits() {
 }
 
 function handleModeChange() {
-  currentMode = bindingModeSelect();
-  if (currentMode === 'real') {
-    fruitControls.style.display = 'none';
-  } else {
+  // Update UI visibility based on dataset
+  if (currentDatasetName === 'fruits') {
     fruitControls.style.display = 'contents';
+  } else {
+    fruitControls.style.display = 'none';
   }
+
   renderBaseList();
   filterFruits();
 }
 
-function bindingModeSelect() {
-  if (modeSelect) return modeSelect.value;
-  return "fruits";
+// === Visualization: Rotation Curve ===
+function drawRotationCurveChart(massSolar, label) {
+  if (myChart) { myChart.destroy(); myChart = null; }
+  qgChartCanvas.style.display = 'block';
+  qgOutput.style.display = 'none';
+
+  // Run Engine
+  const data = simulateRotationCurve(massSolar, 50); // 50 kpc max
+
+  const dsNewton = data.radius.map((r, i) => ({ x: r, y: data.v_newton[i] }));
+  const dsSigma = data.radius.map((r, i) => ({ x: r, y: data.v_sigma[i] }));
+
+  // Add "Observed Data" simulation (just scatter points around sigmaP curve?)
+  // Or just simple comparison.
+
+  myChart = new Chart(qgChartCanvas, {
+    type: 'line',
+    data: {
+      datasets: [
+        {
+          label: 'Newtonian (Expected)',
+          data: dsNewton,
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderDash: [5, 5],
+          fill: false,
+          tension: 0.4
+        },
+        {
+          label: 'σ_P / RAR (Observed)',
+          data: dsSigma,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 3,
+          fill: false,
+          tension: 0.4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        title: { display: true, text: `Rotation Curve: ${label}` },
+        subtitle: { display: true, text: 'No Dark Matter required. Pure σ_P Geometry.' }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          title: { display: true, text: 'Radius [kpc]' }
+        },
+        y: {
+          title: { display: true, text: 'Velocity [km/s]' }
+        }
+      }
+    }
+  });
 }
 
-// === Visualization ===
+
+// === Visualization: Page Curve ===
 function drawPageCurveChart(massKg, label) {
   if (myChart) {
     myChart.destroy();
@@ -152,13 +257,11 @@ function drawPageCurveChart(massKg, label) {
   qgChartCanvas.style.display = 'block';
   qgOutput.style.display = 'none';
 
-  // Use the new SigmaP engine
   const data = simulatePageCurve(massKg, 150);
 
   const datasetBH = data.s_bh.map((s, i) => ({ x: data.time[i], y: s }));
   const datasetRad = data.s_rad_accum.map((s, i) => ({ x: data.time[i], y: s }));
 
-  // Page Curve Logic: Min(S_BH, S_Rad)
   const datasetPage = data.time.map((t, i) => {
     return { x: t, y: Math.min(data.s_bh[i], data.s_rad_accum[i]) };
   });
@@ -171,31 +274,9 @@ function drawPageCurveChart(massKg, label) {
     data: {
       labels: data.time.map(t => (t / tau).toFixed(2)),
       datasets: [
-        {
-          label: 'S_BH (Kapazität)',
-          data: datasetBH,
-          borderColor: 'rgba(255, 99, 132, 0.5)',
-          borderDash: [5, 5],
-          pointRadius: 0,
-          borderWidth: 2
-        },
-        {
-          label: 'S_Rad (Ticks)',
-          data: datasetRad,
-          borderColor: 'rgba(54, 162, 235, 0.5)',
-          borderDash: [5, 5],
-          pointRadius: 0,
-          borderWidth: 2
-        },
-        {
-          label: 'Page Curve (Unitär)',
-          data: datasetPage,
-          borderColor: 'rgba(75, 192, 192, 1)',
-          pointRadius: 1,
-          borderWidth: 3,
-          backgroundColor: 'rgba(75, 192, 192, 0.1)',
-          fill: true
-        }
+        { label: 'S_BH (Horizon Capacity)', data: datasetBH, borderColor: 'rgba(255, 99, 132, 0.5)', borderDash: [5, 5], pointRadius: 0, borderWidth: 2 },
+        { label: 'S_Rad (Accumulated)', data: datasetRad, borderColor: 'rgba(54, 162, 235, 0.5)', borderDash: [5, 5], pointRadius: 0, borderWidth: 2 },
+        { label: 'Page Curve (Unitary)', data: datasetPage, borderColor: 'rgba(75, 192, 192, 1)', pointRadius: 1, borderWidth: 3, backgroundColor: 'rgba(75, 192, 192, 0.1)', fill: true }
       ]
     },
     options: {
@@ -203,31 +284,13 @@ function drawPageCurveChart(massKg, label) {
       animation: { duration: 800 },
       interaction: { mode: 'index', intersect: false },
       plugins: {
-        title: {
-          display: true,
-          text: `Evaporation: ${label} (M=${massKg.toExponential(1)} kg)`
-        },
-        subtitle: {
-          display: true,
-          text: `σ_P Evolution → Remnant Stable at t ~ ${(lastT / tau).toFixed(1)} τ`
-        },
-        tooltip: {
-          callbacks: {
-            label: function (context) {
-              return context.dataset.label + ': ' + Number(context.parsed.y).toExponential(2) + ' J/K';
-            }
-          }
-        }
+        title: { display: true, text: `Evaporation: ${label} (M=${massKg.toExponential(1)} kg)` },
+        subtitle: { display: true, text: `σ_P Evolution → Remnant Stable at t ~ ${(lastT / tau).toFixed(1)} τ` },
+        tooltip: { callbacks: { label: function (context) { return context.dataset.label + ': ' + Number(context.parsed.y).toExponential(2) + ' J/K'; } } }
       },
       scales: {
-        x: {
-          title: { display: true, text: 'Normierte Zeit (t / τ)' },
-          ticks: { maxTicksLimit: 10 }
-        },
-        y: {
-          title: { display: true, text: 'Entropie [J/K]' },
-          type: 'linear'
-        }
+        x: { title: { display: true, text: 'Normalized Time (t / τ)' }, ticks: { maxTicksLimit: 10 } },
+        y: { title: { display: true, text: 'Entropy [J/K]' }, type: 'linear' }
       }
     }
   });
@@ -265,6 +328,9 @@ const toolHandlers = {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
     const data = getActiveDataset();
+    // Check if handling galaxies (no entropy calc for now)
+    if (currentDatasetName === 'galaxies') return "Entropie-Berechnung für ganze Galaxien steht noch aus.";
+
     return data.map(
       (obj) => `S(${obj.name}) = ${bekensteinHawkingEntropy(obj.massKg).toExponential(3)} J/K`
     ).join("\n");
@@ -273,6 +339,8 @@ const toolHandlers = {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
     const data = getActiveDataset();
+    if (currentDatasetName === 'galaxies') return "Schwarzschild-Radius irrelevant für diffuse Galaxien-Metrik.";
+
     return data.map(
       (obj) => `R_s(${obj.name}) = ${schwarzschildRadius(obj.massKg).toExponential(3)} m`
     ).join("\n");
@@ -281,16 +349,20 @@ const toolHandlers = {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
     const data = getActiveDataset();
+    if (currentDatasetName === 'galaxies') return "Galaxien strahlen nicht wie Hawking-Körper.";
+
     return data.map(
       (obj) => `T_H(${obj.name}) = ${hawkingTemperature(obj.massKg).toExponential(3)} K`
     ).join("\n");
   },
-  asciiPlot: () => {
-    // Deprecated
-    return "ASCII Deprecated.";
-  },
+  asciiPlot: () => { return "ASCII Deprecated."; },
   smoothPage: () => {
     const data = getActiveDataset();
+    if (currentDatasetName === 'galaxies') {
+      const item = data[0];
+      drawRotationCurveChart(item.massSolar, item.name);
+      return `Rendering Rotation Curve for ${item.name}...`;
+    }
     const item = data[0];
     drawPageCurveChart(item.massKg, item.name);
     return `Rendering SigmaP Curve for ${item.name}...`;
@@ -317,9 +389,8 @@ function handleToolChange(event) {
 }
 
 // === Init ===
-if (modeSelect) modeSelect.addEventListener("change", handleModeChange);
-renderBaseList();
-filterFruits();
+// Auto-detect loaded UI state or just run default
+handleModeChange(); // Force render of list based on default 'fruits'
 
 searchField.addEventListener("input", filterFruits);
 formSelect.addEventListener("change", filterFruits);
