@@ -1,66 +1,55 @@
-# Quantum-Fruits
-Just creating a Webpage
+# Quantum Fruits: The SigmaP Simulation Suite
 
-## Fundamentale Dualgrößen
+## 🧪 Projekt-Übersicht
 
-Kurz: Neben der Planck‑Größe
+**Quantum Fruits** ist eine interaktive Web-Simulation zur Visualisierung hypothetischer Quantengravitations-Effekte in der Raumzeit. Diese Anwendung wurde im Rahmen einer Projektarbeit entwickelt, um komplexe theoretische Konzepte (wie Schwarze Löcher und Galaxienrotation) für den Laien verständlich und grafisch erfahrbar zu machen.
 
-$$
-\sigma_P=\ell_P t_P=\frac{\hbar G}{c^4} \quad\text{(Einheit: L·T)}
-$$
+Das Kernstück bildet die **$\sigma_P$-Engine**, ein JavaScript-Physikmodul, das geometrische Berechnungen auf Basis der Planck-Skala durchführt, ohne auf klassische Unendlichkeiten (Singularitäten) zu stoßen.
 
-kann man eine `Dualgröße` definieren
+---
 
-$$
-Z=\frac{\hbar^{2}}{c} \quad\text{(Einheit: M^{2}L^{3}T^{-1})}
-$$
+## 🚀 Features
 
-Beide Größen sind fundamental und können zusammengefasst werden:
+### 1. Mikro-Kosmos: Schwarze Löcher & Früchte
+Simulation der Verdampfung (Hawking-Strahlung) verschiedener Objekte – von der Frucht bis zum supermassiven Schwarzen Loch.
+- **Visualisierung:** Unitäre Page-Kurven (Entropie-Verlauf).
+- **Besonderheit:** Zeigt die Stabilisierung am "Planck-Remnant" (anstelle einer vollständigen Auflösung).
 
-$$
-\sigma_P\,Z=\frac{\hbar G}{c^{4}}\cdot\frac{\hbar^{2}}{c}=\frac{\hbar^{3}G}{c^{5}}\,.
-$$
+### 2. Makro-Kosmos: Galaxien ohne Dunkle Materie
+Simulation von Rotationskurven großer Galaxien.
+- **Vergleich:** Darstellung der klassischen Newtonschen Erwartung (rote Kurve) vs. der beobachteten Realität (grüne Kurve).
+- **Physik:** Der Effekt wird rein geometrisch durch die $\sigma_P$-Skalierung erzeugt, ohne Zunahme hypothetischer Dunkler Materie.
 
-Diese Kombinationen verbinden Konstanten, die Raum, Zeit und Quantisierung zusammenbringen und helfen, Aussagen über Skalen zu machen, bei denen die klassische Raumzeit‑Beschreibung versagt.
+### 3. Echtzeit-Interaktion
+- Filterbare Datenbank ("Früchte", "Real BHs", "Galaxien").
+- Dynamische Chart.js Graphen.
+- Responsives Design für Desktop & Tablet.
 
-## Theorie: Dualstruktur von QM & GR
+---
 
-Kurzfassung der zentralen Aussagen:
+## 🛠 Technologie-Stack
 
-- Fundamentale Raumzeit-Skala (LT):
+- **Frontend:** HTML5, CSS3 (Modern Variables, Flexbox/Grid)
+- **Engine:** Vanilla JavaScript (ES6 Modules)
+- **Visualisierung:** Chart.js
+- **Math-Rendering:** KaTeX (für Formeldarstellung)
+- **Server:** Python `http.server` (für Entwicklung/Test)
 
-$$
-\sigma_P=\frac{\hbar G}{c^{4}}\quad\text{(Einheit: L\cdot T)}
-$$
+---
 
-- Quadratische Spin‑2 Skalen:
+## ⚠️ Embargo & Wissenschaftlicher Hinweis
 
-$$
-Z=\frac{\hbar^{2}}{c},\qquad A_G=\frac{G^{2}}{c^{4}}
-$$
+Die zugrunde liegende theoretische Arbeit ("Theorie der Ticks" / $\sigma_P = \hbar G / c^4$) unterliegt einem **Veröffentlichungs-Embargo**.
+Die in dieser Web-Anwendung dargestellten Formeln und Simulationslogiken dienen ausschließlich der **pädagogischen Visualisierung** im Rahmen dieser Schularbeit. Sie stellen kein publiziertes Paper dar.
 
-Diese sind quadratisch in der Wirkung bzw. Geometrie und tragen eine Spin‑2 Signatur; ihr Produkt liefert:
+Sämtliche tiefergehenden Herleitungen in der Sektion `theory.html` wurden für die öffentliche Einsicht redigiert.
 
-$$
-Z\,A_G=\sigma_P\,.
-$$
+---
 
-- Zwei relevante, dimensionslose Kopplungen der Gravitation:
+## 📜 Lizenz & Nutzung
 
-$$
-\alpha_G(M)=\frac{GM}{\hbar c},\qquad \chi(M)=\frac{GM^{2}}{\hbar c^{3}}\sim\frac{1}{v^{2}}\,.
-$$
+**Copyright © 2025**
+Dieses Projekt ist **Privatbesitz**.
 
-- Hawking‑Tick (Wirkungsquantum pro Emission):
-
-$$
-E_H t_H=\hbar
-$$
-
-Dies interpretiere ich so: jede Hawking‑Emission ist eine diskrete Aktualisierung der Weltzeit; Entropie ergibt sich als Anzahl solcher Ticks.
-
-- Anmerkungen:
-	- Faktoren wie $4\pi$ sind topologisch (Flächenwahl), physikalisch bleibt vor allem die Kopplung $GM^{2}/(\hbar c)$.  
-	- Die „Gravitations‑Ladung“ kann als $\hbar/(G c)$ interpretiert werden (geometrisierte Planck‑Ladung / Impedanz des Spin‑2 Feldes).
-
-Diese Texte sind bewusst prägnant formuliert; sag mir, wenn ich Referenzen/Berechnungsdetails ergänzen oder die Darstellung anders priorisieren soll.
+- **Erlaubt:** Einsicht und Ausführung durch Lehrkräfte zur Bewertung der Projektleistung.
+- **Untersagt:** Kopieren, Veröffentlichen (GitHub Public), Weitergabe des `js/sigmaP.js` Kernels oder kommerzielle Nutzung ohne schriftliche Genehmigung.

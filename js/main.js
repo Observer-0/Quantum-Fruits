@@ -48,37 +48,20 @@ const qgOutput = document.querySelector("#qgOutput");
 const qgChartCanvas = document.querySelector("#qgChart");
 const selectedToolLabel = document.querySelector("#selectedToolLabel");
 const limitNote = document.querySelector("#limitNote");
-const modeSelect = document.querySelector("#modeSelect");
+
+// Dataset Selector (now in HTML)
+const datasetSelect = document.querySelector("#datasetSelect");
 const fruitControls = document.querySelector("#fruitControls");
 
-// Add specific container for dataset selection if it existed, but we reuse modeSelect or create new logic
-// We'll create a dynamic dataset switcher if needed, but for now lets rely on a variable or inject a simple UI
 let currentDatasetName = "fruits"; // fruits, bhs, galaxies
 
-// Inject a Dataset Selector into the UI at runtime if not present
-const filterBox = document.querySelector(".filterBox");
-let datasetSelect = document.getElementById("datasetSelect");
-if (!datasetSelect && filterBox) {
-  const label = document.createElement("label");
-  label.textContent = "Kategorie";
-  label.className = "control";
-  datasetSelect = document.createElement("select");
-  datasetSelect.id = "datasetSelect";
-  datasetSelect.innerHTML = `
-      <option value="fruits">Früchte</option>
-      <option value="bhs">Schwarze Löcher</option>
-      <option value="galaxies">Galaxien (Rotation)</option>
-    `;
-  filterBox.insertBefore(datasetSelect, filterBox.firstChild);
-  filterBox.insertBefore(label, datasetSelect);
-
-  // Wire it up
+// Wire up the Dataset Selector
+if (datasetSelect) {
   datasetSelect.addEventListener("change", (e) => {
     currentDatasetName = e.target.value;
-    handleModeChange();
+    handleDatasetChange();
   });
 }
-
 
 let myChart = null;
 
@@ -116,7 +99,7 @@ function renderBaseList() {
       // Action depends on type
       if (currentDatasetName === 'galaxies') {
         drawRotationCurveChart(item.massSolar, item.name);
-        qgSelect.value = "none";
+        qgSelect.value = "smoothPage"; // Abuse this value to show active state
         selectedToolLabel.textContent = `Galaxie-Rotation (${item.name})`;
       } else {
         // Mass conversion for non-galaxies is direct kg
@@ -178,7 +161,7 @@ function filterFruits() {
   });
 }
 
-function handleModeChange() {
+function handleDatasetChange() {
   // Update UI visibility based on dataset
   if (currentDatasetName === 'fruits') {
     fruitControls.style.display = 'contents';
@@ -390,7 +373,7 @@ function handleToolChange(event) {
 
 // === Init ===
 // Auto-detect loaded UI state or just run default
-handleModeChange(); // Force render of list based on default 'fruits'
+handleDatasetChange(); // Force render of list based on default
 
 searchField.addEventListener("input", filterFruits);
 formSelect.addEventListener("change", filterFruits);

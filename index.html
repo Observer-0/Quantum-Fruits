@@ -96,39 +96,51 @@
       <p class="limit-note" id="limitNote" aria-live="polite"></p>
       <!-- ADDED VIS CONTAINER -->
       <div id="visContainer" style="margin-top: 1rem; position: relative;">
-          <canvas id="qgChart" style="display:none; max-height: 400px; width: 100%;"></canvas>
-          <pre id="qgOutput" class="qg-output" aria-live="polite"></pre>
+        <canvas id="qgChart" style="display:none; max-height: 400px; width: 100%;"></canvas>
+        <pre id="qgOutput" class="qg-output" aria-live="polite"></pre>
       </div>
     </section>
 
     <section class="fruit-filter">
       <div class="filter-header">
-        <h2>Fruchtliste</h2>
+        <h2>Objekt-Liste</h2>
         <p>Suche, filtere nach Form und Farbe und behalte stets schön kapitalisierte Namen.</p>
       </div>
 
       <div class="filterBox">
+        <!-- New Category Selector -->
+        <label for="datasetSelect" class="control">Kategorie</label>
+        <select id="datasetSelect">
+          <option value="fruits" selected>Früchte</option>
+          <option value="bhs">Schwarze Löcher</option>
+          <option value="galaxies">Galaxien (Rotation)</option>
+        </select>
+
         <label for="suchfeld" class="control">Suche</label>
-        <input type="text" id="suchfeld" placeholder="Suche nach Frucht..." />
-        <label for="formSelect" class="control">Form</label>
-        <select id="formSelect">
-          <option value="alle">Alle</option>
-          <option value="rund">Rund</option>
-          <option value="oval">Oval</option>
-        </select>
-        <label for="farbeSelect" class="control">Farbe</label>
-        <select id="farbeSelect">
-          <option value="alle">Alle</option>
-          <option value="rot">Rot</option>
-          <option value="gelb">Gelb</option>
-          <option value="gruen">Grün</option>
-          <option value="orange">Orange</option>
-        </select>
+        <input type="text" id="suchfeld" placeholder="Suche..." />
+
+        <!-- Fruit specific controls wrapped -->
+        <div id="fruitControls" style="display: contents;">
+          <label for="formSelect" class="control">Form</label>
+          <select id="formSelect">
+            <option value="alle">Alle</option>
+            <option value="rund">Rund</option>
+            <option value="oval">Oval</option>
+          </select>
+          <label for="farbeSelect" class="control">Farbe</label>
+          <select id="farbeSelect">
+            <option value="alle">Alle</option>
+            <option value="rot">Rot</option>
+            <option value="gelb">Gelb</option>
+            <option value="gruen">Grün</option>
+            <option value="orange">Orange</option>
+          </select>
+        </div>
       </div>
 
       <div class="lists">
         <div>
-          <h3>Alle Früchte</h3>
+          <h3>Verfügbare Objekte</h3>
           <ul id="meineListe" class="fruit-list"></ul>
         </div>
         <div>
