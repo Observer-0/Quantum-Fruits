@@ -1,5 +1,11 @@
 // === Imports ===
-import { simulatePageCurve, CONSTS, SIGMA_P } from './sigmaP.js';
+import {
+  simulatePageCurve,
+  CONSTS,
+  schwarzschildRadius,
+  hawkingTemperature,
+  bekensteinHawkingEntropy
+} from './sigmaP.js';
 
 // === Naturkonstanten ===
 const { hbar, G, c, kB } = CONSTS;
@@ -22,12 +28,6 @@ const REAL_BHS = [
   { name: "M87*", massKg: 6.5e9 * 1.989e30, type: "supermassive", desc: "The Event Horizon Image" },
   { name: "TON 618", massKg: 66e9 * 1.989e30, type: "ultramassive", desc: "Largest known quasar" }
 ];
-
-const SPECIAL_MASSES = {
-  pbh: 1e12, // primordial
-  stellar: 5e30,
-  smbh: 1e34
-};
 
 // === DOM Elemente ===
 const searchField = document.querySelector("#suchfeld");
@@ -70,17 +70,14 @@ function renderBaseList() {
       ? `${item.name} (${item.type})`
       : capitalize(item.name);
 
-    // Store metadata for filtering if needed
     if (item.shape) li.dataset.shape = item.shape;
     if (item.color) li.dataset.color = item.color;
 
-    // Add click handler to simulate selecting this object
     li.style.cursor = "pointer";
     li.title = `Mass: ${item.massKg.toExponential(1)} kg`;
     li.addEventListener("click", () => {
-      // Quick visual check
       drawPageCurveChart(item.massKg, item.name);
-      qgSelect.value = "smoothPage"; // fake update UI
+      qgSelect.value = "smoothPage";
       selectedToolLabel.textContent = `Glatte Page-Kurve (${item.name})`;
     });
 
@@ -92,8 +89,6 @@ function filterFruits() {
   const query = searchField.value.trim().toLowerCase();
   const shape = formSelect.value;
   const color = colorSelect.value;
-
-  // In Real mode, shape/color are ignored or hidden
   const isReal = currentMode === 'real';
 
   resultList.innerHTML = "";
@@ -119,7 +114,6 @@ function filterFruits() {
     const li = document.createElement("li");
     li.textContent = isReal ? item.name : capitalize(item.name);
 
-    // Add quick action button
     const btn = document.createElement("span");
     btn.textContent = " 📊";
     btn.style.cursor = "pointer";
@@ -134,9 +128,9 @@ function filterFruits() {
 }
 
 function handleModeChange() {
-  currentMode = modeSelect.value;
+  currentMode = bindingModeSelect();
   if (currentMode === 'real') {
-    fruitControls.style.display = 'none'; // Hide colors/shapes
+    fruitControls.style.display = 'none';
   } else {
     fruitControls.style.display = 'contents';
   }
@@ -144,19 +138,9 @@ function handleModeChange() {
   filterFruits();
 }
 
-// === Physikfunktionen ===
-function schwarzschildRadius(mass) {
-  return (2 * G * mass) / (c * c);
-}
-
-function hawkingTemp(mass) {
-  return (hbar * c ** 3) / (8 * Math.PI * G * mass * kB);
-}
-
-function fruchtEntropie(mass) {
-  const lp2 = (hbar * G) / c ** 3;
-  const area = 4 * Math.PI * schwarzschildRadius(mass) ** 2;
-  return (kB * area) / (4 * lp2);
+function bindingModeSelect() {
+  if (modeSelect) return modeSelect.value;
+  return "fruits";
 }
 
 // === Visualization ===
@@ -168,20 +152,19 @@ function drawPageCurveChart(massKg, label) {
   qgChartCanvas.style.display = 'block';
   qgOutput.style.display = 'none';
 
-  // For visualization, we need to handle extreme time scales.
-  // Real BHs live for 10^60+ years. Javascript floats can handle 1e308.
-  // But Chart.js labels might be tricky. We normalize time to t/tau (lifetime).
-  // The simulation function handles this, returning abstract time steps.
-
-  const data = simulatePageCurve(massKg, 100);
+  // Use the new SigmaP engine
+  const data = simulatePageCurve(massKg, 150);
 
   const datasetBH = data.s_bh.map((s, i) => ({ x: data.time[i], y: s }));
   const datasetRad = data.s_rad_accum.map((s, i) => ({ x: data.time[i], y: s }));
+
+  // Page Curve Logic: Min(S_BH, S_Rad)
   const datasetPage = data.time.map((t, i) => {
     return { x: t, y: Math.min(data.s_bh[i], data.s_rad_accum[i]) };
   });
 
-  const tau = data.time[data.time.length - 1];
+  const tau = data.tau_limit;
+  const lastT = data.time[data.time.length - 1];
 
   myChart = new Chart(qgChartCanvas, {
     type: 'line',
@@ -217,13 +200,8 @@ function drawPageCurveChart(massKg, label) {
     },
     options: {
       responsive: true,
-      animation: {
-        duration: 800
-      },
-      interaction: {
-        mode: 'index',
-        intersect: false,
-      },
+      animation: { duration: 800 },
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         title: {
           display: true,
@@ -231,7 +209,7 @@ function drawPageCurveChart(massKg, label) {
         },
         subtitle: {
           display: true,
-          text: 'Unitary tick evolution via σ_P = ħG/c^4. Remnant stable.'
+          text: `σ_P Evolution → Remnant Stable at t ~ ${(lastT / tau).toFixed(1)} τ`
         },
         tooltip: {
           callbacks: {
@@ -248,15 +226,14 @@ function drawPageCurveChart(massKg, label) {
         },
         y: {
           title: { display: true, text: 'Entropie [J/K]' },
-          type: 'linear' // Log scale breaks 0
+          type: 'linear'
         }
       }
     }
   });
 }
 
-
-// === Tool-Begrenzung ===
+// === Tool Controls ===
 const MAX_TOOL_RUNS = 2;
 let activeToolRuns = 0;
 let limitTimer;
@@ -266,10 +243,8 @@ function withToolLimit(fn) {
     limitNote.textContent = `Maximal ${MAX_TOOL_RUNS} Funktionen dürfen gleichzeitig laufen.`;
     return;
   }
-
   activeToolRuns += 1;
   limitNote.textContent = "";
-
   try {
     fn();
   } finally {
@@ -280,19 +255,18 @@ function withToolLimit(fn) {
   }
 }
 
-// === QG Tools ===
 const toolHandlers = {
   pageFruits: () => {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
-    return "Bitte nutze die glatte Kurve für korrekte unitäre Physik.";
+    return "Bitte nutze die 'Glatte Page-Kurve'. Die klassische Ansicht ist veraltet.";
   },
   fruitEntropy: () => {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
     const data = getActiveDataset();
     return data.map(
-      (obj) => `S(${obj.name}) = ${fruchtEntropie(obj.massKg).toExponential(3)} J/K`
+      (obj) => `S(${obj.name}) = ${bekensteinHawkingEntropy(obj.massKg).toExponential(3)} J/K`
     ).join("\n");
   },
   fruitRs: () => {
@@ -308,20 +282,18 @@ const toolHandlers = {
     qgOutput.style.display = 'block';
     const data = getActiveDataset();
     return data.map(
-      (obj) => `T_H(${obj.name}) = ${hawkingTemp(obj.massKg).toExponential(3)} K`
+      (obj) => `T_H(${obj.name}) = ${hawkingTemperature(obj.massKg).toExponential(3)} K`
     ).join("\n");
   },
   asciiPlot: () => {
-    qgChartCanvas.style.display = 'none';
-    qgOutput.style.display = 'block';
-    return "ASCII deprecated. View graph.";
+    // Deprecated
+    return "ASCII Deprecated.";
   },
   smoothPage: () => {
     const data = getActiveDataset();
-    // Default to first item
     const item = data[0];
     drawPageCurveChart(item.massKg, item.name);
-    return `Rendering Curve for ${item.name}...`;
+    return `Rendering SigmaP Curve for ${item.name}...`;
   }
 };
 
@@ -338,16 +310,14 @@ function handleToolChange(event) {
 
   withToolLimit(() => {
     const output = toolHandlers[selectedValue]();
-    if (selectedValue !== 'smoothPage') {
+    if (selectedValue !== 'smoothPage' && selectedValue !== 'pageFruits') {
       qgOutput.textContent = output;
-    } else {
-      qgOutput.textContent = "Grafik wird generiert...";
     }
   });
 }
 
 // === Init ===
-modeSelect.addEventListener("change", handleModeChange);
+if (modeSelect) modeSelect.addEventListener("change", handleModeChange);
 renderBaseList();
 filterFruits();
 
