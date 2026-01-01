@@ -281,6 +281,36 @@ const GALAXIES = [
   { name: "UGC 2885", massSolar: 2e12, type: "galaxy", desc: "Godzilla Galaxy" }
 ];
 
+const MACRO_SYSTEMS = [
+  {
+    name: "Usain Bolt (WR)",
+    massKg: 94,
+    energyJ: 81600,
+    length: 100,
+    time: 9.58,
+    type: "macro",
+    desc: "100m World Record Dash"
+  },
+  {
+    name: "Glühbirne (60W)",
+    massKg: 0.1,
+    energyJ: 60,
+    length: 0.1,
+    time: 1,
+    type: "macro",
+    desc: "1 Sekunde Leuchten"
+  },
+  {
+    name: "Pkw (Beschleunigung)",
+    massKg: 1500,
+    energyJ: 580000,
+    length: 5,
+    time: 5,
+    type: "macro",
+    desc: "0-100 km/h in 5s"
+  }
+];
+
 // === DOM Elemente ===
 const searchField = document.querySelector("#suchfeld");
 const formSelect = document.querySelector("#formSelect");
@@ -322,6 +352,7 @@ function capitalize(value) {
 function getActiveDataset() {
   if (currentDatasetName === 'bhs') return REAL_BHS;
   if (currentDatasetName === 'galaxies') return GALAXIES;
+  if (currentDatasetName === 'macro') return MACRO_SYSTEMS;
   return FRUITS;
 }
 
@@ -581,6 +612,37 @@ const toolHandlers = {
     return data.map(
       (obj) => `T_H(${obj.name}) = ${hawkingTemperature(obj.massKg).toExponential(3)} K`
     ).join("\n");
+  },
+  macroHawking: () => {
+    qgChartCanvas.style.display = 'none';
+    qgOutput.style.display = 'block';
+    const data = getActiveDataset();
+    if (currentDatasetName !== 'macro') return "Bitte 'Makro-Systeme' wählen.";
+
+    return data.map(obj => {
+      const sigma_eff = obj.length * obj.time;
+      const action = obj.energyJ * obj.time;
+      const ticks = action / sigma_eff; // structurally: E*t / (L*t) = E/L which is force? 
+      // Actually N = Action / sigma_eff
+      const temp_j = obj.energyJ / (action / sigma_eff);
+      // Simplified: T = E / ( (E*t)/(L*t) ) = L. 
+      // The user's joke: T_eff = E_total / N.
+      // E_total / ( (E_total * t) / (L * t) ) = L.
+      // Wait, the structural beauty is: T_eff = E / N.
+
+      const n_ticks = obj.energyJ * obj.time / (obj.length * obj.time); // = E/L
+      const t_eff = obj.energyJ / n_ticks; // = L!
+
+      // Let's use the actual thermal "energy per tick" interpretation:
+      const result = `
+--- ${obj.name} ---
+Effektive Zelle (σ_eff): ${sigma_eff.toFixed(2)} m·s
+Anzahl Ticks (N): ${n_ticks.toFixed(2)}
+Energie pro Tick (T_eff): ${t_eff.toFixed(2)} Joule
+Entropie-Export: ${(obj.energyJ * 0.92).toFixed(1)} J (Dissipation)
+      `;
+      return result;
+    }).join("\n");
   },
   asciiPlot: () => { return "ASCII Deprecated."; },
   smoothPage: () => {
