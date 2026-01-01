@@ -8,7 +8,7 @@ This software and documentation is strictly provided for **EDUCATIONAL EVALUATIO
 Permission is hereby granted, free of charge, to the reviewing academic staff (Teachers/Examiners) to execute, view, and test this software solely for the purpose of grading the associated project work.
 
 ## 2. Proprietary Theory Embargo
-The theoretical framework ("SigmaP Physics" / "Theory of Ticks") implemented within the source code files (specifically `gammaP.js`, `sigmaP.js`) is proprietary intellectual property under active research embargo.
+The theoretical framework implemented within the source code files (specifically `gammaP.js`, `sigmaP.js`) is proprietary intellectual property under active research embargo.
 
 **It is strictly FORBIDDEN to:**
 - Publish this code to public repositories (e.g., GitHub private repos are allowed, public are not).

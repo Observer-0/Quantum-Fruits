@@ -1,14 +1,13 @@
 # Quantum Fruits: The SigmaP Simulation Suite
 
-## 🧪 Projekt-Übersicht
+
 
 **Quantum Fruits** ist eine interaktive Web-Simulation zur Visualisierung hypothetischer Quantengravitations-Effekte in der Raumzeit. Diese Anwendung wurde im Rahmen einer Projektarbeit entwickelt, um komplexe theoretische Konzepte (wie Schwarze Löcher und Galaxienrotation) für den Laien verständlich und grafisch erfahrbar zu machen.
 
 Das Kernstück bildet die **$\sigma_P$-Engine**, ein JavaScript-Physikmodul, das geometrische Berechnungen auf Basis der Planck-Skala durchführt, ohne auf klassische Unendlichkeiten (Singularitäten) zu stoßen.
 
----
 
-## 🚀 Features
+
 
 ### 1. Mikro-Kosmos: Schwarze Löcher & Früchte
 Simulation der Verdampfung (Hawking-Strahlung) verschiedener Objekte – von der Frucht bis zum supermassiven Schwarzen Loch.
@@ -35,21 +34,17 @@ Simulation von Rotationskurven großer Galaxien.
 - **Math-Rendering:** KaTeX (für Formeldarstellung)
 - **Server:** Python `http.server` (für Entwicklung/Test)
 
----
 
-## ⚠️ Embargo & Wissenschaftlicher Hinweis
-
-Die zugrunde liegende theoretische Arbeit ("Theorie der Ticks" / $\sigma_P = \hbar G / c^4$) unterliegt einem **Veröffentlichungs-Embargo**.
-Die in dieser Web-Anwendung dargestellten Formeln und Simulationslogiken dienen ausschließlich der **pädagogischen Visualisierung** im Rahmen dieser Schularbeit. Sie stellen kein publiziertes Paper dar.
-
-Sämtliche tiefergehenden Herleitungen in der Sektion `theory.html` wurden für die öffentliche Einsicht redigiert.
-
----
-
-## 📜 Lizenz & Nutzung
+Lizenz & Nutzung
 
 **Copyright © 2025**
 Dieses Projekt ist **Privatbesitz**.
 
 - **Erlaubt:** Einsicht und Ausführung durch Lehrkräfte zur Bewertung der Projektleistung.
 - **Untersagt:** Kopieren, Veröffentlichen (GitHub Public), Weitergabe des `js/sigmaP.js` Kernels oder kommerzielle Nutzung ohne schriftliche Genehmigung.
+
+
+Roadmap:
+- Visuals
+- Translation
+- Paper-Section
