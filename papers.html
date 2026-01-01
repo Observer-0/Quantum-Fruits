@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papers & Forschung | Quantum Fruits</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="favicon.svg">
+    <style>
+        .papers-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem 4rem;
+        }
+
+        .paper-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .paper-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent);
+        }
+
+        .paper-meta {
+            font-size: 0.85rem;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            transition: background 0.2s;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .tex-link {
+            display: inline-block;
+            margin-left: 1rem;
+            color: var(--ink-soft);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .tex-link:hover {
+            color: var(--ink);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="page-header">
+        <div class="hero">
+            <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
+            <p class="eyebrow">Original Publications</p>
+            <h1>Forschungspapers</h1>
+            <p class="tagline">Die Mathematik hinter den Früchten.</p>
+        </div>
+    </header>
+
+    <main class="papers-content">
+
+        <div class="paper-card">
+            <div class="paper-meta">Oktober 2025 • Unified Field Theory</div>
+            <h2>The Natural Structure of Spacetime</h2>
+            <p><strong>A Parameter-Free Bridge between Quantum Mechanics and General Relativity</strong></p>
+            <p>
+                Das Hauptwerk. Eine parameterfreie Unifizierung basierend auf dem Planck-Zweiermaß $\sigma_P = \hbar G /
+                c^4$.
+                Leitet die Feinstrukturkonstante $\alpha \approx 1/137$ holographisch her, fixiert die kosmologische
+                Konstante $\Lambda$
+                und liefert falsifizierbare Vorhersagen ohne neue Felder.
+            </p>
+            <div style="margin-top: 1rem;">
+                <a href="assets/papers/Zander_2025_Natural_Structure.tex" class="download-btn">LaTeX Source
+                    Herunterladen</a>
+                <span style="display:inline-block; margin-left: 1rem; color: #666; font-style: italic;">(PDF durch
+                    Kompilieren)</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-meta">Dezember 2025 • Stochastic / Essays</div>
+            <h2>The Statistical Price of True Love</h2>
+            <p><strong>An Abductive Approach to Romance, Entropy and Eurojackpot</strong></p>
+            <p>
+                Eine wissenschaftliche Annäherung an das Unmögliche. Übersetzt die Wahrscheinlichkeit menschlicher
+                Begegnungen
+                in Eurojackpot-Gewinne und verbindet diese Statistik mit Entropie und Quantengravitation.
+                Beinhaltet die "Human-Readable" Introductions zu komplexen Konzepten wie Operator-Einstein-Gleichungen.
+            </p>
+            <div style="margin-top: 1rem;">
+                <a href="assets/papers/Zander_2025_Price_of_Love.tex" class="download-btn">LaTeX Source
+                    Herunterladen</a>
+                <span style="display:inline-block; margin-left: 1rem; color: #666; font-style: italic;">(PDF durch
+                    Kompilieren)</span>
+            </div>
+        </div>
+
+    </main>
+</body>
+
+</html>

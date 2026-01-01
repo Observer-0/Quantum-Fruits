@@ -102,6 +102,31 @@
         </div>
 
         <section>
+            <h2>Vollendung statt Neuerfindung</h2>
+            <div class="qg-box" style="background: rgba(255, 215, 0, 0.05); border-left: 4px solid var(--accent);">
+                <p>
+                    Oft verlieren sich moderne Theorien darin, das "neue große Ding" sein zu wollen.
+                    Doch es geht nicht darum, Einstein, Planck, Minkowski, Schrödinger, Boltzmann oder Feynman zu
+                    ersetzen.
+                    Es geht darum, ihr Lebenswerk zu ehren und zu vollenden – mit den Mitteln, die sie damals nicht
+                    hatten.
+                </p>
+                <p>
+                    Eigentlich war die Frage immer simpel: <strong>Was passiert, wenn wir Raum $\times$ Zeit
+                        quantifizieren?</strong>
+                </p>
+                <p>
+                    Warum taucht die Kombination $\frac{\hbar G}{c^4}$ auf? Sie ist verblüffend nah an Einsteins
+                    Gravitationskoppler:
+                    $$ \kappa = \frac{8\pi G}{c^4} $$
+                    Wenn wir bedenken, dass das Wirkungsquantum $\hbar = h/2\pi$ geometrisiert ist, wird klar:
+                    Es ist derselbe Baustein. Wir haben nur das Pixel ($ \sigma_P $) gefunden, aus dem Einstein seine
+                    glatte Geometrie baute.
+                </p>
+            </div>
+        </section>
+
+        <section>
             <h2>1. Einleitung: Das Gedächtnis der Raumzeit</h2>
             <p>
                 Raum und Zeit sind nicht nur die Bühne des Universums – sie sind selbst Akteure.
@@ -147,43 +172,81 @@
             </p>
 
             <h3>7.3 Tensorielle Struktur von $\overline T_{\mu\nu}$</h3>
-            <div class="redacted-box">
-                <p class="redacted-title">&#9888; Redacted / Embargoed</p>
+            <div class="qg-box" style="background: rgba(15, 23, 42, 0.03); border: 1px solid var(--border);">
                 <p>
-                    Die explizite Herleitung des Verschmierungs-Kernels $K_{\sigma_P}(x,y)$ und der tensoriellen
-                    Projektoren unterliegt dem Forschungsembargo.
-                    <br><br>
-                    <em>Kern-Aussage:</em> Der Energie-Impuls-Tensor wird durch die Geometrie von $\sigma_P$ natürlich
-                    regularisiert, was UV-Divergenzen verhindert.
+                    Der Energie-Impuls-Tensor wird durch einen gaußschen Propagator $K_{\sigma_P}$ mit der Geometrie von
+                    $\sigma_P$
+                    natürlich regularisiert.
+                </p>
+                <p>
+                    $$ K_{\sigma_{\mathrm P}}(x,y) = \frac{1}{\mathcal
+                    N}\exp\!\Big[-\frac{\sigma_+(x,y)}{2\ell_P^2}\Big]
+                    $$
+                </p>
+                <p>
+                    $$ \overline{T}_{\mu\nu}(x) = \int d^4y\,\sqrt{-g(y)}\;K_{\sigma_{\mathrm
+                    P}}(x,y)\;\Pi_{\mu}{}^{\mu'}(x,y)\,\Pi_{\nu}{}^{\nu'}(x,y)\;T_{\mu'\nu'}(y) $$
                 </p>
             </div>
+            <p>
+                Hierbei dienen $\Pi_{\mu}{}^{\mu'}$ als bivektorielle Paralleltransporter, die den Tensor sicher vom
+                Quellpunkt $y$ zum Zielpunkt $x$ transportieren.
+                Dies eliminiert punktförmige Singularitäten durch "Verschmierung" über die Planck-Zelle.
+            </p>
 
-            <h3>7.4 Die regulierte Metrik (Minkowski-Zander)</h3>
-            <div class="redacted-box">
-                <p class="redacted-title">&#9888; Redacted / Embargoed</p>
+            <h3>7.4 Die Operator-Einstein-Gleichung</h3>
+            <div class="qg-box" style="background: rgba(15, 23, 42, 0.03); border: 1px solid var(--border);">
                 <p>
-                    Die exakte Form des Regularisierungsfaktors $f(\mathcal{R},x)$ ist Teil der laufenden Verifikation.
-                    <br><br>
-                    <em>Resultat:</em> Für kleine Krümmungen gilt die klassische Metrik. Nahe der Singularität
-                    verhindert der Faktor die Divergenz.
+                    In unserem Framework wird der Einstein-Tensor zum <strong>Operator</strong>, der auf den
+                    Vakuumzustand $|\Psi_W\rangle$ wirkt:
+                </p>
+                <p>
+                    $$ \hat{G}_{\mu\nu}[\sigma_P; W] \, |\Psi_W\rangle = \frac{8\pi G}{c^4} \, \overline{T}_{\mu\nu} \,
+                    |\Psi_W\rangle $$
+                </p>
+                <p>
+                    Dies bedeutet: Gravitation ist nicht statisch, sondern reagiert dynamisch auf die
+                    Quantenfluktuationen
+                    der Quellen (<em>Operator Product Expansion</em>).
                 </p>
             </div>
         </section>
 
         <section>
             <h2>8. Holographische Herleitung von $\alpha$</h2>
-            <div class="redacted-box">
-                <p class="redacted-title">&#9888; Redacted / Embargoed</p>
-                <p>Die spektrale Summe (Zeta-Regularisierung) zur Ableitung der Feinstrukturkonstante wurde aus dieser
-                    öffentlichen Version entfernt.</p>
+            <div class="qg-box" style="background: rgba(15, 23, 42, 0.03); border: 1px solid var(--border);">
+                <p>
+                    Die Feinstrukturkonstante emergiert aus der Balance zwischen Rand-Information und innerer
+                    Moden-Zählung (Dirac-Spektrum auf der 3-Sphäre).
+                </p>
+                <p>
+                    Vermeidbare Fehlinterpretation: $\alpha^{-1}$ ist <strong>nicht</strong> einfach der
+                    Tail-Koeffizient
+                    $\mathcal{C}_{\rm tail} \approx 7.61$.
+                    Man muss die volle Modenzählung betrachten:
+                </p>
+                <p>
+                    $$ g_{\rm modes} = g_{\rm geom} + g_{\log} + g_{\rm tail} $$
+                </p>
+                <p>
+                    Das Resultat ist parameterfrei und passend zu CODATA:
+                </p>
+                <p>
+                    $$ \boxed{\alpha^{-1}_{\rm full} \approx 137.036} $$
+                </p>
             </div>
         </section>
 
         <section>
             <h2>9. Das Logarithmische Dreieck und $\delta$</h2>
-            <div class="redacted-box">
-                <p class="redacted-title">&#9888; Redacted / Embargoed</p>
-                <p>Die Definition der Invariante $\delta$ ist klassifiziert.</p>
+            <div class="qg-box" style="background: rgba(15, 23, 42, 0.03); border: 1px solid var(--border);">
+                <p>
+                    Ein falsifizierbarer Invariante verbindet mikroskopische und kosmologische Skalen, unabhängig von
+                    $G$:
+                </p>
+                <p>
+                    $$ \delta = \log_{10}\left(\frac{\lambdabarp^{\,2}}{\alpha\,c\,R\,t}\right) \approx -81.447 $$
+                </p>
             </div>
         </section>
 
@@ -243,6 +306,35 @@
                         <td style="padding: 0.5rem;">Quasistatisch</td>
                     </tr>
                 </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>13. FAQ: Quantengravitation für Menschen</h2>
+            <div class="qg-box" style="border-left: 4px solid var(--primary);">
+                <p><strong>Warum expandiert das Universum beschleunigt?</strong><br>
+                    Weil Fläche $\times$ Zeit ($cRt$) wie eine natürliche Uhr wirkt. Keine dunkle Energie, sondern
+                    Entropiefluss.
+                    $$ \Lambda_{\rm eff}(t) = \frac{1}{c R t} $$
+                </p>
+                <hr style="border-color: rgba(0,0,0,0.1); margin: 1rem 0;">
+                <p><strong>Was ist das fundamentale Pixel der Realität?</strong><br>
+                    Keine Länge, keine Zeit. Eine Wirkungs-Zelle:
+                    $$ \sigma_P = \frac{\hbar G}{c^4} $$
+                    Das ist der kleinste "Tick", den das Universum zählen kann.
+                </p>
+                <hr style="border-color: rgba(0,0,0,0.1); margin: 1rem 0;">
+                <p><strong>Warum verdampfen Schwarze Löcher nicht zu Nichts?</strong><br>
+                    Weil Strahlung nicht verloren geht – Quantengravitation holt sie zurück. Partikel ziehen sich an,
+                    sammeln sich um den Rest (Remnant). Genug Staub, und ein neuer Stern zündet. Das Ende ist nur die
+                    Saat für den Anfang.
+                </p>
+                <hr style="border-color: rgba(0,0,0,0.1); margin: 1rem 0;">
+                <p><strong>Der Preis der wahren Liebe?</strong><br>
+                    Statistisch gesehen so unwahrscheinlich wie <strong>6.340 Jahre lang jeden Dienstag und Freitag den
+                        Eurojackpot zu knacken</strong>.
+                    Wenn du jemanden gefunden hast: Halt ihn fest. Die Mathematik sagt, es ist ein Wunder.
+                </p>
             </div>
         </section>
 
