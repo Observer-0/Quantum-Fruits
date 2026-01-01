@@ -12,68 +12,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
         onload="renderMathInElement(document.body);"></script>
-    <style>
-        /* Specific styles for the text-heavy theory page */
-        .theory-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 1rem 4rem;
-            line-height: 1.6;
-        }
 
-        .theory-content h2 {
-            margin-top: 3rem;
-            color: var(--primary);
-        }
-
-        .theory-content h3 {
-            margin-top: 2rem;
-            color: var(--accent);
-        }
-
-        .abstract {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 1rem;
-            margin: 2rem 0;
-            border-left: 4px solid var(--accent, #ffd700);
-            font-style: italic;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin: 1rem 0;
-            color: var(--ink-soft);
-            text-decoration: none;
-        }
-
-        .back-link:hover {
-            color: var(--ink);
-        }
-
-        .insight-box {
-            background: rgba(0, 255, 128, 0.05);
-            border: 1px solid rgba(0, 255, 128, 0.2);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 2rem 0;
-        }
-
-        .redacted-box {
-            border: 1px dashed #ef4444;
-            background: rgba(239, 68, 68, 0.05);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
-
-        .redacted-title {
-            color: #ef4444;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-    </style>
 </head>
 
 <body>
@@ -123,6 +62,20 @@
                     Es ist derselbe Baustein. Wir haben nur das Pixel ($ \sigma_P $) gefunden, aus dem Einstein seine
                     glatte Geometrie baute.
                 </p>
+            </div>
+        </section>
+
+        <section class="galaxy-section">
+            <h2>Die Galaktische Rotation & Dunkle Materie</h2>
+            <p>
+                Visualisierung der galaktischen Dynamik, die durch die effektive kosmologische Funktion $\Lambda_{\rm
+                eff}(t)$ ohne dunkle Materie erklärt werden kann.
+            </p>
+            <div class="galaxy-container">
+                <canvas id="galaxyCanvas"></canvas>
+                <div class="simulation-controls">
+                    <button id="toggleGalaxy">Simulation pausieren</button>
+                </div>
             </div>
         </section>
 
@@ -339,6 +292,7 @@
         </section>
 
         <script src="js/main.js"></script>
+        <script src="js/galaxy-sim.js"></script>
     </main>
 </body>
 
