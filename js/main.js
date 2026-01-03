@@ -655,6 +655,10 @@ Entropie-Export: ${(obj.energyJ * 0.92).toFixed(1)} J (Dissipation)
     const item = data[0];
     drawPageCurveChart(item.massKg, item.name);
     return `Rendering SigmaP Curve for ${item.name}...`;
+  },
+  kinematicMotor: () => {
+    window.location.href = 'motor.html';
+    return "Redirecting to Motor Lab...";
   }
 };
 
