@@ -20,7 +20,11 @@
     <div class="hero hero-content">
       <p class="eyebrow">Raumzeit-Quantisierung</p>
       <h1>Quantum Fruits</h1>
-      <p class="tagline">Wo Entropie auf Geometrie trifft – und Früchte den Takt angeben.</p>
+      <p class="tagline">Wo Entropie auf Geometrie trifft – und Information erst durch den Beobachter Sinn ergibt.</p>
+      <p
+        style="color: var(--text-secondary); font-size: 0.9rem; margin-top: -0.5rem; margin-bottom: 2rem; font-style: italic;">
+        "Erst durch Relativität erkenne ich die Entropie."
+      </p>
       <a href="motor.html"
         style="background: linear-gradient(90deg, #00f2ff, #bc00ff); color: white; padding: 0.8rem 1.5rem; border-radius: 100px; font-weight: bold; text-decoration: none; box-shadow: 0 0 15px rgba(0,242,255,0.4);">
         Motor Lab (Action vs. G) &rarr;
@@ -143,6 +147,12 @@
           <option value="smoothPage">Glatte Page-Kurve (unitär, Remnant)</option>
           <option value="kinematicMotor">Kinematic Motor (Action vs Gravity)</option>
         </select>
+      </div>
+      <div class="controls" style="margin-top: 1rem; justify-content: center; gap: 2rem;">
+        <label class="control" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+          <input type="checkbox" id="dynamicWindowToggle" style="width: auto;">
+          <span>Dynamic Window (p=1.6) aktivieren</span>
+        </label>
       </div>
       <p class="limit-note" id="limitNote" aria-live="polite"></p>
       <!-- ADDED VIS CONTAINER -->

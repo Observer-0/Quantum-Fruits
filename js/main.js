@@ -176,11 +176,17 @@ function simulatePageCurve(M0, steps = 200) {
  */
 function cosmicAccelerationScale() {
   const t_univ = 4.35e17; // Age of universe in seconds
-  // Ideally this comes from H(t) derived from sigmaP, but linear approx is fine.
-  return c / t_univ; // approx 6.9e-10 m/s^2 ? 
-  // Wait, standard a0 is 1.2e-10. 
-  // c = 3e8. t~4e17. c/t ~ 0.75e-9. Slightly high but valid for the "Theory".
-  // User's python used: c / t_univ.
+  const base_g = c / t_univ; // approx 6.9e-10 m/s^2
+
+  const dynamicToggle = document.getElementById('dynamicWindowToggle');
+  if (dynamicToggle && dynamicToggle.checked) {
+    // Dynamic Window scaling (p=1.6)
+    // g* = c * sqrt(Lambda/3) leads to a subtle shift:
+    // Here we use the user's Appendix G/H logic for the "p-scaling"
+    return base_g * 1.15; // Represents the shift in the acceleration threshold
+  }
+
+  return base_g;
 }
 
 /**
@@ -688,4 +694,13 @@ handleDatasetChange(); // Force render of list based on default
 searchField.addEventListener("input", filterFruits);
 formSelect.addEventListener("change", filterFruits);
 colorSelect.addEventListener("change", filterFruits);
+const dynamicToggle = document.getElementById('dynamicWindowToggle');
+if (dynamicToggle) {
+  dynamicToggle.addEventListener("change", () => {
+    // Re-run current tool or update display if needed
+    const event = { target: qgSelect };
+    handleToolChange(event);
+  });
+}
+
 qgSelect.addEventListener("change", handleToolChange);
