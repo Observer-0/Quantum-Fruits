@@ -42,6 +42,7 @@
                 <button class="tab-btn active" onclick="switchTab('theory')">Theorie</button>
                 <button class="tab-btn" onclick="switchTab('papers')">Wiss. Bibliothek</button>
                 <button class="tab-btn" onclick="switchTab('formulas')">Formelsammlung</button>
+                <button class="tab-btn" onclick="switchTab('kerr')">Kerr/Teukolsky Lab</button>
                 <a href="tsf_sim.html" class="tab-btn"
                     style="text-decoration: none; display: inline-block; border-color: var(--accent-primary); color: var(--accent-primary);">🚀
                     TSF Simulation</a>
@@ -137,6 +138,74 @@
         </div>
         </section>
 
+        <!-- EINSTEIN'S LEGACY: THE 1931 ARCHIVE -->
+        <section class="einstein-legacy" style="margin: 4rem 0;">
+            <div class="qg-box"
+                style="border-left: 5px solid #fff; background: rgba(255,255,255,0.02); padding: 2.5rem;">
+                <h2 style="color: var(--accent-primary); margin-bottom: 1.5rem;">Inversion der Geschichte: Einsteins
+                    Erbe (1931)</h2>
+                <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 2rem;">
+                    50 Jahre lang haben wir es verpasst, Einstein wirklich zu verstehen.
+                    Wir haben die <strong>Relativität</strong> aus der <em>Allgemeinen Relativität</em> entfernt,
+                    indem wir den $\Lambda$-Term von der geometrischen Seite auf die Materie-Seite
+                    verschoben haben – nur um ihn als "Dunkle Energie" passend zu machen.
+                </p>
+
+                <div class="theory-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem;">
+                    <div class="qg-box" style="background: rgba(239, 68, 68, 0.05); border-color: #ef4444;">
+                        <h4 style="color: #ef4444;">Der heutige Irrtum (LCDM)</h4>
+                        <p style="font-size: 0.95rem;">
+                            LCDM verschiebt $\Lambda$ nach rechts. Es wird zu einem "Fluid".
+                            Die Raumzeit verkommt zu einem starren Hintergrund. Das ist keine Relativität mehr,
+                            sondern reine Mechanik.
+                        </p>
+                    </div>
+                    <div class="qg-box" style="background: rgba(16, 185, 129, 0.05); border-color: #10b981;">
+                        <h4 style="color: #10b981;">Die geometrische Reinheit (σₚ)</h4>
+                        <p style="font-size: 0.95rem;">
+                            Einstein sah $\Lambda$ (1931) als geometrischen Mittelwert.
+                            In <strong>Quantum Fruits</strong> ist $\Lambda$ die Summe aller Quanten-Ticks
+                            innerhalb des kosmischen Radius ($3/cRt$). Es ist die Signatur der endlichen Raumzeit.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="historical-archive">
+                    <h3 style="color: var(--accent-secondary); margin-bottom: 1.5rem; text-align: center;">📜 Das
+                        Hacker-Archiv: Zwischen den Zeilen lesen</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+                        <div class="archive-item" style="text-align: center;">
+                            <img src="assets/img/einstein-1931/page_235.jpg" alt="Einstein 1931 Page 235"
+                                style="width: 100%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); filter: sepia(0.2) contrast(1.1); cursor: pointer;"
+                                onclick="window.open(this.src)">
+                            <p style="font-size: 0.8rem; color: #aaa; margin-top: 1rem;">S. 235: Das Problem</p>
+                        </div>
+                        <div class="archive-item" style="text-align: center;">
+                            <img src="assets/img/einstein-1931/page_236.png" alt="Einstein 1931 Page 236"
+                                style="width: 100%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); filter: sepia(0.2) contrast(1.1); cursor: pointer;"
+                                onclick="window.open(this.src)">
+                            <p style="font-size: 0.8rem; color: #aaa; margin-top: 1rem;">S. 236: Der Ricci-Mittelwert
+                            </p>
+                        </div>
+                        <div class="archive-item" style="text-align: center;">
+                            <img src="assets/img/einstein-1931/page_237.png" alt="Einstein 1931 Page 237"
+                                style="width: 100%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); filter: sepia(0.2) contrast(1.1); cursor: pointer;"
+                                onclick="window.open(this.src)">
+                            <p style="font-size: 0.8rem; color: #aaa; margin-top: 1rem;">S. 237: Hubbles Grenze</p>
+                        </div>
+                    </div>
+                    <div
+                        style="margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 8px; border-left: 4px solid var(--accent-primary);">
+                        <p
+                            style="font-size: 1.1rem; color: var(--accent-primary); font-style: italic; text-align: center;">
+                            "Man darf die geometrische Seite der Gleichung nicht verändern – denn sie ist nicht Modell,
+                            sie ist Gesetz."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- THE 50/50 PRINCIPLE: STATISTICAL INVERSION -->
         <section class="inversion-principle" style="margin: 4rem 0;">
             <div class="qg-box" style="background: rgba(251, 191, 36, 0.05); border-left: 4px solid #fbbf24;">
@@ -144,7 +213,7 @@
                     ein Inverses braucht</h2>
 
                 <div style="max-width: 900px; margin: 0 auto;">
-                    <h3 style="color: var(--accent-secondary); margin-top: 2rem;">🎲 Die Lotto-Analogie</h3>
+                    <h3 style="color: var(--accent-secondary); margin-top: 2rem;">Die Lotto-Analogie</h3>
                     <p style="font-size: 1rem; line-height: 1.8;">
                         Stell dir vor, du spielst Lotto. Die Statistik sagt: „Deine Gewinnchance ist 1 zu 140
                         Millionen."
@@ -177,7 +246,7 @@
                     <div
                         style="margin: 2rem 0; padding: 1.5rem; background: rgba(59, 130, 246, 0.1); border-left: 3px solid var(--primary);">
                         <p style="font-size: 0.95rem; font-style: italic; color: rgba(255,255,255,0.9);">
-                            💡 <strong>Die Einsicht:</strong> Wahrscheinlichkeit ist keine Eigenschaft der Welt, sondern
+                            <strong>Die Einsicht:</strong> Wahrscheinlichkeit ist keine Eigenschaft der Welt, sondern
                             eine Eigenschaft <strong>deines Wissens über die Welt</strong>.
                             Die Realität ist binär. Die Statistik ist unser Versuch, unsere Unwissenheit zu
                             quantifizieren.
@@ -220,10 +289,40 @@
                             <h4 style="color: #fbbf24;">🌍 Global (Makro)</h4>
                             <p style="font-size: 0.95rem; margin-top: 0.5rem;">
                                 Gemittelt über das Universum:<br>
-                                $$ \Lambda = \frac{\sigma_P}{cRt} \sim 10^{-123} $$
+                                $$ \Lambda \approx \frac{\sigma_P}{c \cdot R \cdot t} \sim 10^{-123} $$
                                 Die kosmologische Konstante!
                             </p>
                         </div>
+                    </div>
+
+                    <!-- NEW: THE 10^123 INSIGHT -->
+                    <div class="qg-box"
+                        style="margin-top: 1.5rem; background: rgba(16, 185, 129, 0.05); border-left: 4px solid #10b981;">
+                        <h4 style="color: #10b981;">Die Lösung der "Vakuum-Katastrophe"</h4>
+                        <p style="font-size: 0.95rem; line-height: 1.7;">
+                            Die Physik rätselt seit Jahrzehnten, warum die vorhergesagte Energie des Vakuums um den
+                            Faktor
+                            <strong>$10^{120}$</strong> von der beobachteten abweicht. In <strong>Quantum
+                                Fruits</strong> ist das kein Fehler,
+                            sondern der Beweis für die Skalierung:
+                        </p>
+                        <div
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; text-align: center;">
+                            <div style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                <span style="color: #fbbf24;">$10^{-123}$</span><br>
+                                <span style="font-size: 0.8rem; color: #aaa;">Dichte der Info ($\Lambda$)</span>
+                            </div>
+                            <div style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                <span style="color: var(--accent-primary);">$10^{123}$</span><br>
+                                <span style="font-size: 0.8rem; color: #aaa;">Kapazität der Info ($N_{ticks}$)</span>
+                            </div>
+                        </div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">
+                            <strong>$\frac{c \cdot R \cdot t}{\sigma_P}$</strong> zeigt uns, wie viel Zeit relativ zur
+                            Information
+                            vergangen ist und wie viel Raum diese Informationen im gesamten Kosmos einnehmen.
+                            Die "Vakuum-Energie" ist einfach die Summe aller Ticks seit dem Anfang.
+                        </p>
                     </div>
 
                     <p style="font-size: 1rem; line-height: 1.8; margin-top: 1.5rem;">
@@ -339,7 +438,7 @@
                         Welt der Energie.</p>
                     <p
                         style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--accent-secondary); font-style: italic;">
-                        🤓 <strong>Fun Fact für Informatiker:</strong> Dass $k_B$ die gleiche Abkürzung hat wie
+                        <strong>Fun Fact für Informatiker:</strong> Dass $k_B$ die gleiche Abkürzung hat wie
                         <em>Kilobyte</em> (kB), ist vielleicht kein Zufall... Beides misst Speicherkapazität –
                         einmal im RAM, einmal im Universum.
                     </p>
@@ -724,10 +823,11 @@
                         <h3>Die Computer-Brücke (Zeroth Law)</h3>
                         <p style="font-size: 0.95rem;">
                             Stell dir eine Festplatte vor.
-                            <br><strong>Leere Disk (0000...):</strong> Perfekte Ordnung, der Lesekopf (Reader) fliegt
-                            ohne Widerstand.
-                            <br><strong>Volle Disk (1010...):</strong> Maximale Information. Physikalisch sind die
-                            Bits chaotisch verteilt.
+                            <br><strong>Leere Disk (0000...):</strong> Perfekte Ordnung. Aber Vorsicht: Auch
+                            dies ist Information – nämlich die Gewissheit, dass hier *keine* Daten liegen oder
+                            die Platte neu ist. Die Entropie ist minimal, weil es keine Überraschung gibt.
+                            <br><strong>Volle Disk (1010...):</strong> Maximale Information (Shannon). Für uns sieht es
+                            chaotisch aus, aber für das System ist jedes Bit eine notwendige Koordinate.
                         </p>
                         <p style="font-size: 0.95rem;">
                             Die <strong>Surface Gravity</strong> ($\kappa$) ist der "Prozessortakt". Je mehr Information
@@ -799,6 +899,39 @@
                         Deshalb ist Entropie kein absolutes Gesetz des Chaos, sondern ein Gesetz der
                         <strong>Perspektive</strong> im Informationsfluss.
                     </p>
+                </div>
+
+                <!-- NEW: TRANSFORMATIONS-PRINZIP & TSF LINK -->
+                <div class="qg-box"
+                    style="margin-top: 2rem; border-color: var(--accent-primary); background: rgba(0, 242, 255, 0.03);">
+                    <h3 style="color: var(--accent-primary);">Das Transformations-Prinzip</h3>
+                    <p style="font-style: italic; font-size: 1.1rem; line-height: 1.7; margin-bottom: 1rem;">
+                        „Entropie ist die Information, die wir über eine Zeitskala erhalten. Ohne Information gibt es
+                        keine Transformation – und ohne Transformation herrscht Stillstand.“
+                    </p>
+                    <p style="margin-top: 1rem; font-size: 0.95rem;">
+                        In <strong>Quantum Fruits</strong> ist Entropie der Motor der Zeit. Ein System im perfekten
+                        Gleichgewicht
+                        (maximale Entropie / Null-Information für den Beobachter) kann sich nicht mehr verändern. Es
+                        atmet nicht mehr.
+                    </p>
+
+                    <div
+                        style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px dashed var(--accent-primary);">
+                        <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">🔗 Brücke zur Simulation (TSF)
+                        </h4>
+                        <p style="font-size: 0.9rem;">
+                            Schau dir die <strong>Thermal Spacetime Feedback (TSF)</strong> Simulation an:
+                            Der Moment, in dem die Punkte aufhören zu expandieren oder zu kontrahieren, wäre der
+                            <strong>Informationelle Stillstand</strong>.
+                            Nur durch den ständigen Fluss von Information (den Zander-Zyklus) bleibt die Geometrie
+                            in Bewegung. Stillstand bedeutet nicht nur Ruhe – es bedeutet das Ende der Raumzeit selbst.
+                        </p>
+                        <a href="tsf_sim.html"
+                            style="display: inline-block; margin-top: 1rem; color: var(--accent-primary); font-weight: bold; text-decoration: none; border-bottom: 1px solid var(--accent-primary);">
+                            Zum Atem des Universums (TSF Simulation) &rarr;
+                        </a>
+                    </div>
                 </div>
             </div>
             </div>
@@ -1245,6 +1378,23 @@
                     <a href="assets/papers/die natürliche Struktur der Raumzeit.tex" class="download-link"
                         style="color: var(--primary);">View source (.tex)</a>
                 </div>
+                <!-- NEW PAPERS -->
+                <div class="paper-card">
+                    <div class="paper-icon">🧩</div>
+                    <h3>The Paradox Paper</h3>
+                    <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 1rem;">Auflösung der Informationsparadoxa
+                        durch die diskrete Geometrie von $\sigma_P$.</p>
+                    <a href="assets/papers/The Paradox Paper.tex" class="download-link"
+                        style="color: var(--primary);">View source (.tex)</a>
+                </div>
+                <div class="paper-card">
+                    <div class="paper-icon">🏛️</div>
+                    <h3>Zander 2025: Natural Structure</h3>
+                    <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 1rem;">Der fundamentale Blueprint:
+                        Wie Materie aus geometrischer Resonanz emergiert.</p>
+                    <a href="assets/papers/Zander_2025_Natural_Structure.tex" class="download-link"
+                        style="color: var(--primary);">View source (.tex)</a>
+                </div>
             </div>
         </div>
 
@@ -1302,10 +1452,118 @@
             </div>
         </div>
 
+        <!-- TAB 4: KERR/TEUKOLSKY LAB -->
+        <div id="tab-kerr" class="tab-content">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Kerr/Teukolsky Lab: 3+1 Semi-Classic Solver</h2>
+
+            <div class="theory-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <!-- Explanation Panel -->
+                <div class="qg-box">
+                    <h3>Was ist das Kerr/Teukolsky Lab?</h3>
+                    <p style="font-size: 0.95rem; margin-bottom: 1rem;">
+                        Dieses Labor simuliert die Physik eines <strong>rotierenden Schwarzen Lochs</strong>
+                        (Kerr-Metrik)
+                        und berechnet die Abweichungen von der idealen Wärmestrahlung (Hawking) durch Quanteneffekte.
+                    </p>
+
+                    <h4 style="color: var(--accent-secondary); margin-top: 1.5rem;">Vogelperspektive (Laien)</h4>
+                    <p style="font-size: 0.9rem;">
+                        <strong>Roy Kerr:</strong> Der Mann, der herausfand, wie sich Raumzeit um ein <em>drehendes</em>
+                        Loch
+                        verwirbelt (Frame-Dragging). Da sich fast alles im Weltraum dreht, sind fast alle realen
+                        Schwarzen Löcher "Kerr-Löcher".
+                    </p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+                        <strong>Saul Teukolsky:</strong> Er lieferte die mathematischen Werkzeuge, um "Wellen" (Licht,
+                        Gravitationswellen) zu beschreiben, die von diesen rotierenden Kernen ausgehen.
+                    </p>
+
+                    <h4 style="color: var(--accent-primary); margin-top: 1.5rem;">Semi-Klassisch vs. Quanten</h4>
+                    <ul style="font-size: 0.85rem; padding-left: 1.2rem;">
+                        <li><strong>Semi-Klassisch:</strong> Wir tun so, als wäre der Raum eine glatte Fläche
+                            (Einstein),
+                            aber das Licht darauf ist quantisiert (Hawking). Das führt zu Strahlung, aber auch zu
+                            Paradoxien.</li>
+                        <li><strong>Quanten-Geometrie ($\sigma_P$):</strong> Hier ist der Raum <em>selbst</em>
+                            quantisiert.
+                            Das Labor berechnet den Koeffizienten $c_0$, der misst, wie stark die "Pixeligkeit" der
+                            Raumzeit
+                            die Strahlung verändert.</li>
+                    </ul>
+                </div>
+
+                <!-- Control Panel -->
+                <div class="qg-box" style="border-color: var(--primary);">
+                    <h3>Simulationsparameter</h3>
+                    <div class="control-group" style="margin-bottom: 1.5rem;">
+                        <label for="kerr-mass" class="label">Masse ($M$ in Sonnenmassen)</label>
+                        <input type="range" id="kerr-mass" min="1" max="100" value="10" step="1" style="width: 100%;">
+                        <div id="val-kerr-m" class="value" style="text-align: right; color: var(--primary);">10 M☉</div>
+                    </div>
+
+                    <div class="control-group" style="margin-bottom: 1.5rem;">
+                        <label for="kerr-spin" class="label">Dimensionsloser Spin ($\chi$)</label>
+                        <input type="range" id="kerr-spin" min="0" max="0.99" value="0.7" step="0.01"
+                            style="width: 100%;">
+                        <div id="val-kerr-chi" class="value" style="text-align: right; color: var(--accent-secondary);">
+                            0.70</div>
+                    </div>
+
+                    <div class="control-group"
+                        style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;">
+                        <input type="checkbox" id="kerr-sigmap-toggle" checked>
+                        <label for="kerr-sigmap-toggle"><strong>$\sigma_P$-Kopplung aktivieren</strong></label>
+                    </div>
+
+                    <div class="results-panel" style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Horizont-Radius ($r_+$):</span>
+                            <span id="val-kerr-rp" style="color: #fff;">-</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Hawking Temperatur ($T_H$):</span>
+                            <span id="val-kerr-th" style="color: #fff;">-</span>
+                        </div>
+                        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Temporal Piece ($c_{0t}$):</span>
+                            <span id="val-kerr-c0t" style="color: var(--primary); font-family: monospace;">-</span>
+                        </div>
+                        <div
+                            style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; opacity: 0.7;">
+                            <span>Spatial (Teukolsky) ($c_{0s}$):</span>
+                            <span id="val-kerr-c0s"
+                                style="color: var(--accent-secondary); font-family: monospace;">-</span>
+                        </div>
+                        <div
+                            style="display: flex; justify-content: space-between; font-weight: bold; margin-top: 1rem; font-size: 1.1rem;">
+                            <span>Non-thermality $c_0$:</span>
+                            <span id="val-kerr-c0" style="color: #fff; font-family: monospace;">-</span>
+                        </div>
+                    </div>
+                    <p id="kerr-smear-note"
+                        style="font-size: 0.8rem; font-style: italic; margin-top: 1rem; color: #888;"></p>
+                </div>
+            </div>
+
+            <div class="qg-box" style="margin-top: 2rem; border-color: #fbbf24; background: rgba(251, 191, 36, 0.05);">
+                <h3>Warum ist $c_0$ wichtig?</h3>
+                <p style="font-size: 0.95rem;">
+                    In einer perfekten Welt (klassische Hawking-Theorie) ist Strahlung rein thermisch – wie ein heißer
+                    Ofen.
+                    Doch die Quanten-Geometrie ($\sigma_P$) "verschmiert" den Horizont. Der Wert $c_0$ zeigt uns, wie
+                    stark
+                    das Schwarze Loch von dieser idealen Kurve abweicht.
+                    <strong>Je kleiner das Schwarze Loch, desto dramatischer wird dieser Effekt.</strong>
+                </p>
+            </div>
+        </div>
+
         <script src="js/main.js"></script>
         <script src="js/tabs.js"></script>
         <script src="js/galaxy-sim.js"></script>
         <script src="js/black-hole-sim.js"></script>
+        <script src="js/kerr-lab.js"></script>
     </main>
 </body>
 
