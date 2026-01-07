@@ -715,15 +715,47 @@
         <section class="galaxy-section">
             <h2>Die Galaktische Rotation & Dunkle Materie</h2>
             <p>
-                Visualisierung der galaktischen Dynamik, die durch die effektive kosmologische Funktion
-                $\Lambda_{\rm
-                eff}(t)$ ohne dunkle Materie erklärt werden kann.
+                In der klassischen Physik müssten Sterne am Rand einer Galaxie langsamer rotieren ($1/\sqrt{r}$).
+                Da sie das nicht tun, erfand man "Dunkle Materie". In <strong>Quantum Fruits</strong> ist dies
+                nicht nötig. Die effektive kosmologische Funktion $\Lambda_{\rm eff}(t)$ sorgt für eine
+                geometrische Stabilisierung der Rotation.
             </p>
             <div class="galaxy-container">
                 <canvas id="galaxyCanvas"></canvas>
-                <div class="simulation-controls">
+                <div class="simulation-controls"
+                    style="display: flex; flex-direction: column; gap: 1rem; align-items: center; background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px;">
                     <button id="toggleGalaxy">Simulation pausieren</button>
+
+                    <div style="width: 100%; max-width: 400px;">
+                        <label for="sigma-coupling-slider"
+                            style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">
+                            $\sigma_P$-Kopplung (Geometrische Stabilisierung): <span id="val-sigma-coupling"
+                                style="color: var(--accent-primary); font-weight: bold;">50%</span>
+                        </label>
+                        <input type="range" id="sigma-coupling-slider" min="0" max="100" value="50"
+                            style="width: 100%;">
+                        <div
+                            style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #666; margin-top: 0.3rem;">
+                            <span>Kepler (Lagt/Fliegt auseinander)</span>
+                            <span>Zander (Stabil/Flach)</span>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <div class="qg-box" style="margin-top: 2rem; border-left: 4px solid var(--accent-primary);">
+                <h3>Kein Halo nötig: Die Geometrie hält zusammen</h3>
+                <p style="font-size: 0.95rem; line-height: 1.7;">
+                    Schiebe den Regler auf 0% (Kepler): Du siehst, wie die äußeren Sterne gegenüber dem Kern
+                    "zurückbleiben" und die Galaxie ihre Spiralform verliert. Dies ist das Problem, das Astronomen
+                    seit Jahrzehnten Kopfzerbrechen bereitet.
+                </p>
+                <p style="font-size: 0.95rem; line-height: 1.7; margin-top: 0.5rem;">
+                    Erhöhe die **$\sigma_P$-Kopplung auf 100%**: Die Rotation wird "flach". Die äußeren Sterne
+                    bewegen sich synchron mit dem Geiste der Galaxie. In unserem Modell ist das kein unsichtbares
+                    Teilchen-Halo, sondern die **Wirkungs-Resonanz** der Raumzeit selbst. Die Galaxie ist ein
+                    einzelnes, quantisiertes Objekt.
+                </p>
             </div>
         </section>
 
