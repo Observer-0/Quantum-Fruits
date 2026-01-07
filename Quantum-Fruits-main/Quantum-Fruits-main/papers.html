@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papers & Forschung | Quantum Fruits</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="icon" href="favicon.svg" />
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    <style>
+        /* Specific overrides for Paper Cards if needed, 
+       but we mostly use components.css classes now */
+        .paper-card {
+            /* Extending theory-card with specific padding or flex */
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            margin-bottom: 2rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .paper-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-secondary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-primary);
+            color: var(--bg-deep);
+            text-decoration: none;
+            border-radius: 100px;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            transition: filter 0.2s, transform 0.2s;
+        }
+
+        .download-btn:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="page-header">
+        <div class="hero">
+            <a href="index.html" class="back-link">&larr; Zurück zur Übersicht</a>
+            <p class="eyebrow">Original Publications</p>
+            <h1>Forschung & Papers</h1>
+            <p class="tagline">Die Mathematik hinter den Früchten, im Original-LaTeX.</p>
+        </div>
+    </header>
+
+    <main class="papers-content">
+
+        <div class="paper-card">
+            <div class="paper-meta"
+                style="color: var(--accent-secondary); font-weight: bold; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;">
+                Oktober 2025 • Unified Field Theory</div>
+            <h2 style="margin-top: 0.5rem; font-size: 1.8rem; border-bottom: none;">The Natural Structure of Spacetime
+            </h2>
+            <p style="font-size: 1.1rem; color: var(--text-primary);"><strong>A Parameter-Free Bridge between Quantum
+                    Mechanics and General Relativity</strong></p>
+            <p style="color: var(--text-secondary);">
+                Das Hauptwerk. Eine parameterfreie Unifizierung basierend auf dem Planck-Zweiermaß $\sigma_P = \hbar G /
+                c^4$.
+                Leitet die Feinstrukturkonstante $\alpha \approx 1/137$ holographisch her, fixiert die kosmologische
+                Konstante $\Lambda$
+                und liefert falsifizierbare Vorhersagen ohne neue Felder.
+            </p>
+            <div style="margin-top: 1rem;">
+                <a href="assets/papers/Zander_2025_Natural_Structure.tex" class="download-btn">
+                    LaTeX Source Herunterladen
+                </a>
+                <span
+                    style="display:inline-block; margin-left: 1rem; color: var(--text-secondary); font-style: italic; font-size: 0.9rem;">(PDF
+                    durch Kompilieren)</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-meta"
+                style="color: var(--accent-secondary); font-weight: bold; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;">
+                Januar 2026 • Reference / Constants</div>
+            <h2 style="margin-top: 0.5rem; font-size: 1.8rem; border-bottom: none;">Formelsammlung — Quantum Fruits</h2>
+            <p style="font-size: 1.1rem; color: var(--text-primary);"><strong>Die offizielle mathematische Basis des
+                    Zander-Frameworks</strong></p>
+            <p style="color: var(--text-secondary);">
+                Enthält alle Kernformeln von der Planck-Skala $\sigma_P$ bis zur effektiven kosmologischen Konstante
+                $\Lambda_{\rm eff}$,
+                inklusive der neuen "Tick"-Statistik und der geometrischen Unschärferelation.
+                Die essenzielle Referenz für alle Simulationen.
+            </p>
+            <div style="margin-top: 1rem;">
+                <a href="assets/papers/Formelsammlung.tex" class="download-btn">
+                    LaTeX Source Herunterladen
+                </a>
+                <span
+                    style="display:inline-block; margin-left: 1rem; color: var(--text-secondary); font-style: italic; font-size: 0.9rem;">(PDF
+                    durch Kompilieren)</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-meta"
+                style="color: var(--accent-secondary); font-weight: bold; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;">
+                Januar 2026 • Black Hole Kinematics</div>
+            <h2 style="margin-top: 0.5rem; font-size: 1.8rem; border-bottom: none;">Action vs. Gravity: The Spin-Mass
+                Feedback Loop</h2>
+            <p style="font-size: 1.1rem; color: var(--text-primary);"><strong>Dynamische Transformation statt statischem
+                    Abgrund</strong></p>
+            <p style="color: var(--text-secondary);">
+                Beschreibt Schwarze Löcher als kinematische Transformatoren. Führt das Modell ein, bei dem die reine
+                Wirkung ($\hbar$)
+                des Kerns gegen die bremsende Wirkung der Masse ($G$) antritt und so die galaktische Evolution steuert.
+            </p>
+            <div style="margin-top: 1rem;">
+                <a href="assets/papers/Spin_Dynamics.tex" class="download-btn">
+                    LaTeX Source Herunterladen
+                </a>
+                <span
+                    style="display:inline-block; margin-left: 1rem; color: var(--text-secondary); font-style: italic; font-size: 0.9rem;">(PDF
+                    durch Kompilieren)</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-meta"
+                style="color: var(--accent-secondary); font-weight: bold; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;">
+                Dezember 2025 • Stochastic / Essays</div>
+            <h2 style="margin-top: 0.5rem; font-size: 1.8rem; border-bottom: none;">The Statistical Price of True Love
+            </h2>
+            <p style="font-size: 1.1rem; color: var(--text-primary);"><strong>An Abductive Approach to Romance, Entropy
+                    and Eurojackpot</strong></p>
+            <p style="color: var(--text-secondary);">
+                Eine wissenschaftliche Annäherung an das Unmögliche. Übersetzt die Wahrscheinlichkeit menschlicher
+                Begegnungen
+                in Eurojackpot-Gewinne und verbindet diese Statistik mit Entropie und Quantengravitation.
+            </p>
+            <div style="margin-top: 1rem;">
+                <a href="assets/papers/Zander_2025_Price_of_Love.tex" class="download-btn">
+                    LaTeX Source Herunterladen
+                </a>
+                <span
+                    style="display:inline-block; margin-left: 1rem; color: var(--text-secondary); font-style: italic; font-size: 0.9rem;">(PDF
+                    durch Kompilieren)</span>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 4rem 0;">
+
+        <section id="appendices">
+            <h1 style="text-align: center; margin-bottom: 3rem;">Technischer Anhang (A–J)</h1>
+
+            <!-- Appendix A -->
+            <div class="qg-box">
+                <h2>Appendix A — Heat–Kernel Normalization & Cell Curvature</h2>
+                <p>Wir fixieren die Zell-Krümmung über die Schwinger-Regularisierung (Proper-Time) und leiten den
+                    FLRW-Faktor 3 her.</p>
+                <div class="math-content">
+                    $$W_{\rm vac} = -\frac{i\hbar}{2}\int_{s_{\min}}^{\infty}\frac{ds}{s}\ \mathrm{Tr}\, e^{-s\Delta},
+                    \quad s_{\min}=\ell_P^2$$
+                    $$\Lambda_{\rm cell} = \frac{3}{\ell_P^2} \implies \Lambda_{\rm eff}(R,t) = \frac{3}{c\,R\,t}$$
+                </div>
+                <p class="qg-note">Dies zeigt: Der Faktor 3 folgt direkt aus der FLRW-Normalisierung und dem
+                    Planck-Cutoff.</p>
+            </div>
+
+            <!-- Appendix B -->
+            <div class="qg-box">
+                <h2>Appendix B — Window Catalogue & Calculator</h2>
+                <div style="overflow-x: auto;">
+                    <table
+                        style="width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.85rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--accent-primary);">
+                                <th style="text-align: left; padding: 0.5rem;">Window $W(R,t)$</th>
+                                <th style="text-align: right; padding: 0.5rem;">$R \cdot t$ [m·s]</th>
+                                <th style="text-align: right; padding: 0.5rem;">$N_\sigma$</th>
+                                <th style="text-align: right; padding: 0.5rem;">$\Lambda_{\rm eff}$ [m$^{-2}$]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Proton Compton</td>
+                                <td style="text-align: right;">1.475e-40</td>
+                                <td style="text-align: right;">1.693e38</td>
+                                <td style="text-align: right;">6.783e31</td>
+                            </tr>
+                            <tr>
+                                <td>PBH (10$^{12}$ kg)</td>
+                                <td style="text-align: right;">7.358e-39</td>
+                                <td style="text-align: right;">8.444e39</td>
+                                <td style="text-align: right;">1.360e30</td>
+                            </tr>
+                            <tr>
+                                <td>Galaxy (10 kpc)</td>
+                                <td style="text-align: right;">4.761e35</td>
+                                <td style="text-align: right;">5.464e113</td>
+                                <td style="text-align: right;">2.102e-44</td>
+                            </tr>
+                            <tr>
+                                <td>Cosmic ($H_0=67.4$)</td>
+                                <td style="text-align: right;">6.284e43</td>
+                                <td style="text-align: right;">7.211e121</td>
+                                <td style="text-align: right;">1.593e-52</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Appendix C -->
+            <div class="qg-box">
+                <h2>Appendix C — Benchmark Simulations</h2>
+                <p>Nachweis, dass $\Lambda = 3/(cRt)$ als natürliche Randbedingung die Erfolge von $\Lambda$CDM ohne
+                    freie Parameter reproduziert.</p>
+                <div class="theory-grid">
+                    <div class="theory-card">
+                        <h3>Type Ia Supernovae</h3>
+                        <p>Pantheon+ Sample: $\chi^2_{\text{model}} \approx 104.8$ vs. $\chi^2_{\Lambda\mathrm{CDM}}
+                            \approx 104.6$.</p>
+                    </div>
+                    <div class="theory-card">
+                        <h3>BAO / CMB Angle</h3>
+                        <p>Abweichung < 2% über $0.1 \le z \le 2.4$. $\theta_\ast$ konsistent mit Planck 2018.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appendix D -->
+            <div class="qg-box">
+                <h2>Appendix D — Regularized Black Holes</h2>
+                <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <p>Die unphysikalische Singularität wird durch einen endlichen <strong>Curvature Spike</strong>
+                            bei $r \sim \ell_P$ ersetzt.</p>
+                        <ul style="font-size: 0.9rem; color: var(--text-secondary);">
+                            <li>Kein Breakdown der Geometrie</li>
+                            <li>Unitäre Evaporation gewahrt</li>
+                            <li>Zentraler $K(0) \approx 4.15 \times 10^{217}$ m$^{-4}$ (finit!)</li>
+                        </ul>
+                    </div>
+                    <div
+                        style="flex: 1; min-width: 300px; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px;">
+                        <!-- Inline SVG for the Spike visualization -->
+                        <svg width="100%" height="150" viewBox="0 0 200 100">
+                            <!-- Axis -->
+                            <line x1="20" y1="90" x2="180" y2="90" stroke="var(--text-secondary)" stroke-width="1" />
+                            <line x1="20" y1="90" x2="20" y2="10" stroke="var(--text-secondary)" stroke-width="1" />
+                            <!-- Classical Curve (1/r) -->
+                            <path d="M 30 10 Q 30 80 180 85" fill="none" stroke="#ef4444" stroke-width="2"
+                                stroke-dasharray="2,2" />
+                            <!-- Sigma P Spike -->
+                            <path d="M 20 85 L 25 85 Q 40 10 55 85 L 180 85" fill="none" stroke="var(--accent-primary)"
+                                stroke-width="3" />
+                            <text x="45" y="98" fill="var(--text-secondary)" font-size="8">l_P</text>
+                            <text x="185" y="95" fill="var(--text-secondary)" font-size="8">r</text>
+                        </svg>
+                        <p style="font-size: 0.7rem; text-align: center; color: var(--text-secondary);">Blau:
+                            $\sigma_P$-regulärer Flare | Rot: Klassische Divergenz</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appendix E & F -->
+            <div class="qg-box">
+                <h2>Appendix E & F — Master Equation & Galactic Curves</h2>
+                <p>Parameterfreie Erklärung der galaktischen Rotation über $g_\ast = c^2 \sqrt{\Lambda/3}$.</p>
+                <div class="math-content">
+                    $$\widehat{\mathcal G}_{\mu\nu}[\sigma_{\mathrm P};W]\, |\Psi_W\rangle=0$$
+                    $$g_\ast \approx 6.9 \times 10^{-10}\,\mathrm{m\,s^{-2}} \text{ (MOND-Skala)}$$
+                </div>
+            </div>
+
+            <!-- Appendix G, H, I, J -->
+            <div class="qg-box"
+                style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(188, 0, 255, 0.05));">
+                <h2>Appendix G–J — Dynamic Window & Full N-Body</h2>
+                <p>Die Einführung eines dynamischen Fensters $R(z)t(z) \propto (1+z)^{-1.6}$ löst alle verbleibenden
+                    Spannungen.</p>
+                <div class="theory-grid">
+                    <div class="theory-card">
+                        <h3>Weak Lensing (Euclid)</h3>
+                        <p>Vorhersage: Konkurrenzfähige -21.8% Amplituden-Unterdrückung im Vergleich zu $\Lambda$CDM.
+                        </p>
+                    </div>
+                    <div class="theory-card">
+                        <h3>JWST High-z</h3>
+                        <p>Erklärt die erhöhte Dichte früher Galaxien ($z \sim 12$) ohne neue dunkle Sektoren.</p>
+                    </div>
+                    <div class="theory-card" style="grid-column: span 2;">
+                        <h3>Zukunftsprognose (LISA)</h3>
+                        <p>LISA Event GW3001 ($z=30$): Pop-III Binärsysteme messbar bei $f \approx 3.2$ Hz, $S/N \approx
+                            120$.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</body>
+
+</html>

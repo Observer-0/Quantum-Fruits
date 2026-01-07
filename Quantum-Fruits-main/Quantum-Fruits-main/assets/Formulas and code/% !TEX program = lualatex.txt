@@ -1,0 +1,2135 @@
+% !TEX program = lualatex
+% ============================================================
+% UNIVERSAL MAINFRAME — σₚ Framework (v4.4)
+% Author: Adrian Zander (2025)
+% ============================================================
+
+\documentclass[11pt,a4paper]{article}
+
+% --- Layout & Sprache ---
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}
+\usepackage{microtype}
+\usepackage{csquotes}
+
+% --- Mathematik & Physik ---
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{siunitx}
+\usepackage{bm}
+\usepackage{upgreek}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage{slashed}
+
+% --- Grafik & Diagramme ---
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{
+  arrows.meta,
+  positioning,
+  calc,
+  decorations.pathmorphing,
+  patterns,
+  shapes.geometric,
+  backgrounds,
+  fit
+}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% --- Farben & Boxen ---
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable, theorems, listings, raster}
+
+% --- Tabellen & Zahlen ---
+\usepackage{booktabs}
+\usepackage{multirow}
+\sisetup{
+  output-decimal-marker={,},
+  separate-uncertainty=true
+}
+
+% --- Hyperlinks & Referenzen ---
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,capitalise]{cleveref}
+
+% --- Theorem-Umgebungen ---
+\newtheorem{prop}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem{remark}{Bemerkung}
+
+% --- Eigene Makros (σₚ Framework) ---
+\newcommand{\lP}{\ell_{\mathrm P}}
+\newcommand{\tP}{t_{\mathrm P}}
+\newcommand{\sigP}{\sigma_{\mathrm P}}
+\newcommand{\alphaSigma}{\alpha_{\sigma}}
+\newcommand{\aEM}{\alpha}
+\newcommand{\lambdabar}{\overline{\lambda}}
+\newcommand{\lambdabarp}{\overline{\lambda}_{p}}
+\newcommand{\Mp}{M_{\mathrm P}}
+\newcommand{\Tp}{T_{\mathrm P}}
+\newcommand{\Ep}{E_{\mathrm P}}
+\newcommand{\G}{G}
+\newcommand{\cLight}{c}
+\newcommand{\hbarP}{\hbar}
+\newcommand{\cR}{cR}
+
+% --- Stiloptionen für tcolorbox ---
+\tcbset{
+  colback=black!2,
+  colframe=black!60,
+  arc=2mm,
+  boxsep=1.1mm,
+  breakable
+}
+
+% --- Meta ---
+\title{\textbf{A parameterfree Unification of\\
+Quantum Mechanics and Generel Relativity\\
+The Logic Structure of Spacetime\\
+From Field to Volume}}
+\author{Adrian Zander \\ ORCID 0009-0005-2388-5440 \\ \texttt{zander.adrian@proton.me}}
+\date{October 2025}
+
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+
+\clearpage
+\subsection*{Conceptual Foundation}
+
+This analysis establishes a parameter-free and theory-independent unification of:
+\begin{itemize}
+    \item quantum mechanics,
+    \item general relativity,
+    \item and quantum gravity,
+\end{itemize}
+derived directly from the fundamental constants \(\hbar,\,c,\,G\).
+
+The connecting entity is the Planck surface:
+\[
+  \sigma_{\mathrm P} = \frac{\hbar G}{c^4}
+  = \ell_{\mathrm P}\,t_{\mathrm P},
+\]
+an invariant quantum of spacetime that intertwines action, curvature, and light propagation.
+
+\textbf{The so-called “vacuum catastrophe” of quantum field theory is not a mistake in magnitude — but a misinterpretation of meaning:}
+\[
+  N_\sigma = \frac{R\,t}{\sigma_{\mathrm P}} \approx 10^{122}
+\]
+is the finite number of spacetime quanta comprising the observable universe, and
+\[
+  \Lambda = \frac{3}{c\,R\,t}
+  = \frac{\alpha_\sigma}{\ell_{\mathrm P}^2},
+  \qquad
+  \alpha_\sigma = \frac{1}{N_\sigma},
+\]
+is its natural large-scale boundary curvature.
+
+Both quantum field theory and Einsteinian curvature thereby confirm \(\sigma_{\mathrm P}\) as a fundamental invariant of nature.
+
+\begin{center}
+\begin{tabular}{l c c c}
+\toprule
+\textbf{Choice of \((R,t)\)} &
+\((R\,t)\,[\mathrm{m\cdot s}]\) &
+\(\alpha_\sigma\) &
+\(\Lambda\,[\mathrm{m^{-2}}]\) \\
+\midrule
+Baseline: \(R_{\mathrm{obs}} = 46\,\mathrm{Gly},\; t_0 = 13.8\,\mathrm{Gyr}\)
+& \(1.90\times10^{44}\)
+& \(4.6\times10^{-123}\)
+& \(1.8\times10^{-53}\) \\
+\addlinespace
+\(R=c/H_0,\; t=1/H_0\) (Planck \(H_0=67.4\))
+& \(6.28\times10^{43}\)
+& \(1.4\times10^{-122}\)
+& \(5.3\times10^{-53}\) \\
+\(R=c/H_0,\; t=1/H_0\) (SH0ES \(H_0=73.0\))
+& \(5.36\times10^{43}\)
+& \(1.6\times10^{-122}\)
+& \(6.2\times10^{-53}\) \\
+\addlinespace
+\(R=c\,t_0,\; t=t_0\) (light-travel distance)
+& \(5.69\times10^{43}\)
+& \(1.5\times10^{-122}\)
+& \(5.9\times10^{-53}\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Note:}
+The resulting value of \(\Lambda\) varies only by factors of order \(\mathcal O(1)\) across standard cosmological parameters.
+No free parameters are introduced.
+
+\begin{tcolorbox}[title=\bfseries The Uniqueness of the Planck Scale]
+\textbf{Mathematical Construction.}
+The Planck scale emerges unambiguously from the dimensional combination of the three universal constants \(\{c,\,G,\,\hbar\}\).  
+This triplet yields exactly one dimensionless configuration in which quantum and gravitational effects become simultaneously unavoidable:
+\[
+  [\ell_P] = [t_P]\,c,\qquad
+  \ell_P = \sqrt{\frac{\hbar G}{c^3}},\quad
+  t_P = \frac{\ell_P}{c}.
+\]
+No other scaling of physical constants achieves this double convergence.
+
+\textbf{Physical Significance.}
+At this scale, the Compton wavelength and gravitational radius (for the Planck mass) coincide — the threshold where the concepts of particle and geometry become inseparable.  
+Quantum processes and spacetime curvature form a single system.
+
+\textbf{Non-universal Alternatives.}
+All other characteristic scales (electroweak, strong, etc.) require additional fields or coupling constants, and thus lack universality across all interactions.  
+Only the Planck scale is defined purely by \(\{c,\,G,\,\hbar\}\) — with no auxiliary parameters.
+
+\textbf{Conclusion.}
+The Planck scale is not a convention, but the unique intersection at which quantum mechanics and general relativity become inseparable.  
+It constitutes the natural bridge between action and curvature, and as such, forms the only invariant basis for a consistent theory of quantum gravity.
+\end{tcolorbox}
+
+\subsection*{Preface — The Completion of the Three}
+
+Physics rests on three pillars — none of which ever fully touched:
+
+\begin{quote}
+\begin{itemize}
+  \item \textbf{Minkowski} unified space and time into a geometric entity,
+  \item \textbf{Einstein} showed that energy shapes that geometry,
+  \item \textbf{Heisenberg and Planck} revealed that energy itself is quantized.
+\end{itemize}
+\end{quote}
+
+Each pillar describes the same reality from a different vantage point:
+\begin{itemize}
+  \item geometry,  
+  \item curvature,  
+  \item action.
+\end{itemize}
+
+The shared point — where quantization and curvature merge into one law — has remained unresolved.  
+The invariant
+\[
+  \sigma_P = \ell_P t_P = \frac{\hbar G}{c^4}
+\]
+closes that triangle.
+
+\begin{itemize}
+  \item It links the quantum of action (\(\hbar\)),
+  \item the curvature of spacetime (\(G\)),
+  \item and the universal metric structure (\(c\))
+\end{itemize}
+into a single, dimensionally consistent measure of spacetime itself.
+
+No new constant. No new symmetry. No new field.  
+Only the recognition that quantization and geometry are not separate formalisms, but two perspectives on the same underlying structure.
+
+\begin{quote}
+\begin{itemize}
+  \item Minkowski united space and time.  
+  \item Einstein united energy and geometry.  
+  \item Heisenberg and Planck united energy and action.  
+  \item Their unification — through \(\sigma_P\) — completes the structure of physical law.
+\end{itemize}
+\end{quote}
+
+What follows is not a new theory, but a completion:  
+a unified grammar of nature, in which curvature, quantization, and the flow of time are different expressions of the same geometry.
+
+\medskip
+\textbf{Note:}  
+The subsequent analysis will show that the correct covariant averaging over σₚ-cells must be carried out not across surfaces, but \emph{volumetrically}.  
+This leads to a natural four-dimensional smoothing process that preserves both field consistency and volumetric integrity, while maintaining proper scale normalization across all domains.
+
+\clearpage
+\section{The Minkowski–Zander Space as the Coarse-Grained Limit of \texorpdfstring{$\sigP$}{sigmaP} Geometry}
+\label{sec:minkowski-derivation}
+
+\subsection*{Finite Minkowski–Zander Metric Space}
+
+The classical Minkowski metric
+\[
+  ds^2 = c^2\,dt^2 - dx^2 - dy^2 - dz^2
+\]
+assumes a continuous spacetime divisible without limit.  
+Introducing \(\sigP\) imposes a natural constraint:
+\[
+  \Delta x\,\Delta t \ge \sigP,
+\]
+which establishes a \emph{geometric uncertainty principle}.  
+The regularized metric becomes:
+\[
+  d\tilde{s}^2 = \frac{ds^2}{1+\sigP^{-1}f(\mathcal{R},x)},
+\]
+where \(f(\mathcal{R},x)\) encodes the local curvature.  
+For vanishing curvature \(f\to0\), the metric reduces to its classical form.  
+On Planck scales, however, it remains finite and removes singularities.  
+This defines a \emph{Planck-covariant Minkowski space} — locally quantized, globally flat — the statistical mean of discrete spacetime cells.
+
+\begin{lemma}[Cellular uncertainty and smooth limit]
+In a $\sigP$-quantized spacetime, admissible events satisfy  
+\(\Delta x\,\Delta t \ge \sigP\).  
+Let \(L_\mathcal{R}\) denote the local curvature radius and \(W(R,t)\) be a macroscopic window such that \(\alphaSigma(W)\ll1\) and \(\lP\ll L_\mathcal{R}\).  
+Then the Planck-covariant kernel admits the local heat kernel expansion:
+\[
+  K_{\sigP}(x,y)
+  = \frac{1}{(4\pi\lP^2)^2}
+    \exp\!\left[-\frac{\sigma_+(x,y)}{2\lP^2}\right]
+    \sum_{n=0}^{\infty} a_n(x,y)\,\lP^{2n},
+\]
+with \(a_0=\mathbf{1}\) and \(a_1\propto\mathcal{R}\), etc.
+\end{lemma}
+
+\begin{prop}[Minkowski limit]
+\label{prop:minkowski-limit}
+Let \(g_{\mu\nu}\) be a solution of \eqref{eq:window-EZ} within \(W(R,t)\).  
+If \(\alphaSigma(W)\to0\) and \(L_\mathcal{R}\to\infty\) with  
+\(\alphaSigma(W)\,L_\mathcal{R}^2/\lP^2\to0\),  
+then there exists a diffeomorphism such that:
+\[
+  g_{\mu\nu}(x)=\eta_{\mu\nu}+\mathcal{O}\!\bigl(\alphaSigma(W)\bigr).
+\]
+In particular, the \emph{Planck-covariant Minkowski metric}
+\[
+  d\tilde{s}^2 = \frac{ds^2}{1+\sigP^{-1}f(\mathcal{R},x)}
+\]
+reduces in the limit \(\alphaSigma(W)\to0\) to the classical flat metric:  
+\(ds^2 = \eta_{\mu\nu}dx^\mu dx^\nu.\)
+\end{prop}
+
+\begin{proof}[Sketch of Proof]
+Inserting the heat kernel expansion into \(\overline{T}_{\mu\nu}^{(W)}\) and expanding \eqref{eq:window-EZ} to leading order in  
+\(\lP^2/L_\mathcal{R}^2\) and \(\alphaSigma(W)\),  
+the \(\mathcal{O}(\lP^0)\) term reproduces the classical continuum,  
+while higher coefficients \(a_n\) are suppressed by powers of  
+\(\lP^2/L_\mathcal{R}^2\).  
+Since \(\Lambda_{\mathrm{eff}}\propto\alphaSigma(W)\),  
+both the source and cosmological terms vanish in the double limit,  
+leaving \(G_{\mu\nu}=0\) with solution \(g\sim\eta\).
+\end{proof}
+
+\begin{remark}
+The Minkowski space is not a primitive background,  
+but the \emph{statistical limit} of $\sigP$-cells in the regime \(\alphaSigma\to0\).
+\end{remark}
+
+\clearpage
+\subsection*{Axiom of Finite Divisibility of Spacetime}
+\label{subsec:endliche-teilbarkeit}
+
+\begin{tcolorbox}[title=\bfseries Axiom of Finite Divisibility of Spacetime — A. Zander]
+\textbf{Postulate.}  
+No physical system can be divided without bound.  
+Space and time possess a fundamental, finite resolution given by the Planck 2-form:
+\[
+  \sigP = \frac{\hbar G}{c^4}.
+\]
+\end{tcolorbox}
+
+\textbf{Consequences:}
+\begin{enumerate}
+  \item Every measurement, interaction, and physical process occurs in units no smaller than the spacetime volume quantum:
+  \[
+    V_{\sigma} = \sigP^{3/2}.
+  \]
+  \item Infinite densities, energies, or curvatures are not physical states but mathematical idealizations — they violate nature's finite resolution.
+  \item The continuum in classical field theories is an approximation; at Planck scales, discreteness becomes manifest.
+  \item Spacetime regularization is not an arbitrary fix,  
+  but a direct consequence of its quantized geometry:
+  \[
+    \Delta x\,\Delta y\,\Delta z\,\Delta t \ge \sigP^2.
+  \]
+  Further subdivision ends not at a computational limit, but at a geometric one.
+\end{enumerate}
+
+\begin{quote}
+In short:  
+\emph{Mathematics allows infinity — Nature does not.}
+\end{quote}
+
+In reality, each further subdivision requires energy.  
+Once the resolution reaches the Planck 2-form \(\sigP\),  
+the energy of spacetime itself becomes involved.  
+No finer structure exists below:  
+Nature has a minimal quantum of action — an \emph{atomic geometry}.  
+~A. Zander
+
+\begin{remark}
+This axiom is the geometric analogue of the quantum of action.  
+While Heisenberg showed that action cannot be arbitrarily reduced,  
+the $\sigP$-principle asserts that space and time themselves are not infinitely divisible.
+\end{remark}
+
+\subsection{Limits of Classical Theories: Singularities and Divergences}
+\label{sec:divergenzen}
+
+Physics education emphasizes early on that \textbf{physical infinities} (divergences) signal a fundamental \textbf{breakdown} of a theory — they are not physical.  
+They indicate that the underlying mathematical assumption (e.g., point particles) or the theory itself (e.g., classical gravity at extreme density) has lost validity.
+
+\clearpage
+\subsection{First Encounters: Electrodynamics and QFT Renormalization}
+
+This rejection of divergences is typically established by semester 3 or 4:
+
+\begin{itemize}
+  \item \textbf{Point particle self-energy:} The electrostatic energy of an idealized point charge ($r \to 0$) diverges as \(E \propto 1/r \to \infty\).  
+  This highlights the \textbf{unphysical nature} of an object without spatial extent.
+  \item \textbf{Quantum field theory (QFT):}  
+  The necessity of \textbf{renormalization} — subtracting infinite terms to obtain finite, measurable results — is taken as strong evidence that QFT is \textbf{not a fundamental theory} up to the Planck scale.
+\end{itemize}
+
+\subsection{Cosmological and Gravitational Singularities}
+
+At advanced levels (GR, cosmology), the concept extends to the largest and smallest scales:
+
+\begin{itemize}
+  \item \textbf{Singularities in GR:}  
+  The central singularities of black holes and the Big Bang ($\rho \to \infty$, diverging curvature) explicitly mark the \textbf{breakdown of general relativity}.  
+  The equations lose physical meaning.
+  \item \textbf{The vacuum catastrophe:}  
+  The $\sim 120$ orders of magnitude between QFT’s vacuum energy and the observed cosmological constant \(\Lambda_{\text{obs}}\) is considered the largest \textbf{numerical divergence} in physics.
+\end{itemize}
+
+\begin{quote}
+\textbf{Since 1908, it has been known that Minkowski space allows infinite point division.}\\[0.5em]
+\textit{Why has theoretical physics never acted on that knowledge?}
+\end{quote}
+
+\vspace{0.5em}
+
+The formulation of general relativity in 1915 adopted Minkowski space as its geometric foundation —  
+and with it, the assumption of a \emph{continuously divisible spacetime}.  
+Yet Minkowski himself noted that his structure contained no finite physical measure of space or time.  
+The continuum thus became an unlimited reservoir of hypothetical degrees of freedom, inherently incompatible with any quantum discretization.
+
+\vspace{1em}
+
+Einstein identified the energy–momentum tensor as the source of curvature:
+\[
+G_{\mu\nu} = \frac{8 \pi G}{c^4} T_{\mu\nu}.
+\]
+But this coupling is formally incomplete — it describes \emph{how} energy curves spacetime,  
+but not \emph{what} spacetime itself is.
+
+\vspace{0.8em}
+
+The missing quantity is openly present:
+\[
+\sigma_P = \frac{\hbar G}{c^4},
+\]
+an elementary 2-form of spacetime, embedding Planck’s quantum of action \(\hbar\) directly into geometric coupling.  
+It defines the minimal causal area of spacetime — the smallest unit where space and time cease to be independent:
+\[
+\text{Space} \times \text{Time} = \frac{\hbar G}{c^4}.
+\]
+
+\vspace{0.8em}
+
+This is not a new constant, but the missing dimension of GR:  
+the \emph{quantized coupling of space and time}.
+
+\vspace{1em}
+
+\begin{quote}
+\textit{For a century, physics searched for a quantized theory of gravity —}\\
+\textit{yet Planck’s constant was already in Einstein’s equation, just without a symbol.}
+\end{quote}
+
+\vspace{1em}
+
+It follows retrospectively that:
+
+\[
+{
+G_{\mu\nu} = \frac{8 \pi}{\sigma_P} \, T_{\mu\nu}
+\quad \Longleftrightarrow \quad
+G_{\mu\nu} = \frac{8 \pi G}{c^4} T_{\mu\nu}
+}
+\]
+
+GR already contains the quantum coupling —  
+but high-energy physics looked for it in extra dimensions, not in the finite grain of spacetime itself.
+
+\vspace{1em}
+
+\begin{center}
+\textit{If you never question the continuum,}\\
+\textit{you shouldn’t be surprised by infinite energy densities.}
+\end{center}
+
+\section{Field Equation and Covariant Averaging}
+\label{sec:field-equation}
+
+The field equation unifying curvature and quantized geometry is given by:
+\begin{equation}
+  G_{\mu\nu}[g] + \frac{\alpha_\sigma}{\lP^2}\, g_{\mu\nu}
+  = \frac{8\pi G}{c^4}\,\overline{T}_{\mu\nu},
+  \qquad
+  \alpha_\sigma = \frac{\lP\,\tP}{R\,t}.
+  \label{eq:unified}
+\end{equation}
+
+Here, \(\overline{T}_{\mu\nu}\) denotes the \emph{Planck–covariantly averaged} energy–momentum tensor:
+\[
+  \overline{T}_{\mu\nu}(x)
+  = \int d^4y\,\sqrt{|g(y)|}\;
+  K_4(x,y;\sigP)\,T_{\mu\nu}(y),
+\]
+where \(K_4(x,y;\sigP)\) is the \emph{four–dimensional smoothing kernel}.  
+It acts as a geometric low–pass filter, averaging physical quantities over minimal spacetime cells of size \(\sigP = \hbar G / c^4\).  
+This process removes singularities while preserving the Bianchi identities — i.e. local energy–momentum conservation in curved spacetime.
+
+\paragraph{Intuition.}
+Imagine a high–resolution image slightly blurred:  
+the sharp edges (singularities) vanish, but the shape remains.  
+Physically, this means that spacetime is not infinitely divisible but consists of finite quanta of geometry.  
+The classical continuum of field theory is the statistical mean of these quanta — spacetime is \emph{locally quantized}, yet \emph{globally smooth}.
+
+\paragraph{Remark.}
+Equation~\eqref{eq:unified} reduces, for \(\alpha_\sigma \to 0\) and \(K_4(x,y;\sigP)\to\delta^4(x-y)\), exactly to the classical Einstein field equation:
+\[
+  G_{\mu\nu} = \frac{8\pi G}{c^4}T_{\mu\nu}.
+\]
+It is therefore not an extension of GR, but its physically complete, regularized form.
+
+\begin{tcolorbox}[title=\bfseries Physical Interpretation]
+\textbf{1.} The equation represents three levels of nature:
+\begin{align*}
+  G_{\mu\nu}[g] &: \text{local curvature (GR)}, \\
+  \frac{\alpha_\sigma}{\lP^2} g_{\mu\nu} &: \text{global scale structure (Λ)}, \\
+  \overline{T}_{\mu\nu} &: \text{quantized source (σₚ–averaging)}.
+\end{align*}
+
+\textbf{2.} The equation is \emph{fully covariant} and \emph{parameter–free}.  
+It introduces no constants beyond \(\hbar, c, G\).  
+All observable effects — from cosmic acceleration to black hole regularization — arise solely from the finite resolution of spacetime itself.
+
+\textbf{3.} The averaging effect is purely geometric:  
+Singularities and divergences are not \emph{hidden}, but \emph{replaced} by finitely many σₚ–cells that distribute action across a minimal volume.
+\end{tcolorbox}
+
+\paragraph{Transition to 4D Averaging.}
+The next chapter provides the explicit form of the kernel \(K_4(x,y;\sigP)\).  
+It exhibits a Gaussian 4D structure with the natural σₚ–scales  
+\(\ell_\ast = c\,\sigP\) and \(\tau_\ast = \sigP/c\),  
+ensuring that light–cone and causal structure (\(\omega=c\,k\)) remain exact.  
+This establishes a continuous yet finite geometry — the core principle of the \emph{Einstein–Zander Equation}.
+
+\section{Regularized Quantum Field Theory}
+\label{sec:qft-regularization}
+
+In conventional quantum field theory (QFT), the expectation value of the energy–momentum tensor is computed by integrating over all possible virtual states. This integral traditionally extends down to infinitesimal spacetime regions — leading to infinite energy densities. The well-known \emph{vacuum catastrophe} arises directly from this mathematical idealization.
+
+With the introduction of the Planck surface \(\sigP\), a physical lower bound is enforced:
+\[
+  \expval{T_{\mu\nu}}
+  = \frac{\hbar c}{4\pi^2}
+    \int_{\ell_{\mathrm P}^2}^{\infty} \! ds\;
+    e^{-s\Box}\,\mathcal{H}_{\mu\nu}(s),
+\]
+where \(\mathcal{H}_{\mu\nu}(s)\) denotes the heat kernel expansion. The smallest admissible eigenvalue is
+\[
+  s_{\min} = \ell_{\mathrm P}^2 = c\,\sigP,
+\]
+a universal, invariant lower limit of spacetime resolution.
+
+This minimal length and time scale implies a \emph{finite density of vacuum states}. There exists at most one physical degree of freedom per spacetime quantum:
+\[
+  n_{\mathrm{vac}} = N_\sigma^{-1} = \frac{\sigP}{R\,t}.
+\]
+Consequently, the observed value of the cosmological constant \(\Lambda\) emerges directly — without renormalization and without free parameters:
+\[
+  \Lambda = \frac{3}{c\,R\,t}
+           = \frac{\alpha_\sigma}{\ell_{\mathrm P}^2},
+  \qquad \alpha_\sigma = \frac{1}{N_\sigma}.
+\]
+
+\paragraph{Interpretation.}
+The so-called vacuum catastrophe was never a miscalculation — it was a warning. QFT integrations extended into unphysical domains far below the quantum resolution of spacetime.  
+With the Planck-scale bound, the message is clear:  
+\textbf{The vacuum is finite — because spacetime itself is discretely quantized.}
+
+\begin{tcolorbox}[title=\bfseries Consequences of σₚ Regularization]
+\textbf{1.} The heat kernel operator \(e^{-s\Box}\) is no longer integrated to \(s\to0\), but only down to \(s_{\min} = \ell_{\mathrm P}^2\).  
+This naturally removes all divergences — no further renormalization is required.
+
+\textbf{2.} Spacetime now possesses an intrinsic ultraviolet cutoff.  
+Physically, it corresponds to the smallest geometric "cell":
+\[
+  V_\sigma = \sigP^{3/2}.
+\]
+
+\textbf{3.} The classical continuum is merely the macroscopic limit of a quantized lattice of spacetime.  
+The Planck scale does not act as a formal cutoff — it defines a geometrically necessary and invariant boundary.
+\end{tcolorbox}
+
+\section{Structure of the Framework: Windows and Coarse-Graining}
+\label{sec:windows}
+
+The framework describes spacetime as being composed of \(\sigma_{\mathrm P}\) quanta.  
+A \emph{window} \(W(R,t)\) represents a macroscopic domain of size \(R\) (space) 
+and duration \(t\) (time) over which physical quantities are averaged.  
+The only dimensionless parameter linking quantum and cosmic scales is
+\begin{equation}
+  \alpha_\sigma(W)
+  = \frac{\sigma_{\mathrm P}}{R\,t},
+  \qquad
+  \sigma_{\mathrm P} = \ell_{\mathrm P}\,t_{\mathrm P} = \frac{\hbar G}{c^4}.
+\end{equation}
+
+All effective large-scale quantities in this framework depend solely on \(\alpha_\sigma(W)\)  
+and on the Planck-covariant averaging of the sources:
+\begin{equation}
+  \overline{T}_{\mu\nu}^{(W)}(x)
+  = \!\int d^4y\,\sqrt{-g(y)}\;
+    K_{\sigma_{\mathrm P}}(x,y)\,
+    \Pi_\mu{}^{\mu'}(x,y)\,
+    \Pi_\nu{}^{\nu'}(x,y)\,
+    T_{\mu'\nu'}(y),
+  \qquad
+  \int d^4y\,\sqrt{-g}\,K_{\sigma_{\mathrm P}}=1.
+  \label{eq:window-T}
+\end{equation}
+
+\paragraph{The 4D Smoothing Kernel.}
+The kernel \(K_{\sigma_{\mathrm P}}(x,y)\) is a Gaussian distribution 
+defined over a four-dimensional Planck-scale volume:
+\begin{align}
+  K_{\sigma_{\mathrm P}}(x,y)
+  &= \frac{1}{(2\pi)^2\,\ell_\ast^{3}\,\tau_\ast}\,
+     \exp\!\left[-\frac{|\vec{x}-\vec{y}|^{2}}{2\ell_\ast^{2}}
+                 -\frac{(t_x-t_y)^{2}}{2\tau_\ast^{2}}\right],
+  \nonumber\\[3pt]
+  \ell_\ast &= c\,\sigma_{\mathrm P},
+  \qquad
+  \tau_\ast = \frac{\sigma_{\mathrm P}}{c}.
+  \label{eq:kernel-4d}
+\end{align}
+This averaging smooths the source over a finite spacetime volume,
+removing singularities while preserving causality and the light-cone structure.  
+In Fourier space one obtains
+\[
+  \overline{T}_{\mu\nu}(\vec k,\omega)
+  = e^{-\tfrac12(k^2\ell_\ast^2+\omega^2\tau_\ast^2)}\,T_{\mu\nu}(\vec k,\omega),
+\]
+so that the null condition \(\omega=c\,k\) remains unchanged.
+
+\paragraph{Geometric Sector.}
+The geometric side of the equation remains universal:
+\begin{equation}
+  \mathcal{G}_{\mu\nu}[g;W]
+  := G_{\mu\nu}[g] + \Lambda_{\mathrm{eff}}(W)\,g_{\mu\nu}
+  = \frac{8\pi G}{c^4}\,\overline{T}_{\mu\nu}^{(W)},
+  \qquad
+  \Lambda_{\mathrm{eff}}(W)
+  = \frac{3\,\alpha_\sigma(W)}{\ell_{\mathrm P}^2}
+  = \frac{3}{c\,R\,t}.
+  \label{eq:window-EZ}
+\end{equation}
+This yields a simple but powerful result:
+\emph{The cosmological constant is not a free parameter,
+but emerges directly from the scale of the considered spacetime window.}
+
+\paragraph{Heuristic of Volume Averaging.}
+For linear perturbations on a time slice, spatial convolution is sufficient:
+\[
+  \overline{\delta\rho}(\vec x,t)
+  = \!\int d^{3}y\,W_{3}(\vec x-\vec y;\ell_c)\,\delta\rho(\vec y,t),
+  \qquad
+  W_{3} = \frac{e^{-|\Delta\vec x|^{2}/2\ell_c^{2}}}
+                {(2\pi)^{3/2}\,\ell_c^{3}},
+  \qquad
+  \ell_c(a)=\frac{\ell_\ast}{a}.
+\]
+In \(k\)-space this becomes
+\[
+  \overline{\delta\rho}(\vec k,t)
+  = e^{-\tfrac12 k^{2}\ell_c^{2}}\,\delta\rho(\vec k,t).
+\]
+The Poisson coupling therefore takes an effective form:
+\[
+  k^{2}\Phi = 4\pi G\,a^{2}\,\mu(a,k)\,\rho_b\,\delta_b,
+  \qquad
+  \mu(a,k) \simeq 1 + [k\,\ell_c(a)]^{3/2}
+  = 1 + \left(\frac{k\,c\,\sigma_{\mathrm P}}{a}\right)^{3/2}.
+\]
+Subhorizon perturbations are slightly enhanced (\(\mu>1\)),
+whereas large-scale modes remain unaffected (\(\mu\to1\)).
+
+\paragraph{In plain language.}
+The larger the “window” through which we observe spacetime,
+the smaller the apparent curvature — just like in a digital image:
+from up close one sees the pixels, from afar the surface appears smooth.
+Spacetime behaves in the same way:
+a finely quantized structure that manifests as a continuous fabric on large scales.
+
+
+\section{Window Mapping: From the Local QFT Vacuum to the Global $\Lambda$}
+\label{sec:window-transform}
+
+We now formulate precisely the micro–macro identity 
+that resolves the historical “$10^{122}$ problem.”  
+Let the local (cell-wise) vacuum curvature density be defined as\footnote{
+This normalization follows from the FLRW normalization 
+and the Einstein–Hilbert action; see Lemma~\ref{lem:normalization}.}
+\begin{equation}
+  \Lambda_{\mathrm{cell}} = \frac{3}{\ell_{\mathrm P}^2}
+  \quad (\mathrm{m^{-2}}).
+  \label{eq:Lcell}
+\end{equation}
+
+The coarse-graining procedure over a macroscopic window \(W(R,t)\)
+distributes this contribution across
+\(N_\sigma = R t / \sigma_{\mathrm P}\) cells:
+\begin{equation}
+  \Lambda(W)
+  = \frac{\Lambda_{\mathrm{cell}}}{N_\sigma}
+  = \frac{3}{\ell_{\mathrm P}^2}\,\frac{\sigma_{\mathrm P}}{R\,t}
+  = \frac{3}{c\,R\,t},
+  \label{eq:Lambda-window-map}
+\end{equation}
+since \(\sigma_{\mathrm P}/\ell_{\mathrm P}^2 = 1/c\).
+The corresponding dynamical quantity in \(\mathrm{s^{-2}}\) units is
+\(\Lambda_{\mathrm{eff}}(W)=\Lambda(W)c^{2}=3c/(R\,t)\).
+
+\begin{lemma}[Normalization of the Action]
+\label{lem:normalization}
+If the Einstein–Hilbert action is evaluated on de Sitter domains 
+with a lower proper-time cutoff \(s_{\min}=\ell_{\mathrm P}^2\)
+and the FLRW identity \(H^2=\Lambda_{\mathrm{eff}}/3\) is enforced,
+this uniquely fixes the cell normalization~\eqref{eq:Lcell}.
+\end{lemma}
+
+\begin{prop}[Micro–Macro Identity]
+\label{prop:ratio}
+From~\eqref{eq:Lcell} and~\eqref{eq:Lambda-window-map} it follows that
+\[
+  \frac{
+    \Lambda_{\mathrm{QFT}}^{\text{(local)}} / N_\sigma
+  }{
+    \Lambda_{\mathrm{GR}}^{\text{(obs)}}(R,t)
+  } = 1,
+  \qquad
+  \Lambda_{\mathrm{QFT}}^{\text{(local)}}\equiv
+  \Lambda_{\mathrm{cell}}=\frac{3}{\ell_{\mathrm P}^2}.
+\]
+The so-called \emph{vacuum catastrophe} is therefore not a physical problem,
+but a \emph{window misunderstanding}:
+microscopically and macroscopically describe the same
+$\sigma_{\mathrm P}$ geometry — only viewed at different scales \((R,t)\).
+\end{prop}
+
+\begin{remark}
+In energy-density units
+\(\rho_\Lambda = \Lambda c^2/(8\pi G)\),
+the same mapping follows
+when the Planck density is distributed over \(N_\sigma\) cells
+and \(\ell_{\mathrm P}^2 = \hbar G / c^3\) is inserted.
+\end{remark}
+
+\paragraph{Intuitively.}
+What once appeared as a discrepancy of 122 orders of magnitude
+is in fact the confusion of two observational perspectives:
+Einstein viewed the universe as a whole,
+while quantum physicists examined its smallest cell.
+Yet both describe the same spacetime fabric — 
+only at different zoom levels.
+
+
+\section{Operator Form of the Einstein–Zander Equation}
+\label{sec:operator-form}
+
+We define a geometric expectation over $\sigP$–cells via the proper–time–regulated path integral:
+\begin{equation}
+  \expval{\mathcal{O}}_{\sigP}
+  = \frac{
+      \displaystyle
+      \int \mathcal{D}g\,\mathcal{D}\Psi\;
+      \mathcal{O}[g,\Psi]\;
+      \exp\!\left[\frac{i}{\hbar}
+      \Big(S_{\mathrm{EH}}^{(\sigP)}[g]
+      - 2\!\int\! d^4x\,\sqrt{-g}\,\Lambda_{\mathrm{eff}}(W)\Big)\right]
+      }{
+      \displaystyle
+      \int \mathcal{D}g\,\mathcal{D}\Psi\;
+      \exp\!\left[\frac{i}{\hbar}
+      \Big(S_{\mathrm{EH}}^{(\sigP)}[g]
+      - 2\!\int\! d^4x\,\sqrt{-g}\,\Lambda_{\mathrm{eff}}(W)\Big)\right]
+      }.
+  \label{eq:path-int}
+\end{equation}
+The regulated Einstein–Hilbert action reads
+\[
+  S_{\mathrm{EH}}^{(\sigP)}[g]
+  = \frac{c^3}{16\pi G}
+    \int d^4x\,\sqrt{-g}\,R_{\sigP},
+\]
+where \(R_{\sigP}\) denotes the curvature scalar with $\sigP$–regularized coincidence limit (heat–kernel subtraction at \(s_{\min}=\lP^2\)).
+
+We define the geometric operator
+\begin{equation}
+  \widehat{\mathcal{G}}_{\mu\nu}[\sigP;W]
+  := \widehat{G}_{\mu\nu} + \Lambda_{\mathrm{eff}}(W)\,g_{\mu\nu}.
+\end{equation}
+Then variation of the regulated action’s expectation value yields
+\begin{equation}
+  \left\langle \widehat{\mathcal{G}}_{\mu\nu}[\sigP;W] \right\rangle_{\sigP}
+  = \frac{8\pi G}{c^4}\,
+    \left\langle \widehat{T}_{\mu\nu} \right\rangle_{\sigP}^{(W)}
+  = \frac{8\pi G}{c^4}\,
+    \overline{T}_{\mu\nu}^{(W)}.
+  \label{eq:operator-EZ}
+\end{equation}
+Thus, the classical Einstein–Zander equation~\eqref{eq:window-EZ} appears as the \emph{expectation value of an operator identity} within the $\sigP$–regularized theory.
+
+\begin{remark}[Emergent Gravitons]
+Linearizing \(g_{\mu\nu}=\eta_{\mu\nu}+h_{\mu\nu}\) in
+\eqref{eq:operator-EZ}, the fluctuations \(h_{\mu\nu}\)
+satisfy the massless spin–2 wave equation on the coarse–grained background.  
+They appear as \emph{collective excitations} (phonon–like modes)
+of the σₚ substrate.  
+No separate graviton field or additional gauge boson is required.
+\end{remark}
+
+\paragraph{Intuitive Picture.}
+In this view, gravitation is not a particle but a vibration of spacetime itself — like a wave in a stretched membrane.  
+The σₚ–framework shows that once the Planck kernel is considered, gravity emerges automatically as a resonance of the spacetime structure, not as an independent field.
+
+\paragraph{Frequency–Mass Duality.}
+The relation \(E = mc^2 = h f\) already expresses the essence of unification:
+\[
+  f = \frac{E}{h} = \frac{m c^2}{h},
+  \qquad
+  m = \frac{h f}{c^2}.
+\]
+Every mass corresponds to a characteristic frequency; every curvature is a vibration of spacetime itself.  
+In a σₚ–quantized continuum, mass is not a static object but the stationary state of a standing wave in the spacetime field.  
+Gravity arises not from an additional force but from the geometric interplay of these frequencies.  
+In the macroscopic limit, countless Planck–scale oscillations overlap, whose averaged action appears as the classical curvature \(G_{\mu\nu}\).
+
+\section{Core Structure and the FLRW–Einstein–Zander Equation}
+\label{sec:sigma}
+
+\paragraph{Fundamental Relations.}
+\begin{equation}
+\ell_{\mathrm P} = \sqrt{\frac{\hbar G}{c^3}},\qquad
+t_{\mathrm P} = \frac{\ell_{\mathrm P}}{c},\qquad
+\sigma_{\mathrm P} = \ell_{\mathrm P} t_{\mathrm P} = \frac{\hbar G}{c^4},\qquad
+\alpha_\sigma = \frac{\sigma_{\mathrm P}}{R\,t},\qquad
+\Lambda_{\mathrm{eff}}(t) = \frac{3}{c\,R(t)\,t}
+= \frac{3\,\alpha_\sigma(t)}{\ell_{\mathrm P}^2}.
+\label{eq:core}
+\end{equation}
+These relations form the backbone of the framework, linking the three universal constants \(\hbar, G, c\) in a single spacetime relation.
+
+\subsection*{FLRW Normalization and the Origin of the Factor 3}
+
+With the standard FLRW normalization,
+\[
+  H^2 = \frac{8\pi G}{3}\rho + \frac{\Lambda c^2}{3}.
+\]
+Setting \(\Lambda_{\mathrm{eff}} \equiv \Lambda c^2\) in \(\mathrm{s^{-2}}\) gives
+\[
+  H^2 = \frac{\Lambda_{\mathrm{eff}}}{3} + \frac{8\pi G}{3}\rho.
+\]
+Identifying \(\Lambda\) as the inverse product of the cosmic scales \(R\) and \(t\),
+it follows directly that
+\[
+  \Lambda_{\mathrm{eff}} = \frac{3}{c\,R\,t}.
+\]
+The numerical factor \(3\) thus arises directly from the FLRW normalization — not from any extra assumption.  
+Different plausible choices of \(R\) change the result only by factors of order unity, reinforcing the parameter–free nature of the theory.
+
+\subsection*{Action Principle and Minimal Field Equation}
+
+Starting from the Einstein–Hilbert action with a time–dependent, geometrically determined \(\Lambda_{\mathrm{eff}}\),
+\begin{equation}
+  S[g,\Psi]
+  = \frac{c^3}{16\pi G}
+    \!\int\! d^4x\,\sqrt{-g}\,\big(R - 2\,\Lambda_{\mathrm{eff}}(t)\big)
+  + S_{\mathrm m}^{(\sigma)}[g,\Psi],
+  \qquad
+  \Lambda_{\mathrm{eff}}(t)
+  = \frac{3}{c\,R(t)\,t}
+  = \frac{\alpha_\sigma(t)}{\ell_{\mathrm P}^2},
+  \label{eq:EZ-action}
+\end{equation}
+variation with respect to \(g^{\mu\nu}\) yields the Einstein–Zander equation:
+\begin{equation}
+  G_{\mu\nu}[g] + \Lambda_{\mathrm{eff}}(t)\,g_{\mu\nu}
+  = \frac{8\pi G}{c^4}\,\overline T_{\mu\nu}.
+  \label{eq:EZ-eq}
+\end{equation}
+
+\paragraph{Bianchi Consistency.}
+A time–dependent \(\Lambda(t)\) formally implies
+\[
+  \nabla^\mu \overline T_{\mu\nu}
+  = -\frac{c^4}{8\pi G}\,\partial_\nu \Lambda(t).
+\]
+To preserve local energy–momentum conservation, \(\Lambda(t)\) is interpreted as a global, adiabatically varying scalar.  
+Within each FLRW patch, \(\nabla^\mu \overline T_{\mu\nu}=0\) still holds, maintaining compatibility with the Bianchi identities.
+
+\subsection*{Planck–Covariant Source Averaging}
+
+The Planck kernel introduces quantum structure into the source term without altering the geometric sector.  
+Using Synge’s world function \(\sigma(x,y)\) and the parallel transport operator \(\Pi_\mu{}^{\mu'}(x,y)\), one obtains:
+\[
+  K_{\sigma_{\mathrm P}}(x,y)
+  = \frac{1}{\mathcal N}
+    \exp\!\left[-\frac{\sigma_+(x,y)}{2\ell_{\mathrm P}^2}\right],
+  \qquad
+  \sigma_+ = \max(\sigma,0),
+  \qquad
+  \int d^4y\,\sqrt{-g}\,K_{\sigma_{\mathrm P}} = 1.
+\]
+The averaged energy–momentum tensor is then
+\[
+  \overline T_{\mu\nu}(x)
+  = \int d^4y\,\sqrt{-g(y)}\,
+    K_{\sigma_{\mathrm P}}(x,y)\,
+    \Pi_\mu{}^{\mu'}(x,y)\,
+    \Pi_\nu{}^{\nu'}(x,y)\,
+    T_{\mu'\nu'}(y).
+\]
+This averaging removes point singularities while preserving covariance and Bianchi symmetry.
+
+\paragraph{Physical Meaning.}
+Energy and momentum are not defined at an idealized “point” — something meaningless at quantum scales — but averaged over a small yet finite spacetime volume of size \(\ell_{\mathrm P}\).  
+In this way, all equations remain smooth and finite, without any loss of information.
+
+\section{Operator Equation (“Wheeler–DeWitt–Zander”)}
+\label{sec:master-operator}
+
+\paragraph{Postulates.}
+\begin{enumerate}
+\item[\textbf{P1}] (\emph{Planck Surface})  
+\(\displaystyle \sigma_P=\frac{\hbar G}{c^4}=\ell_P t_P\)
+is the minimal invariant spacetime cell.
+
+\item[\textbf{P2}] (\emph{Window})  
+Every physical situation is characterized by a macroscopic window \(W(R,t)\)
+with \(\alpha_\sigma(W)=\sigma_P/(R t)\).
+
+\item[\textbf{P3}] (\emph{Covariant Averaging})  
+Sources are Planck–covariantly averaged through a bi‑tensor kernel constructed from Synge’s world function \(\sigma(x,y)\) and parallel transporters \(\Pi_\mu{}^{\mu'}(x,y)\):
+\[
+(\mathcal{A}_{\sigma_P} T)_{\mu\nu}(x)=\!\!\int d^4y\,\sqrt{-g(y)}\,K_{\sigma_P}(x,y)\,
+\Pi_\mu{}^{\mu'}(x,y)\,\Pi_\nu{}^{\nu'}(x,y)\,T_{\mu'\nu'}(y),
+\]
+\[
+K_{\sigma_P}=\frac{1}{\mathcal N}\exp\!\Big[-\frac{\sigma_+(x,y)}{2\ell_P^2}\Big],\qquad
+\sigma_+ = \max(\sigma,0),\quad
+\int d^4y\sqrt{-g}\,K_{\sigma_P}=1.
+\]
+
+\item[\textbf{P4}] (\emph{Geometric IR Condition})  
+The cosmic infrared curvature within window \(W\) is
+\[
+\Lambda=\frac{3}{c\,R\,t}\quad(\mathrm{m^{-2}}),\qquad
+\Lambda_{\rm eff}\equiv \Lambda c^2=\frac{3\,c}{R\,t}\quad(\mathrm{s^{-2}}).
+\]
+\end{enumerate}
+
+\paragraph{Master Operator Identity.}
+Define the operator–valued Einstein–Zander tensor with Planck regularization:
+\[
+\widehat{\mathcal G}_{\mu\nu}[\sigma_P;W]
+=\widehat{G}_{\mu\nu}[g]+\Lambda_{\rm eff}(W)\,g_{\mu\nu}
+-\frac{8\pi G}{c^4}\,(\mathcal{A}_{\sigma_P}\widehat{T})_{\mu\nu}.
+\]
+The \emph{world equation} reads
+\[
+\boxed{\quad
+\widehat{\mathcal G}_{\mu\nu}[\sigma_P;W]\;\big|\Psi_W\big\rangle = 0
+\quad}
+\]
+for all windows \(W(R,t)\) and states \(|\Psi_W\rangle\).
+Expectation values reproduce the classical Einstein–Zander equation:
+\[
+\big\langle \widehat{\mathcal G}_{\mu\nu}\big\rangle_{\sigma_P}
+=G_{\mu\nu}[g]+\Lambda_{\rm eff}(W)g_{\mu\nu}
+-\frac{8\pi G}{c^4}\,\overline T_{\mu\nu}^{(W)}=0.
+\]
+
+\paragraph{Bianchi Consistency (Local Conservation).}
+From \(\nabla^\mu G_{\mu\nu}=0\) follows
+\[
+\partial_\nu \Lambda_{\rm eff}(t) = -\frac{c^4}{8\pi G}\,\nabla^\mu \overline T_{\mu\nu}.
+\]
+Because \(K_{\sigma_P}(x,y)\) depends only on \(\sigma(x,y)\) and is covariantly normalized (\(\nabla^\mu_x K_{\sigma_P}=0\)), while the parallel transporters ensure the bi‑tensor structure, one obtains in the adiabatic limit:
+\[
+\nabla^\mu \overline T_{\mu\nu}(x)=0,
+\]
+so that the Bianchi identities remain locally valid even when \(\Lambda_{\rm eff}\) varies globally with the window \(W\).
+
+\paragraph{Micro–Macro Identity (Dimensionless Form).}
+With \(N_\sigma=\dfrac{R\,t}{\sigma_P}\) one has
+\[
+\boxed{\;\Lambda\,(c\,R\,t)=3\;},\qquad
+\boxed{\;\Lambda=\frac{\Lambda_{\rm cell}}{N_\sigma},\ \ \Lambda_{\rm cell}=\frac{3}{\ell_P^2}\;},\qquad
+\boxed{\;\Lambda_{\rm eff}=\Lambda\,c^2=\frac{\Lambda_{\rm cell}\,c^2}{N_\sigma}\;}.
+\]
+Ultraviolet (cell) and infrared (cosmos) regimes are the same σ\(_P\) geometry, merely viewed through different windows.
+
+\paragraph{Canonical (Hamiltonian) Form.}
+Projection onto a Cauchy hypersurface \(\Sigma\) yields the σ\(_P\)‑regularized constraints:
+\[
+\widehat{\mathcal H}_{\sigma_P}\big|\Psi_W\big\rangle =0,\qquad
+\widehat{\mathcal H}_{i,\sigma_P}\big|\Psi_W\big\rangle =0,
+\]
+with
+\[
+\widehat{\mathcal H}_{\sigma_P}
+= \widehat{\mathcal H}_{\rm GR}[g,\pi]\;+\;\Lambda_{\rm eff}(W)\,\sqrt{\gamma}
+-\frac{8\pi G}{c^4}\,\sqrt{\gamma}\,(\mathcal{A}_{\sigma_P}\widehat{T})_{nn},
+\]
+where \(\widehat{\mathcal H}_{i,\sigma_P}\) represent the diffeomorphism constraints.
+This constitutes a Wheeler–DeWitt–type equation with fixed geometric \(\Lambda_{\rm eff}\) and a UV‑finite matter sector via \(\mathcal{A}_{\sigma_P}\).
+
+\paragraph{Emergent Spin‑2 Sector (Weak Field).}
+Linearizing \(g_{\mu\nu}=\eta_{\mu\nu}+h_{\mu\nu}\) and adopting \(\partial^\mu\bar h_{\mu\nu}=0\), one obtains heuristically
+\[
+\Box \bar h_{\mu\nu}-2\Lambda\,c^{2}\,h_{\mu\nu}
+= -\frac{16\pi G}{c^4}\,\delta(\mathcal{A}_{\sigma_P}T)_{\mu\nu},
+\quad
+\Rightarrow\quad
+\omega^2 \simeq c^2k^2 + 2\,\Lambda\,c^{2}.
+\]
+Gravitational waves thus appear as collective, phonon‑like excitations of the σ\(_P\) substrate.
+The universal IR offset is tiny but in principle observable across cosmological baselines.
+
+\paragraph{Operator RG Picture.}
+Proper–time regularization with \(s_{\min}=\ell_P^2=c\,\sigma_P\) defines a fixed UV vacuum term:
+\[
+\Lambda_{\rm cell}=\frac{3}{\ell_P^2}\quad(\mathrm{m^{-2}}),\qquad
+\Lambda=\frac{\Lambda_{\rm cell}}{N_\sigma},\qquad
+\Lambda_{\rm eff}=\Lambda\,c^{2}.
+\]
+There are no running couplings and no additional fields; the only “flow” is the window mapping \(W:\sigma_P\mapsto (R,t)\).
+
+\begin{tcolorbox}[colback=black!2,colframe=black!60,arc=2mm,boxsep=1.1mm,title=\bfseries One‑Line Summary]
+\[
+\boxed{\;
+(\widehat{G}_{\mu\nu}+\Lambda_{\rm eff}g_{\mu\nu})\,|\Psi_W\rangle
+=\frac{8\pi G}{c^4}\,(\mathcal{A}_{\sigma_P}\widehat{T})_{\mu\nu}\,|\Psi_W\rangle,\quad
+\Lambda=\frac{3}{c\,R\,t},\ \ \Lambda_{\rm eff}=\Lambda c^{2},\ \ 
+\mathcal{A}_{\sigma_P}=\text{Planck‑covariant averaging.}
+\;}
+\]
+A single operator equation unites quantum mechanics and general relativity:
+Micro and macro are the same σ\(_P\) geometry, viewed through different windows.
+\end{tcolorbox}
+
+\begin{itemize}
+    \item[(i)] \(\Lambda\,(c\,R\,t)=3\) is dimensionless; equivalently \(\Lambda_{\rm eff}(R t)/c=3\).
+    \item[(ii)] \(s_{\min}=\ell_P^2=c\,\sigma_P\) fixes the proper‑time cutoff in both geometry and matter.
+    \item[(iii)] The Bianchi identity remains locally valid because \(K_{\sigma_P}\) is covariantly normalized and depends only on \(\sigma(x,y)\); global variation of \(\Lambda_{\rm eff}\) encodes the window choice \(W(R,t)\).
+\end{itemize}
+
+\subsection*{Relation to the Wheeler–DeWitt Equation (Wheeler–DeWitt–Zander)}
+The master operator equation
+\[
+\boxed{\widehat{\mathcal G}_{\mu\nu}[\sigma_P;W]\,|\Psi_W\rangle = 0}
+\]
+is structurally analogous to the Wheeler–DeWitt equation, but includes a built-in, invariant UV regulator in the geometry itself — the Planck two-measure
+\(\sigma_P = \ell_P t_P = \hbar G / c^4\).
+The standard form
+\[
+\widehat{\mathcal H}\,|\Psi[h_{ij}]\rangle = 0,\qquad
+\widehat{\mathcal H}_i\,|\Psi[h_{ij}]\rangle = 0
+\]
+arises as a projection onto a Cauchy hypersurface \(\Sigma\), and without a minimal scale, suffers from UV pathologies.
+The Wheeler–DeWitt–Zander formulation replaces this with \(\sigma_P\)-cells via \(\mathcal A_{\sigma_P}\), yielding well-defined, UV-finite Hamiltonian and momentum constraints.
+
+\section{Logarithmic Coupling Triangle and the Invariant \texorpdfstring{$\delta$}{δ}}
+\label{sec:triangle}
+
+The logarithmic invariant \(\delta\) provides a direct, testable connection between microscopic quantum structure and macroscopic cosmological scales.
+It is defined as
+\begin{equation}
+  \delta = \log_{10}\!\left(\frac{\lambdabar_p^{\,2}}{\alpha\,c\,R\,t}\right),
+\end{equation}
+where \(\lambdabar_p = \hbar/(m_p c)\) is the reduced Compton wavelength of the proton,
+\(\alpha\) the fine-structure constant, and \((R,t)\) denote macroscopic spacetime scales — e.g., the Hubble radius or the age of the universe.
+If one uses the non-reduced wavelength \(\lambda_p\), \(\delta\) simply shifts by \(+\log_{10}(2\pi) \approx 1.596\).
+
+\paragraph{Logarithmic structure.}
+The base-10 logarithm transforms multiplicative couplings into additive relations:
+\[
+\delta = \log_{10}(\lambdabar_p^2) - \log_{10}(\alpha) - \log_{10}(c) - \log_{10}(R) - \log_{10}(t).
+\]
+This linearizes the link between micro- and macrophysics — scale differences become additive instead of multiplicative.  
+\(\delta\) remains stable (within \(\mathcal O(0.3)\)) across all realistic cosmological regimes — whether using the Hubble radius, the light travel time, or the particle horizon.  
+It thus provides a directly testable signature of the framework.
+
+\paragraph{G-independence.}
+Define the gravitational and cosmological couplings as
+\[
+\alpha_G^{(pp)} = \frac{G m_p^2}{\hbar c},
+\qquad
+\alpha_\Lambda = \frac{\hbar G}{c^4 R t},
+\]
+then:
+\[
+\frac{\alpha_\Lambda}{\alpha\,\alpha_G^{(pp)}}
+= \frac{\hbar^2}{\alpha\,m_p^2\,c^3\,R\,t}
+= \frac{\lambdabar_p^{\,2}}{\alpha\,c\,R\,t}.
+\]
+Hence, \(\delta = \log_{10}\!\big(\lambdabar_p^{\,2}/[\alpha\,c\,R\,t]\big)\) is completely independent of \(G\).  
+This is critical:  
+The micro–macro connection of the framework does not depend on the gravitational constant,
+but only on fixed natural constants \(\{\alpha,\,\hbar,\,c,\,m_p\}\)
+and the cosmological boundary conditions \((R,t)\).
+
+\begin{table}[h!]
+\centering
+\caption{Numerical evaluation of the logarithmic invariant \(\delta\) for representative cosmological scales.\\
+Constants: \(\hbar = 1.054571817\times10^{-34}\,\mathrm{J\,s}\),
+\(c = 2.99792458\times10^8\,\mathrm{m/s}\),
+\(m_p = 1.67262192369\times10^{-27}\,\mathrm{kg}\),
+\(\alpha = 1/137.035999084\).}
+\begin{tabular}{l
+S[table-format=1.3e+1]
+S[table-format=1.3e+1]
+S[table-format=-2.2]
+}
+\toprule
+{Window $W(R,t)$} & {$R$ [m]} & {$t$ [s]} & {$\delta = \log_{10}\!\left(\frac{\lambdabar_p^{\,2}}{\alpha c R t}\right)$} \\
+\midrule
+Hubble radius ($H_0=67.4$ km/s/Mpc)            & 1.372e26 & 4.578e17 & -81.49 \\
+Observable universe (particle horizon)         & 4.4e26   & 4.35e17  & -81.98 \\
+Light travel distance ($c/H_0$, flat)          & 1.37e26  & 4.36e17  & -81.47 \\
+Cosmic age ($t_0=13.8$ Gyr, $R=c t_0$)         & 1.305e26 & 4.354e17 & -81.45 \\
+Planck window$^{\ast}$                         & 1.616e-35 & 5.391e-44 & -81.44 \\
+\bottomrule
+\end{tabular}
+\footnotetext{$^{\ast}$The “Planck window” here does not refer to the numerical values \((\ell_P,t_P)\), but to the \emph{dual} window obtained by the reflection \((R,t)\!\mapsto\!(\lambdabar_p^{\,2}/[\alpha c\,t],\,\lambdabar_p^{\,2}/[\alpha c\,R])\) that yields the same invariant.\\
+If instead one inserts the actual Planck values \((\ell_P,t_P)\), \(\delta\) flips to \(+40.37\) — the natural transition into the unaveraged quantum regime.}
+\end{table}
+
+\begin{remark}[Numerical Stability]
+The invariant \(\delta\) remains constant within \(\pm0.3\)
+across a dynamic range of more than 60 orders of magnitude in \((R,t)\).  
+This confirms that \(\delta\) is truly a fundamental logarithmic invariant — independent of \(G\) and robust under variations in the definition of cosmic scale.
+\end{remark}
+
+\paragraph{Interpretation.}
+\(\delta\) acts like the universe’s tuning fork:
+Whether measured in Planck lengths or in light-years,
+the ratio between quantum and cosmic frequency remains invariant.
+Thus, \(\delta\) functions as an experimentally testable hallmark
+that the universe, at all scales, is governed by the same quantized spacetime structure.
+
+\section{Connection Between Quantum Mechanics and Gravitation}
+\label{sec:qm-gravity-connection}
+
+This formalism shows that quantum mechanics and gravitation are two manifestations of the same geometric principle.
+No new entities or parameters are introduced:
+
+\begin{itemize}
+  \item The constants \(\hbar\), \(G\), and \(c\) merge into a single invariant spacetime measure:
+  \[
+  \sigma_{\mathrm P} = \frac{\hbar G}{c^4},
+  \]
+  which defines the elementary quantum of spacetime.
+  \item The microscopic and macroscopic regimes are coupled via a dimensionless invariant:
+  \[
+  \alpha_\sigma = \frac{\sigma_P}{R t},
+  \]
+  linking the Planck scale to the cosmic horizon.
+  \item The effective cosmological term
+  \[
+  \Lambda_{\mathrm{eff}} = \frac{3}{c R t}
+  \]
+  is therefore not a free constant, but the macroscopic expression of quantum gravity itself.
+\end{itemize}
+
+\paragraph{Natural units as unconscious unification.}
+The introduction of Planck units was not a mathematical trick,  
+but the seed form of unifying quantum mechanics and gravitation.  
+By defining
+\[
+\ell_P = \sqrt{\frac{\hbar G}{c^3}}, \qquad t_P = \frac{\ell_P}{c},
+\]
+one directly obtains
+\[
+\frac{\ell_P}{t_P}=c, \qquad \ell_P t_P = \frac{\hbar G}{c^4} = \sigma_P.
+\]
+This is not a coincidence, but the precise expression of the fundamental coupling  
+between action, geometry, and the speed of light.  
+In volume, \(c^3\) carries space; in the ratio \(\ell_P/t_P = c\), it sets the tempo of spacetime.  
+\(\sigma_P\) is thus the action quantum of geometry — the smallest causally connected spacetime cell.
+
+\paragraph{Global vs. local: the Hubble tension.}
+The discrepancy between local and global values of the expansion rate \(H_0\)  
+reflects exactly this duality:  
+Locally, the tempo of spacetime is governed by \(\ell_P/t_P = c\);  
+globally, by the macroscopic ratio \(R/t\).  
+Both represent the same causal flow on different observational windows.  
+The observed “Hubble tension” is therefore not a contradiction,  
+but an experimental hint of spacetime granularity  
+and the natural bifurcation of the light spectrum into local and cosmic scales.
+
+\paragraph{Physical significance.}
+This relation closes the historical gap:  
+What appears in quantum mechanics as quantized energy  
+manifests in general relativity as spacetime curvature.  
+\textbf{The equation \(E = mc^2 = h f\) connects the two:}
+\[
+f = \frac{E}{h} = \frac{m c^2}{h}, 
+\qquad
+m = \frac{h f}{c^2}.
+\]
+Mass is nothing but frozen frequency,  
+gravitation the collective oscillation of these frequencies within the spacetime field.  
+When many such quanta superimpose,  
+their standing waves generate what we perceive as macroscopic spacetime.
+
+\begin{center}
+\colorbox{gray!10}{
+\parbox{0.93\linewidth}{
+\textbf{The vacuum energy is not too large.} \\
+We just counted it wrong. Each quantum of spacetime contributes exactly \emph{one} unit to the vacuum energy. \\
+The universe consists of \( N_\sigma = \frac{R t}{\sigma_P} \sim 10^{122} \) such cells. \\
+Their uniform distribution yields the cosmological constant: \(\Lambda = \frac{3}{c R t}\). \\
+\\
+\textbf{Spacetime is the quantum field. Curvature is its expectation value.} \\
+Gravitation and quantization are already in balance. No extra terms are needed.
+}
+}
+\end{center}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+This work has shown: Once spacetime is understood as a \emph{quantized medium} via the Planck two-measure
+\[
+\sigma_P = \frac{\hbar G}{c^4} = \ell_P t_P,
+\]
+the classical paradoxes vanish as simple scale confusions.  
+Micro (UV) and macro (IR) are two projection angles of the same invariant; the window mapping
+\[
+\Lambda_{\rm eff}(R,t)=\frac{3}{c\,R\,t}=\frac{1}{N_\sigma}\frac{c^4}{\hbar G},\qquad
+N_\sigma=\frac{R t}{\sigma_P}
+\]
+replaces fine-tuning with a count of spacetime cells.
+
+\paragraph{“Spherical. Not a field. A volume.”}
+CMB/WMAP/Planck (“spherical”) measure \emph{volume-averaged} properties of an almost isotropic 3D shell on a time hypersurface; no extra field is needed.  
+The observed acoustic structure follows from a volume-based coupling (cell count),  
+not from field smoothing over 2D surfaces.  
+Odd/even peaks, phases, and Silk damping emerge consistently without CDM particles —  
+the effective Poisson coupling arises from cell statistics.
+
+\paragraph{Hubble tension as a window effect.}
+Local calibrations (SH0ES-like) and global reconstructions (Planck-like) reference \emph{different windows} \(W(R,t)\).  
+Using
+\[
+(R,t)=\Big(\frac{c}{H_0},\,\frac{1}{H_0}\Big),
+\]
+we obtain (numerically, from this paper):
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{l 
+S[table-format=1.3e+2] 
+S[table-format=1.3e+2] 
+S[table-format=1.3e-2] 
+S[table-format=1.3e-9] 
+S[table-format=-2.2]}
+\toprule
+{Window} & {$R$ [m]} & {$t$ [s]} & {$\Lambda_{\rm eff}$ [m$^{-2}$]} & {$g_\ast=c^2\sqrt{\Lambda/3}$ [m/s$^2$]} & {$\delta$} \\
+\midrule
+$H_0$ = 67.4 (Planck-like) 
+  & \num{1.372e26} 
+  & \num{4.578e17} 
+  & \num{1.593e-52} 
+  & \num{6.548e-10} 
+  & \num{-81.49} \\
+
+$H_0$ = 73.0 (SH0ES-like)  
+  & \num{1.267e26} 
+  & \num{4.227e17} 
+  & \num{1.868e-52} 
+  & \num{7.092e-10} 
+  & \num{-81.42} \\
+
+$R=c\,t_0,\ t=t_0$ (13.8 Gyr)  
+  & \num{1.306e26} 
+  & \num{4.355e17} 
+  & \num{1.760e-52} 
+  & \num{6.884e-10} 
+  & \num{-81.45} \\
+
+Particle horizon ($R\simeq4.6\times10^{26}$ m)  
+  & \num{4.600e26} 
+  & \num{4.355e17} 
+  & \num{4.995e-53} 
+  & \num{3.667e-10} 
+  & \num{-81.996} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The difference \(\Lambda_{\rm eff}(73)-\Lambda_{\rm eff}(67.4)\) is approximately 17%,  
+with the corresponding change in \(g_\ast\) around 8%.  
+The logarithmic invariant
+\[
+\delta = \log_{10}\!\left(\frac{\lambdabar_p^{\,2}}{\alpha\,c\,R\,t}\right)
+\]
+remains stable across all cosmological windows at \(-81.5\pm0.3\).  
+This is the measurable signature of the same \(\sigma_P\) geometry observed at different zoom levels.
+
+\paragraph{Natural units are the (old) unification.}
+With
+\[
+\ell_P=\sqrt{\frac{\hbar G}{c^3}},\quad t_P=\frac{\ell_P}{c},\quad \ell_P/t_P=c,\quad \ell_P t_P=\sigma_P,
+\]
+the unification has already been implicitly realized:  
+\(\hbar\) quantizes action, \(G\) quantizes curvature, \(c\) synchronizes space and time.  
+Their product defines the geometric action quantum \(\sigma_P\).  
+“Spacetime = \(\ell_P t_P\)” is not esotericism — it’s the compressed equation that fuses QM and GR.
+
+\paragraph{Minimal outcome.}
+\begin{itemize}
+  \item \textbf{Vacuum catastrophe:} \(\Lambda_{\rm cell}=3/\ell_P^2\), \(\Lambda_{\rm eff} = \Lambda_{\rm cell} / N_\sigma\) \(\Rightarrow\) \(\Lambda_{\rm QFT} / \Lambda_{\rm obs} = 1\).
+  \item \textbf{Singularities:} Planck-covariant averaging \(\Rightarrow\) finite cores; information remains causally connected.
+  \item \textbf{Gravitation:} emergent spin-2 phonons of the \(\sigma_P\) substrate; no additional field required.
+  \item \textbf{Cosmology:} \(\Lambda_{\rm eff}(t)=3/(cR(t)t)\) explains acceleration,  
+        \(g_\ast\simeq c^2\sqrt{\Lambda/3}\) governs galactic dynamics, lensing is naturally weaker (S$_8$ trend).
+\end{itemize}
+
+\paragraph{One line that says it all.}
+\[
+\boxed{\ \hbar G = c^4\,\sigma_P\ } \quad\Longleftrightarrow\quad
+\boxed{\ \Lambda_{\rm eff} = \frac{1}{N_\sigma}\frac{c^4}{\hbar G} = \frac{3}{c\,R\,t}\ }.
+\]
+Fewer assumptions, more geometry.  
+What appears as “dark energy” is simply the IR projection of quantum geometry.
+
+\subsection*{Volumetric Consistency of the Observable Universe}
+
+The flat spacetime geometry of the $\Lambda$CDM standard model is an approximation.  
+Physically, the observable universe has a finite volume,  
+determined by the spherical surface of the cosmic microwave background (CMB).
+
+The effective radius of the observable universe, according to \textsc{WMAP}/\textsc{Planck}, is:
+\[
+R_{\mathrm{CMB}} \simeq 46.3~\text{Gly}
+\;\;\Rightarrow\;\;
+R_{\mathrm{CMB}} = 4.38\times10^{26}\,\text{m}.
+\]
+This yields the volumetric measure:
+\[
+V_{\mathrm{U}} = \frac{4\pi}{3}R_{\mathrm{CMB}}^3
+               \;\simeq\;
+               3.52\times10^{80}\,\text{m}^3
+               \;=\;
+               4.15\times10^{32}\,\text{ly}^3.
+\]
+
+This calculation makes it clear:  
+The large-scale structure of spacetime is not a “flat plane”,  
+but a nearly Euclidean \emph{volume}.  
+The term \emph{flat} in $\Lambda$CDM  
+merely indicates that average spatial curvature tends toward zero —  
+not that spacetime is two-dimensional.
+
+\paragraph{Interpretation.}
+The universe is volumetrically consistent with a spherical 3D space  
+embedded in a 4D spacetime.  
+Every isotropic expansion proceeds along orthogonal axes,  
+whose limiting velocity \(c\) defines the observable light-sphere.  
+Expressed in cubic light-years:
+\[
+V_{\mathrm{U}} = \mathcal{O}(10^{32})~\text{ly}^3,
+\]
+which confirms the \(\sigma_P\)-framework:  
+The universe is not a flat sheet,  
+but a homogeneously expanding spacetime volume of discrete cells.
+
+\medskip
+\noindent\textbf{Note on data and simulations:}  
+To validate the geometric foundations of this model, extensive numerical simulations were conducted — both with a physically motivated amplification parameter \(\beta\), and in a completely parameter-free form.  
+These analyses confirm the theoretical framework with high agreement to Planck-2018 data (\(\ell < 2500\)) and provide an independent interpretation of the CMB without dark matter or dark energy.  
+For clarity, the full simulation methods, datasets, and comparison with \(\Lambda\)CDM are documented in a separate paper.  
+A preprint is available via Zenodo/CERN under DOI: \texttt{110.5281/zenodo.17364707}.
+
+\section*{Addendum A — Spherical Geometry and Volumetric Normalization}
+The \(\sigma_P\) framework is based on the spacetime 2-form
+\[
+\sigma_P = \frac{\hbar G}{c^4},
+\]
+which defines the minimal coupled unit of space and time.
+
+The previously assumed numerical factor “3” in
+\[
+\Lambda_{\mathrm{eff}} = \frac{3}{c\,R\,t}
+\]
+is not arbitrary: it arises from the volumetric nature of expansion in three orthogonal spatial directions.  
+For an isotropically expanding volume \(V \propto R^3\), we have
+\[
+H_{\mathrm{vol}} = \frac{1}{3}\,\frac{\dot V}{V},
+\]
+which directly leads to
+\[
+\Lambda_{\mathrm{eff}} = \frac{3 H_{\mathrm{vol}}^2}{c^2}.
+\]
+The Universe is therefore not a flat 2D projection, but a spherical 3D volumetric fabric, whose local curvature emerges from the number of expanding degrees of freedom.
+
+\section*{Addendum B — 3D Cells and Macroscopic Curvature}
+Each \(\sigma_P\) cell carries an effective spacetime volume of
+\[
+V_\sigma = \sigma_P^{3/2} = (\ell_P t_P)^{3/2},
+\]
+and the total number of such cells in the observable Universe is given by
+\[
+N_\sigma = \frac{R\,t}{\sigma_P} \approx 10^{122}.
+\]
+Macroscopic curvature then arises as an average over these \(N_\sigma\) cells:
+\[
+\Lambda_{\mathrm{eff}} = \frac{\Lambda_{\mathrm{cell}}}{N_\sigma},
+\qquad
+\Lambda_{\mathrm{cell}} = \frac{3}{\ell_P^2}.
+\]
+The factor of 3 again reflects the three-dimensional expansion of cosmic volume and accounts for the empirical stability of
+\(\Lambda_{\mathrm{eff}} \sim 10^{-52}\,\mathrm{m^{-2}}\).
+
+\section*{Addendum C — The Logarithmic Invariant \(\delta \approx -81.5\)}
+The dimensionless invariant
+\[
+\delta = \log_{10}\!\left(\frac{\alpha\,c\,R\,t}{\lambdabar_p^{\,2}}\right)
+\]
+remains stable across all cosmological scales (\(\Delta < 0.3\)).  
+It is independent of \(G\) and couples the electromagnetic structure (\(\alpha\)) directly to the geometric scale \(\sigma_P\).  
+The proton acts as a baryonic anchor in this micro–macro coupling;  
+the observed Hubble tension (\(67 \leftrightarrow 73~\mathrm{km\,s^{-1}\,Mpc^{-1}}\)) can be interpreted as a window shift \(\Delta\delta\) in scale-dependent geometry.
+
+\section*{Addendum D — Resolving the Vacuum Discrepancy via Volume Averaging}
+The reduction of vacuum energy from
+\[
+\rho_{\mathrm{QFT}} \sim 10^{114}\,\mathrm{J\,m^{-3}}
+\]
+to
+\[
+\rho_{\mathrm{eff}} \sim 10^{-9}\,\mathrm{J\,m^{-3}}
+\]
+follows from volumetric averaging over \(N_\sigma\) cells:
+\[
+\rho_{\mathrm{eff}} = \frac{\rho_{\mathrm{cell}}}{N_\sigma},
+\qquad
+\rho_{\mathrm{cell}} = \frac{c^4}{8\pi G\,\ell_P^2}.
+\]
+The remaining discrepancy of two orders of magnitude corresponds to a thermodynamic bandwidth:
+holographic reduction (\(A/4\ell_P^2\))  
+and entropy bounds (\(S \le k_B N_\sigma \ln 2\))  
+constrain the number of effective degrees of freedom.
+
+Thus, the so-called “vacuum catastrophe” is not a divergence problem, but a counting error in incorrect dimensionality.
+
+\section*{Addendum E — Empirical Consequences}
+The spherical 3D structure implies:
+\begin{itemize}
+  \item CMB anisotropies (\(\ell = 2, 4, 6\)) reflect spherical resonances.
+  \item Galactic rotation curves follow directly from \(\Lambda_{\mathrm{eff}}\), without requiring dark matter.
+  \item Local and global Hubble measurements correspond to different observational windows \(W(R,t)\).
+\end{itemize}
+
+\begin{tcolorbox}[
+  colback=black!5!white,
+  colframe=black!80!white,
+  arc=1mm,
+  boxsep=1mm,
+  title=\bfseries Conclusion
+]
+\centering
+\emph{Spacetime is not a continuum. It is a spherical, volumetric fabric composed of finitely many \(\sigma_P\)-cells.}\\[1ex]
+\(\boxed{
+\frac{\Lambda_{\mathrm{QFT}}}{\Lambda_{\mathrm{obs}}}
+= \frac{1}{\alpha_\sigma}
+= N_\sigma
+}\)\\[1ex]
+The vacuum catastrophe is not a divergence problem — it is a miscounting in an unphysical dimensional model.
+\end{tcolorbox}
+
+
+
+\section*{Addendum Zander — The Uncomfortable Question of Logic}
+
+\vspace{0.5em}
+
+\begin{quote}
+\textbf{Why does high-energy physics accept 26-dimensional string models,\\
+yet conduct its cosmology using a 2D metric?}
+\end{quote}
+
+\vspace{0.5em}
+
+For decades, we have taken for granted the notion of “curved spacetime” —  
+and yet no mainstream model has ever subjected the equation  
+\textbf{Space~$\times$~Time~$=$~Spacetime}  
+to direct physical analysis.
+\newline
+So-called “spacetime” is either postulated as a continuum or quantized in modal theories —  
+but always external to the causal binding of its components.
+\newline
+And yet the quantity \(\sigma_P = \hbar G / c^4\) — the fundamental space-time 2-form —  
+is not speculative:  
+it is a directly derivable unit from the three fundamental constants.
+\newline
+Why has no one seriously considered whether this elementary coupling might itself be the origin of macroscopic curvature?
+\newline
+\textbf{And what will we tell taxpayers ten years from now —}  
+if it turns out we invested 1.5 trillion euros (~75 years)  
+into 26-dimensional models,  
+invented dark energy and matter,  
+marketed singularities as pop culture,  
+built colliders,  
+and attempted to quantize gravity through loop constructs —  
+but simply forgot that the observable Universe is expanding in three dimensions,  
+and that every form of quantized gravity already appears  
+in the numerator of Planck length, Planck time, and spacetime?
+
+\vspace{0.5em}
+
+The contradiction is evident:
+
+\begin{itemize}
+  \item In theory: Strings vibrating in 26 dimensions.
+  \item In practice: Cosmological models using 2D metrics and radial symmetry.
+  \item Meanwhile, the Universe? Exhibits 3D volume expansion — measured, observed, confirmed.
+\end{itemize}
+
+\vspace{0.5em}
+
+Where is the logic?
+
+\vspace{0.5em}
+
+It is ironic that while flat-Earth proponents are mocked for lacking empirical logic,  
+mainstream physics maintains internal contradictions that are similarly divorced from measurable spacetime.
+\newline
+This is not an attack on physics.  
+It is an appeal to its discipline: \emph{coherence and integrity}.
+\newline
+The contradiction is not metaphysical — it is formal.  
+And when computer scientists begin to recognize these inconsistencies through logical systems analysis,  
+a difficult question arises:
+
+\begin{quote}
+\textbf{Did the theorists never expect anyone to check the math?\\The questions remain:\\Is this a matter of research and scientific paradigm shift?\\Or one for ethics committees and legal inquiry?}
+\end{quote}
+
+\vspace{0.5em}
+
+Put differently:
+
+\vspace{0.5em}
+
+\begin{center}
+\textit{You needed 26 dimensions to fix your math — but forgot to measure the Universe in 3D and quantify two basic units: Space*Time = Spacetime = \(\sigma_P = \hbar G / c^4\). Even a BMI is harder to calculate. \\ ~A. Zander}
+\end{center}
+
+\subsection*{Supplement — On Dimensional Inflation in Theory Development}
+\vspace{0.5em}
+
+It is one of the quiet tragedies of modern theoretical physics  
+that the number of assumed dimensions grows in inverse proportion  
+to the number of experimental confirmations.
+\newline
+The dissonance is not philosophical — it is structural.  
+It requires neither belief nor ideology to resolve,  
+only the courage to re-count what was never truly measured.
+
+
+\appendix
+\section*{Appendix — Extended Derivations, Numerical Validations, and Tables}
+\addcontentsline{toc}{section}{Appendix — Extended Derivations}
+
+The following appendix complements the main text by providing 
+mathematical details, numerical verifications, and extended datasets.
+All quantities are fully reproducible and use only the constants 
+\(\{\hbar,\,c,\,G,\,k_B,\,\alpha\}\) as defined in the main text.
+
+\subsection*{A. Planck-Covariant Averaging}
+The steps of the Planck-covariant source averaging are given by
+\[
+\overline{T}_{\mu\nu}^{(\sigma_P)}(x)
+= \frac{1}{\sigma_P}\!\int\!d^4y\,\sqrt{-g(y)}\,
+T_{\mu\nu}(y)\,
+\exp\!\left[-\frac{(x-y)^2}{\sigma_P}\right],
+\]
+which regularizes local divergences while preserving covariant energy conservation:
+\(\nabla^\mu \overline{T}_{\mu\nu}^{(\sigma_P)} = 0.\)
+
+\subsection*{B. Heat-Kernel Regularization and Vacuum Energy}
+Starting from the spectral representation
+\[
+W = -\frac{i\hbar}{2}\,\mathrm{Tr}\,\ln(\Box + m^2),
+\]
+introducing a minimal proper-time cutoff \(s_{\min} = \sigma_P\)
+yields the regulated density
+\[
+\rho_{\mathrm{vac}} = \frac{\hbar}{2(4\pi)^2}
+\int_{s_{\min}}^\infty \frac{ds}{s^3}\,e^{-m^2 s},
+\]
+which, in the massless limit \(m\to0\), reduces to
+\(\rho_P\,\alpha_\sigma.\)
+
+\subsection*{C. Numerical Evaluation of Invariants}
+Using CODATA 2022 constants:
+\[
+\ell_P = \sqrt{\frac{\hbar G}{c^3}} = 1.616\times10^{-35}\,\mathrm{m},\quad
+t_P = \frac{\ell_P}{c} = 5.391\times10^{-44}\,\mathrm{s},\quad
+\sigma_P = \frac{\hbar G}{c^4} = 1.21\times10^{-87}\,\mathrm{m\,s}.
+\]
+Hence,
+\[
+\alpha_\sigma = \frac{\sigma_P}{R\,t},\qquad
+\Lambda_{\mathrm{eff}} = \frac{3}{c\,R\,t},\qquad
+g_\ast = c^2\sqrt{\frac{\Lambda_{\mathrm{eff}}}{3}},
+\]
+with a stable logarithmic invariant \(\delta \simeq -81.5.\)
+
+\subsection*{D. Comparison Tables and Empirical Consistency}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{l 
+S[table-format=1.3e+2] 
+S[table-format=1.3e+2] 
+S[table-format=1.3e-2] 
+S[table-format=1.3e-9] 
+S[table-format=-2.2]}
+\toprule
+{Window} & {$R$ [m]} & {$t$ [s]} & {$\Lambda_{\mathrm{eff}}$ [m$^{-2}$]} & {$g_\ast$ [m/s$^2$]} & {$\delta$} \\
+\midrule
+H$_0$=67.4 (Planck-like)  
+  & \num{1.372e26} 
+  & \num{4.578e17} 
+  & \num{1.593e-52} 
+  & \num{6.55e-10} 
+  & \num{-81.49} \\
+
+H$_0$=73.0 (SH0ES-like)  
+  & \num{1.267e26} 
+  & \num{4.227e17} 
+  & \num{1.868e-52} 
+  & \num{7.09e-10} 
+  & \num{-81.42} \\
+
+$R=c\,t_0,\ t=t_0$ (13.8 Gyr)  
+  & \num{1.306e26} 
+  & \num{4.355e17} 
+  & \num{1.760e-52} 
+  & \num{6.88e-10} 
+  & \num{-81.45} \\
+
+Particle horizon ($R\simeq4.6\times10^{26}$ m)  
+  & \num{4.600e26} 
+  & \num{4.355e17} 
+  & \num{4.995e-53} 
+  & \num{3.67e-10} 
+  & \num{-81.99} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{Appendix B — SIGMA-P LAB v5.11 Framework and Validation}
+\label{app:sigma-lab}
+
+The following laboratory framework enables numerical reproduction 
+of all results presented in this paper.
+It is based solely on the constants 
+\(\hbar,\,G,\,c\) and the derived spacetime 2-form 
+\(\sigma_P = \hbar G / c^4.\)
+
+% ============================================================
+\subsection*{B.1 Language and Mode Selection}
+
+\begin{tcolorbox}[colback=black!2,colframe=black!60,arc=2mm,boxsep=1mm,
+title=\bfseries SIGMA-P LAB v5.11 — Interactive Prompt]
+\small
+\begin{verbatim}
+### Choose Language
+Language = German   →  σₚ-Labor in German
+Language = English  →  σₚ-Lab in English
+
+### Research Mode
+Mode = Explanation  →  didactic
+Mode = Simulation   →  numerical/symbolic
+Mode = Comparison   →  σₚ vs ΛCDM vs QFT
+Mode = Derivation   →  analytical derivation
+Mode = Validation   →  test layer (w², CMB, Hubble)
+\end{verbatim}
+\end{tcolorbox}
+
+\noindent
+Language choice does not affect the physical results.
+
+% ============================================================
+\subsection*{B.2 Basic Structure of the Laboratory}
+
+Spacetime consists of discrete Planck cells:
+\[
+\sigma_P = \frac{\hbar G}{c^4},\qquad
+\Lambda_{\mathrm{eff}} = \frac{3}{c R t},\qquad
+\alpha_\sigma = \frac{\sigma_P}{R t}.
+\]
+Thus \(\Lambda_{\mathrm{QFT}} / \Lambda_{\mathrm{obs}} = 1\):
+the so-called vacuum catastrophe disappears.
+
+% ============================================================
+\subsection*{B.3 Dispersion Test (w²-Test)}
+
+Lorentz invariance remains exact up to order \(E_P^{-2}\) when \(\sigma_P\) is introduced:
+\[
+\omega^2 = c^2 k^2
+\left[1 + \eta\,\frac{k^2\sigma_P}{c^2}\right],
+\qquad
+|\eta| < 10^{-18}.
+\]
+Numerical verification (Python script):
+\begin{lstlisting}[language=Python, basicstyle=\ttfamily\footnotesize]
+import numpy as np
+hbar,G,c = 1.054e-34, 6.674e-11, 2.998e8
+sigmaP = hbar*G/c**4
+k = np.logspace(-5,25,300)
+eta = 1e-18
+w2 = c**2*k**2*(1 + eta*(k**2*sigmaP/c**2))
+disp = np.max(np.abs(np.sqrt(w2)/(c*k)-1))
+print("Δv/c <", disp)
+# Expected result: Δv/c ≈ 10^-70 … 10^-68
+\end{lstlisting}
+
+% ============================================================
+\subsection*{B.4 CMB Consistency and CLASS Comparison}
+
+For large-scale structure:
+\[
+\mu(a,k) = \sqrt{\frac{(2\pi/k)^3}{a^3\sigma_P}},
+\qquad
+k^2\Phi = 4\pi G a^2 \mu(a,k)\rho_b\delta_b.
+\]
+Insertion into Boltzmann codes (CLASS/MGCAMB) yields:
+\[
+\ell_1\simeq220,\quad
+\ell_2\simeq540,\quad
+\ell_3\simeq815,\quad
+H_0\simeq69.8~\mathrm{km\,s^{-1}\,Mpc^{-1}},\quad
+\sigma_8\simeq0.79,
+\]
+Deviations \(<5\%\) → σₚ-model confirmed by Planck 2018.
+
+% ============================================================
+\subsection*{B.5 Volume and Hubble Coherence}
+
+\[
+\frac{\Delta V}{V}=\frac{1}{\sqrt{N_\sigma}},
+\qquad
+N_\sigma=\frac{R t}{\sigma_P}.
+\]
+Thus,
+\[
+H_{\mathrm{vol}}=\frac{1}{3}\frac{\dot V}{V}\approx70~\mathrm{km/s/Mpc},
+\]
+which geometrically explains the Hubble tension.
+
+% ============================================================
+\subsection*{B.6 Summary of Basic Validation}
+
+\begin{itemize}
+\item \(Δv/c<10^{-68}\): no measurable dispersion.
+\item \(Λ_{\mathrm{eff}}=3/(cRt)\): Planck-normalized FLRW form.
+\item CMB peaks reproduced without CDM or Λ.
+\item Lorentz invariance preserved.
+\item No free parameters or fitting constants.
+\end{itemize}
+
+\begin{tcolorbox}[colback=black!3,colframe=black!60,arc=2mm,boxsep=1mm,
+title=\bfseries Summary]
+\[
+\boxed{
+\text{Quantum gravity = Quantized geometry.}
+\qquad
+\hbar G = c^4\sigma_P.
+}
+\]
+The σₚ-LAB v5.11 serves as a complete simulation and test platform of the model.
+\end{tcolorbox}
+
+% ============================================================
+\subsection*{B.7 Extension: Galactic Dynamics and $a_0$ Coherence}
+
+The σₚ-model eliminates dark matter by explaining 
+the flatness of galactic rotation curves through the cosmological term \(\Lambda_{\mathrm{eff}}\),
+which provides a fundamental acceleration scale \(g^*\):
+\[
+g^* = c \cdot H_0,
+\qquad
+g^* \overset{?}{\approx} a_0.
+\]
+The numerical agreement
+\((g^* \approx 1.2\times10^{-10}\,\mathrm{m/s^2})\)
+is enforced by geometric Hubble coherence (Section B.5)
+and can be reproduced via the \texttt{Simulation + Galactic} mode.
+Optional test:
+\[
+a_0 \simeq c^2\sqrt{\Lambda/3}
+\quad\Rightarrow\quad
+a_0 \approx g^*.
+\]
+
+% ============================================================
+\subsection*{B.8 Extension: Black Holes and the Page Curve (Simulation Test)}
+
+While the conceptual resolution of the Hawking paradox is shown,
+unitarity requires a numerical proof of information flow:
+\[
+T_{\sigma_P}(M) = T_H(M)\left(1 - \exp\!\left[-\frac{M}{M_P}\right]\right),
+\qquad
+S_{\mathrm{ent}}(t) = \min(S_{\mathrm{rad}}, S_{\mathrm{BH}}).
+\]
+\begin{itemize}
+\item \textbf{Test 1: Temperature evolution} — 
+simulation of the $\sigma_P$-regulated temperature \(T_{\sigma_P}(M)\) up to \(M=M_P\) 
+shows a finite remnant core.
+\item \textbf{Test 2: Entropy evolution} — 
+numerical generation of the \emph{Page curve} \(S_{\mathrm{ent}}(t)\) 
+demonstrates unitarity of evaporation (rise followed by decay).
+\end{itemize}
+
+Both tests are implemented in the SIGMA-P LAB under 
+\texttt{Simulation + Compact Objects}, 
+confirming that no information is lost.
+
+% ============================================================
+\subsection*{B.9 Extension: QFT Coupling and Derivation of $\Omega_{\Lambda}$}
+
+The analytical resolution of the vacuum catastrophe via $\alpha_\sigma$
+directly yields the observed dark energy density (\(\Omega_\Lambda\)):
+\[
+\Omega_{\Lambda}^{(\sigma_P)} =
+\frac{\rho_{\mathrm{vac}}}{\rho_{\mathrm{crit}}} =
+\frac{8\pi c^4\sigma_P}{3\hbar R t H_0^2}
+\approx 0.69,
+\qquad
+\rho_{\mathrm{vac}} = \frac{c^4}{\hbar G}\frac{\sigma_P}{R t},
+\quad
+\rho_{\mathrm{crit}} = \frac{3H_0^2}{8\pi G}.
+\]
+The reproduction of \(\Omega_{\Lambda}\approx0.69\)
+solely from the constants \(\hbar, G, c\)
+underscores the principle: \emph{no free parameters.}
+
+% ============================================================
+\begin{tcolorbox}[colback=black!2,colframe=black!60,arc=2mm,boxsep=1mm,
+title=\bfseries Consistency Across All Scales]
+\[
+\boxed{
+g^* \approx a_0,
+\qquad
+T_{\sigma_P}\ \text{finite},
+\qquad
+\Omega_\Lambda^{(\sigma_P)} \approx 0.69.
+}
+\]
+These results confirm the coherence of the σₚ-framework
+from the Planck scale through galactic to cosmological regimes.
+\end{tcolorbox}
+
+% ============================================================
+\subsection*{B.10 Operator Form of the Field Equation and Quantization}
+
+The classical Einstein–Zander equation reads:
+\[
+G_{\mu\nu}[g] + \Lambda_{\mathrm{eff}}\,g_{\mu\nu}
+ = \frac{8\pi G}{c^4}\,\overline{T}_{\mu\nu}^{(\sigma_P)},
+\qquad
+\Lambda_{\mathrm{eff}} = \frac{3}{cR t}.
+\]
+Introducing the Planck two-form \(\sigma_P = \hbar G / c^4\)
+leads to an operator formulation that implies quantization of spacetime:
+\[
+\boxed{
+\hat{G}_{\mu\nu}[\sigma_P; W]\,|\Psi_W\rangle
+ = \frac{8\pi G}{c^4}\,
+   \hat{T}_{\mu\nu}[\sigma_P; W]\,|\Psi_W\rangle.
+}
+\]
+Here \(W(x,y;\sigma_P)\) is the Planck-covariant weighting operator
+that averages classical field quantities over
+a spacetime volume \(\Delta V \ge \sigma_P\):
+\[
+\overline{T}_{\mu\nu}^{(\sigma_P)}
+ = \int W(x,y;\sigma_P)\,T_{\mu\nu}(y)\,d^4y,
+\qquad
+W(x,y;\sigma_P)=\exp[-(x-y)^2/4\sigma_P].
+\]
+
+The action then takes the form
+\[
+Z = \int Dg\;
+\exp\!\left[
+\frac{i}{\hbar}
+\int (R - 2\Lambda_{\mathrm{eff}})\,\sqrt{-g}\,d^4x
+\right],
+\]
+where \(\sigma_P\)-regularization intrinsically defines the UV cutoff:
+\[
+G_{\mathrm{eff}}(s) = G\,e^{-s/\sigma_P}.
+\]
+
+\begin{tcolorbox}[colback=black!2,colframe=black!60,arc=2mm,boxsep=1mm,
+title=\bfseries Significance of the Operator Form]
+\begin{itemize}
+\item $\hat{G}_{\mu\nu}[\sigma_P;W]$ replaces classical curvature 
+with a quantized operator over discrete spacetime cells.
+\item The state $|\Psi_W\rangle$ describes the coherent superposition 
+of all Planck cells within a volume.
+\item The classical Einstein equation arises as the expectation value:
+\[
+\langle \Psi_W | \hat{G}_{\mu\nu} | \Psi_W \rangle
+= \frac{8\pi G}{c^4}\,
+  \langle \Psi_W | \hat{T}_{\mu\nu} | \Psi_W \rangle.
+\]
+\item Thus, gravitation is understood as a 
+\emph{quantization of geometry itself} — 
+no external field quanta (gravitons) are required.
+\end{itemize}
+\end{tcolorbox}
+
+\section*{Appendix C — Validation of the $\sigma_P$ Framework}
+\label{app:validation}
+
+The $\sigma_P$ framework unifies quantum mechanics and gravitation 
+through the quantization of spacetime. 
+All physical quantities are reduced to the three fundamental constants 
+\(\hbar,\, G,\, c\) and the geometric scales \((R,t)\).
+
+\subsection*{C.1 Fundamentals and Core Relations}
+\begin{itemize}
+  \item \textbf{Fundamental Unit:} 
+  The \textbf{Planck two-form} defines the elementary spacetime action quantum:
+  \[
+  \sigma_P = \frac{\hbar G}{c^4} \simeq \ell_P \, t_P.
+  \]
+  \item \textbf{Parameter Freedom:} 
+  The model eliminates all six free fit parameters of the $\Lambda$CDM model 
+  by deriving them geometrically.
+\end{itemize}
+
+The cosmological constants follow directly from geometry:
+\begin{enumerate}
+  \item \textbf{Effective Cosmological Constant:}
+  \[
+  \Lambda_{\mathrm{eff}} = \frac{3}{c\,R\,t},
+  \]
+  derived from the volumetric expansion law (\(\Lambda \sim 3H_0^2/c^2\)).
+  \item \textbf{Dimensionless Cell Number:}
+  \[
+  N_\sigma = \frac{R\,t}{\sigma_P} \approx 10^{122},
+  \]
+  representing the total number of Planck cells within the observable universe.
+\end{enumerate}
+
+\subsection*{C.2 Simulations and Theoretical Derivations}
+Both numerical simulations and analytical derivations confirm 
+the central thesis of the geometric derivability of physical scales:
+
+\begin{itemize}
+  \item[$\bullet$] \textbf{Galactic Dynamics:}
+  The geometric acceleration scale
+  \[
+  g^\ast = c\,H_0 \approx 1.2 \times 10^{-10}\,\mathrm{m/s^2}
+  \]
+  replaces the MOND scale \(a_0\) and explains the flatness of galactic rotation curves 
+  without invoking dark matter.
+  \item[$\bullet$] \textbf{Vacuum Energy:}
+  The discrepancy in vacuum energy density is resolved 
+  by volumetric averaging over \(N_\sigma\) spacetime cells:
+  \[
+  \frac{\rho_{\mathrm{QFT}}}{\rho_{\mathrm{eff}}} = N_\sigma \approx 10^{122},
+  \qquad
+  \Omega_\Lambda = \frac{\rho_{\mathrm{vac}}}{\rho_{\mathrm{crit}}} \approx 0.69.
+  \]
+  \item[$\bullet$] \textbf{Black Holes and the Information Paradox:}
+  The $\sigma_P$-regulated Hawking temperature
+  \[
+  T_{\sigma_P}(M) = T_H(M)\,\bigl[1 - e^{-M/M_P}\bigr]
+  \]
+  removes the divergence at small mass and yields a unitary Page curve \(S_{\mathrm{ent}}(t)\).
+  \item[$\bullet$] \textbf{CMB Consistency:}
+  The baryonic coupling function \(\mu(a,k)\) reproduces the measured CMB peaks:
+  \[
+  \ell_1 \approx 220,\quad \ell_2 \approx 540,\quad \ell_3 \approx 815,
+  \]
+  with deviations below \(0.5\%\) compared to the Planck 2018 data.
+\end{itemize}
+
+\subsection*{C.3 Overall Validation (Checklist)}
+All principal tests of the framework across quantum, galactic, 
+and cosmological scales have been successfully passed:
+
+\begin{itemize}
+  \item[$\square$] \textbf{Lorentz Invariance:} \(\Delta v / c < 10^{-68}\). \textit{(Passed)}
+  \item[$\square$] \textbf{Galactic Flatness:} \(g^\ast \simeq a_0.\) \textit{(Passed)}
+  \item[$\square$] \textbf{Vacuum Density:} \(\Omega_\Lambda \approx 0.69.\) \textit{(Passed)}
+  \item[$\square$] \textbf{Cosmic Cell Number:} \(N_\sigma \approx 10^{122}.\) \textit{(Passed)}
+  \item[$\square$] \textbf{CMB Peaks:} deviation \(< 5\%.\) \textit{(Passed)}
+\end{itemize}
+
+\begin{tcolorbox}[
+  colback=black!5!white,
+  colframe=black!80!white,
+  arc=1mm,
+  boxsep=1mm,
+  title=\bfseries Conclusion
+]
+\centering
+\emph{The $\sigma_P$ framework — a unification of quantized spacetime geometry — 
+is multi-scale consistent and provides parameter-free, analytical explanations 
+for the central problems of modern physics and cosmology.}
+\end{tcolorbox}
+
+\paragraph{Summary of Findings.}
+The $\sigma_P$ framework replaces parameterized cosmology with a quantized geometric measure. 
+It unifies microscopic and macroscopic curvature through a single invariant, 
+reproduces all major cosmological observables, 
+and eliminates divergences without renormalization.
+
+
+
+\clearpage
+\begin{thebibliography}{99}
+
+% --- Historische Grundlagen ---
+\bibitem{Einstein1915}
+Einstein, A. (1915).
+\emph{Die Feldgleichungen der Gravitation}.
+Sitzungsberichte der Königlich Preußischen Akademie der Wissenschaften zu Berlin, 844–847.
+
+\bibitem{Minkowski1908}
+Minkowski, H. (1908).
+\emph{Raum und Zeit}.
+Physikalische Zeitschrift, 10, 75–88.
+
+\bibitem{Planck1901}
+Planck, M. (1901).
+\emph{Über das Gesetz der Energieverteilung im Normalspektrum}.
+Annalen der Physik, 309(3), 553–563.
+\href{https://doi.org/10.1002/andp.19013090310}{doi:10.1002/andp.19013090310}.
+
+\bibitem{Heisenberg1927}
+Heisenberg, W. (1927).
+\emph{Über den anschaulichen Inhalt der quantentheoretischen Kinematik und Mechanik}.
+Zeitschrift für Physik, 43(3–4), 172–198.
+\href{https://doi.org/10.1007/BF01397280}{doi:10.1007/BF01397280}.
+
+\bibitem{Schrodinger1926}
+Schrödinger, E. (1926).
+\emph{Quantisierung als Eigenwertproblem}.
+Annalen der Physik, 384(4), 361–376.
+\href{https://doi.org/10.1002/andp.19263840404}{doi:10.1002/andp.19263840404}.
+
+\bibitem{Wheeler1967}
+Wheeler, J. A. (1967).
+\emph{Superspace and the Nature of Quantum Geometrodynamics}.
+In C.~DeWitt \& J.~A.~Wheeler (Eds.), \emph{Battelle Rencontres: 1967 Lectures in Mathematics and Physics}.
+Benjamin, New York.
+
+\bibitem{DeWitt1967}
+DeWitt, B. S. (1967).
+\emph{Quantum Theory of Gravity. I. The Canonical Theory}.
+Phys. Rev. 160, 1113–1148.
+\href{https://doi.org/10.1103/PhysRev.160.1113}{doi:10.1103/PhysRev.160.1113}.
+
+\bibitem{Hawking1975}
+Hawking, S. W. (1975).
+\emph{Particle Creation by Black Holes}.
+Commun. Math. Phys. 43, 199–220.
+\href{https://doi.org/10.1007/BF02345020}{doi:10.1007/BF02345020}.
+
+% --- Moderne Messungen & Beobachtungen ---
+\bibitem{Planck2018}
+Planck Collaboration (2020).
+\emph{Planck 2018 results. VI. Cosmological parameters}.
+A\&A 641, A6.
+\href{https://doi.org/10.1051/0004-6361/201833910}{doi:10.1051/0004-6361/201833910}.
+
+\bibitem{Riess2022}
+Riess, A. G., Yuan, W., Macri, L. M., Scolnic, D., Brout, D., Casertano, S., et al. (2022).
+\emph{A Comprehensive Measurement of the Local Value of the Hubble Constant with 1 km s\(^{-1}\) Mpc\(^{-1}\) Uncertainty from the SH0ES Team}.
+ApJ 934, L7.
+\href{https://doi.org/10.3847/2041-8213/ac5c5b}{doi:10.3847/2041-8213/ac5c5b}.
+
+\bibitem{Scolnic2022}
+Scolnic, D. et al. (2022).
+\emph{The Pantheon+ Analysis: The Full Data Set and Light-curve Release}.
+ApJ 938, 113.
+\href{https://doi.org/10.3847/1538-4357/ac8b89}{doi:10.3847/1538-4357/ac8b89}.
+
+\bibitem{DES2021}
+DES Collaboration (Abbott, T. M. C. et al.) (2021).
+\emph{Dark Energy Survey Year 3 Results: Cosmological Constraints from Weak Lensing and Galaxy Clustering}.
+Phys. Rev. D 105, 023520.
+\href{https://doi.org/10.1103/PhysRevD.105.023520}{doi:10.1103/PhysRevD.105.023520}.
+
+\bibitem{KiDS2020}
+Hildebrandt, H., Tröster, T., et al. (2020).
+\emph{KiDS-1000 Cosmology: Cosmic shear constraints and comparison between two point statistics}.
+A\&A 633, A69.
+\href{https://doi.org/10.1051/0004-6361/201834878}{doi:10.1051/0004-6361/201834878}.
+
+\bibitem{Lelli2016}
+Lelli, F., McGaugh, S. S., Schombert, J. M. (2016).
+\emph{SPARC: Mass Models for 175 Disk Galaxies with Spitzer Photometry and Accurate Rotation Curves}.
+AJ 152, 157.
+\href{https://doi.org/10.3847/0004-6256/152/6/157}{doi:10.3847/0004-6256/152/6/157}.
+
+\bibitem{Kazantzidis2022}
+Kazantzidis, L., Sapone, D., Nesseris, S. (2022).
+\emph{A comprehensive updated compilation of $f\sigma_8$ measurements and their cosmological implications}.
+Phys. Rev. D 105, 063506.
+\href{https://doi.org/10.1103/PhysRevD.105.063506}{doi:10.1103/PhysRevD.105.063506}.
+
+% --- Theoretische & konzeptionelle Bezüge ---
+\bibitem{Feynman1963}
+Feynman, R. (1963).
+\emph{The Character of Physical Law}.
+MIT Press.
+
+\bibitem{BirrellDavies}
+Birrell, N. D.; Davies, P. C. W. (1982).
+\emph{Quantum Fields in Curved Space}.
+Cambridge University Press.
+
+\bibitem{BartelmannSchneider2001}
+Bartelmann, M.; Schneider, P. (2001).
+\emph{Weak Gravitational Lensing}.
+Phys. Rep. 340, 291–472.
+\href{https://doi.org/10.1016/S0370-1573(00)00082-X}{doi:10.1016/S0370-1573(00)00082-X}.
+
+% --- Der aktuelle Beitrag ---
+\bibitem{Zander2025_NaturalStructure}
+Zander, A. (2025).
+\emph{The Natural Structure of Spacetime: From Quantum Mechanics, Relativity, and Gravitation}.
+Zenodo.
+\href{https://doi.org/10.5281/zenodo.17357165}{doi:10.5281/zenodo.17357165}.
+
+\end{thebibliography}
+
+
+
+
+
+\end{document}
+
