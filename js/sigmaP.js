@@ -175,9 +175,9 @@ export function simulatePageCurve(M0, steps = 200) {
 export function cosmicAccelerationScale() {
   const t_univ = 4.35e17; // Age of universe in seconds
   // Ideally this comes from H(t) derived from sigmaP, but linear approx is fine.
-  return c / t_univ; // approx 6.9e-10 m/s^2 ? 
+  return c / t_univ; // approx 6.9e-10 m/s^2 
   // Wait, standard a0 is 1.2e-10. 
-  // c = 3e8. t~4e17. c/t ~ 0.75e-9. Slightly high but valid for the "Theory".
+  // c = 3e8. t~4e17. c/t ~ 0.75e-9. 
   // User's python used: c / t_univ.
 }
 

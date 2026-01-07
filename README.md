@@ -28,6 +28,19 @@ Quantifies a structural thermal–inertial action density. Combined with $\sigma
 - **No Singularities:** Elimination of curvature singularities through Planck-covariant source smearing ($G_{\mu\nu} = \frac{8\pi G}{c^4} \langle T_{\mu\nu}\rangle_{\sigma_P}$).
 - **Hawking Resolution:** The information paradox is resolved through a unitary evaporation process ending in a stable Planck remnant.
 
+- **Hawking Resolution:** The information paradox is resolved through a unitary evaporation process ending in a stable Planck remnant.
+
+##Current Evolution (2026 Update)
+The project has evolved beyond static theory into dynamic simulation and philosophical unification.
+
+### [See the Roadmap: README_EVOLUTION.md](README_EVOLUTION.md)
+*The blueprint for the "Breath of the Universe" module.*
+
+### New Modules:
+1.  **[TSF Simulation (Click to Run)](tsf_sim.html)**: An interactive HTML5 visualization of the Thermal Spacetime Feedback cycle. Experience gravity, entropy, and the "bounce" in real-time.
+2.  **[Theory for Everyone](theory.html)**: Now expanded with the "James Webb" analogy and the "Cosmic Equation".
+3.  **[Quantum Fruits Lab](assets/Formulas%20and%20code/quantum_fruits_lab.py)**: The unified Python simulation suite for professional verification.
+
 ## Scientific Library
 The ZIP archive includes the full rigorous papers (published with separate DOIs):
 - *Dark Matter Elimination*

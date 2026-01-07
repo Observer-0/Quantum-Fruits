@@ -1,0 +1,245 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath, amssymb, physics, geometry, graphicx, hyperref}
+\geometry{a4paper, left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+\title{Formelsammlung: SigmaP-Lab und Gravitation}
+\author{Quantum-Fruits Project}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Allgemeine Formeln}
+
+\begin{align}
+\sigma_{\mathrm P} &= \frac{\hbar G}{c^{4}} \\
+\alpha_{G}(M) &= \frac{G M}{\hbar c} \qquad \text{(im Abstract)} \\
+E_{H} \cdot t_{H} &= \hbar \\
+S &= N_{\text{ticks}} \\
+\text{Ticks} &= \frac{c^4}{G} \\
+n_{\text{Tick}} &\sim \frac{c^4}{G}, \qquad \Delta A = \hbar \\
+i &\equiv \frac{\Delta A}{\sigma_{\mathrm P}} = \frac{\hbar}{\sigma_{\mathrm P}} = \frac{E_P}{T_P} \\
+S &= k_B \cdot N_{\rm ticks} = k_B \sum i = k_B \sum \frac{\Delta A}{\sigma_P} \\
+i &= \frac{E \cdot t}{\sigma_P} \\
+E_{\rm kin} &= \sigma_P \cdot \frac{i_{\rm kin}}{t_P} \\
+\alpha_G(M) &= \frac{G M}{\hbar c} \quad\Rightarrow\quad \text{pro Tick: } i_G = \alpha_G(M) \frac{\sigma_P}{t_P} \\
+i_{\rm max} &= \frac{\hbar}{\sigma_P} = \frac{c^4}{G} \\
+\chi(M) &:= \frac{G M^2}{\hbar c^3} \\
+E_{\text{quant}} \cdot t_{\text{quant}} &= \hbar \\
+t_{\text{quant}} &\sim t \cdot \sqrt{\chi(M)} \\
+S_{\text{total}} &= N \cdot \hbar, \qquad N \sim \frac{S_{BH}}{k_B} \\
+T_H^{\text{Kerr}} &= \frac{\hbar}{2\pi k_B c} \kappa \\
+t_{\text{Kerr}} &:= t \cdot \sqrt{\chi(M)} \\
+\alpha_G(M) &= \frac{G M^2}{\hbar c} \quad\Rightarrow\quad G M^2 = \alpha_G(M) \hbar c \quad \text{(in Abschnitt 6.1)} \\
+\alpha &= \frac{e^2}{\hbar c},\quad e^2 = \alpha \hbar c \\
+\frac{\hbar c}{G M^2} &= 1 \quad\Rightarrow\quad M_P^2 = \frac{\hbar c}{G} \\
+\frac{\alpha_G(M)}{\alpha} &= \frac{G M^2}{e^2} \cdot \frac{1}{\varepsilon_0}
+\end{align}
+
+\subsection*{Feldgleichungen und Pfadintegral}
+\begin{align}
+S[g,\Psi] &= \frac{c^3}{16\pi G}\int d^4x\sqrt{-g}\Big(R - 2\Lambda_{\rm eff}(t)\Big) + S_{\rm m}^{(\sigma)}[g,\Psi] \\
+\Lambda_{\rm eff}(t) &= \frac{\alpha_\sigma(t)}{\ell_P^2} = \frac{1}{c R(t) t} \\
+G_{\mu\nu}[g] + \Lambda_{\rm eff}(t)g_{\mu\nu} &= \frac{8\pi G}{c^4}\overline T_{\mu\nu} \\
+K_{\sigma_P}(x,y) &= \frac{1}{\mathcal N}\exp\Big[-\sigma_+(x,y)/(2\ell_P^2)\Big] \\
+\overline{T}_{\mu\nu}(x) &= \int d^4y\sqrt{-g(y)} K_{\sigma_P}(x,y)\Pi_{\mu}{}^{\mu'}\Pi_{\nu}{}^{\nu'}T_{\mu'\nu'}(y) \\
+d\tilde{s}^2 &= \frac{ds^2}{1+\sigma_P^{-1}f(\mathcal{R},x)}, \qquad f(\mathcal{R},x)=\frac{\ell_P^2\mathcal{R}}{1+\ell_P^2\mathcal{R}^2} \\
+g_{\rm modes} &= g_{\rm geom} + g_{\rm log} + g_{\rm tail} \\
+\alpha^{-1}_{\rm full} &= 137.036 \pm \mathcal{O}(10^{-5}) \\
+\delta &= \log_{10}\left(\frac{\bar{\lambda}_p^{2}}{\alpha c R t}\right) = -81.447 \\
+\Lambda_{\rm eff} &= \frac{1}{c R t} \\
+g_\ast &= c\sqrt{\Lambda} \\
+V_{\sigma} &= \sigma_{\mathrm P}^{3/2}
+\end{align}
+
+\subsection*{Dimensionen}
+\begin{align}
+[\hbar] &= M L^2 T^{-1}, \quad [G] = M^{-1} L^3 T^{-2} \\
+[\sigma_P] &= \frac{L^5 T^{-3}}{L^n T^{-n}} = L^{5-n} T^{n-3} \overset{!}{=} L^1 T^1 \\
+\boxed{\sigma_P = \frac{\hbar G}{c^4}}
+\end{align}
+
+\section*{Struktur-Übersicht}
+\begin{enumerate}
+    \item \textbf{Newtonsche Gravitationskraft (Skalare Form)} \\
+    $F_{ij} = \frac{G m_i m_j}{\lVert \vec r_i - \vec r_j\rVert^2}$
+    
+    \item[\textbf{1b)}] \textbf{Vektorform (Kraft auf $i$ durch $j$, anziehend)} \\
+    $\vec F_{ij} = -G \frac{m_i m_j}{\lVert \vec r_i - \vec r_j\rVert^3}(\vec r_i - \vec r_j)$
+    
+    \item[\textbf{1c)}] \textbf{Gesamt-Kraft auf Körper $i$ (Drei-Körper-Problem)} \\
+    $\vec F_i = \sum_{j\neq i} \vec F_{ij}$
+    
+    \item \textbf{Hamiltonian-Aufteilung (schematisch)} \\
+    $H = H_{\text{frei}} + H_{\text{Wechsel}}$
+    
+    \item[\textbf{2a)}] \textbf{Schematischer Wechselwirkungsterm (grav., niedrigste Ordnung)} \\
+    $H_{\text{Wechsel}} \sim \kappa_{\mathrm Z}\sum_{i<j} T^{\mu\nu}{(i)}h_{\mu\nu}^{(j)}$
+    
+    \item \textbf{Pfadintegral mit externen Quellen (schematisch)} \\
+    $Z[J] = \int \mathcal D\Phi \exp\Big(i S[\Phi] + i\sum_k \int d^4x J_k(x)\Phi(x)\Big)$
+    
+    \item[\textbf{3a)}] \textbf{Für das Gravitationsfeld (Tensorquellen)} \\
+    $Z[J^{\mu\nu}] = \int \mathcal Dh_{\alpha\beta} \exp\Big(i S_{\text{grav}}[h] + i\sum_k \int d^4x J^{\mu\nu}_k(x)h_{\mu\nu}(x)\Big)$
+    
+    \item \textbf{Vielkörper-Wellenfunktion (schematisch)} \\
+    $\Psi = \Psi(\vec r_1,\vec r_2,\vec r_3)$
+    
+    \item \textbf{Schematische Summe der Paarwechselwirkungen} \\
+    $\text{Gesamt-Wechselwirkung} \sim \kappa_{\mathrm Z}\Big( T(1)h(2)+T(2)h(1)+T(1)h(3)+T(3)h(1)+T(2)h(3)+T(3)h(2) \Big)$
+    
+    \item \textbf{Baum-Niveau Streuamplitude (schematisch für Gravitionsaustausch)} \\
+    $\mathcal M \propto \kappa_{\mathrm Z}^2 \frac{T^{\mu\nu}{(1)}(q)P_{\mu\nu\rho\sigma}(q)T^{\rho\sigma}_{(2)}(-q)}{q^2}$
+    
+    \item \textbf{Dimensions-Angabe} \\
+    $[\kappa_{\mathrm Z}] \leadsto \text{Skalenbindung mit Dimensionen } M^4 T^4 / L^4$
+    
+    \item \textbf{Zusammenhang zwischen $\kappa$ und $G$} \\
+    $\kappa \sim \sqrt{32\pi G}/c^2$
+    
+    \item \textbf{(Optional) Austausch-Term in Feldern} \\
+    $S_{\text{int}} \sim \kappa_{\mathrm Z}\sum_i \int d^4x T^{\mu\nu}{(i)}(x)h_{\mu\nu}(x)$
+\end{enumerate}
+
+\newpage
+\section*{SigmaP-Lab: Key Equations \& Operators (Quick-Reference)}
+
+\subsection*{Fundamental Units \& Tick Definition}
+\begin{equation}
+    \boxed{\sigma_{\mathrm P} = \frac{\hbar G}{c^{4}}}
+\end{equation}
+Wirkungszelle: Basis-Transit, Kern der Tick-Kalkulation.
+
+\noindent\textbf{Anzahl Ticks/Unit:}
+\[ N_{\text{Tick}} \sim \frac{\hbar}{\sigma_P} = \frac{c^4}{G} \]
+
+\subsection*{Tick-Kapazität pro Aktionsquantum}
+\begin{equation}
+    i \equiv \frac{\Delta A}{\sigma_P}
+\end{equation}
+Diskreter Tick-Operator ($i$ zählt Ticks aus Aktion $\Delta A$; für $\Delta A = \hbar$: $i_{\rm max} = \frac{\hbar}{\sigma_P}$).
+
+\subsection*{Entropie und Tick-Relation}
+\begin{equation}
+    S = k_B \cdot N_{\rm ticks} = k_B \sum i = k_B \sum \frac{\Delta A}{\sigma_P}
+\end{equation}
+Entropie als tatsächlicher Tick-Zähler, nicht statistisch.
+
+\subsection*{Energie-Zeit-Relation auf Tick-Basis}
+\begin{equation}
+    E \cdot t = i \cdot \sigma_P \qquad E_{\text{quant}} \cdot t_{\text{quant}} = \hbar
+\end{equation}
+Jede Energie-Zeit-Sequenz erzeugt Ticks proportional zu Tick-Größe.
+
+\subsection*{Planck Units (Referenz)}
+\begin{align}
+    \ell_P &= \sqrt{\frac{\hbar G}{c^3}} \\
+    t_P &= \frac{\ell_P}{c} \\
+    m_P &= \sqrt{\frac{\hbar c}{G}}
+\end{align}
+Zentrale Skalen dieser Theorie.
+
+\subsection*{Gravitationskopplung}
+\begin{equation}
+    \alpha_G(M) = \frac{G M}{\hbar c} \qquad \chi(M) = \frac{G M^2}{\hbar c^3}
+\end{equation}
+$\alpha_G$: lineare Kopplung (Spin-0/1-Vergleich). \\
+$\chi$: quadratische Selbstkopplung, Spin-2-Signatur.
+
+\subsection*{Gravitative Tick-Rate, Kerr-Korrektur}
+\begin{equation}
+    t_{\text{quant}} \sim t \cdot \sqrt{\chi(M)} \qquad t_{\text{Kerr}} := t \cdot \sqrt{\chi(M)}
+\end{equation}
+Massive Körper strecken Tick-Sequenz durch quadratische Kopplung.
+
+\subsection*{Schwarzschild \& Kerr: Thermodynamik}
+\begin{equation}
+    S_{\text{total}} = N \cdot \hbar \qquad N \sim \frac{S_{BH}}{k_B}
+\end{equation}
+Entropie ist Tick-Zählung beim Schwarzen Loch.
+
+\subsection*{Spin-2-Operator \& Wirkung}
+\begin{equation}
+    S[g,\Psi] = \frac{c^3}{16\pi G}\int d^4x\,\sqrt{-g}\,\Big(R - 2\,\Lambda_{\rm eff}(t)\Big) + S_{\rm m}^{(\sigma)}[g,\Psi]
+\end{equation}
+Dynamische Feldgleichung, parameterfrei.
+
+\begin{equation}
+    \Lambda_{\rm eff}(t) = \frac{1}{c\,R(t)\,t}
+\end{equation}
+Effektive kosmologische Konstante aus Tick-Glättung.
+
+\begin{equation}
+    G_{\mu\nu}[g] + \Lambda_{\rm eff}(t)\,g_{\mu\nu} = \frac{8\pi G}{c^4}\,\overline T_{\mu\nu}
+\end{equation}
+Feldgleichung mit gemittelter Quellantwort.
+
+\subsection*{Kernel-Mittelung (Singularitätsregulierung)}
+\begin{equation}
+    K_{\sigma_P}(x,y) = \frac{1}{\mathcal N}\exp\left[-\frac{\sigma_+(x,y)}{2\ell_P^2}\right]
+\end{equation}
+Kernel für Planck-kovariante Glättung.
+
+\begin{equation}
+    \overline{T}_{\mu\nu}(x) = \int d^4y\,\sqrt{-g(y)}\,K_{\sigma_P}(x,y)\,\Pi_{\mu}{}^{\mu'}\Pi_{\nu}{}^{\nu'}\,T_{\mu'\nu'}(y)
+\end{equation}
+
+\subsection*{Metrik-Renormierung}
+\begin{equation}
+    d\tilde{s}^2 = \frac{ds^2}{1+\sigma_P^{-1}f(\mathcal{R},x)} \qquad f(\mathcal{R},x) = \frac{\ell_P^2\mathcal{R}}{1+\ell_P^2\mathcal{R}^2}
+\end{equation}
+Singuläre Ticks werden geometrisch gestreckt.
+
+\subsection*{Vielkörper-Mechanik \& Wechselwirkung}
+\begin{align}
+    F_{ij} &= \frac{G\, m_i\, m_j}{|\vec r_i - \vec r_j|^2} \\
+    \vec F_{ij} &= -G \frac{m_i m_j}{|\vec r_i - \vec r_j|^3} (\vec r_i - \vec r_j) \\
+    \vec F_i &= \sum_{j\neq i} \vec F_{ij}
+\end{align}
+
+\begin{align}
+    H &= H_{\text{frei}} + H_{\text{Wechsel}} \\
+    H_{\text{Wechsel}} &\sim \kappa_{\mathrm Z}\sum_{i<j} T^{\mu\nu}_{(i)}\,h_{\mu\nu}^{(j)}
+\end{align}
+
+\begin{equation}
+    \Psi = \Psi(\vec r_1, \vec r_2, \vec r_3)
+\end{equation}
+Tick-basierte Vielkörperdynamik: alle Wechselwirkungen sind über Ticks organisierbar!
+
+\subsection*{Pfadintegralstruktur}
+\begin{equation}
+    Z[J] = \int \mathcal D\Phi \;\exp\!\Big(i S[\Phi] + i\sum_k \int d^4x\;J_k(x)\,\Phi(x)\Big)
+\end{equation}
+\begin{equation}
+    Z[J^{\mu\nu}] = \int \mathcal Dh_{\alpha\beta}\;\exp\!\Big(i S_{\text{grav}}[h] + i\sum_k \int d^4x\;J^{\mu\nu}_k(x)\,h_{\mu\nu}(x)\Big)
+\end{equation}
+
+\subsection*{Baum-Niveau Streuung \& Kopplung}
+\begin{equation}
+    \mathcal M \propto \kappa_{\mathrm Z}^2\, \frac{T^{\mu\nu}_{(1)}(q)\,P_{\mu\nu\rho\sigma}(q)\,T^{\rho\sigma}_{(2)}(-q)}{q^2}
+\end{equation}
+Amplituden sind verkettete Tick-Übertragungen (moduliert durch Tensorstruktur/Spin-2).
+
+\subsection*{Dimensionsanalyse}
+\begin{align*}
+    [G] &= M^{-1} L^3 T^{-2} \\
+    [\hbar] &= M L^2 T^{-1} \\
+    [\sigma_P] &= L^1 T^1 \\
+    [\kappa_{\mathrm Z}] &\sim M^4 T^4 / L^4 \quad \text{(Prüfen je nach Kontext!)}
+\end{align*}
+
+\section*{Kernel und Mittelung}
+Die Mittelung erfolgt über den Kernel:
+\begin{equation}
+    K_{\sigma_P}(x,y) = \frac{1}{(2\pi)^2 \ell_\ast^3 \tau_\ast} \exp\Bigg[ \frac{|\vec x - \vec y|^2}{2 \ell_\ast^2} \frac{(t_x - t_y)^2}{2 \tau_\ast^2} \Bigg],
+\end{equation}
+mit
+\begin{equation}
+    \ell_\ast = c \sigma_P, \qquad \tau_\ast = \frac{\sigma_P}{c}, \qquad \sigma_P = \frac{\hbar G}{c^4}.
+\end{equation}
+
+\end{document}
