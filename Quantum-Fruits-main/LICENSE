@@ -1,0 +1,22 @@
+# EDUCATIONAL & PRIVATE EVALUATION LICENSE
+
+**Copyright (c) 2025 - All Rights Reserved**
+
+## 1. Grant of License
+This software and documentation is strictly provided for **EDUCATIONAL EVALUATION PURPOSES** only.
+
+Permission is hereby granted, free of charge, to the reviewing academic staff (Teachers/Examiners) to execute, view, and test this software solely for the purpose of grading the associated project work.
+
+## 2. Proprietary Theory Embargo
+The theoretical framework implemented within the source code files (specifically `gammaP.js`, `sigmaP.js`) is proprietary intellectual property under active research embargo.
+
+**It is strictly FORBIDDEN to:**
+- Publish this code to public repositories (e.g., GitHub private repos are allowed, public are not).
+- Extract equations or algorithms for external scientific publication without author consent.
+- Reverse-engineer the specific derivation steps marked as "Redacted" in the documentation.
+
+## 3. No Redistribution
+Redistribution and use in source and binary forms, with or without modification, are NOT permitted.
+
+## 4. Disclaimer
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. THE AUTHORS MAKE NO CLAIMS REGARDING THE PHYSICAL CORRECTNESS OF THE SIMULATED THEORIES FOR REAL-WORLD APPLICATIONS BEYOND EDUCATIONAL DEMONSTRATION.
