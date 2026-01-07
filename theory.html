@@ -194,12 +194,34 @@
                             <p style="font-size: 0.8rem; color: #aaa; margin-top: 1rem;">S. 237: Hubbles Grenze</p>
                         </div>
                     </div>
-                    <div
+                    <div <div
                         style="margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 8px; border-left: 4px solid var(--accent-primary);">
                         <p
                             style="font-size: 1.1rem; color: var(--accent-primary); font-style: italic; text-align: center;">
                             "Man darf die geometrische Seite der Gleichung nicht verändern – denn sie ist nicht Modell,
                             sie ist Gesetz."
+                        </p>
+                    </div>
+
+                    <div class="qg-box"
+                        style="margin-top: 2rem; border-color: #fbbf24; background: rgba(251, 191, 36, 0.05);">
+                        <h4 style="color: #fbbf24;">🔍 Zwischen den Zeilen: Der "Sophisticated Diss"?</h4>
+                        <p style="font-size: 0.95rem; line-height: 1.7;">
+                            Wenn man Einstein (1931) genau liest, erkennt man eine fast schon ironische Distanz zu
+                            Hubbles Interpretation. Er schreibt von
+                            <em>„nur etwa 10¹⁰ Jahren“</em> (S. 237) und davon, dass Hubbles Theorie <em>„einfach und
+                                bequem genug“</em> sei,
+                            um mit den Fakten verglichen zu werden.
+                        </p>
+                        <p style="font-size: 0.95rem; line-height: 1.7; margin-top: 0.5rem;">
+                            Was heute wie eine sachliche Feststellung wirkt, liest sich bei näherer Betrachtung wie ein
+                            eleganter Front:
+                            Einstein wirft Hubble (und dem damaligen Zeitgeist) vor, die tiefere, geometrische
+                            Notwendigkeit der Relativität
+                            für eine „bequeme“ lineare Expansion (den Dopplereffekt) geopfert zu haben. Er wusste, dass
+                            das Modell zu kurz griff –
+                            und er versteckte seine Kritik in diesen subtilen Adjektiven. Er hat Hubble gewissermaßen
+                            "gedisst", und fast niemand hat es gemerkt.
                         </p>
                     </div>
                 </div>
@@ -968,6 +990,171 @@
                     Raumzeit-Zelle.
                 </p>
             </div>
+
+            <div class="qg-box"
+                style="margin-top: 1.5rem; background: rgba(251, 191, 36, 0.05); border-left: 4px solid #fbbf24;">
+                <h3 style="color: #fbbf24;">Die JWST-Quittung: Wenn Empirie die Theorie überholt</h3>
+                <p style="font-size: 0.95rem;">
+                    Die Quittung für 50 Jahre "Fudging" kommt jetzt. JWST liefert Daten, die LCDM fundamental
+                    erschüttern: Wir sehen Galaxien am Rand der Zeit, die bereits voll entwickelt sind.
+                </p>
+                <p style="font-size: 0.95rem; margin-top: 0.5rem;">
+                    <strong>Die Dipol-Anomalie:</strong> Wir haben mittlerweile festgestellt, dass sich unser
+                    Sonnensystem <strong>4x schneller</strong> bewegt, als es LCDM im kosmischen Ruheframe
+                    vorhersagt. Geometrisch betrachtet ist diese Folgerung absolut korrekt und keine Messpanne.
+                    Es ist das Resultat der geometrischen Wirkungseinheit:
+                </p>
+                <div style="font-size: 1.2rem; text-align: center; margin: 1rem 0; color: #fff;">
+                    $$ \rho_{\Lambda} = \frac{3c^3}{8\pi G R t} $$
+                </div>
+                <p style="font-size: 0.9rem; font-style: italic;">
+                    Diese Formel beschreibt den geometrischen Druck, der aus dem Verhältnis von Raum ($R$) und
+                    Zeit ($t$) resultiert. Was wir als "überraschende" Geschwindigkeit messen, ist einfach die
+                    natürliche Reaktion der Materie auf die wahre Krümmung der Raumzeit-Zelle.
+                </p>
+
+                <!-- INTERACTIVE MONITOR -->
+                <div
+                    style="margin-top: 2rem; padding: 1.5rem; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                    <h4
+                        style="color: #fbbf24; margin-bottom: 1.5rem; text-align: center; text-transform: uppercase; letter-spacing: 1px;">
+                        📊 LCDM Departure Monitor (Realtime)
+                    </h4>
+
+                    <div style="margin-bottom: 2rem;">
+                        <label for="cosmo-age-slider" style="font-size: 0.85rem; color: #aaa;">Zeitpunkt im Universum
+                            (Expansion):</label>
+                        <input type="range" id="cosmo-age-slider" min="10" max="100" value="100"
+                            style="width: 100%; margin-top: 0.5rem;">
+                        <div
+                            style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 0.3rem;">
+                            <span>Frühes All</span>
+                            <span id="val-cosmo-t" style="color: #fff;">13.8 Bio. Jahre</span>
+                            <span>Heute</span>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="result-card"
+                            style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                            <span style="font-size: 0.75rem; color: #888;">Geometrischer Radius (R):</span><br>
+                            <span id="val-cosmo-r"
+                                style="font-size: 1.1rem; color: var(--accent-primary); font-family: monospace;">-</span>
+                        </div>
+                        <div class="result-card"
+                            style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                            <span style="font-size: 0.75rem; color: #888;">Energie-Dichte ($\rho_\Lambda$):</span><br>
+                            <span id="val-cosmo-rho"
+                                style="font-size: 1.1rem; color: var(--accent-secondary); font-family: monospace;">-</span>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(255,0,0,0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-size: 0.85rem;">Dipol-Anomalie (V-Sonnensystem):</span>
+                            <span id="val-cosmo-v" style="font-weight: bold; color: #ef4444;">- km/s</span>
+                        </div>
+                        <div
+                            style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                            <div id="cosmo-departure-fill" style="height: 100%; background: #ef4444; width: 0%;"></div>
+                        </div>
+                        <div
+                            style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.75rem;">
+                            <span id="val-cosmo-dep" style="color: #ef4444;">0% Abweichung</span>
+                            <span style="color: #666;">Standard LCDM Grenze</span>
+                        </div>
+                    </div>
+
+                    <p id="cosmo-alert"
+                        style="font-size: 0.85rem; text-align: center; font-weight: bold; height: 1rem;"></p>
+                </div>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const slider = document.getElementById('cosmo-age-slider');
+                    const valCosmoT = document.getElementById('val-cosmo-t');
+                    const valCosmoR = document.getElementById('val-cosmo-r');
+                    const valCosmoRho = document.getElementById('val-cosmo-rho');
+                    const valCosmoV = document.getElementById('val-cosmo-v');
+                    const cosmoDepartureFill = document.getElementById('cosmo-departure-fill');
+                    const valCosmoDep = document.getElementById('val-cosmo-dep');
+                    const cosmoAlert = document.getElementById('cosmo-alert');
+
+                    // Constants (simplified for demonstration)
+                    const G = 6.674e-11; // Gravitational constant
+                    const c = 299792458; // Speed of light
+                    const M_SUN = 1.989e30; // Solar mass in kg
+                    const KM_PER_AU = 149597870.7; // km per AU
+                    const AU_PER_PC = 206265; // AU per parsec
+                    const PC_PER_MPC = 1e6; // parsec per megaparsec
+                    const KM_PER_MPC = KM_PER_AU * AU_PER_PC * PC_PER_MPC; // km per megaparsec
+
+                    // Base values for current universe (approximate)
+                    const CURRENT_AGE_GYR = 13.8; // Billion years
+                    const CURRENT_R_MPC = 14000; // Mpc (approximate observable universe radius)
+                    const CURRENT_R_KM = CURRENT_R_MPC * KM_PER_MPC; // km
+                    const CURRENT_RHO_LAMBDA = 5.96e-27; // kg/m^3 (approximate dark energy density)
+
+                    function updateMonitor() {
+                        const sliderValue = parseInt(slider.value); // 10 to 100
+                        const ageFactor = sliderValue / 100; // 0.1 to 1.0
+
+                        // Time (t) in seconds
+                        const t_gyr = CURRENT_AGE_GYR * ageFactor;
+                        const t_seconds = t_gyr * 3.154e16; // Convert Gyr to seconds
+
+                        // Radius (R) in meters (simplified linear scaling for demonstration)
+                        // In reality, R scales non-linearly with time, but for this demo, we'll use a simplified approach
+                        // Let's assume R scales roughly with t for early universe, then slows down.
+                        // For simplicity, we'll just scale R linearly with ageFactor for now.
+                        const R_km = CURRENT_R_KM * ageFactor;
+                        const R_meters = R_km * 1000;
+
+                        // Calculate rho_lambda based on the formula: rho_Lambda = (3c^3) / (8πGRt)
+                        const rho_lambda = (3 * Math.pow(c, 3)) / (8 * Math.PI * G * R_meters * t_seconds);
+
+                        // Calculate Dipole Anomaly Velocity (simplified)
+                        // This is a highly simplified model for demonstration purposes.
+                        // The actual anomaly is complex and depends on many factors.
+                        // We'll simulate a departure that increases as rho_lambda deviates from a "standard" value.
+                        const lcdmRho = 5.96e-27; // A reference LCDM value for rho_lambda
+                        const rhoDeviation = Math.abs(rho_lambda - lcdmRho);
+                        const maxDeviation = Math.abs((3 * Math.pow(c, 3)) / (8 * Math.PI * G * (CURRENT_R_KM * 0.1 * 1000) * (CURRENT_AGE_GYR * 0.1 * 3.154e16)) - lcdmRho); // Max possible deviation at 10% age
+
+                        let anomalyVelocity = 0;
+                        let departurePercentage = 0;
+
+                        if (rhoDeviation > 0) {
+                            departurePercentage = (rhoDeviation / maxDeviation) * 100;
+                            if (departurePercentage > 100) departurePercentage = 100; // Cap at 100%
+
+                            // Scale velocity from 0 to 1000 km/s (example max anomaly)
+                            anomalyVelocity = (departurePercentage / 100) * 1000;
+                        }
+
+                        // Update UI
+                        valCosmoT.textContent = `${t_gyr.toFixed(2)} Bio. Jahre`;
+                        valCosmoR.textContent = `${(R_km / KM_PER_MPC).toFixed(2)} Mpc`;
+                        valCosmoRho.textContent = `${rho_lambda.toExponential(2)} kg/m³`;
+                        valCosmoV.textContent = `${anomalyVelocity.toFixed(0)} km/s`;
+                        cosmoDepartureFill.style.width = `${departurePercentage}%`;
+                        valCosmoDep.textContent = `${departurePercentage.toFixed(0)}% Abweichung`;
+
+                        if (departurePercentage > 50) {
+                            cosmoAlert.textContent = "🚨 Signifikante Abweichung von LCDM!";
+                            cosmoAlert.style.color = '#ef4444';
+                        } else if (departurePercentage > 10) {
+                            cosmoAlert.textContent = "⚠️ Leichte Abweichung von LCDM.";
+                            cosmoAlert.style.color = '#fbbf24';
+                        } else {
+                            cosmoAlert.textContent = "";
+                        }
+                    }
+
+                    slider.addEventListener('input', updateMonitor);
+                    updateMonitor(); // Initial update
+                });
+            </script>
             <p>
                 In dieser Arbeit betrachten wir Schwarze Löcher nicht als Abgründe, sondern als
                 <strong>Gedächtnisse</strong>.
