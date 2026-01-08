@@ -55,3 +55,28 @@
     padding: 2rem;
     border-radius: var(--radius-lg);
 }
+
+/* Matrix/Source Peek Effect */
+body.source-peek {
+    animation: glitch 0.3s infinite;
+    filter: invert(1) hue-rotate(180deg) brightness(1.5);
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+/* Cosmic Status Monitor Style */
+#cosmic-status {
+    z-index: 1000;
+    transition: opacity 0.3s;
+}
+
+#cosmic-status:hover {
+    opacity: 1;
+}
