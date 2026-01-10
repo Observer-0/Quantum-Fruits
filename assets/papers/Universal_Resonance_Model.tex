@@ -43,11 +43,24 @@ The Universal Resonance Model (URM) provides a framework for understanding synch
 
 \section{Main Equations and Simulations}
 
-\subsection*{0. The Master Field Equation (Universal Wave Command)}
-The fundamental evolution of the resonant scalar field $\phi$ is governed by the Master Field Equation:
+\subsection*{0. The Master Field Equation (URME)}
+The fundamental evolution of the resonant scalar field $\phi$ is governed by the Universal Resonance Master Equation:
 \begin{equation}
-\Box \phi + \gamma \partial^\beta \phi + \alpha \phi^3 + \beta \phi^5 = qE_{\text{Res}} + \lambda \langle \hat{Q} \rangle + \eta \epsilon^{\beta\nu\rho\sigma} \partial_\beta \phi \partial_\nu \phi \partial_\rho \phi \partial_\sigma \phi + \xi \zeta(x^\beta) + \kappa \partial_t \phi + \delta \phi E^2
+\Box \phi + \gamma \partial^\mu \phi + \alpha \phi^3 + \beta \phi^5 = q E_{\text{Res}} + \lambda \langle \hat{Q} \rangle + \eta \epsilon^{\mu\nu\rho\sigma} \partial_\mu \phi \partial_\nu \phi \partial_\rho \phi \partial_\sigma \phi + \xi \zeta(x^\mu) + \kappa \partial_t \phi + \delta \phi E^2
 \end{equation}
+
+\subsubsection*{Physical Derivation of Terms}
+\begin{itemize}
+    \item \textbf{$\Box \phi$}: Relativistic core wave operator (Lorentz invariant background).
+    \item \textbf{$\gamma \partial^\mu \phi$}: 4-vector damping, representing energy dissipation across spacetime dimensions.
+    \item \textbf{$\alpha \phi^3 + \beta \phi^5$}: Non-linear self-interaction. $\phi^3$ handles localized symmetry breaking, while $\phi^5$ ensures large-scale field stability.
+    \item \textbf{$q E_{\text{Res}}$}: Coupling to external resonance fields (environmental synchronization).
+    \item \textbf{$\lambda \langle \hat{Q} \rangle$}: Expectation value of quantum observables, providing the bridge between field classicality and quantum operators.
+    \item \textbf{$\eta \epsilon^{\mu\nu\rho\sigma} \partial_\mu \phi \partial_\nu \phi \partial_\rho \phi \partial_\sigma \phi$}: Topological invariant term. This protects the field against global deformations and defines the "winding number" of spacetime resonance.
+    \item \textbf{$\xi \zeta(x^\mu)$}: Stochastic/perturbation component (background noise/vacuum fluctuations).
+    \item \textbf{$\kappa \partial_t \phi$}: Specific temporal damping, defining the arrow of time as a dissipative process.
+    \item \textbf{$\delta \phi E^2$}: Electrodynamic feedback, coupling the resonance field to the electromagnetic energy density.
+\end{itemize}
 
 \subsection*{0.1. D'Alembertian Identity}
 The field density relates to spacetime curvature via the d'Alembertian operator:
@@ -55,11 +68,12 @@ The field density relates to spacetime curvature via the d'Alembertian operator:
 \Box \phi = -\beta \phi - \beta \partial_t \phi + \beta \nabla^2 \phi + \beta \zeta R \phi
 \end{equation}
 
-\subsection*{0.2. Metric Coupling (Einstein-Zander)}
-The geometry of spacetime responds to the informational field density:
+\subsection*{0.2. Metric Coupling (Einstein-Zander Resonance)}
+The geometry of spacetime responds to the field resonance and its entropic state:
 \begin{equation}
-G_{\beta\nu} + \beta \langle \phi^2 \rangle g_{\beta\nu} = 8\pi G(T_{\text{std}} + T_\phi)
+G_{\mu\nu} + \left[ R_{ij} \cdot \frac{\sigma_P}{\hbar\sqrt{-g}} \right] = \oint_{\partial\Omega} \left[ \frac{\delta\phi}{\delta x^\alpha} \otimes J^\alpha + \kappa \int \zeta(t) dt \right] + \frac{\alpha\phi^3 + \beta\phi^5}{e^{\Delta S/k_B}}
 \end{equation}
+Where $\sigma_P = \ell_P t_P = \frac{\hbar G}{c^4}$ defines the fundamental spacetime quantum.
 
 \subsection*{1. Coupled Oscillator Dynamics (Kuramoto Model)}
 % Describing phase dynamics of coupled oscillators

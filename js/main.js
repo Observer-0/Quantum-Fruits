@@ -701,6 +701,18 @@ Entropie-Export: ${(obj.energyJ * 0.92).toFixed(1)} J (Dissipation)
   kinematicMotor: () => {
     window.location.href = 'motor.html';
     return "Redirecting to Motor Lab...";
+  },
+  urmeLattice: () => {
+    qgChartCanvas.style.display = 'none';
+    qgOutput.style.display = 'none';
+    const ui = document.getElementById('urmeDynamicsUI');
+    if (ui) ui.style.display = 'block';
+
+    // The canvas is already being drawn by urm-lattice-sim.js 
+    // but we can trigger a high-energy impulse
+    if (window.resetURMLattice) window.resetURMLattice();
+
+    return "URME Lattice Active. Observe Entropy vs Coherence.";
   }
 };
 
@@ -712,6 +724,8 @@ function handleToolChange(event) {
   if (!toolHandlers[selectedValue]) {
     qgOutput.textContent = "";
     qgChartCanvas.style.display = 'none';
+    const ui = document.getElementById('urmeDynamicsUI');
+    if (ui) ui.style.display = 'none';
     return;
   }
 
