@@ -1,22 +1,21 @@
-# EDUCATIONAL & PRIVATE EVALUATION LICENSE
+MIT License
 
-**Copyright (c) 2025 - All Rights Reserved**
+Copyright (c) 2026 Adrian Zander
 
-## 1. Grant of License
-This software and documentation is strictly provided for **EDUCATIONAL EVALUATION PURPOSES** only.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-Permission is hereby granted, free of charge, to the reviewing academic staff (Teachers/Examiners) to execute, view, and test this software solely for the purpose of grading the associated project work.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-## 2. Proprietary Theory Embargo
-The theoretical framework implemented within the source code files (specifically `gammaP.js`, `sigmaP.js`) is proprietary intellectual property under active research embargo.
-
-**It is strictly FORBIDDEN to:**
-- Publish this code to public repositories (e.g., GitHub private repos are allowed, public are not).
-- Extract equations or algorithms for external scientific publication without author consent.
-- Reverse-engineer the specific derivation steps marked as "Redacted" in the documentation.
-
-## 3. No Redistribution
-Redistribution and use in source and binary forms, with or without modification, are NOT permitted.
-
-## 4. Disclaimer
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. THE AUTHORS MAKE NO CLAIMS REGARDING THE PHYSICAL CORRECTNESS OF THE SIMULATED THEORIES FOR REAL-WORLD APPLICATIONS BEYOND EDUCATIONAL DEMONSTRATION.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

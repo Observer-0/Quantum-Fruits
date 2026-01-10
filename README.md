@@ -32,9 +32,7 @@ The Arrow of Time is redefined as a **directed braking process**. Entropy growth
 - **No Singularities:** Elimination of curvature singularities through Planck-covariant source smearing ($G_{\mu\nu} = \frac{8\pi G}{c^4} \langle T_{\mu\nu}\rangle_{\sigma_P}$).
 - **Hawking Resolution:** The information paradox is resolved through a unitary evaporation process ending in a stable Planck remnant.
 
-- **Hawking Resolution:** The information paradox is resolved through a unitary evaporation process ending in a stable Planck remnant.
-
-##Current Evolution (2026 Update)
+## Current Evolution (2026 Update)
 The project has evolved beyond static theory into dynamic simulation and philosophical unification.
 
 ### [See the Roadmap: README_EVOLUTION.md](README_EVOLUTION.md)
@@ -44,6 +42,14 @@ The project has evolved beyond static theory into dynamic simulation and philoso
 1.  **[TSF Simulation (Click to Run)](tsf_sim.html)**: An interactive HTML5 visualization of the Thermal Spacetime Feedback cycle. Experience gravity, entropy, and the "bounce" in real-time.
 2.  **[Theory for Everyone](theory.html)**: Now expanded with the "James Webb" analogy and the "Cosmic Equation".
 3.  **[Quantum Fruits Lab](assets/Formulas%20and%20code/quantum_fruits_lab.py)**: The unified Python simulation suite for professional verification.
+
+## Future Roadmap (Next Steps)
+
+1.  **Bilingual Translation (English/German)**: Complete localization of `theory.html` and `index.html` to reach a global audience.
+2.  **URME Dashboard**: Expanding the interactive lattice simulation with real-time data export and parameter presets.
+3.  **Mobile Optimization**: Ensuring all simulations (TSF, Lattice, Galaxy) are fully responsive and touch-enabled for mobile devices.
+4.  **Scientific Peer Review Integration**: Linking finalized paper versions (ArXiv/Zenodo) directly to the interactive modules.
+5.  **Observer-POV Module**: Implementing a VR-ready visualization of the "One-Quantum Hypothesis".
 
 ## Scientific Library
 The ZIP archive includes the full rigorous papers (published with separate DOIs):
@@ -55,5 +61,5 @@ The ZIP archive includes the full rigorous papers (published with separate DOIs)
 
 ---
 
-**Copyright © 2026**
-This project is private property. All rights reserved.
+**Copyright © 2026 Adrian Zander**  
+Licensed under the **MIT License**. Feel free to use, modify, and resonate with this theory.

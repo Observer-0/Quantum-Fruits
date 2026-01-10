@@ -69,9 +69,16 @@ Ersetze die statische Expansion durch einen **Information-Phase-Shift**:
 * **Color-Shift:** Nutze Blue-Shifts für die Kompression (Gravitation übernimmt) und Red-Shifts für die Entspannung (Expansion gewinnt).
 * **Core-Element:** Der Kern von Andromeda (und alle Quasare) müssen als helle Zentren maximaler Planck-Kraft sichtbar sein, die das Gewebe der Sandbox stabilisieren.
 
+#### 5. Final Phase: The One-Quantum Hypothesis (PoV Monism)
+
+The ultimate evolution of the model recognizes that $\sigma_P$ is not just a building block, but the **unique core** of the universe. 
+
+* **Perspective Scaling:** The cosmological constant $\Lambda$ is the aging of this single quantum.
+* **Unified Field:** Gravity, Entropy, and Action are mere perspectives of the same $\sigma_P$ dance.
+
 ---
 
-### 5. Scientific Postulate Reference
+### 6. Scientific Postulate Reference
 
 This implementation is based on the **QSTF Framework (Postulates P1-P10)**, specifically linking:
 
