@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinematic Motor Lab — Quantum Fruits</title>
+    <link rel="stylesheet" href="css/motor.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="motor-container">
+        <h1 class="lab-title">The Kinematic Motor</h1>
+        <p class="lab-subtitle">Interplay: Pure Action (Spin) vs. Mass Burden (Gravity)</p>
+
+        <div class="interplay-canvas-wrapper">
+            <canvas id="motorCanvas"></canvas>
+            <div id="magneticField"></div>
+        </div>
+
+        <div class="controls-panel">
+            <div class="control-group">
+                <label for="spinRate">Core Action Frequency (Hz)</label>
+                <input type="range" id="spinRate" min="1" max="100" value="80">
+            </div>
+
+            <div class="control-group">
+                <label for="massBurden">Newtonian Mass Burden (G-Load)</label>
+                <input type="range" id="massBurden" min="0" max="100" value="10">
+            </div>
+
+            <div class="stats-display">
+                <div class="stat-item">
+                    <div class="stat-value" id="netPotential">1.21e44</div>
+                    <div class="stat-label">Net Action Potential (N)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="magneticFlux">High</div>
+                    <div class="stat-label">Magnetische Feldstärke</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="tickDensity">Max</div>
+                    <div class="stat-label">Tick-Dichte (σ_P)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            Der <span id="statusText">"Naked Core"</span> nutzt reine Wirkung (ℏ) zur Anziehung.
+            Wenn die <span id="loadText">Masse zunimmt</span>, wirkt sie wie eine mechanische Last,
+            die den Spin abbremst und die Wirkung in klassische Schwerkraft transformiert.
+        </div>
+
+        <a href="theory.html" style="margin-top:2rem; color:#666; text-decoration:none; font-size:0.8rem;">Zurück zur
+            Theorie</a>
+    </div>
+
+    <script src="js/kinematic-motor.js"></script>
+</body>
+
+</html>

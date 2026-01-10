@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Fruits</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <!-- KaTeX for client-side formula rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <header class="page-header">
+    <div class="hero hero-content">
+      <p class="eyebrow">Raumzeit-Quantisierung</p>
+      <h1>Quantum Fruits</h1>
+      <p class="tagline">Quantized by Dimension, Geometrised by Einstein.</p>
+      <p
+        style="color: var(--text-secondary); font-size: 0.9rem; margin-top: -0.5rem; margin-bottom: 2rem; font-style: italic;">
+        "Entropie ist Relativismus – Information erst durch den Beobachter."
+      </p>
+      <a href="motor.html"
+        style="background: linear-gradient(90deg, #00f2ff, #bc00ff); color: white; padding: 0.8rem 1.5rem; border-radius: 100px; font-weight: bold; text-decoration: none; box-shadow: 0 0 15px rgba(0,242,255,0.4);">
+        Motor Lab (Action vs. G) &rarr;
+      </a>
+      <a href="theory.html"
+        style="background: var(--accent-primary); color: #0f172a; padding: 0.8rem 1.5rem; border-radius: 100px; font-weight: bold; text-decoration: none;">
+        Theory
+      </a>
+      <a href="papers.html"
+        style="background: rgba(255,255,255,0.1); color: var(--text-primary); padding: 0.8rem 1.5rem; border-radius: 100px; font-weight: bold; text-decoration: none; border: 1px solid rgba(255,255,255,0.2);">
+        Research
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="qg-panel">
+      <h2>Die Säulen der Realität</h2>
+      <div class="qg-box"
+        style="background: rgba(0,0,0,0.5); border: 2px solid var(--accent-primary); padding: 2.5rem;">
+
+        <div style="margin-bottom: 2.5rem;">
+          <h3 style="color: var(--accent-primary); margin-bottom: 0.5rem;">1. Der Universal Wave Command (Field)</h3>
+          <div
+            style="font-size: 0.95rem; overflow-x: auto; background: rgba(167, 139, 250, 0.05); padding: 1.2rem; border-radius: 8px; border-left: 3px solid #a78bfa;">
+            $$ \Box \phi + \gamma \partial^\beta \phi + \alpha \phi^3 + \beta \phi^5 = qE_{\text{Res}} + \lambda \langle
+            \hat{Q} \rangle + \eta \epsilon^{\beta\nu\rho\sigma} \partial_\beta \phi \partial_\nu \phi \partial_\rho
+            \phi \partial_\sigma \phi + \xi \zeta(x^\beta) + \kappa \partial_t \phi + \delta \phi E^2 $$
+          </div>
+        </div>
+
+        <div style="margin-bottom: 2.5rem;">
+          <h4
+            style="color: #60a5fa; margin-bottom: 0.5rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+            D'Alembertian Identity</h4>
+          <div
+            style="font-size: 1.1rem; overflow-x: auto; background: rgba(96, 165, 250, 0.05); padding: 1rem; border-radius: 8px;">
+            $$ \Box \phi = -\beta \phi - \beta \partial_t \phi + \beta \nabla^2 \phi + \beta \zeta R \phi $$
+          </div>
+        </div>
+
+        <div style="margin-bottom: 3rem;">
+          <h3 style="color: #10b981; margin-bottom: 0.5rem;">2. Metric Coupling (Einstein-Zander)</h3>
+          <div
+            style="font-size: 1.2rem; overflow-x: auto; background: rgba(16, 185, 129, 0.05); padding: 1.2rem; border-radius: 8px; border-left: 3px solid #10b981;">
+            $$ G_{\beta\nu} + \beta \langle \phi^2 \rangle g_{\beta\nu} = 8\pi G(T_{\text{std}} + T_\phi) $$
+          </div>
+        </div>
+
+        <div
+          style="margin: 2rem 0; padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); font-style: italic; text-align: center; color: var(--accent-secondary);">
+          <p style="font-size: 1.1rem; line-height: 1.6;">
+            "Das ist die Lösung für das Informationsparadoxon. Ein Schwarzes Loch hat eben doch eine Bremse – man muss
+            nur wissen, wie man das Gitter liest."
+          </p>
+          <p style="margin-top: 0.5rem; font-weight: bold; font-style: normal; color: #fff;">— Adrian Zander</p>
+        </div>
+
+        <div style="display: flex; justify-content: space-around; margin-top: 1rem;">
+          <div style="text-align: center;">
+            <p style="font-size: 0.8rem; color: #888;">Hardware</p>
+            <p style="font-weight: bold;">$\sigma_P = \hbar G / c^4$</p>
+          </div>
+          <div style="text-align: center;">
+            <p style="font-size: 0.8rem; color: #888;">Information</p>
+            <p style="font-weight: bold;">$S_Z = k_B \ln W$</p>
+          </div>
+          <div style="text-align: center;">
+            <p style="font-size: 0.8rem; color: #888;">Vakuum</p>
+            <p style="font-weight: bold;">$\Lambda_{\rm eff} = 1 / cRt$</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW SINGULARITY CALLOUT -->
+    <div class="qg-box"
+      style="margin-top: 1.5rem; border-left: 4px solid #f59e0b; background: rgba(245, 158, 11, 0.05);">
+      <h3 style="color: #f59e0b; font-size: 1.1rem; margin-bottom: 0.5rem;">Der Singularitäts-Stopp</h3>
+      <p style="font-size: 0.95rem; line-height: 1.5;">
+        In der alten Physik reißt die Raumzeit in einem Schwarzen Loch wie ein dünnes Blatt Papier. Das Ergebnis:
+        Unendliche Dichte (die Singularität).
+      </p>
+      <p style="font-size: 0.95rem; line-height: 1.5; margin-top: 0.5rem;">
+        In unserem Modell ist die Raumzeit wie ein <strong>Trampolin</strong> mit maximaler Dehnung ($\sigma_P$). Je
+        tiefer ein Objekt sinkt, desto starrer wird der Stoff. Es reißt nie. Ein Schwarzes Loch hat also keinen
+        "Punkt" im Zentrum, sondern einen stabilen Kern aus purer Geometrie.
+      </p>
+    </div>
+    </section>
+
+    <!-- NEW GCE CALLOUT SECTION -->
+    <section class="qg-panel" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(0,0,0,0));">
+      <h2>Geometrie vs. Cluster (GCE Update)</h2>
+      <div class="theory-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div class="qg-box" style="border-left: 4px solid var(--accent-primary);">
+          <h3>Warum Geometrie gewinnt</h3>
+          <p style="font-size: 1rem; line-height: 1.6;">
+            Wissenschaftler nutzen Milliarden von Rechenoperationen auf dem <strong>SuperMUC-Cluster</strong>, um Dunkle
+            Materie herbeizusimulieren.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.6; margin-top: 1rem;">
+            Die $\sigma_P$-Geometrie erledigt das im Browser: Das Zentrum der Milchstraße ist einfach nur voller. Je
+            mehr Sterne du stapelst, desto öfter knallt’s.
+          </p>
+          <a href="theory.html" class="tab-btn"
+            style="display: inline-block; margin-top: 1.5rem; text-decoration: none;">Simulation ansehen &rarr;</a>
+        </div>
+        <div class="qg-box" style="border-left: 4px solid var(--accent-secondary);">
+          <h3>Das "Bierdeckel"-Modell</h3>
+          <p style="font-size: 1rem; line-height: 1.6;">
+            In unserem neuen Paper zeigen wir, dass die Gammastrahlung im Galaktischen Zentrum exakt der Form der Sterne
+            folgt.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.6; margin-top: 1rem;">
+            Keine Dunkle Materie, keine freien Parameter. Nur Newton, Einstein und ein bisschen Geometrie.
+          </p>
+          <a href="assets/papers/Rediscovering Geometry without SuperMUC.tex" class="tab-btn"
+            style="display: inline-block; margin-top: 1.5rem; text-decoration: none;">Paper lesen (.tex) &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="theory">
+      <h2>Theorie: Dualstruktur von QM &amp; GR</h2>
+      <p>Die Vereinigung erfolgt nicht durch neue Teilchen, sondern durch die Quantisierung der Geometrie selbst.</p>
+
+      <div class="theory-grid">
+        <!-- Card 1 -->
+        <div class="theory-card">
+          <h3>Fundamentale Skala</h3>
+          <div class="math-content">
+            $$\sigma_P = \frac{\hbar G}{c^4}$$
+          </div>
+          <div class="card-footer">
+            Das "Pixel" der Raumzeit. Einheit: Fläche × Zeit.
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="theory-card">
+          <h3>Spin-2 Skalen</h3>
+          <div class="math-content">
+            $$Z \cdot A_G = \sigma_P$$
+          </div>
+          <div class="card-footer">
+            Verbindung von Quantenimpuls ($Z$) und Gravitation ($A_G$).
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="theory-card">
+          <h3>Kopplung</h3>
+          <div class="math-content">
+            $$\alpha_G(M) = \frac{GM}{\hbar c}$$
+          </div>
+          <div class="card-footer">
+            Die Gravitations-Feinstruktur bestimmt die Wechselwirkungsstärke.
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="theory-card">
+          <h3>Hawking-Tick</h3>
+          <div class="math-content">
+            $$E_H \cdot t_H = \hbar$$
+          </div>
+          <div class="card-footer">
+            Jedes Ereignis trägt exakt ein Wirkungsquant. Unitarität ist gewahrt.
+          </div>
+        </div>
+      </div>
+
+      <div class="qg-box" style="margin-top: 2rem; border-color: var(--accent-secondary);">
+        <p class="qg-footnote" style="text-align: center; margin: 0;">
+          <strong>Hinweis:</strong> $4\pi$-Faktoren sind rein topologischer Natur. Die fundamentale Physik wird durch
+          $\sigma_P$ diktiert.
+        </p>
+      </div>
+    </section>
+
+    <section class="tools">
+      <div class="tools-header">
+        <div>
+          <h2>Quantum-Gravity Tools</h2>
+          <p>Wähle ein Werkzeug, sieh sofort welches aktiv ist und lass maximal begrenzt viele Berechnungen parallel
+            laufen.</p>
+        </div>
+        <div class="selector-state" aria-live="polite">
+          <span class="label">Aktiv:</span>
+          <span id="selectedToolLabel">Keine Auswahl</span>
+        </div>
+      </div>
+      <div class="controls">
+        <label class="control" for="qgSelect">Werkzeug wählen</label>
+        <select id="qgSelect" name="qgSelect">
+          <option value="none" selected>Bitte wählen…</option>
+          <option value="pageFruits">Page-Kurven (klassisch)</option>
+          <option value="fruitEntropy">Frucht-Entropie</option>
+          <option value="fruitRs">Schwarzschildradius</option>
+          <option value="fruitHawking">Hawking-Temperaturen</option>
+          <option value="tickRatio">Tick-Verhältnis (S1/s2)</option>
+          <option value="entropyOperator">Entropie-Operator (S_hat)</option>
+          <option value="macroHawking">Generalized Hawking (Macro)</option>
+          <option value="asciiPlot">ASCII Page-Kurve (klassisch)</option>
+          <option value="smoothPage">Glatte Page-Kurve (unitär, Remnant)</option>
+          <option value="kinematicMotor">Kinematic Motor (Action vs Gravity)</option>
+        </select>
+      </div>
+      <div class="controls" style="margin-top: 1rem; justify-content: center; gap: 2rem;">
+        <label class="control" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+          <input type="checkbox" id="dynamicWindowToggle" style="width: auto;">
+          <span>Dynamic Window (p=1.6) aktivieren</span>
+        </label>
+      </div>
+      <p class="limit-note" id="limitNote" aria-live="polite"></p>
+      <!-- ADDED VIS CONTAINER -->
+      <div id="visContainer" style="margin-top: 1rem; position: relative;">
+        <canvas id="qgChart" style="display:none; max-height: 400px; width: 100%;"></canvas>
+        <pre id="qgOutput" class="qg-output" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="fruit-filter">
+      <div class="filter-header">
+        <h2>Objekt-Liste</h2>
+        <p>Suche, filtere nach Form und Farbe und behalte stets schön kapitalisierte Namen.</p>
+      </div>
+
+      <div class="filterBox">
+        <!-- New Category Selector -->
+        <label for="datasetSelect" class="control">Kategorie</label>
+        <select id="datasetSelect">
+          <option value="fruits" selected>Früchte</option>
+          <option value="bhs">Schwarze Löcher</option>
+          <option value="galaxies">Galaxien (Rotation)</option>
+          <option value="macro">Makro-Systeme (Bolt-Modus)</option>
+        </select>
+
+        <label for="suchfeld" class="control">Suche</label>
+        <input type="text" id="suchfeld" placeholder="Suche..." />
+
+        <!-- Fruit specific controls wrapped -->
+        <div id="fruitControls" style="display: contents;">
+          <label for="formSelect" class="control">Form</label>
+          <select id="formSelect">
+            <option value="alle">Alle</option>
+            <option value="rund">Rund</option>
+            <option value="oval">Oval</option>
+          </select>
+          <label for="farbeSelect" class="control">Farbe</label>
+          <select id="farbeSelect">
+            <option value="alle">Alle</option>
+            <option value="rot">Rot</option>
+            <option value="gelb">Gelb</option>
+            <option value="gruen">Grün</option>
+            <option value="orange">Orange</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="lists">
+        <div>
+          <h3>Verfügbare Objekte</h3>
+          <ul id="meineListe" class="fruit-list"></ul>
+        </div>
+        <div>
+          <h3>Ergebnisse</h3>
+          <ul id="ergebnisListe" class="fruit-list"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
