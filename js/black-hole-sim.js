@@ -162,6 +162,18 @@ class BlackHoleSimulation {
         });
     }
 
+    calculateSZ() {
+        // Mock mass for visual purposes: 10 Solar Masses
+        const mass = 10 * 1.989e30;
+        const c = 2.99792458e8;
+        const h = 6.62607015e-34;
+        const kB = 1.380649e-23;
+        const f_ref = 1e14; // Visible light ref
+
+        // S_Z = kB * ln( mc^2 / hf )
+        return kB * Math.log((mass * c * c) / (h * f_ref));
+    }
+
     drawLabels() {
         this.ctx.font = '700 12px "Inter", sans-serif';
         this.ctx.fillStyle = 'rgba(0, 242, 255, 0.9)';
@@ -169,7 +181,20 @@ class BlackHoleSimulation {
         this.ctx.shadowColor = 'rgba(0, 242, 255, 0.8)';
         this.ctx.textAlign = 'center';
 
+        const Sz = this.calculateSZ();
+
+        // TOP LEFT INFO: Zander-Stats
+        this.ctx.textAlign = 'left';
+        this.ctx.fillStyle = '#fbbf24';
+        this.ctx.fillText(`ZANDER-ENTROPY (S_Z): ${Sz.toExponential(4)} J/K`, 20, 30);
+        this.ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        this.ctx.font = '500 10px monospace';
+        this.ctx.fillText(`STATE: MAX_BRAKING (Z_LIMIT)`, 20, 45);
+
         // Action Core
+        this.ctx.textAlign = 'center';
+        this.ctx.fillStyle = 'rgba(0, 242, 255, 0.9)';
+        this.ctx.font = '700 12px "Inter", sans-serif';
         this.ctx.fillText('ACTION CORE', this.centerX, this.centerY - 25);
         this.ctx.strokeStyle = 'rgba(0, 242, 255, 0.5)';
         this.ctx.beginPath();
@@ -180,12 +205,15 @@ class BlackHoleSimulation {
         // Event Horizon
         this.ctx.textAlign = 'left';
         this.ctx.fillText('EVENT HORIZON', this.centerX + 120, this.centerY - 80);
+        this.ctx.font = 'italic 10px "Inter"';
+        this.ctx.fillText('Frozen Frequency Zone', this.centerX + 120, this.centerY - 65);
         this.ctx.beginPath();
         this.ctx.moveTo(this.centerX + 115, this.centerY - 85);
         this.ctx.lineTo(this.centerX + 35, this.centerY - 25);
         this.ctx.stroke();
 
         // Accretion Disk
+        this.ctx.font = '700 12px "Inter", sans-serif';
         this.ctx.textAlign = 'left';
         this.ctx.fillText('ACCRETION DISK', this.centerX - 240, this.centerY + 100);
         this.ctx.beginPath();
@@ -201,6 +229,10 @@ class BlackHoleSimulation {
         this.ctx.fillRect(0, 0, this.width, this.height);
 
         this.time += 0.01;
+
+        // Visual feedback based on entropy state
+        const pulse = Math.sin(this.time * 2) * 0.05;
+        this.params.rotationSpeed = 0.02 + pulse;
 
         this.drawAccretionDisk();
         this.drawEventHorizon();

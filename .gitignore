@@ -1,1 +1,9 @@
 assets/Formulas and code/md
+*.zip
+*.7z
+*.rar
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db

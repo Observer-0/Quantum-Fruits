@@ -5,8 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quantum Fruits</title>
-  <meta name="description"
-    content="Quantum Fruits: Exploring the Source Code of the Universe through sigmaP Spacetime Quantization.">
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/components.css" />
   <!-- KaTeX for client-side formula rendering -->
@@ -15,19 +13,17 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="js/lattice-bg.js"></script>
 </head>
-
 
 <body>
   <header class="page-header">
     <div class="hero hero-content">
       <p class="eyebrow">Raumzeit-Quantisierung</p>
       <h1>Quantum Fruits</h1>
-      <p class="tagline">Wo Entropie auf Geometrie trifft – und Information erst durch den Beobachter Sinn ergibt.</p>
+      <p class="tagline">Quantized by Dimension, Geometrised by Einstein.</p>
       <p
         style="color: var(--text-secondary); font-size: 0.9rem; margin-top: -0.5rem; margin-bottom: 2rem; font-style: italic;">
-        "Erst durch Relativität erkenne ich die Entropie."
+        "Entropie ist Relativismus – Information erst durch den Beobachter."
       </p>
       <a href="motor.html"
         style="background: linear-gradient(90deg, #00f2ff, #bc00ff); color: white; padding: 0.8rem 1.5rem; border-radius: 100px; font-weight: bold; text-decoration: none; box-shadow: 0 0 15px rgba(0,242,255,0.4);">
@@ -43,49 +39,112 @@
       </a>
     </div>
   </header>
-  <!-- FAQ / Simple Explanation Section -->
-  <section class="faq" style="margin-top: 3rem; padding: 2rem; background: rgba(0,0,0,0.05); border-radius: 12px;">
-    <h2 style="color: var(--primary); text-align: center; margin-bottom: 1.5rem;">Einfach erklärt</h2>
-    <p style="font-size: 1rem; line-height: 1.6; color: var(--text-primary); max-width: 800px; margin: 0 auto;">
-      Das Universum besteht aus winzigen Bausteinen, die wir <em>σₚ</em> nennen – ein Produkt aus Planck‑Länge und
-      Planck‑Zeit. Diese Bausteine sind so klein, dass sie für uns praktisch unsichtbar sind, aber sie bestimmen, wie
-      Raum und Zeit zusammenwirken. Wenn du dir das wie ein digitales Bild vorstellst, ist σₚ das kleinste Pixel. Alles,
-      was wir sehen, ist nur eine sehr stark vergrößerte Version dieses Bildes.
-    </p>
-    <p style="font-size: 1rem; line-height: 1.6; color: var(--text-primary); max-width: 800px; margin: 1rem auto;">
-      <strong>Hawking‑Strahlung:</strong> Ein schwarzes Loch verliert langsam Energie, weil die Quantennatur von σₚ es
-      erlaubt, Teilchen‑Paare aus dem Vakuum zu „ziehen“. Unser Modell beschreibt das exakt mit der Formel $4\pi r_s^2 =
-      \hbar r_s^2$, sodass die Strahlung keine geheimnisvolle Ausnahme ist, sondern ein natürlicher Effekt der
-      Raumzeit‑Quantisierung.
-    </p>
-    <p style="font-size: 1rem; line-height: 1.6; color: var(--text-primary); max-width: 800px; margin: 1rem auto;">
-      <strong>Die Konstante K:</strong> Wir definieren $K = \frac{\hbar}{c G}$ – ein Maß dafür, wie stark ein
-      „Massen‑Quadrat“ über eine Fläche wirkt. Sie hat die Dimension $\mathrm{kg^2\,s^2\,m^{-2}}$ und verbindet
-      Quanten‑Aktion, Gravitation und Lichtgeschwindigkeit zu einer einzigen Größe.
-    </p>
-  </section>
 
   <main>
     <section class="qg-panel">
-      <h2>Weltformeln am Obstregal</h2>
-      <div class="qg-box">
-        <p class="qg-heading">Wie verhält sich eine Frucht in quantisierter Raumzeit?</p>
-        <p class="qg-eq">
-          $$ \hat{G}_{\mu\nu}[\sigma_P; W] \, |\Psi_W\rangle = \frac{8\pi G}{c^4} \, \overline{T}_{\mu\nu} \,
-          |\Psi_W\rangle $$
-        </p>
-        <p class="qg-eq">σ<sub>P</sub> = ℓ<sub>P</sub> t<sub>P</sub> = ħG / c⁴</p>
-        <p class="qg-eq">Z = ħ² / c <span class="qg-note">(Dualgröße, Einheit: M²L³T⁻¹)</span></p>
-        <p class="qg-eq">σ<sub>P</sub> · Z = ħ³ G / c⁵</p>
-        <p class="qg-eq">g̃<sub>μν</sub>(x) = g<sub>μν</sub>(x)/(1 + (1/σ<sub>P</sub>) f(R(x)))</p>
-        <p class="qg-eq">Δx Δt ≥ σ<sub>P</sub> = ℓ<sub>P</sub> t<sub>P</sub></p>
-        <p class="qg-eq">Korrigierte Form (dimensionell konsistent):</p>
-        <p class="qg-eq">iħ ∂<sub>t</sub>ψ = &lt; - (ħ²/2m) ∇² + V &gt; ψ,</p>
-        <p class="qg-eq">mit V = ½ m v² − ħ ∂<sub>t</sub> ln(σ<sub>P</sub>/σ₀) (Argument des Logarithmus muss
-          dimensionslos sein)</p>
-        <p class="qg-eq">Λ<sub>eff</sub> = 3 / (c · R · t)</p>
-        <p class="qg-note">Θ<sub>Z</sub>(M) = c³ / (8π G M k<sub>B</sub> ħ) löst das Hawking-Paradoxon.</p>
-        <p class="qg-footnote">Hinweis: Information wird nicht vernichtet. Jede Frucht besitzt einen Planck-Remnant.</p>
+      <h2>Die Säulen der Realität</h2>
+      <div class="qg-box"
+        style="background: rgba(0,0,0,0.5); border: 2px solid var(--accent-primary); padding: 2.5rem;">
+
+        <div style="margin-bottom: 2.5rem;">
+          <h3 style="color: var(--accent-primary); margin-bottom: 0.5rem;">1. Der Universal Wave Command (Field)</h3>
+          <div
+            style="font-size: 0.95rem; overflow-x: auto; background: rgba(167, 139, 250, 0.05); padding: 1.2rem; border-radius: 8px; border-left: 3px solid #a78bfa;">
+            $$ \Box \phi + \gamma \partial^\beta \phi + \alpha \phi^3 + \beta \phi^5 = qE_{\text{Res}} + \lambda \langle
+            \hat{Q} \rangle + \eta \epsilon^{\beta\nu\rho\sigma} \partial_\beta \phi \partial_\nu \phi \partial_\rho
+            \phi \partial_\sigma \phi + \xi \zeta(x^\beta) + \kappa \partial_t \phi + \delta \phi E^2 $$
+          </div>
+        </div>
+
+        <div style="margin-bottom: 2.5rem;">
+          <h4
+            style="color: #60a5fa; margin-bottom: 0.5rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+            D'Alembertian Identity</h4>
+          <div
+            style="font-size: 1.1rem; overflow-x: auto; background: rgba(96, 165, 250, 0.05); padding: 1rem; border-radius: 8px;">
+            $$ \Box \phi = -\beta \phi - \beta \partial_t \phi + \beta \nabla^2 \phi + \beta \zeta R \phi $$
+          </div>
+        </div>
+
+        <div style="margin-bottom: 3rem;">
+          <h3 style="color: #10b981; margin-bottom: 0.5rem;">2. Metric Coupling (Einstein-Zander)</h3>
+          <div
+            style="font-size: 1.2rem; overflow-x: auto; background: rgba(16, 185, 129, 0.05); padding: 1.2rem; border-radius: 8px; border-left: 3px solid #10b981;">
+            $$ G_{\beta\nu} + \beta \langle \phi^2 \rangle g_{\beta\nu} = 8\pi G(T_{\text{std}} + T_\phi) $$
+          </div>
+        </div>
+
+        <div
+          style="margin: 2rem 0; padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); font-style: italic; text-align: center; color: var(--accent-secondary);">
+          <p style="font-size: 1.1rem; line-height: 1.6;">
+            "Das ist die Lösung für das Informationsparadoxon. Ein Schwarzes Loch hat eben doch eine Bremse – man muss
+            nur wissen, wie man das Gitter liest."
+          </p>
+          <p style="margin-top: 0.5rem; font-weight: bold; font-style: normal; color: #fff;">— Adrian Zander</p>
+        </div>
+
+        <div style="display: flex; justify-content: space-around; margin-top: 1rem;">
+          <div style="text-align: center;">
+            <p style="font-size: 0.8rem; color: #888;">Hardware</p>
+            <p style="font-weight: bold;">$\sigma_P = \hbar G / c^4$</p>
+          </div>
+          <div style="text-align: center;">
+            <p style="font-size: 0.8rem; color: #888;">Information</p>
+            <p style="font-weight: bold;">$S_Z = k_B \ln W$</p>
+          </div>
+          <div style="text-align: center;">
+            <p style="font-size: 0.8rem; color: #888;">Vakuum</p>
+            <p style="font-weight: bold;">$\Lambda_{\rm eff} = 1 / cRt$</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW SINGULARITY CALLOUT -->
+    <div class="qg-box"
+      style="margin-top: 1.5rem; border-left: 4px solid #f59e0b; background: rgba(245, 158, 11, 0.05);">
+      <h3 style="color: #f59e0b; font-size: 1.1rem; margin-bottom: 0.5rem;">Der Singularitäts-Stopp</h3>
+      <p style="font-size: 0.95rem; line-height: 1.5;">
+        In der alten Physik reißt die Raumzeit in einem Schwarzen Loch wie ein dünnes Blatt Papier. Das Ergebnis:
+        Unendliche Dichte (die Singularität).
+      </p>
+      <p style="font-size: 0.95rem; line-height: 1.5; margin-top: 0.5rem;">
+        In unserem Modell ist die Raumzeit wie ein <strong>Trampolin</strong> mit maximaler Dehnung ($\sigma_P$). Je
+        tiefer ein Objekt sinkt, desto starrer wird der Stoff. Es reißt nie. Ein Schwarzes Loch hat also keinen
+        "Punkt" im Zentrum, sondern einen stabilen Kern aus purer Geometrie.
+      </p>
+    </div>
+    </section>
+
+    <!-- NEW GCE CALLOUT SECTION -->
+    <section class="qg-panel" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(0,0,0,0));">
+      <h2>Geometrie vs. Cluster (GCE Update)</h2>
+      <div class="theory-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div class="qg-box" style="border-left: 4px solid var(--accent-primary);">
+          <h3>Warum Geometrie gewinnt</h3>
+          <p style="font-size: 1rem; line-height: 1.6;">
+            Wissenschaftler nutzen Milliarden von Rechenoperationen auf dem <strong>SuperMUC-Cluster</strong>, um Dunkle
+            Materie herbeizusimulieren.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.6; margin-top: 1rem;">
+            Die $\sigma_P$-Geometrie erledigt das im Browser: Das Zentrum der Milchstraße ist einfach nur voller. Je
+            mehr Sterne du stapelst, desto öfter knallt’s.
+          </p>
+          <a href="theory.html" class="tab-btn"
+            style="display: inline-block; margin-top: 1.5rem; text-decoration: none;">Simulation ansehen &rarr;</a>
+        </div>
+        <div class="qg-box" style="border-left: 4px solid var(--accent-secondary);">
+          <h3>Das "Bierdeckel"-Modell</h3>
+          <p style="font-size: 1rem; line-height: 1.6;">
+            In unserem neuen Paper zeigen wir, dass die Gammastrahlung im Galaktischen Zentrum exakt der Form der Sterne
+            folgt.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.6; margin-top: 1rem;">
+            Keine Dunkle Materie, keine freien Parameter. Nur Newton, Einstein und ein bisschen Geometrie.
+          </p>
+          <a href="assets/papers/Rediscovering Geometry without SuperMUC.tex" class="tab-btn"
+            style="display: inline-block; margin-top: 1.5rem; text-decoration: none;">Paper lesen (.tex) &rarr;</a>
+        </div>
       </div>
     </section>
 
@@ -167,6 +226,8 @@
           <option value="fruitEntropy">Frucht-Entropie</option>
           <option value="fruitRs">Schwarzschildradius</option>
           <option value="fruitHawking">Hawking-Temperaturen</option>
+          <option value="tickRatio">Tick-Verhältnis (S1/s2)</option>
+          <option value="entropyOperator">Entropie-Operator (S_hat)</option>
           <option value="macroHawking">Generalized Hawking (Macro)</option>
           <option value="asciiPlot">ASCII Page-Kurve (klassisch)</option>
           <option value="smoothPage">Glatte Page-Kurve (unitär, Remnant)</option>

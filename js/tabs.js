@@ -4,29 +4,21 @@ function switchTab(tabId) {
     // Deactivate all buttons
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
 
-    // Activate selected content
-    const targetContent = document.getElementById('tab-' + tabId);
-    if (targetContent) {
-        targetContent.classList.add('active');
-    }
+    // Activate selected
+    document.getElementById('tab-' + tabId).classList.add('active');
 
-    // Activate selected button
-    // Find button that has the onclick with this tabId
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${tabId}'`)) {
-            btn.classList.add('active');
-        }
-    });
+    // Find button and activate it
+    // Logic: The button that called this might not be easily accessible if we just pass ID.
+    // Instead early binding or querySelector strategy.
+
+    // Let's assume buttons are in order: Theory, Papers, Formulas
+    const btns = document.querySelectorAll('.tab-btn');
+    if (tabId === 'theory' && btns[0]) btns[0].classList.add('active');
+    if (tabId === 'papers' && btns[1]) btns[1].classList.add('active');
+    if (tabId === 'formulas' && btns[2]) btns[2].classList.add('active');
 
     // Optional: Trigger Math render if needed
-    if (window.renderMathInElement && targetContent) {
-        renderMathInElement(targetContent, {
-            delimiters: [
-                { left: "$$", right: "$$", display: true },
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "\\[", right: "\\]", display: true }
-            ]
-        });
-    }
+    // if (window.renderMathInElement) {
+    //    renderMathInElement(document.getElementById('tab-' + tabId));
+    // }
 }

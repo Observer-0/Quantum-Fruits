@@ -21,6 +21,10 @@ A bridge between quantum action and geometry. At the Compton wavelength, it show
 $$W = m_P T_P k_B = \frac{\hbar c^3}{G}$$
 Quantifies a structural thermal–inertial action density. Combined with $\sigma_P$, it yields $W \cdot \sigma_P = \hbar^2/c$, the universal constant underlying the scaling function.
 
+### 5. Zander-Entropy & The Arrow of Time ($S_Z$)
+$$S_Z = k_B \ln \left( \frac{mc^2}{hf} \right)$$
+The Arrow of Time is redefined as a **directed braking process**. Entropy growth is the transition of energy from pure quantum oscillation ($hf$) into gravitational mass-burden ($mc^2$). Time is the waste product of this conversion.
+
 ## Key Theoretical Results
 
 - **Cosmology Bridge:** The cosmological constant $\Lambda \approx 10^{-53} \text{ m}^{-2}$ is derived directly from the global fine-structure of the quantum field: $\alpha_\sigma = \sigma_P / (R \cdot t) \implies \Lambda = \alpha_\sigma / \ell_P^2$. No dark energy required.

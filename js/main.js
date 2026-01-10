@@ -619,6 +619,42 @@ const toolHandlers = {
       (obj) => `T_H(${obj.name}) = ${hawkingTemperature(obj.massKg).toExponential(3)} K`
     ).join("\n");
   },
+  tickRatio: () => {
+    qgChartCanvas.style.display = 'none';
+    qgOutput.style.display = 'block';
+    const data = getActiveDataset();
+    const f_ref = 1e14; // Reference frequency [Hz] (Visible Light / Fruit Scale)
+    const h = 6.62607015e-34;
+
+    return data.map(obj => {
+      const mass = obj.massKg || (obj.massSolar * 1.989e30);
+      const energy = mass * (c ** 2);
+      const hf = h * f_ref;
+      const S1 = energy / hf;
+      const s2 = hf / energy;
+
+      return `--- ${obj.name} ---\nS1 (mc^2/hf): ${S1.toExponential(4)}\ns2 (hf/mc^2): ${s2.toExponential(4)}`;
+    }).join("\n\n");
+  },
+  entropyOperator: () => {
+    qgChartCanvas.style.display = 'none';
+    qgOutput.style.display = 'block';
+    const data = getActiveDataset();
+    const f_ref = 1e14; // Reference frequency
+    const h = 6.62607015e-34;
+    const kB = 1.380649e-23;
+
+    return data.map(obj => {
+      const mass = obj.massKg || (obj.massSolar * 1.989e30);
+      const energy = mass * (c ** 2);
+      const hf = h * f_ref;
+
+      // Zander-Entropy S_Z = kB * ln( mc^2 / hf )
+      const S_val = kB * Math.log(energy / hf);
+
+      return `--- ${obj.name} ---\nZander-Entropie (S_Z): ${S_val.toExponential(4)} J/K\n(Geometrische Bremslast)`;
+    }).join("\n\n");
+  },
   macroHawking: () => {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
