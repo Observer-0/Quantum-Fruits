@@ -144,7 +144,9 @@ function simulatePageCurve(M0, steps = 200) {
     steps = Math.max(10, Math.floor(Math.min(10000, ticks)));
   }
 
-  const dt = Math.max(tau / steps, 1e-30);
+  let dt = Math.max(tau / steps, 1e-30);
+  const MAX_REL_CHANGE = 0.02; // max relative change per step (2%)
+  const MIN_DT = 1e-40;
 
   let t = 0;
   let M = M0;
@@ -168,24 +170,50 @@ function simulatePageCurve(M0, steps = 200) {
       // Radiation entropy stops growing (energy emission stops)
       sradPoints.push(S_rad_accum);
     } else {
-      // Evolve
-      const dMdt = regularizedEvaporationRate(M);
-      const dM = dMdt * dt; // dM is negative
+      // Adaptive sub-step loop to enforce relative-change limits
+      let remaining = dt;
+      let safetyCounter = 0;
+      while (remaining > 0 && safetyCounter < 1000) {
+        safetyCounter++;
+        const dMdt = regularizedEvaporationRate(M);
+        // tentative change for this sub-step
+        let dM_try = dMdt * remaining;
 
-      // Energy radiated
-      const dE = -dM * (c ** 2);
+        // relative change based limiter
+        const rel = Math.abs(dM_try) / Math.max(Math.abs(M), 1e-20);
+        if (rel > MAX_REL_CHANGE) {
+          // reduce sub-step
+          const scale = MAX_REL_CHANGE / rel;
+          const subDt = Math.max(remaining * scale, MIN_DT);
+          dM_try = dMdt * subDt;
 
-      // Entropy increase dS = dE / T_H
-      const T = hawkingTemperature(M);
-      const dS = dE / T;
-
-      // Irreversibility factor approx 1.0 for simplicity or >1 for realism
-      S_rad_accum += dS;
-
-      sradPoints.push(S_rad_accum);
-
-      M += dM;
-      t += dt;
+          // apply sub-step
+          const dE = -dM_try * (c ** 2);
+          const T = hawkingTemperature(M);
+          const dS = (T > 0) ? (dE / T) : 0;
+          S_rad_accum += dS;
+          sradPoints.push(S_rad_accum);
+          M += dM_try;
+          t += subDt;
+          remaining -= subDt;
+        } else {
+          // safe to apply remaining in one go
+          const dE = -dM_try * (c ** 2);
+          const T = hawkingTemperature(M);
+          const dS = (T > 0) ? (dE / T) : 0;
+          S_rad_accum += dS;
+          sradPoints.push(S_rad_accum);
+          M += dM_try;
+          t += remaining;
+          remaining = 0;
+        }
+        // remnant check
+        if (M <= MP * 1.01) { M = MP; break; }
+      }
+      if (safetyCounter >= 1000) {
+        // bailout: numerical trouble
+        break;
+      }
     }
 
     // Safety break if simulation runs too long
@@ -376,6 +404,8 @@ if (datasetSelect) {
   datasetSelect.addEventListener("change", (e) => {
     currentDatasetName = e.target.value;
     handleDatasetChange();
+    // update N_sigma display when dataset changes (keeps UI in sync)
+    updateNSigmaDisplay();
   });
 }
 
@@ -389,6 +419,28 @@ function capitalize(value) {
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+}
+
+// === N_sigma Live Display ===
+function formatSci(n) {
+  if (!isFinite(n)) return '∞';
+  // show 3 significant digits
+  return Number(n).toExponential(3);
+}
+
+function updateNSigmaDisplay() {
+  const panel = document.getElementById('nSigmaValue');
+  const cosmo = (typeof window !== 'undefined' && window.COSMO_GLOBAL) ? window.COSMO_GLOBAL : { age_now: COSMO_AGE_NOW, radius_now: COSMO_RADIUS_NOW, SIGMA_P: SIGMA_P };
+  if (!panel) return;
+  try {
+    const t_now = cosmo.age_now;
+    const R_now = cosmo.radius_now;
+    const sigma = cosmo.SIGMA_P || SIGMA_P;
+    const N_sigma = (c * R_now * t_now) / sigma;
+    panel.innerText = formatSci(N_sigma);
+  } catch (e) {
+    panel.innerText = '—';
+  }
 }
 
 function getActiveDataset() {
@@ -794,7 +846,7 @@ function handleToolChange(event) {
 // === Init ===
 // Auto-detect loaded UI state or just run default
 handleDatasetChange(); // Force render of list based on default
-
+updateNSigmaDisplay();
 searchField.addEventListener("input", filterFruits);
 formSelect.addEventListener("change", filterFruits);
 colorSelect.addEventListener("change", filterFruits);
@@ -804,6 +856,7 @@ if (dynamicToggle) {
     // Re-run current tool or update display if needed
     const event = { target: qgSelect };
     handleToolChange(event);
+    updateNSigmaDisplay();
   });
 }
 

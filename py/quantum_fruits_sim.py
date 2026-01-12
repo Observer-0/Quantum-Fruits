@@ -37,6 +37,9 @@ def simulate_page_curve_mechanic(duration=10.0, steps=200):
     if math.isfinite(ticks) and ticks > 0 and ticks < steps:
         steps = max(10, int(min(10000, ticks)))
 
+    # Adaptive timestep: limit relative changes per step for stability
+    MAX_REL_CHANGE = 0.03  # 3% per step
+    MIN_DT = 1e-12
     dt = duration / steps
     
     # Initial State
@@ -49,40 +52,48 @@ def simulate_page_curve_mechanic(duration=10.0, steps=200):
     accretion_rate = 0.8
     brake_efficiency = 1.2
     
-    for _ in range(steps):
-        # 1. Spin Up (Conservation of Momentum for low mass)
-        # Force drives Spin up when mass is low
+    i = 0
+    while i < steps:
+        # Predict derivatives
         drive = (1.0 / (curr_mass + 0.1)) * 0.1
-        
-        # 2. Accretion
-        # Logarithmic growth of mass
-        dM = accretion_rate * dt * math.exp(-0.3 * curr_t)
-        curr_mass += dM
-        
-        # 3. Brake (Gravity)
+        dM_dt = accretion_rate * math.exp(-0.3 * curr_t)
         brake = brake_efficiency * (curr_mass**2)
-        
-        # 4. Integrate Spin
-        dSpin = (drive - brake) * dt
-        curr_spin += dSpin
+        dSpin_dt = (drive - brake)
+
+        # tentative changes for dt
+        dM_try = dM_dt * dt
+        dSpin_try = dSpin_dt * dt
+
+        rel_m = abs(dM_try) / max(abs(curr_mass), 1e-8)
+        rel_s = abs(dSpin_try) / max(abs(curr_spin), 1e-8)
+        rel_max = max(rel_m, rel_s)
+
+        if rel_max > MAX_REL_CHANGE and dt > MIN_DT:
+            # reduce dt
+            factor = MAX_REL_CHANGE / rel_max
+            dt = max(MIN_DT, dt * factor * 0.9)
+            # do not advance time index, recompute
+            continue
+
+        # Accept step
+        curr_mass += dM_try
+        curr_spin += dSpin_try
         if curr_spin < 0: curr_spin = 0
-        
-        # 5. Page Curve (Entanglement tracks Activity)
-        # Rising Action vs Falling Brake
+
+        # Page-Curve entropy update
         if curr_spin > 0.05:
-            # Active phase: Entanglement grows
             curr_entropy += curr_spin * dt
         else:
-            # Cooled phase: Information returns
             curr_entropy -= 0.5 * dt
             if curr_entropy < 0: curr_entropy = 0
-            
+
         t_list.append(curr_t)
         spin_list.append(curr_spin)
         mass_list.append(curr_mass)
         entropy_list.append(curr_entropy)
-        
+
         curr_t += dt
+        i += 1
         
     return t_list, spin_list, mass_list, entropy_list
 

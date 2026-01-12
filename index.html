@@ -285,6 +285,15 @@
           <span class="label">Aktiv:</span>
           <span id="selectedToolLabel">Keine Auswahl</span>
         </div>
+          <!-- N_sigma live display -->
+          <div id="nSigmaPanel" style="margin-left: 1.5rem; text-align: left;">
+            <div style="font-size:0.8rem; color:#9CA3AF;">Fundamentale Ticks (N_σ)</div>
+            <div id="nSigmaValue" style="font-weight:800; font-size:1rem; color:var(--accent-primary);">—</div>
+            <div id="nSigmaExplanations" style="font-size:0.85rem; color:#cbd5e1; margin-top:0.5rem;">
+              <div><strong>Für Laien:</strong> Unsere Simulation respektiert ein kleines kosmisches "Pixel" (σₚ). N_σ sagt, wie viele dieser Pixel in deinem Zeit‑Raum‑Fenster Platz finden.</div>
+              <div style="margin-top:0.4rem;"><strong>Für Profis:</strong> $N_\sigma = \dfrac{c R t}{\sigma_P}$ — angezeigt in wissenschaftlicher Notation.</div>
+            </div>
+          </div>
       </div>
       <div class="controls">
         <label class="control" for="qgSelect">Werkzeug wählen</label>
