@@ -714,6 +714,11 @@ Entropie-Export: ${(obj.energyJ * 0.92).toFixed(1)} J (Dissipation)
     if (window.resetURMLattice) window.resetURMLattice();
 
     return "URME Lattice Active. Observe Entropy vs Coherence.";
+  },
+  evaporationLab: () => {
+    const isSubdir = window.location.pathname.includes('/html/') || window.location.pathname.includes('\\html\\');
+    window.location.href = isSubdir ? 'evaporation_lab.html' : 'html/evaporation_lab.html';
+    return "Redirecting to Evaporation Lab...";
   }
 };
 

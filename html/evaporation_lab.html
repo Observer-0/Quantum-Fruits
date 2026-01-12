@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaporation Lab | Quantum Fruits</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --bg: #050505;
+            --card-bg: rgba(20, 20, 25, 0.8);
+            --accent: #f59e0b;
+        }
+
+        body {
+            background: var(--bg);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .hero-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #050505 100%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+        }
+
+        .tagline {
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+        }
+
+        .controls {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            height: fit-content;
+        }
+
+        .qg-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            background: #333;
+            height: 4px;
+            border-radius: 2px;
+            appearance: none;
+        }
+
+        select,
+        input[type="number"] {
+            width: 100%;
+            background: #111;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 0.8rem;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .main-display {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #888;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 242, 255, 0.3);
+        }
+
+        nav {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero-bg"></div>
+
+    <nav>
+        <a href="../index.html" class="nav-link">← Zurück zur Übersicht</a>
+    </nav>
+
+    <div class="container">
+        <header class="header">
+            <div class="tagline">Sigma-P Framework</div>
+            <h1>Evaporation Lab (v2.0)</h1>
+            <p style="opacity: 0.6; max-width: 600px; margin: 1.5rem auto;">
+                Simulieren Sie den Zerfall Schwarzer Löcher unter Berücksichtigung des <strong>Axioms der endlichen
+                    Teilbarkeit</strong>. Vergleichen Sie klassische Hawking-Modelle mit der quantisierten
+                Information-Geometrie.
+            </p>
+        </header>
+
+        <div class="grid">
+            <aside class="controls">
+                <h3>Parameter</h3>
+
+                <div class="control-group">
+                    <label>Objekt-Typ</label>
+                    <select id="objSelect">
+                        <option value="1e12">Primordial (10^12 kg)</option>
+                        <option value="1.989e30">Stellar (1 M_sun)</option>
+                        <option value="1.989e31">Stellar (10 M_sun)</option>
+                        <option value="1.989e36">Supermassive (10^6 M_sun)</option>
+                        <option value="custom">Benutzerdefiniert...</option>
+                    </select>
+                </div>
+
+                <div id="customMassInput" class="control-group" style="display: none;">
+                    <label>Masse (kg)</label>
+                    <input type="number" id="massKg" value="1.989e30" step="1e25">
+                </div>
+
+                <div class="control-group">
+                    <label>Smoothing (α)</label>
+                    <input type="range" id="alphaRange" min="0" max="10" step="0.5" value="4.0">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-top: 0.3rem;">
+                        <span>Klassisch</span>
+                        <span id="alphaVal">4.0</span>
+                        <span>Stark</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Remnant Scale (M_P)</label>
+                    <input type="range" id="remRange" min="0.1" max="5" step="0.1" value="1.0">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-top: 0.3rem;">
+                        <span>0.1 M_P</span>
+                        <span id="remVal">1.0</span>
+                        <span>5 M_P</span>
+                    </div>
+                </div>
+
+                <button class="btn" id="runBtn">Simulation Starten</button>
+
+                <div class="qg-box" style="margin-top: 2rem; border-left: 2px solid var(--accent);">
+                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent);">Physik-Notiz</h4>
+                    <p style="font-size: 0.8rem; line-height: 1.5; color: #ccc;">
+                        Im Zander-Modell führt die Raumzeit-Körnung ($\sigma_P$) dazu, dass die Temperatur nicht
+                        unendlich steigt. Der Zerfall stoppt bei der Planck-Masse.
+                    </p>
+                </div>
+            </aside>
+
+            <main class="main-display">
+                <div class="chart-card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3 style="margin: 0;">Page-Kurven Vergleich</h3>
+                        <div
+                            style="font-size: 0.8rem; background: rgba(0,242,255,0.1); padding: 4px 12px; border-radius: 4px; color: var(--primary);">
+                            UNITÄR vs. STOCHASTISCH</div>
+                    </div>
+                    <div style="height: 350px;">
+                        <canvas id="pageChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-val" id="stat-temp">-</span>
+                        <span class="stat-label">Max. Temp (K)</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-val" id="stat-tau">-</span>
+                        <span class="stat-label">Lebensdauer (s)</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-val" id="stat-entropy">-</span>
+                        <span class="stat-label">Rest-Entropie</span>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <h3 style="margin-bottom: 1.5rem;">Massen-Abnahme ($M/M_0$)</h3>
+                    <div style="height: 250px;">
+                        <canvas id="massChart"></canvas>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../js/evaporation-engine.js"></script>
+    <script>
+        const ctxPage = document.getElementById('pageChart').getContext('2d');
+        const ctxMass = document.getElementById('massChart').getContext('2d');
+        let chartPage, chartMass;
+
+        const objSelect = document.getElementById('objSelect');
+        const massKgInput = document.getElementById('massKg');
+        const customMassInput = document.getElementById('customMassInput');
+        const alphaRange = document.getElementById('alphaRange');
+        const alphaVal = document.getElementById('alphaVal');
+        const remRange = document.getElementById('remRange');
+        const remVal = document.getElementById('remVal');
+        const runBtn = document.getElementById('runBtn');
+
+        objSelect.addEventListener('change', (e) => {
+            if (e.target.value === 'custom') {
+                customMassInput.style.display = 'block';
+            } else {
+                customMassInput.style.display = 'none';
+                massKgInput.value = e.target.value;
+            }
+        });
+
+        alphaRange.addEventListener('input', () => alphaVal.textContent = alphaRange.value);
+        remRange.addEventListener('input', () => remVal.textContent = remRange.value);
+
+        function updateSimulation() {
+            const M0 = parseFloat(massKgInput.value);
+            const alpha = parseFloat(alphaRange.value);
+            const remFactor = parseFloat(remRange.value);
+            const MP = EvaporationEngine.MP;
+            const Mrem = MP * remFactor;
+
+            const resSc = EvaporationEngine.simulateSemiclassical(M0);
+            const resQ = EvaporationEngine.simulateQuantized(M0, 200, Mrem, alpha);
+
+            renderCharts(resSc, resQ, M0);
+            updateStats(resQ);
+        }
+
+        function updateStats(res) {
+            document.getElementById('stat-temp').textContent = Math.max(...res.TH).toExponential(2);
+            document.getElementById('stat-tau').textContent = res.tau_eff.toExponential(2);
+            document.getElementById('stat-entropy').textContent = (res.Srem / EvaporationEngine.kB).toFixed(2) + " kB";
+        }
+
+        function renderCharts(sc, q, M0) {
+            if (chartPage) chartPage.destroy();
+            if (chartMass) chartMass.destroy();
+
+            // Page Chart
+            chartPage = new Chart(ctxPage, {
+                type: 'line',
+                data: {
+                    labels: q.t.map(t => (t / q.tau_eff).toFixed(2)),
+                    datasets: [
+                        {
+                            label: 'Klassisch (Hawking)',
+                            data: sc.Srad.map(s => s / Math.max(...sc.Srad)),
+                            borderColor: 'rgba(255, 99, 132, 0.4)',
+                            borderDash: [5, 5],
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Zander (Quantisiert)',
+                            data: q.Srad.map(s => s / Math.max(...q.Srad)),
+                            borderColor: 'rgba(0, 242, 255, 1)',
+                            borderWidth: 3,
+                            fill: true,
+                            backgroundColor: 'rgba(0, 242, 255, 0.1)',
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            title: { display: true, text: 'S_rad / S_max', color: '#888' },
+                            grid: { color: 'rgba(255,255,255,0.05)' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Normalisierte Zeit (t/τ)', color: '#888' },
+                            grid: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#fff' } }
+                    }
+                }
+            });
+
+            // Mass Chart
+            chartMass = new Chart(ctxMass, {
+                type: 'line',
+                data: {
+                    labels: q.t.map(t => (t / q.tau_eff).toFixed(2)),
+                    datasets: [{
+                        label: 'Massen-Trend',
+                        data: q.M.map(m => m / M0),
+                        borderColor: '#7000ff',
+                        backgroundColor: 'rgba(112, 0, 255, 0.2)',
+                        fill: true,
+                        pointRadius: 0,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        runBtn.addEventListener('click', updateSimulation);
+
+        // Initial run
+        window.addEventListener('load', updateSimulation);
+    </script>
+</body>
+
+</html>

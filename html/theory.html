@@ -576,19 +576,31 @@
                     <p>Entropie ist die Brücke zwischen der kühlen Geometrie ($\sigma_P$) und der heißen Thermodynamik
                         ($k_B$). Jede Kachel der Raumzeit trägt Information.</p>
                 </div>
+
+                <!-- P12 (New: Source-Smeared GR) -->
+                <div class="theory-card"
+                    style="border: 2px solid var(--accent-primary); background: rgba(0, 242, 255, 0.05);">
+                    <h3>P12 – Source-Smeared GR</h3>
+                    <div class="math-content">
+                        $$\overline{T}_{\mu\nu}(x) = \int K_{\sigma_P}(x,y) \, T_{\mu\nu}(y) \, \sqrt{-g} \, d^4y$$
+                    </div>
+                    <p>Einstein unverändert: Nicht die Gleichung wird modifiziert, sondern die Quelle ($T_{\mu\nu}$).
+                        Die Planck-Körnung ($\sigma_P$) verschmiert die Materie kovariant, was auf galaktischen Skalen
+                        zu MOND-Effekten führt.</p>
+                </div>
             </div>
 
             <div class="qg-box" style="margin-top: 3rem; background: rgba(56, 189, 248, 0.05);">
-                <h3 style="color: var(--accent-primary);">Core Physical Statement</h3>
-                <p><strong>Ein natürliches Feld = Quantisierte Raumzeit.</strong></p>
-                <p>Das fundamentale Objekt ist die Planck-Zelle $\sigma_P$. Als Konsequenz bleiben
-                    Krümmungsinvarianten
-                    endlich, $\Lambda$ passt exakt zu den Messwerten und IR-Abweichungen (MOND) entstehen natürlich
-                    ohne
-                    dunkle Materie.</p>
-                <p><em>Gravitation ist konstant, weil die zugrunde liegende Spin-Wirkung ($\hbar$) konstant
-                        ist.</em>
-                </p>
+                <h3 style="color: var(--accent-primary);">Die galaktische Randbedingung (a₀)</h3>
+                <p>In dünnen Scheiben (Galaxien) erzeugt das verschmierte Potential einen logarithmischen Term. Die
+                    charakteristische Beschleunigung $a_0$ ist kein freier Parameter, sondern die <strong>Signatur des
+                        Ganzen</strong>:</p>
+                <div style="font-size: 1.4rem; text-align: center; margin: 1.5rem 0; color: #fff;">
+                    $$ \boxed{ a_0 = \frac{c}{2\pi \cdot T} = \frac{c \cdot H_0}{2\pi} } $$
+                </div>
+                <p>Damit wird Dunkle Materie überflüssig: Die flachen Rotationskurven sind das Ergebnis der
+                    Planck-Geometrie, die sich im schwachen Feld der galaktischen Peripherie bemerkbar macht.
+                    Gravitation bleibt Einstein-konform, die Quelle wird nur geometrisch ehrlich abgebildet.</p>
             </div>
 
             <div class="qg-box" style="border-left: 4px solid var(--accent-secondary);">
@@ -643,10 +655,56 @@
                     Gravitationskoppler:
                     $$ \kappa = \frac{8\pi G}{c^4} $$
                     Wenn wir bedenken, dass das Wirkungsquantum $\hbar = h/2\pi$ geometrisiert ist, wird klar:
-                    Es ist derselbe Baustein. Wir haben nur das Pixel ($ \sigma_P $) gefunden, aus dem Einstein
-                    seine
+                    Es ist derselbe Baustein. Wir haben nur das Pixel ($ \sigma_P $) gefunden, aus dem Einstein seine
                     glatte Geometrie baute.
                 </p>
+            </div>
+
+            <div class="theory-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                <div class="qg-box" style="border-top: 4px solid #666; background: rgba(255,255,255,0.02);">
+                    <h4>Klassisch: Minkowski-Vakuum</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                        Raum und Zeit sind eine unendlich teilbare, glatte Bühne. Man kann beliebig weit "hineinzoomen",
+                        was zwangsläufig zu Singularitäten (unendlicher Dichte) führt.
+                    </p>
+                    <div
+                        style="height: 100px; background: linear-gradient(45deg, #1e293b, #0f172a); border-radius: 4px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-family: monospace; font-size: 0.7rem; color: #475569;">
+                        CONTINUUM (UNBOUNDED)
+                    </div>
+                </div>
+                <div class="qg-box"
+                    style="border-top: 4px solid var(--accent-primary); background: rgba(0, 242, 255, 0.03);">
+                    <h4>Real: Minkowski-Zander-Raumzeit</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                        Die Raumzeit ist ein <strong>kosmisches Mosaik</strong> aus endlichen $\sigma_P$-Zellen. Es gibt
+                        kein "Dazwischen". Unendlichkeit ist hier nur ein mathematischer Rechenfehler.
+                    </p>
+                    <div
+                        style="height: 100px; background-image: radial-gradient(var(--accent-primary) 1px, transparent 1px); background-size: 10px 10px; border-radius: 4px; margin-top: 1rem; border: 1px solid var(--accent-primary); display: flex; align-items: center; justify-content: center; font-family: monospace; font-size: 0.7rem; color: var(--accent-primary);">
+                        DISCRETE GRID (QUANTIZED)
+                    </div>
+                </div>
+            </div>
+
+            <div class="qg-box"
+                style="margin-top: 2rem; border-left: 4px solid #f59e0b; background: rgba(245, 158, 11, 0.05);">
+                <h3 style="color: #f59e0b;">Das Axiom der endlichen Teilbarkeit</h3>
+                <p style="font-style: italic; font-size: 1.1rem; line-height: 1.6;">
+                    "Jede physikalische Größe besitzt eine fundamentale Grenze ihrer Auflösung. Raum, Zeit und Energie
+                    sind keine glatten Ströme, sondern eine Sequenz aus diskreten Wirkungszellen."
+                </p>
+                <p style="margin-top: 1rem; font-size: 0.95rem;">
+                    Daraus folgt die <strong>Geometrische Unschärferelation</strong>:
+                    <span style="display: block; text-align: center; font-size: 1.2rem; margin: 1rem 0; color: #fff;">
+                        $$ \Delta x \cdot \Delta t \ge \sigma_P $$
+                    </span>
+                    Jede Wechselwirkung im Universum ist eine Operation auf diesen Zellen. Information verschwindet nie
+                    – sie wird in der Geometrie der Zellen gespeichert.
+                </p>
+                <div
+                    style="margin-top: 1.5rem; text-align: center; font-weight: bold; color: #fff; letter-spacing: 2px;">
+                    INFORMATION $\equiv$ GEOMETRIE
+                </div>
             </div>
         </section>
 
@@ -701,6 +759,7 @@
                     <option value="smoothPage">Glatte Page-Kurve (unitär, Remnant)</option>
                     <option value="kinematicMotor">Kinematic Motor (Action vs Gravity)</option>
                     <option value="urmeLattice">URME Lattice (Entropy Cooling)</option>
+                    <option value="evaporationLab">Evaporation Lab v2.0 (Page-Szenarien)</option>
                 </select>
             </div>
             <div id="urmeDynamicsUI" style="margin-top: 1rem; text-align: center; display: none;">
@@ -905,6 +964,9 @@
                                 <button id="mode-sigmap" class="tab-btn"
                                     style="width: 100%; text-align: left; padding: 10px; font-size: 0.85rem;">📡
                                     &sigma;P Geometrie (Chrome Tab)</button>
+                                <button id="mode-flow" class="tab-btn"
+                                    style="width: 100%; text-align: left; padding: 10px; font-size: 0.85rem;">🌀
+                                    Zander-Flow (&sigma;P c&sup2;)</button>
                             </div>
                         </div>
 
@@ -2071,6 +2133,21 @@
                         $$ Z = \frac{\hbar^2}{c} \qquad \text{(Wirkungs-Skala)} $$
                         $$ W = \frac{\hbar c^3}{G} = m_P T_P k_B \qquad \text{(Spacial Action / Thermal)} $$
                     </div>
+                </div>
+
+                <div class="qg-box" style="border-left: 4px solid #fff; margin-bottom: 2rem;">
+                    <h3>Die Metrik des Gedächtnisses</h3>
+                    <p>Um Singularitäten zu vermeiden, wird die Metrik durch $\sigma_P$ regularisiert. Die effektive
+                        Geometrie ($d\tilde{s}^2$) bleibt auch bei extremen Krümmungen endlich:</p>
+                    <div style="font-size: 1.2rem; margin: 1.5rem 0;">
+                        $$ d\tilde{s}^2 = \frac{ds^2}{1 + \sigma_P^{-1} f(\mathcal{R},x)} $$
+                        $$ \Delta x \cdot \Delta t \ge \sigma_P \qquad \text{(Geom. Unschärfe)} $$
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                        Dies ist das Ende der Unendlichkeit: Wo die klassische Schwerkraft kollabiert, übernimmt die
+                        endliche Struktur der Raumzeit-Zellen. Information kann nicht in einem Punkt verschwinden, der
+                        geometrisch gar nicht existiert.
+                    </p>
                 </div>
 
                 <div class="qg-box" style="border-left: 4px solid var(--accent-secondary); margin-bottom: 2rem;">

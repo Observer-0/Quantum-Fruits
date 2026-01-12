@@ -4,18 +4,22 @@ class GCEMorphologySimulation {
         if (!this.canvas) return;
         this.ctx = this.canvas.getContext('2d');
 
-        this.mode = 'dm'; // 'dm' or 'sigmap'
+        this.mode = 'dm'; // 'dm', 'sigmap', or 'flow'
         this.stars = [];
         this.gammaParticles = [];
+        this.flowLines = [];
         this.numStars = 1500;
         this.numGamma = 1000;
+        this.numFlow = 40;
 
         this.params = {
             bulgeA: 120,    // Semi-major axis (horizontal)
             bulgeB: 85,     // Semi-minor axis (vertical) -> b/a ~ 0.7
-            haloRadius: 100
+            haloRadius: 100,
+            sigmaRel: 1.054e-34 * 6.674e-11 / Math.pow(2.997e8, 2) // Rough sigmaP * c^2
         };
 
+        this.time = 0;
         this.init();
         this.setupControls();
         this.animate = this.animate.bind(this);
@@ -25,17 +29,28 @@ class GCEMorphologySimulation {
     init() {
         this.stars = [];
         this.gammaParticles = [];
+        this.flowLines = [];
 
         // Create baryonic bulge stars
         for (let i = 0; i < this.numStars; i++) {
-            // Boxy/Elliptical distribution
             const angle = Math.random() * Math.PI * 2;
-            const r = Math.pow(Math.random(), 0.5); // Density gradient
+            const r = Math.pow(Math.random(), 0.5);
             this.stars.push({
                 x: Math.cos(angle) * r * this.params.bulgeA,
                 y: Math.sin(angle) * r * this.params.bulgeB,
                 size: Math.random() * 1.2 + 0.5,
                 alpha: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        // Create volumetric flow lines
+        for (let i = 0; i < this.numFlow; i++) {
+            const angle = (i / this.numFlow) * Math.PI * 2;
+            this.flowLines.push({
+                angle: angle,
+                points: [],
+                speed: 0.1 + Math.random() * 0.2,
+                offset: Math.random() * 100
             });
         }
 
@@ -47,7 +62,6 @@ class GCEMorphologySimulation {
         const count = this.numGamma;
 
         if (this.mode === 'dm') {
-            // Spherical/Isotropic distribution for Dark Matter
             for (let i = 0; i < count; i++) {
                 const angle = Math.random() * Math.PI * 2;
                 const r = Math.pow(Math.random(), 0.5) * this.params.haloRadius * 1.2;
@@ -58,7 +72,7 @@ class GCEMorphologySimulation {
                 });
             }
         } else {
-            // Sigma_P mode: Scaling with baryonic density squared (n^2)
+            // Sigma_P / Flow mode: Scaling with baryonic density + flow constraints
             for (let i = 0; i < count; i++) {
                 const angle = Math.random() * Math.PI * 2;
                 const r = Math.pow(Math.random(), 0.5);
@@ -74,29 +88,43 @@ class GCEMorphologySimulation {
     setupControls() {
         const btnDM = document.getElementById('mode-dm');
         const btnSigma = document.getElementById('mode-sigmap');
+        const btnFlow = document.getElementById('mode-flow'); // New button support
         const label = document.getElementById('gce-label');
         const stats = document.getElementById('gce-stats');
 
-        if (btnDM && btnSigma) {
+        const resetButtons = () => {
+            [btnDM, btnSigma, btnFlow].forEach(b => b && b.classList.remove('active'));
+        };
+
+        if (btnDM) {
             btnDM.addEventListener('click', () => {
                 this.mode = 'dm';
-                btnDM.classList.add('active');
-                btnSigma.classList.remove('active');
-                label.innerText = "MODE: DARK MATTER (HESTIA)";
-                label.style.borderColor = "#ef4444";
-                label.style.color = "#ef4444";
-                stats.innerHTML = `Achsenverhältnis b/a: 1.0 (Sphärisch)<br>Parameter: 57 freie Fits<br>Kosten: Milliarden (für den Steuerzahler)`;
+                resetButtons(); btnDM.classList.add('active');
+                label.innerText = "MODE: DARK MATTER (STOCHASTIC)";
+                label.style.borderColor = "#ef4444"; label.style.color = "#ef4444";
+                stats.innerHTML = `Achsenverhältnis: 1.0<br>Status: Statistisch maskiert<br>Problem: Widerspricht stellarer Verteilung`;
                 this.updateGamma();
             });
+        }
 
+        if (btnSigma) {
             btnSigma.addEventListener('click', () => {
                 this.mode = 'sigmap';
-                btnSigma.classList.add('active');
-                btnDM.classList.remove('active');
+                resetButtons(); btnSigma.classList.add('active');
                 label.innerText = "MODE: σP GEOMETRY (CHROME TAB)";
-                label.style.borderColor = "#3b82f6";
-                label.style.color = "#3b82f6";
-                stats.innerHTML = `Achsenverhältnis b/a: 0.7 (Elliptisch)<br>Parameter: 0 (Baryonisch)<br>Kosten: 1 Kaffee (für den User)`;
+                label.style.borderColor = "#3b82f6"; label.style.color = "#3b82f6";
+                stats.innerHTML = `Achsenverhältnis: 0.7<br>Status: Identisch mit Sternen (Baryonen)<br>Lösung: Geometrische Kopplung`;
+                this.updateGamma();
+            });
+        }
+
+        if (btnFlow) {
+            btnFlow.addEventListener('click', () => {
+                this.mode = 'flow';
+                resetButtons(); btnFlow.classList.add('active');
+                label.innerText = "MODE: ZANDER-FLOW (σP c²)";
+                label.style.borderColor = "#10b981"; label.style.color = "#10b981";
+                stats.innerHTML = `Flussrate: ~10⁻⁶² m³/s<br>Vektor: Radial konvergierend<br>Status: Dynamisches Gleichgewicht`;
                 this.updateGamma();
             });
         }
@@ -111,11 +139,42 @@ class GCEMorphologySimulation {
         this.ctx.fillStyle = '#000';
         this.ctx.fillRect(0, 0, w, h);
 
+        // 0. Draw Volumetric Flow Lines (Underlay)
+        if (this.mode === 'flow') {
+            this.ctx.lineWidth = 1;
+            this.flowLines.forEach(line => {
+                const rMax = 200;
+                const rStep = 2;
+                this.ctx.beginPath();
+                this.ctx.strokeStyle = `rgba(16, 185, 129, 0.15)`;
+
+                for (let r = 0; r < rMax; r += rStep) {
+                    const dynamicAngle = line.angle + Math.sin(r * 0.05 - this.time * line.speed) * 0.2;
+                    const x = Math.cos(dynamicAngle) * r;
+                    const y = Math.sin(dynamicAngle) * r;
+                    if (r === 0) this.ctx.moveTo(cx + x, cy + y);
+                    else this.ctx.lineTo(cx + x, cy + y);
+                }
+                this.ctx.stroke();
+
+                // Draw flow particle
+                const pPos = (this.time * line.speed * 20 + line.offset) % rMax;
+                const pAngle = line.angle + Math.sin(pPos * 0.05 - this.time * line.speed) * 0.2;
+                this.ctx.fillStyle = '#10b981';
+                this.ctx.beginPath();
+                this.ctx.arc(cx + Math.cos(pAngle) * pPos, cy + Math.sin(pAngle) * pPos, 1.5, 0, Math.PI * 2);
+                this.ctx.fill();
+            });
+        }
+
         // 1. Draw Gamma Ray Heatmap (Background Glow)
         this.ctx.globalCompositeOperation = 'screen';
         this.gammaParticles.forEach(p => {
             const grad = this.ctx.createRadialGradient(cx + p.x, cy + p.y, 0, cx + p.x, cy + p.y, 15);
-            const color = this.mode === 'dm' ? 'rgba(239, 68, 68,' : 'rgba(59, 130, 246,';
+            let color = 'rgba(59, 130, 246,';
+            if (this.mode === 'dm') color = 'rgba(239, 68, 68,';
+            if (this.mode === 'flow') color = 'rgba(16, 185, 129,';
+
             grad.addColorStop(0, `${color} ${p.intensity * 0.3})`);
             grad.addColorStop(1, `${color} 0)`);
             this.ctx.fillStyle = grad;
@@ -137,16 +196,17 @@ class GCEMorphologySimulation {
         this.ctx.globalCompositeOperation = 'source-over';
         this.ctx.globalAlpha = 1.0;
 
-        // Add subtle coordinate system
-        this.ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-        this.ctx.lineWidth = 1;
+        // Black Hole Core
+        this.ctx.fillStyle = '#000';
         this.ctx.beginPath();
-        this.ctx.moveTo(0, cy); this.ctx.lineTo(w, cy);
-        this.ctx.moveTo(cx, 0); this.ctx.lineTo(cx, h);
+        this.ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.strokeStyle = this.mode === 'flow' ? '#10b981' : '#fff';
         this.ctx.stroke();
     }
 
     animate() {
+        this.time += 1;
         this.draw();
         requestAnimationFrame(this.animate);
     }
