@@ -699,7 +699,8 @@ Entropie-Export: ${(obj.energyJ * 0.92).toFixed(1)} J (Dissipation)
     return `Rendering SigmaP Curve for ${item.name}...`;
   },
   kinematicMotor: () => {
-    window.location.href = 'motor.html';
+    const isSubdir = window.location.pathname.includes('/html/') || window.location.pathname.includes('\\html\\');
+    window.location.href = isSubdir ? 'motor.html' : 'html/motor.html';
     return "Redirecting to Motor Lab...";
   },
   urmeLattice: () => {
