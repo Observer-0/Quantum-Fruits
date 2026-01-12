@@ -549,7 +549,7 @@ function drawPageCurveChart(massKg, label) {
       interaction: { mode: 'index', intersect: false },
       plugins: {
         title: { display: true, text: `Evaporation: ${label} (M=${massKg.toExponential(1)} kg)` },
-        subtitle: { display: true, text: `σ_P Evolution → Remnant Stable at t ~ ${(lastT / tau).toFixed(1)} τ` },
+        subtitle: { display: true, text: `Engine: Action (ħ) vs. Mass Burden. Unitary Return at t ~ ${(lastT / tau).toFixed(1)} τ` },
         tooltip: { callbacks: { label: function (context) { return context.dataset.label + ': ' + Number(context.parsed.y).toExponential(2) + ' J/K'; } } }
       },
       scales: {
