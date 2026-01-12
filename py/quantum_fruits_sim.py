@@ -10,6 +10,12 @@ G    = 6.67430e-11
 kB   = 1.380649e-23
 pi   = math.pi
 tP   = math.sqrt(hbar * G / c**5)
+# Fundamental Planck spacetime cell (sigma_P = ħ G / c^4) [m·s]
+SIGMA_P = (hbar * G) / (c**4)
+# Cosmological window (shared default)
+COSMO_AGE_NOW = 13.8e9 * 365.25 * 24 * 3600
+LY = 9.4607e15
+COSMO_RADIUS_NOW = 46.5e9 * LY
 
 # ============================================================
 # 2. Simulation Logic (Spin-Brake)
@@ -20,6 +26,17 @@ def simulate_page_curve_mechanic(duration=10.0, steps=200):
     mass_list = []
     entropy_list = []
     
+    # Respect fundamental spacetime cell: compute available ticks
+    # N_sigma = c * R * duration / SIGMA_P
+    try:
+        ticks = (c * COSMO_RADIUS_NOW * duration) / SIGMA_P
+    except Exception:
+        ticks = float('inf')
+
+    # If ticks smaller than steps, reduce steps to avoid sub-cell resolution
+    if math.isfinite(ticks) and ticks > 0 and ticks < steps:
+        steps = max(10, int(min(10000, ticks)))
+
     dt = duration / steps
     
     # Initial State

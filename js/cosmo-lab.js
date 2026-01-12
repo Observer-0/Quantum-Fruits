@@ -10,21 +10,42 @@ const COSMO_CONST = {
     c: 2.99792458e8,
     M_sun: 1.98847e30,
     ly: 9.4607e15, // light year in meters
-    age_now: 13.8e9 * 365.25 * 24 * 3600, // Universe age in seconds
-    radius_now: 46.5e9 * 9.4607e15, // Comoving radius in meters
+    age_now: 13.8e9 * 365.25 * 24 * 3600, // Universe age in seconds (fallback)
+    radius_now: 46.5e9 * 9.4607e15, // Comoving radius in meters (fallback)
     rho_lcdm: 6e-27 // Standard LCDM critical density approx kg/m^3
 };
 
+// Allow global overrides (set by main.js) so all tools share the same cosmological window.
+if (typeof window !== 'undefined' && window.COSMO_GLOBAL) {
+    try {
+        const GLOB = window.COSMO_GLOBAL;
+        if (GLOB.age_now) COSMO_CONST.age_now = GLOB.age_now;
+        if (GLOB.radius_now) COSMO_CONST.radius_now = GLOB.radius_now;
+        if (GLOB.SIGMA_P) COSMO_CONST.SIGMA_P = GLOB.SIGMA_P;
+    } catch (e) {
+        // ignore and keep fallbacks
+    }
+} else {
+    // compute local SIGMA_P fallback: ħ G / c^4
+    COSMO_CONST.SIGMA_P = (1.054571817e-34 * COSMO_CONST.G) / Math.pow(COSMO_CONST.c, 4);
+}
+
 function updateCosmoMonitor() {
     // Sliders for age (t) and radius (R)
-    const agePercent = parseFloat(document.getElementById('cosmo-age-slider').value);
+    const sliderEl = document.getElementById('cosmo-age-slider');
+    const agePercent = sliderEl ? parseFloat(sliderEl.value) : 100;
 
-    // Scale current age and radius
-    const t = (agePercent / 100) * COSMO_CONST.age_now;
-    const R = (agePercent / 100) * COSMO_CONST.radius_now;
+    // Scale current age and radius using the same window (user requirement)
+    // Guard against zero to avoid NaN/Infinity in formulas.
+    const t = Math.max((agePercent / 100) * COSMO_CONST.age_now, 1); // at least 1 s
+    const R = Math.max((agePercent / 100) * COSMO_CONST.radius_now, 1); // at least 1 m
 
     // Energy Density Formula: epsilon = 3c^3 / (8 * pi * G * R * t)
-    const epsilon = (3 * Math.pow(COSMO_CONST.c, 3)) / (8 * Math.PI * COSMO_CONST.G * R * t);
+    // Geometric Energy Density: ensure numeric stability
+    let epsilon = 0;
+    if (R > 0 && t > 0) {
+        epsilon = (3 * Math.pow(COSMO_CONST.c, 3)) / (8 * Math.PI * COSMO_CONST.G * R * t);
+    }
 
     // Mass Density: rho = epsilon / c^2
     const rho = epsilon / Math.pow(COSMO_CONST.c, 2);

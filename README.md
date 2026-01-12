@@ -1,6 +1,31 @@
 # Quantum Fruits: The Σₚ Scaffold
 
 **Quantum Fruits** developed a minimal, parameter-free framework of quantum gravity based entirely on the natural constants $\{\hbar, c, G, k_B\}$. It serves as both a narrative and a gateway: rigorous science embedded in a broader perspective of nature’s structure.
+## The Planck Spacetime Cell (σₚ → Universe)
+
+The project uses the concept of a fundamental spacetime action cell
+\(\sigma_P\) as a minimal grain of the universe's causal weave. It is defined as
+
+$$
+\sigma_P = \ell_P \cdot t_P = \frac{\hbar G}{c^4}, \quad \text{with } \frac{\ell_P}{t_P} = c.
+$$
+
+Operational consequences in this codebase:
+- We expose a shared cosmological window (`age_now`, `radius_now`) available to the JS simulation engines as `window.COSMO_GLOBAL`.
+- The number of fundamental ticks in a spacetime window is computed as
+
+$$
+N_{\sigma} = \frac{c \cdot R \cdot t}{\sigma_P}
+$$
+
+where $R$ and $t$ are the cosmological radius and age (or a scaled fraction thereof).
+
+- Simulations in `js/main.js` and `py/quantum_fruits_sim.py` respect this cell by clamping the simulation step count when the number of available $N_{\sigma}$ ticks would otherwise be smaller than the requested resolution. This avoids sub-cell numerical resolution and makes the Planck cell an effective lower bound for temporal/spatial sampling.
+
+See `js/main.js` and `py/quantum_fruits_sim.py` for implementation details and example calculations (N_σ is reported in chart subtitles).
+# Quantum Fruits: The Σₚ Scaffold
+
+**Quantum Fruits** developed a minimal, parameter-free framework of quantum gravity based entirely on the natural constants $\{\hbar, c, G, k_B\}$. It serves as both a narrative and a gateway: rigorous science embedded in a broader perspective of nature’s structure.
 
 ## Core Philosophical & Physical Pillars
 

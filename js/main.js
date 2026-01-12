@@ -21,6 +21,19 @@ const lP = Math.sqrt(SIGMA_P * c);     // Planck Length [m]
 const tP = Math.sqrt(SIGMA_P / c);     // Planck Time [s]
 const MP = Math.sqrt((hbar * c) / G);  // Planck Mass [kg]
 
+// Cosmological global constants (shared window)
+const LY = 9.4607e15; // meters
+const COSMO_AGE_NOW = 13.8e9 * 365.25 * 24 * 3600; // seconds
+const COSMO_RADIUS_NOW = 46.5e9 * LY; // meters
+
+if (typeof window !== 'undefined') {
+  window.COSMO_GLOBAL = window.COSMO_GLOBAL || {
+    age_now: COSMO_AGE_NOW,
+    radius_now: COSMO_RADIUS_NOW,
+    SIGMA_P: SIGMA_P
+  };
+}
+
 // --- Core Helper Functions ---
 
 /**
@@ -102,6 +115,14 @@ function regularizedEvaporationRate(M) {
 // --- Simulation Engine ---
 
 function simulatePageCurve(M0, steps = 200) {
+  // Respect the fundamental spacetime cell: compute available ticks
+  const cosmo = (typeof window !== 'undefined' && window.COSMO_GLOBAL) ? window.COSMO_GLOBAL : { age_now: COSMO_AGE_NOW, radius_now: COSMO_RADIUS_NOW, SIGMA_P: SIGMA_P };
+  const R_univ = cosmo.radius_now;
+  const age_univ = cosmo.age_now;
+
+  // Estimate number of fundamental ticks available for this simulation timespan (tau)
+  // Will be computed below once tau is known; ensure steps aren't smaller than a single tick resolution when sensible.
+
   const timePoints = [];
   const massPoints = [];
   const sbhPoints = [];
@@ -109,7 +130,21 @@ function simulatePageCurve(M0, steps = 200) {
 
   // Time estimate: tau ~ M^3
   const tau = (5120 * pi * (G ** 2) * (M0 ** 3)) / (hbar * (c ** 4));
-  const dt = tau / steps;
+  // Compute available fundamental ticks N_sigma = c * R * tau / SIGMA_P
+  const SIG = (typeof window !== 'undefined' && window.COSMO_GLOBAL && window.COSMO_GLOBAL.SIGMA_P) ? window.COSMO_GLOBAL.SIGMA_P : SIGMA_P;
+  let ticks = 0;
+  try {
+    ticks = (c * R_univ * tau) / SIG;
+  } catch (e) {
+    ticks = Infinity;
+  }
+
+  // Adjust steps for numerical safety while respecting sigma_P resolution
+  if (isFinite(ticks) && ticks > 0 && ticks < steps) {
+    steps = Math.max(10, Math.floor(Math.min(10000, ticks)));
+  }
+
+  const dt = Math.max(tau / steps, 1e-30);
 
   let t = 0;
   let M = M0;
@@ -175,8 +210,9 @@ function simulatePageCurve(M0, steps = 200) {
  * t_univ approx 4.35e17 s
  */
 function cosmicAccelerationScale() {
-  const t_univ = 4.35e17; // Age of universe in seconds
-  const base_g = c / t_univ; // approx 6.9e-10 m/s^2
+  // Use shared cosmological age if available
+  const t_univ = (typeof window !== 'undefined' && window.COSMO_GLOBAL && window.COSMO_GLOBAL.age_now) ? window.COSMO_GLOBAL.age_now : 4.35e17;
+  const base_g = c / t_univ;
 
   const dynamicToggle = document.getElementById('dynamicWindowToggle');
   if (dynamicToggle && dynamicToggle.checked) {
@@ -463,6 +499,12 @@ function drawRotationCurveChart(massSolar, label) {
   // Run Engine
   const data = simulateRotationCurve(massSolar, 50); // 50 kpc max
 
+  // Compute N_sigmaP for the cosmological window and show as subtitle
+  const cosmo = (typeof window !== 'undefined' && window.COSMO_GLOBAL) ? window.COSMO_GLOBAL : { age_now: COSMO_AGE_NOW, radius_now: COSMO_RADIUS_NOW, SIGMA_P: SIGMA_P };
+  const t_now = cosmo.age_now;
+  const R_now = cosmo.radius_now;
+  const N_sigma = (c * R_now * t_now) / (cosmo.SIGMA_P || SIGMA_P);
+
   const dsNewton = data.radius.map((r, i) => ({ x: r, y: data.v_newton[i] }));
   const dsSigma = data.radius.map((r, i) => ({ x: r, y: data.v_sigma[i] }));
 
@@ -496,7 +538,7 @@ function drawRotationCurveChart(massSolar, label) {
       interaction: { mode: 'index', intersect: false },
       plugins: {
         title: { display: true, text: `Rotation Curve: ${label}` },
-        subtitle: { display: true, text: 'No Dark Matter required. Pure σ_P Geometry.' }
+        subtitle: { display: true, text: `No Dark Matter required. Pure σ_P Geometry — N_σ ≈ ${Number(N_sigma).toExponential(2)}` }
       },
       scales: {
         x: {
@@ -522,6 +564,12 @@ function drawPageCurveChart(massKg, label) {
   qgOutput.style.display = 'none';
 
   const data = simulatePageCurve(massKg, 150);
+
+  // Compute N_sigmaP for the cosmological window and include in subtitle
+  const cosmo = (typeof window !== 'undefined' && window.COSMO_GLOBAL) ? window.COSMO_GLOBAL : { age_now: COSMO_AGE_NOW, radius_now: COSMO_RADIUS_NOW, SIGMA_P: SIGMA_P };
+  const t_now = cosmo.age_now;
+  const R_now = cosmo.radius_now;
+  const N_sigma = (c * R_now * t_now) / (cosmo.SIGMA_P || SIGMA_P);
 
   const datasetBH = data.s_bh.map((s, i) => ({ x: data.time[i], y: s }));
   const datasetRad = data.s_rad_accum.map((s, i) => ({ x: data.time[i], y: s }));
@@ -549,7 +597,7 @@ function drawPageCurveChart(massKg, label) {
       interaction: { mode: 'index', intersect: false },
       plugins: {
         title: { display: true, text: `Evaporation: ${label} (M=${massKg.toExponential(1)} kg)` },
-        subtitle: { display: true, text: `Engine: Action (ħ) vs. Mass Burden. Unitary Return at t ~ ${(lastT / tau).toFixed(1)} τ` },
+        subtitle: { display: true, text: `Engine: Action (ħ) vs. Mass Burden. N_σ ≈ ${Number(N_sigma).toExponential(2)} — Unitary Return at t ~ ${(lastT / tau).toFixed(1)} τ` },
         tooltip: { callbacks: { label: function (context) { return context.dataset.label + ': ' + Number(context.parsed.y).toExponential(2) + ' J/K'; } } }
       },
       scales: {
