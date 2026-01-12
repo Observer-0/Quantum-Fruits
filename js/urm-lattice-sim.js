@@ -13,48 +13,15 @@ if (urmLatticeCanvas) {
     let k = 1.0;      // Coupling
     let alpha = 0.01; // Nonlinearity
     let c = 0.1;      // Damping
-    const m = 1.0;    // Mass
+    function update() {
     const dt = 0.05;
 
     // UI Elements
     const kRange = document.getElementById('urmKRange');
-    const alphaRange = document.getElementById('urmAlphaRange');
-    const cRange = document.getElementById('urmCRange');
-    const statusText = document.getElementById('urmStatus');
-    const coherenceText = document.getElementById('urmCoherence');
-
-    // State
-    let x = Array.from({ length: N }, () => new Float32Array(N).fill(0));
-    let v = Array.from({ length: N }, () => new Float32Array(N).fill(0));
-    let entropy = 0; // Represents the global Delta S
-    let t = 0;
-
-    function initLattice() {
-        for (let i = 0; i < N; i++) {
-            for (let j = 0; j < N; j++) {
-                x[i][j] = (Math.random() - 0.5) * 0.1;
-                v[i][j] = 0;
-            }
-        }
-        entropy = 0;
-    }
-
-    window.resetURMLattice = function () {
-        const mid = Math.floor(N / 2);
-        x[mid][mid] = 8.0; // Strong central impulse
-        entropy = Math.max(0, entropy - 2.0); // Shock reduces local entropy (re-ordering)
-        statusText.innerText = "Quantum Impulse!";
-        setTimeout(() => { statusText.innerText = "Resonating..."; }, 1000);
-    };
-
-    function update() {
-        // Read UI
-        if (kRange) k = parseFloat(kRange.value);
-        if (alphaRange) alpha = parseFloat(alphaRange.value);
-        if (cRange) c = parseFloat(cRange.value);
-
+        // Prepare arrays
         let newX = Array.from({ length: N }, () => new Float32Array(N));
         let newV = Array.from({ length: N }, () => new Float32Array(N));
+        let accel = Array.from({ length: N }, () => new Float32Array(N));
 
         // URME Coefficients
         const beta = 0.005;  // phi^5 term
@@ -64,17 +31,67 @@ if (urmLatticeCanvas) {
         // Entropy-based cooling factor: 1 / e^(S/kB)
         const S_cool = Math.exp(-entropy / 10.0);
 
+        // 1) First pass: compute accelerations and provisional positions using Velocity-Verlet
+        for (let i = 0; i < N; i++) {
+            for (let j = 0; j < N; j++) {
+                const iPrev = (i - 1 + N) % N;
+                const iNext = (i + 1) % N;
+                const jPrev = (j - 1 + N) % N;
+                const jNext = (j + 1) % N;
+
+                const laplacian = x[iNext][j] + x[iPrev][j] + x[i][jNext] + x[i][jPrev] - 4 * x[i][j];
+
+                const potential = (alpha * Math.pow(x[i][j], 3) + beta * Math.pow(x[i][j], 5)) * S_cool;
+                const zeta = (Math.random() - 0.5) * xi;
+                const topo = eta * laplacian * Math.abs(x[i][j]);
+
+                const force = k * laplacian - c * v[i][j] - potential + zeta + topo;
+                const a = force / m;
+                accel[i][j] = a;
+
+                // provisional position
+                newX[i][j] = x[i][j] + v[i][j] * dt + 0.5 * a * dt * dt;
+            }
+        }
+
+        // 2) Second pass: compute accelerations at new positions and update velocities
         let sumSin = 0;
         let sumCos = 0;
         let totalEnergy = 0;
 
         for (let i = 0; i < N; i++) {
             for (let j = 0; j < N; j++) {
-                // Laplacian (4-neighbor)
                 const iPrev = (i - 1 + N) % N;
                 const iNext = (i + 1) % N;
                 const jPrev = (j - 1 + N) % N;
                 const jNext = (j + 1) % N;
+
+                const lap_new = newX[iNext][j] + newX[iPrev][j] + newX[i][jNext] + newX[i][jPrev] - 4 * newX[i][j];
+                const potential_new = (alpha * Math.pow(newX[i][j], 3) + beta * Math.pow(newX[i][j], 5)) * S_cool;
+                const zeta_new = (Math.random() - 0.5) * xi;
+                const topo_new = eta * lap_new * Math.abs(newX[i][j]);
+
+                const force_new = k * lap_new - c * v[i][j] - potential_new + zeta_new + topo_new;
+                const a_new = force_new / m;
+
+                // velocity update (Velocity Verlet)
+                newV[i][j] = v[i][j] + 0.5 * (accel[i][j] + a_new) * dt;
+
+                // Metrics on new state
+                const phase = (newX[i][j] % (2 * Math.PI));
+                sumSin += Math.sin(phase);
+                sumCos += Math.cos(phase);
+                totalEnergy += 0.5 * m * newV[i][j]**2 + 0.5 * k * lap_new**2;
+            }
+        }
+
+        // Entropy growth as a function of activity/dissipation
+        entropy += (totalEnergy / (N * N)) * 0.01;
+        if (entropy > 50) entropy *= 0.99; // Natural saturation
+
+        x = newX;
+        v = newV;
+        t += dt;
 
                 const laplacian = x[iNext][j] + x[iPrev][j] + x[i][jNext] + x[i][jPrev] - 4 * x[i][j];
 

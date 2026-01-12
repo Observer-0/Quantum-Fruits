@@ -322,7 +322,17 @@
       <div id="visContainer" style="margin-top: 1rem; position: relative;">
         <canvas id="qgChart" style="display:none; max-height: 400px; width: 100%;"></canvas>
         <pre id="qgOutput" class="qg-output" aria-live="polite"></pre>
+        <div id="adaptiveBadge" style="position:absolute; top:8px; left:8px; background:rgba(0,0,0,0.6); color:#fff; padding:6px 10px; border-radius:6px; font-size:0.8rem; display:none;">Adaptive steps active</div>
       </div>
+    </section>
+
+    <section style="max-width:900px; margin: 2rem auto;">
+      <label for="integratorSelect" style="font-weight:bold; display:block; margin-bottom:0.5rem;">Integrator</label>
+      <select id="integratorSelect" style="padding:0.5rem; border-radius:6px;">
+        <option value="euler">Euler (legacy)</option>
+        <option value="rk4" selected>Runge‑Kutta 4 (recommended)</option>
+      </select>
+      <p style="font-size:0.9rem; color:#94a3b8; margin-top:0.5rem;">Wähle den Integrator für Simulationen. RK4 bietet bessere Genauigkeit bei glatten Systemen.</p>
     </section>
 
     <section class="fruit-filter">

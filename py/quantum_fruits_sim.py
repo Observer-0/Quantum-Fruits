@@ -20,7 +20,15 @@ COSMO_RADIUS_NOW = 46.5e9 * LY
 # ============================================================
 # 2. Simulation Logic (Spin-Brake)
 # ============================================================
-def simulate_page_curve_mechanic(duration=10.0, steps=200):
+def rk4_step_scalar(f, y, dt):
+    k1 = f(y)
+    k2 = f(y + 0.5 * dt * k1)
+    k3 = f(y + 0.5 * dt * k2)
+    k4 = f(y + dt * k3)
+    return y + (dt / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4)
+
+
+def simulate_page_curve_mechanic(duration=10.0, steps=200, integrator='rk4'):
     t_list = []
     spin_list = []
     mass_list = []
@@ -75,8 +83,14 @@ def simulate_page_curve_mechanic(duration=10.0, steps=200):
             # do not advance time index, recompute
             continue
 
-        # Accept step
-        curr_mass += dM_try
+        # Accept step (use integrator if requested)
+        if integrator == 'rk4':
+            def f_mass(m):
+                # accretion only contribution for this toy model (dM/dt)
+                return accretion_rate * math.exp(-0.3 * curr_t)
+            curr_mass = rk4_step_scalar(f_mass, curr_mass, dt)
+        else:
+            curr_mass += dM_try
         curr_spin += dSpin_try
         if curr_spin < 0: curr_spin = 0
 

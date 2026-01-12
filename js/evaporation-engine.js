@@ -72,6 +72,15 @@ const Physics = {
         let currM = M0;
         let tau_eff = tau0;
 
+        // small RK4 helper
+        function rk4_step(f, y, dt) {
+            const k1 = f(y);
+            const k2 = f(y + 0.5 * dt * k1);
+            const k3 = f(y + 0.5 * dt * k2);
+            const k4 = f(y + dt * k3);
+            return y + (dt / 6.0) * (k1 + 2.0 * k2 + 2.0 * k3 + k4);
+        }
+
         for (let i = 0; i <= nsteps * 1.5; i++) {
             const currT = i * dt;
             t.push(currT);
@@ -81,9 +90,14 @@ const Physics = {
             TH.push(Math.min(this.hawkingTemperature(Ms), T_max));
 
             if (currM > M_remnant) {
-                const denom = (currM ** 2) + (alpha * (this.MP ** 2));
-                const dMdt = - (this.hbar * (this.c ** 4)) / (15360.0 * this.pi * (this.G ** 2) * denom);
-                currM = Math.max(currM + dMdt * dt, M_remnant);
+                // Use RK4 on dM/dt = -const / (M^2 + alpha MP^2)
+                const C = - (this.hbar * (this.c ** 4)) / (15360.0 * this.pi * (this.G ** 2));
+                const denomConst = alpha * (this.MP ** 2);
+                const f = (m) => {
+                    return C / ( (m ** 2) + denomConst );
+                };
+                const M_new = rk4_step(f, currM, dt);
+                currM = Math.max(M_new, M_remnant);
                 tau_eff = currT;
             } else {
                 currM = M_remnant;

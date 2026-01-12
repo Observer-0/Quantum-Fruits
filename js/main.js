@@ -112,6 +112,15 @@ function regularizedEvaporationRate(M) {
   return rate * Math.max(0, suppression);
 }
 
+// --- Simple RK4 helper (scalar) ---
+function rk4_step(f, y, dt) {
+  const k1 = f(y);
+  const k2 = f(y + 0.5 * dt * k1);
+  const k3 = f(y + 0.5 * dt * k2);
+  const k4 = f(y + dt * k3);
+  return y + (dt / 6) * (k1 + 2 * k2 + 2 * k3 + k4);
+}
+
 // --- Simulation Engine ---
 
 function simulatePageCurve(M0, steps = 200) {
@@ -151,6 +160,10 @@ function simulatePageCurve(M0, steps = 200) {
   let t = 0;
   let M = M0;
   let S_rad_accum = 0;
+  // Track adaptive usage
+  let adaptiveUsed = false;
+  let maxSubSteps = 0;
+  const integrator = (typeof window !== 'undefined' && window._SIM_OPTIONS && window._SIM_OPTIONS.integrator) ? window._SIM_OPTIONS.integrator : 'rk4';
 
   // Initial Entropy
   const S0 = bekensteinHawkingEntropy(M0);
@@ -182,28 +195,43 @@ function simulatePageCurve(M0, steps = 200) {
         // relative change based limiter
         const rel = Math.abs(dM_try) / Math.max(Math.abs(M), 1e-20);
         if (rel > MAX_REL_CHANGE) {
+          adaptiveUsed = true;
           // reduce sub-step
           const scale = MAX_REL_CHANGE / rel;
           const subDt = Math.max(remaining * scale, MIN_DT);
+          maxSubSteps = Math.max(maxSubSteps, Math.ceil(dt / subDt));
           dM_try = dMdt * subDt;
 
-          // apply sub-step
-          const dE = -dM_try * (c ** 2);
-          const T = hawkingTemperature(M);
+          // apply sub-step (use integrator if selected)
+          const M_prev = M;
+          if (integrator === 'rk4') {
+            M = rk4_step(regularizedEvaporationRate, M, subDt);
+          } else {
+            M += dM_try;
+          }
+
+          const dM_actual = M - M_prev;
+          const dE = -dM_actual * (c ** 2);
+          const T = hawkingTemperature(M_prev);
           const dS = (T > 0) ? (dE / T) : 0;
           S_rad_accum += dS;
           sradPoints.push(S_rad_accum);
-          M += dM_try;
           t += subDt;
           remaining -= subDt;
         } else {
           // safe to apply remaining in one go
-          const dE = -dM_try * (c ** 2);
-          const T = hawkingTemperature(M);
+          const M_prev = M;
+          if (integrator === 'rk4') {
+            M = rk4_step(regularizedEvaporationRate, M, remaining);
+          } else {
+            M += dM_try;
+          }
+          const dM_actual = M - M_prev;
+          const dE = -dM_actual * (c ** 2);
+          const T = hawkingTemperature(M_prev);
           const dS = (T > 0) ? (dE / T) : 0;
           S_rad_accum += dS;
           sradPoints.push(S_rad_accum);
-          M += dM_try;
           t += remaining;
           remaining = 0;
         }
@@ -215,7 +243,7 @@ function simulatePageCurve(M0, steps = 200) {
         break;
       }
     }
-
+    }
     // Safety break if simulation runs too long
     if (timePoints.length > steps * 2) break;
   }
@@ -226,6 +254,7 @@ function simulatePageCurve(M0, steps = 200) {
     s_bh: sbhPoints,
     s_rad_accum: sradPoints,
     tau_limit: tau
+    , adaptive_used: adaptiveUsed, max_substeps: maxSubSteps
   };
 }
 
@@ -615,6 +644,11 @@ function drawPageCurveChart(massKg, label) {
   qgChartCanvas.style.display = 'block';
   qgOutput.style.display = 'none';
 
+  const integrator = document.getElementById('integratorSelect') ? document.getElementById('integratorSelect').value : 'rk4';
+  // Pass integrator option via global for now
+  window._SIM_OPTIONS = window._SIM_OPTIONS || {};
+  window._SIM_OPTIONS.integrator = integrator;
+
   const data = simulatePageCurve(massKg, 150);
 
   // Compute N_sigmaP for the cosmological window and include in subtitle
@@ -632,6 +666,19 @@ function drawPageCurveChart(massKg, label) {
 
   const tau = data.tau_limit;
   const lastT = data.time[data.time.length - 1];
+
+  // Show adaptive badge if used
+  const badge = document.getElementById('adaptiveBadge');
+  if (badge) {
+    if (data.adaptive_used) {
+      badge.style.display = 'block';
+      badge.innerText = `Adaptive steps active (max substeps ≈ ${data.max_substeps})`;
+      badge.style.background = 'rgba(245,158,11,0.95)';
+      badge.style.color = '#0b1220';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
 
   myChart = new Chart(qgChartCanvas, {
     type: 'line',

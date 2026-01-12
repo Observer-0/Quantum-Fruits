@@ -109,6 +109,15 @@ export function simulatePageCurve(M0, steps = 200) {
   const tau = (5120 * pi * (G ** 2) * (M0 ** 3)) / (hbar * (c ** 4));
   const dt = tau / steps;
 
+  // RK4 helper for scalar ODEs
+  function rk4_step(f, y, dt) {
+    const k1 = f(y);
+    const k2 = f(y + 0.5 * dt * k1);
+    const k3 = f(y + 0.5 * dt * k2);
+    const k4 = f(y + dt * k3);
+    return y + (dt / 6) * (k1 + 2 * k2 + 2 * k3 + k4);
+  }
+
   let t = 0;
   let M = M0;
   let S_rad_accum = 0;
@@ -131,23 +140,17 @@ export function simulatePageCurve(M0, steps = 200) {
       // Radiation entropy stops growing (energy emission stops)
       sradPoints.push(S_rad_accum);
     } else {
-      // Evolve
-      const dMdt = regularizedEvaporationRate(M);
-      const dM = dMdt * dt; // dM is negative
-
-      // Energy radiated
-      const dE = -dM * (c ** 2);
-
-      // Entropy increase dS = dE / T_H
-      const T = hawkingTemperature(M);
-      const dS = dE / T;
-
-      // Irreversibility factor approx 1.0 for simplicity or >1 for realism
+      // Evolve using RK4 for better stability
+      const M_prev = M;
+      M = rk4_step(regularizedEvaporationRate, M, dt);
+      // ensure monotonic non-negative mass and remnant
+      if (M <= MP) M = MP;
+      const dM_actual = M - M_prev;
+      const dE = -dM_actual * (c ** 2);
+      const T = hawkingTemperature(M_prev);
+      const dS = (T > 0) ? (dE / T) : 0;
       S_rad_accum += dS;
-
       sradPoints.push(S_rad_accum);
-
-      M += dM;
       t += dt;
     }
 
