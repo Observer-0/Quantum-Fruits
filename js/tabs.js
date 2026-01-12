@@ -4,21 +4,28 @@ function switchTab(tabId) {
     // Deactivate all buttons
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
 
-    // Activate selected
-    document.getElementById('tab-' + tabId).classList.add('active');
+    // Activate selected content
+    const targetTab = document.getElementById('tab-' + tabId);
+    if (targetTab) {
+        targetTab.classList.add('active');
+    }
 
-    // Find button and activate it
-    // Logic: The button that called this might not be easily accessible if we just pass ID.
-    // Instead early binding or querySelector strategy.
+    // Activate the corresponding button
+    // Find button that has an onclick calling this tabId
+    document.querySelectorAll('.tab-nav .tab-btn').forEach(btn => {
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${tabId}'`)) {
+            btn.classList.add('active');
+        }
+    });
 
-    // Let's assume buttons are in order: Theory, Papers, Formulas
-    const btns = document.querySelectorAll('.tab-btn');
-    if (tabId === 'theory' && btns[0]) btns[0].classList.add('active');
-    if (tabId === 'papers' && btns[1]) btns[1].classList.add('active');
-    if (tabId === 'formulas' && btns[2]) btns[2].classList.add('active');
+    // Handle nested buttons if any
+    document.querySelectorAll('.theory-subnav .tab-btn').forEach(btn => {
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${tabId}'`)) {
+            btn.classList.add('active');
+        }
+    });
 
-    // Optional: Trigger Math render if needed
-    // if (window.renderMathInElement) {
-    //    renderMathInElement(document.getElementById('tab-' + tabId));
-    // }
+    // Resize simulations if visible
+    if (tabId === 'galaxies' && window.galaxySim) window.galaxySim.resize();
+    if (tabId === 'blackholes' && window.bhSim) window.bhSim.resize();
 }
