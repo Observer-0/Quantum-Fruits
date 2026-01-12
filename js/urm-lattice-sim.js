@@ -31,8 +31,13 @@ if (urmLatticeCanvas) {
         // Entropy-based cooling factor: 1 / e^(S/kB)
         const S_cool = Math.exp(-entropy / 10.0);
 
+        // Read integrator selection
+        const integratorSelect = document.getElementById('urmIntegratorSelect');
+        const integratorMode = integratorSelect ? integratorSelect.value : 'verlet';
+
         // 1) First pass: compute accelerations and provisional positions using Velocity-Verlet
-        for (let i = 0; i < N; i++) {
+        if (integratorMode === 'verlet') {
+            for (let i = 0; i < N; i++) {
             for (let j = 0; j < N; j++) {
                 const iPrev = (i - 1 + N) % N;
                 const iNext = (i + 1) % N;
@@ -51,6 +56,26 @@ if (urmLatticeCanvas) {
 
                 // provisional position
                 newX[i][j] = x[i][j] + v[i][j] * dt + 0.5 * a * dt * dt;
+            }
+            }
+        } else {
+            // Euler integrator (legacy) - simpler but less stable
+            for (let i = 0; i < N; i++) {
+                for (let j = 0; j < N; j++) {
+                    const iPrev = (i - 1 + N) % N;
+                    const iNext = (i + 1) % N;
+                    const jPrev = (j - 1 + N) % N;
+                    const jNext = (j + 1) % N;
+
+                    const laplacian = x[iNext][j] + x[iPrev][j] + x[i][jNext] + x[i][jPrev] - 4 * x[i][j];
+                    const potential = (alpha * Math.pow(x[i][j], 3) + beta * Math.pow(x[i][j], 5)) * S_cool;
+                    const zeta = (Math.random() - 0.5) * xi;
+                    const topo = eta * laplacian * Math.abs(x[i][j]);
+                    const force = k * laplacian - c * v[i][j] - potential + zeta + topo;
+
+                    newV[i][j] = v[i][j] + (force / m) * dt;
+                    newX[i][j] = x[i][j] + newV[i][j] * dt;
+                }
             }
         }
 

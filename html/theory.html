@@ -2006,6 +2006,13 @@
                                         <strong>Status:</strong> <span id="urmStatus">Resonating...</span><br>
                                         <strong>Coherence ($R$):</strong> <span id="urmCoherence">0.00</span>
                                     </div>
+                                    <div style="margin-top: 1rem;">
+                                        <label for="urmIntegratorSelect">Integrator:</label>
+                                        <select id="urmIntegratorSelect" style="width:100%; padding:6px; margin-top:6px;">
+                                            <option value="verlet" selected>Velocity-Verlet (stable)</option>
+                                            <option value="euler">Euler (legacy)</option>
+                                        </select>
+                                    </div>
                                     <button onclick="resetURMLattice()"
                                         style="margin-top: 1.5rem; width: 100%; padding: 0.8rem; background: #8b5cf6; border: none; border-radius: 4px; color: #fff; cursor: pointer;">Impuls
                                         auslösen</button>
