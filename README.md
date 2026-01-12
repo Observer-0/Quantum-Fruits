@@ -4,14 +4,60 @@
 
 ## Core Philosophical & Physical Pillars
 
-### 1. The Planck Spacetime Cell (σₚ)
+### 1. The Planck Spacetime Cell (σₚ ---> Universe)
 The invariant two-measure of spacetime:
 $$\sigma_P = \ell_P \cdot t_P = \frac{\hbar G}{c^4}, \quad \text{with } \frac{\ell_P}{t_P} = c$$
-This defines the granular ratio of nature's weave. The speed of light $c$ is not an imposed constant but a structural consequence of this granularity.
+This defines the granular ratio of nature's weave. The speed of light $c$ is not an imposed constant but a structural consequence of this granularity (Lambda ~ σₚ/cRt ~ 10^-123; Nσₚ ~ cRt/σₚ ~ 10^123).
+⟨ Ĝ[σ_P; W] + Λ_eff(W) * g ⟩_σP = (8πG / c⁴) * ⟨ T̂ ⟩_σP^(W)
+
+or equivalently:
+
+( Ĝ_μν + Λ_eff(W) * g_μν ) |Ψ_W⟩ = (8πG / c⁴) * (A_σP T̂)_μν |Ψ_W⟩
+
+Where:
+σ_P = ħG / c⁴ → finite spacetime action
+Λ_eff(W) = 3 / (c R t)
+A_σP = Planck-covariant averaging operator over kernel K_σP(x,y)
+
+Expectation values recover the classical Einstein–Zander equation:
+G_μν + Λ_eff(W) g_μν = (8πG / c⁴) T̄_μν^(W)
+
+Key results:
+Λ_eff(W) = 3 / (c R t)
+Λ_cell = 3 / ℓ_P²
+Λ_macro = Λ_cell / N_σ , where N_σ = (R t) / σ_P
+
+Hence, the cosmological “vacuum catastrophe” disappears naturally:
+Λ_QFT(local) / Λ_GR(observed) = 1
+
+Axiom of Finite Divisibility of Spacetime (A. Zander)
+
+Postulate:
+No physical system can be divided without bound.
+Space and time possess a fundamental, finite resolution — given by the fundamental spacetime quantum:
+σ_P = ℓ_P t_P = ħG / c⁴.
+
+This geometric action unit defines the smallest possible quantum of spacetime in which cause and effect remain distinct.
+Below this limit, the continuum assumption collapses, and with it the classical notion of separability.
+
+Consequences:
+
+Every physical process, measurement, or interaction occurs in discrete spacetime volumes. Attempts to resolve beyond σ_P require infinite energy.
+
+Singularities, infinite densities, and point-like particles are mathematical artifacts, not physical realities. Nature enforces a cutoff.
+
+Spacetime is atomic: σ_P sets the minimum geometric extent, implying a quantized fabric of spacetime.
+
+Natural origin of quantum entanglement:
+If separation is limited by geometry, two particles within the same Planck volume cannot be causally independent — they are geometrically entangled.
+Entanglement is not a mysterious bond, but a lack of spacetime resolution.
+Observers measuring correlations across spacelike separations are probing the same indivisible cell from different directions.
+
+“Entanglement is the geometry’s way of saying: you haven’t zoomed in far enough to tell them apart.”
 
 ### 2. The Canonical Energy Chain
 $$E = mc^2 = hf, \quad E_P = \sqrt{\frac{\hbar c^5}{G}}$$
-An equivalence of principles: rest energy, quantum oscillation, and Planck-scale dynamics are connected expressions of the same underlying structure.
+An equivalence of principles: rest energy, quantum oscillation, and Planck-scale dynamics are connected expressions of the same underlying structure (σₚ ---> Universe).
 
 ### 3. The Zander Scaling Function (Z(r))
 $$Z(r) = \frac{\hbar^2}{c \cdot r}$$
