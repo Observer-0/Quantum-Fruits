@@ -1,6 +1,14 @@
 # Quantum Fruits: The Σₚ Scaffold
 
-**Quantum Fruits** developed a minimal, parameter-free framework of quantum gravity based entirely on the natural constants $\{\hbar, c, G, k_B\}$. It serves as both a narrative and a gateway: rigorous science embedded in a broader perspective of nature’s structure.
+## Project Vision
+
+Quantum Fruits is designed to grow into a **fully HTML-based web simulation** of quantum gravity and cosmology.  
+All core modules – from TSF cycles to lattice universes and galaxy dynamics – will be accessible directly im Browser, ohne Installation, ergänzt durch interaktive Tools, Live-Parameter und exportierbare Daten.
+
+- Daily updates (mit Ausnahme von Wochenenden) halten Theorie, Visualisierungen und Code synchron mit dem aktuellen Entwicklungsstand.  
+- Übersetzungs-Hilfe, Korrekturlesen und inhaltliches Feedback (Deutsch/Englisch) sind explizit willkommen – Contributions via Pull Requests oder Issues sind erwünscht.
+
+
 ## The Planck Spacetime Cell (σₚ → Universe)
 
 The project uses the concept of a fundamental spacetime action cell
@@ -143,3 +151,12 @@ The ZIP archive includes the full rigorous papers (published with separate DOIs)
 
 **Copyright © 2026 Adrian Zander**  
 Licensed under the **MIT License**. Feel free to use, modify, and resonate with this theory.
+
+## Current Evolution (2026 Update)
+
+The project has evolved beyond static theory into dynamic simulation and philosophical unification.  
+The long-term goal is a **fully HTML-based web simulation platform**, in which all core ideas of the Σₚ-framework als interaktive Browser-Experimente erlebt werden können – inklusive Tools, Dashboards und Exportfunktionen.
+
+Updates to the codebase and docs are rolled out almost daily (except on weekends), reflecting the living nature of the theory.  
+Community support is welcome: Hilfe bei Übersetzungen (DE/EN), Textverfeinerung und wissenschaftlichem Feedback ist ausdrücklich erwünscht.
+
