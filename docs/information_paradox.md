@@ -60,7 +60,7 @@ Kurze Referenzen und Formeln sind in den vorhandenen Dateien (`README.md`, `html
 
 ## Principle of Quantum Relativism (Zander‑Axiom)
 
-Stellungnahme: Anstatt $\hbar$ als gottgegebene Konstante zu akzeptieren, zerlegen wir seine Dimensionen und lesen sie als physikalischen Bauplan für die Kopplung von Kausalität und Raum.
+Anstatt $\hbar$ als gegebene Konstante zu akzeptieren, zerlegen wir seine Dimensionen und lesen sie als physikalischen Bauplan für die Kopplung von Kausalität und Raum.
 
 1) Zerlegung von $[\hbar^2]$:
 
