@@ -18,6 +18,12 @@ $$
 
 where $R$ and $t$ are the cosmological radius and age (or a scaled fraction thereof).
 
+Holographische Beziehung (kurz): Definiert man
+$$\alpha_\sigma = \frac{\sigma_P}{R\,t},\qquad \Lambda = \frac{\alpha_\sigma}{\ell_P^2},$$
+so folgt algebraisch
+$$\sigma_P = \Lambda\,\ell_P^2\,R\,t\,.$$ 
+Dimensionscheck: $[\Lambda]=L^{-2},\;[\ell_P^2]=L^2,\;[R\,t]=L\cdot T\Rightarrow[\sigma_P]=L\cdot T$, also konsistent mit $\sigma_P=\ell_P t_P$.
+
 - Simulations in `js/main.js` and `py/quantum_fruits_sim.py` respect this cell by clamping the simulation step count when the number of available $N_{\sigma}$ ticks would otherwise be smaller than the requested resolution. This avoids sub-cell numerical resolution and makes the Planck cell an effective lower bound for temporal/spatial sampling.
 
 See `js/main.js` and `py/quantum_fruits_sim.py` for implementation details and example calculations (N_σ is reported in chart subtitles).
