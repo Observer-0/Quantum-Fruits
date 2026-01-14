@@ -109,9 +109,9 @@ Quantifies a structural thermal–inertial action density. Combined with $\sigma
 
 ### 5. Zander-Entropy & The Arrow of Time ($S_Z$)
 $$S_Z = k_B \ln \left( \frac{mc^2}{hf} \right)$$
-The Arrow of Time is redefined as a **directed braking process**. Entropy growth is the transition of energy from pure quantum oscillation ($hf$) into gravitational mass-burden ($mc^2$). Time is the waste product of this conversion.
+The Arrow of Time is redefined as a **directed braking process**. Entropy growth is the transition of energy from pure quantum oscillation ($hf$) into gravitational mass-burden ($mc^2$). Time is the product of this conversion. Without Entropy, there is no Arrow of Time. And without the Arrow of Time, there is no Entropy. Thus, Entropy and Time are co-emergent and the only fundmental Constants of Nature.
 
-## Key Theoretical Results
+ Key Theoretical Results
 
 - **Cosmology Bridge:** The cosmological constant $\Lambda \approx 10^{-53} \text{ m}^{-2}$ is derived directly from the global fine-structure of the quantum field: $\alpha_\sigma = \sigma_P / (R \cdot t) \implies \Lambda = \alpha_\sigma / \ell_P^2$. No dark energy required.
 - **Dark Matter Elimination:** Galactic rotation curves and the Radial Acceleration Relation (RAR/BTFR) emerge as the low-g response of the spacetime field without dark matter halos ($g* \approx c^2\sqrt{\Lambda}$).
