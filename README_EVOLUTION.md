@@ -84,3 +84,37 @@ This implementation is based on the **QSTF Framework (Postulates P1-P10)**, spec
 
 * **P6 (Fine-Structure):** Scaling the cosmological constant $\Lambda$.
 * **P10 (Coupling):** The invariant $\sigma_P$ as the bridge between quantum action and gravity.
+
+The classical Minkowski metric
+\[
+  ds^2 = c^2\,dt^2 - dx^2 - dy^2 - dz^2
+\]
+assumes a continuous, infinitely divisible spacetime.
+The introduction of \(\sigP\) (sigma Planck) leads to a natural constraint:
+\[
+  \Delta x\,\Delta t \ge \sigP,
+\]
+which establishes a \emph{geometric uncertainty relation}.
+The regularized metric reads
+\[
+  d\tilde{s}^2 = \frac{ds^2}{1+\sigP^{-1}f(\mathcal{R},x)},
+\]
+where \(f(\mathcal{R},x)\) describes local curvature.
+For vanishing curvature \(f\to0\), the metric reduces to the classical form.
+On Planck scales, however, it remains finite and eliminates singularities.
+This defines a \emph{Planck-covariant Minkowski space} that is locally quantized but globally flat — the statistical average of discrete cells.
+\newline
+\textbf{Consequences:}
+\begin{enumerate}
+  \item Every measurement, interaction, and physical action occurs in units corresponding to at least one spacetime volume quantum
+  \[
+    V_{\sigma} = \sigP^{3/2}.
+  \]
+  \item Infinite densities, energies, or curvatures are not physical states, but mathematical idealizations — they violate the finite resolution of nature.
+  \item The continuum of classical field theories is an approximation; on Planck scales, discreteness emerges.
+  \item The regularization of spacetime is not an arbitrary measure, but a direct consequence of its quantized geometry:
+  \[
+    \Delta x\,\Delta y\,\Delta z\,\Delta t \ge \sigP^2.
+  \]
+  Thus every further division ends at a geometric boundary, not a computational one.
+\end{enumerate}
