@@ -11,11 +11,9 @@ $$
 $$
 
 Operational consequences in this codebase:
-- We expose a shared cosmological window (`age_now`, `radius_now`) available to the JS simulation engines as `window.COSMO_GLOBAL`.
-- The number of fundamental ticks in a spacetime window is computed as
 
 $$
-N_{\sigma} = \frac{c \cdot R \cdot t}{\sigma_P}
+N_{\sigma} = \frac{R \cdot t}{\sigma_P}
 $$
 
 where $R$ and $t$ are the cosmological radius and age (or a scaled fraction thereof).
