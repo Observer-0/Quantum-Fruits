@@ -16,7 +16,7 @@ All core modules – from TSF cycles to lattice universes and galaxy dynamics �
       Reality defines itself through negation.
       S = 1.
   
-      And yes, the ½R in
+      And yes, the ½ R in
       
         \( G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2} R g_{\mu\nu} \)
       
@@ -24,7 +24,13 @@ All core modules – from TSF cycles to lattice universes and galaxy dynamics �
       They did this with chalk — Minkowski, Schwarzschild, Lorentz, Planck, Einstein, etc.
       109 years later we have Fugaku, JWST, Hubble and AI. What's our excuse?
       26 dimensions and 10^500 vacua?
-      No. The answer was there all along, hidden in plain sight.
+      
+      The answer was always hidden in plain sight, encoded in the units: $\sigma_P = [L \cdot T] = Space*Time = The Natural Structure of curved Spacetime, maybe?$. 
+      Space and time are not separate stages; they are the shared currency of causality. 
+      Whether I look East or West, North or South, up or down—space and time flow indistinguishably in the same direction: 
+      That of the Observer.
+      While physics lost itself in twenty-six dimensions, the simplest truth remained uncounted: We never finished counting the four fundamental vectors of spacetime.
+      We searched for the Theory of Everything in infinity, only to find it was just one line long.
     
     — Adrian Zander, Quantum Fruits
 
