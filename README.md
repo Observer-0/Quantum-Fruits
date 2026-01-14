@@ -25,11 +25,13 @@ All core modules – from TSF cycles to lattice universes and galaxy dynamics �
       109 years later we have Fugaku, JWST, Hubble and AI. What's our excuse?
       26 dimensions and 10^500 vacua?
       
-      The answer was always hidden in plain sight, encoded in the units: $\sigma_P = [L \cdot T] = Space*Time = The Natural Structure of curved Spacetime, maybe?$. 
+      The answer was always hidden in plain sight, encoded in the units: $\sigma_P = [L \cdot T] = Space*Time = 
+      The Natural Structure of curved Spacetime, maybe?$. 
       Space and time are not separate stages; they are the shared currency of causality. 
       Whether I look East or West, North or South, up or down—space and time flow indistinguishably in the same direction: 
       That of the Observer.
-      While physics lost itself in twenty-six dimensions, the simplest truth remained uncounted: We never finished counting the four fundamental vectors of spacetime.
+      While physics lost itself in twenty-six dimensions, the simplest truth remained uncounted: 
+      We never finished counting the four fundamental vectors of spacetime.
       We searched for the Theory of Everything in infinity, only to find it was just one line long.
     
     — Adrian Zander, Quantum Fruits
