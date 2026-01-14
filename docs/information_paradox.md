@@ -87,7 +87,3 @@ ist die kleinste Raumzeit‑Zelle, die festlegt, welche minimale Kombination aus
 - Maximale Kraft ist weiterhin $c^4/G$; das Universum „pixelat“ an dieser Grenze — keine Singularität, nur ein Informations‑Sättigungszustand pro Zelle.
 
 Kurzform: Quantenmechanik ist die notwendige Folge einer getakteten Raumzeit, in der Masse nicht nur krümmt, sondern taktet. $\hbar$ wird als zusammengesetztes Maß der Quellen, der Gleichzeitigkeit und des Wirkvolumens lesbar.
-
----
-
-Wenn du möchtest, kann ich diesen Abschnitt auch auf Englisch hinzufügen und/oder als separaten Abschnitt `Principle_of_Quantum_Relativism.md` auslagern.
