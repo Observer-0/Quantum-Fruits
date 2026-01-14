@@ -1,12 +1,37 @@
 # Quantum Fruits: The Σₚ Scaffold
 
-## Project Vision
+## Project Vision (Beta)
 
 Quantum Fruits is designed to grow into a **fully HTML-based web simulation** of quantum gravity and cosmology.  
-All core modules – from TSF cycles to lattice universes and galaxy dynamics – will be accessible directly im Browser, ohne Installation, ergänzt durch interaktive Tools, Live-Parameter und exportierbare Daten.
+All core modules – from TSF cycles to lattice universes and galaxy dynamics – will be accessible directly  via Browser.
 
 - Daily updates (mit Ausnahme von Wochenenden) halten Theorie, Visualisierungen und Code synchron mit dem aktuellen Entwicklungsstand.  
 - Übersetzungs-Hilfe, Korrekturlesen und inhaltliches Feedback (Deutsch/Englisch) sind explizit willkommen – Contributions via Pull Requests oder Issues sind erwünscht.
+
+
+      "Entropy is the natural order of the Universe."
+      Every event is binary: it happens, or it does not.
+      The information lies not in what occurred,
+      but in all the paths that were never taken.
+      Reality defines itself through negation.
+      S = 1.
+  
+      And yes, the ½R in
+      
+        \( G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2} R g_{\mu\nu} \)
+      
+      is just the trace.
+      They did this with chalk — Minkowski, Schwarzschild, Lorentz, Planck, Einstein, etc.
+      109 years later we have Fugaku, JWST, Hubble and AI. What's our excuse?
+      26 dimensions and 10^500 vacua?
+      No. The answer was there all along, hidden in plain sight.
+    
+    — Adrian Zander, Quantum Fruits
+
+σ_P Framework Overview
+A Minimal, Parameter-Free Approach to Quantum Gravity
+
+
 
 
 ## The Planck Spacetime Cell (σₚ → Universe)
