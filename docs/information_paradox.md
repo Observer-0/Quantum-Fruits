@@ -1,6 +1,5 @@
-# Information Paradox — Zander‑Bit (Kurzfassung)
+# Information Paradox 
 
-Ziel: Formuliere das Informationsparadoxon als eine informationstheoretische/algorithmische Aufgabe und definiere ein Minimal‑Bit (Zander‑Bit), das „keine Information" als gültigen Informationswert gezählt.
 
 ## 1. Bekenstein–Hawking ↔ Shannon
 
@@ -18,9 +17,8 @@ $$
 
 Die Quantifizierung in Bits zählt die Anzahl unabhängiger Ja/Nein‑Entscheidungen, die zur Beschreibung des Systems nötig sind.
 
-## 2. Der Zander‑Bit (Meta‑Information)
+## 2. Information
 
-Definition: Ein `Zander‑Bit` ist ein Meta‑Bit, das zusätzlich zur herkömmlichen Information den Zustand "keine Information" (Null‑Return) als gültigen Informationswert kodiert.
 
 Eigenschaften:
 - Wertebereich: {0,1} — 1 bedeutet "Information vorhanden / Signal", 0 bedeutet "kein Signal / Null‑Return".
@@ -45,7 +43,7 @@ Jeder Kollaps/Ereignis sollte mindestens folgendes protokollieren:
 - `event_id` (UUID)
 - `input_complexity` (z. B. Anzahl unterscheidbarer Mikro‑Zustände oder Entropieschätzer)
 - `zander_bit` (0 oder 1)
-- `payload_summary` (falls `zander_bit==1`, kurze Hash/Code der dekomprimierten Information)
+- `payload_summary` (falls `bit==1`, kurze Hash/Code der dekomprimierten Information)
 
 Dieses Log garantiert Nachvollziehbarkeit ohne Informationsverlust — auch wenn nur `zander_bit==0` zurückgegeben wird.
 
