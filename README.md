@@ -85,7 +85,10 @@ Observers measuring correlations across spacelike separations are probing the sa
 “Entanglement is the geometry’s way of saying: you haven’t zoomed in far enough to tell them apart.”
 
 ### 2. The Canonical Energy Chain
-$$E = mc^2 = hf, \quad E_P = \sqrt{\frac{\hbar c^5}{G}}$$
+$$E = mc^2 = hf,\qquad E_P = \sqrt{\frac{\hbar c^5}{G}} = \frac{\hbar}{t_P}.$$ 
+We adopt the per-grain energy convention: a system composed of $n$ spacetime grains carries
+$$E = n\,E_P = n\,\frac{\hbar}{t_P},$$
+which keeps the dimensional bookkeeping explicit and avoids mixing $\sigma_P$ (L·T) directly with energy units.
 An equivalence of principles: rest energy, quantum oscillation, and Planck-scale dynamics are connected expressions of the same underlying structure (σₚ ---> Universe).
 
 ### 3. The Zander Scaling Function (Z(r))
