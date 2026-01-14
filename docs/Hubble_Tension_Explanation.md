@@ -18,20 +18,50 @@ The **Hubble Tension** — the discrepancy between early-universe (CMB: ~67 km/s
 
 ### Analogy: Two-Phase PC Cooling System
 
-Inspired by **der8auer's Aqua Exhalare** two-phase cooling system, we model the universe as a thermodynamic engine with phase transitions:
+**What is der8auer's Aqua Exhalare?**
+
+Unlike traditional water cooling systems (AiO or custom loops with pumps), the **Aqua Exhalare** is a revolutionary **two-phase immersion cooling system**:
+
+**How it works:**
+1. **Complete Submersion:** The entire PC is submerged in a special dielectric coolant (non-conductive fluid)
+2. **Boiling Phase:** When components heat up, the coolant boils at a low temperature (~61°C), absorbing heat (liquid → gas phase transition)
+3. **Vapor Rise:** The hot vapor naturally rises to the top of the chamber (buoyancy)
+4. **Condensation:** A condenser at the top cools the vapor back into liquid (gas → liquid phase transition)
+5. **Gravity Return:** The condensed liquid falls back down onto the hot components, completing the cycle
+6. **Self-Regulating:** No pumps needed — the phase transition itself drives the circulation!
+
+**Watch it in action:** [der8auer's Aqua Exhalare Demo](https://www.youtube.com/watch?v=j1Ew2rVVTAE)
+
+**Key Differences:**
+
+| Cooling Type | Mechanism | Phase Change? | Pump Needed? |
+|--------------|-----------|---------------|--------------|
+| **AiO (All-in-One)** | Sealed loop, liquid circulation | ❌ No | ✅ Yes |
+| **Custom Loop** | Open loop, liquid circulation | ❌ No | ✅ Yes |
+| **Two-Phase Immersion** | Boiling/condensation cycle | ✅ Yes | ❌ No (gravity-driven) |
+
+---
+
+**Cosmological Mapping:**
+
+We apply the same thermodynamic principles to model the universe:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│  PC Cooling System          ↔  Universe                            │
+│  Two-Phase Immersion Cooling    ↔  Universe                        │
 ├─────────────────────────────────────────────────────────────────────┤
-│  Liquid phase (cold)        ↔  Deflation (H ~ 67 km/s/Mpc)         │
-│  Gas phase (hot)            ↔  Expansion (H ~ 73 km/s/Mpc)         │
-│  Evaporator (heat input)    ↔  Hawking radiation (rethermalization)│
-│  Condenser (heat removal)   ↔  Cosmic cooling (adiabatic expansion)│
-│  Phase transition           ↔  Critical temperature T_c            │
-│  Pressure regulation        ↔  Hubble parameter oscillation        │
+│  Coolant (liquid phase)         ↔  Deflation phase (H ~ 67)        │
+│  Coolant (gas phase)            ↔  Expansion phase (H ~ 73)        │
+│  Boiling (heat absorption)      ↔  Hawking radiation (energy input)│
+│  Condensation (heat release)    ↔  Adiabatic cooling (expansion)   │
+│  Phase transition at ~61°C      ↔  Critical temperature T_c        │
+│  Self-regulating cycle          ↔  Hubble parameter oscillation    │
+│  No external pump               ↔  Self-contained universe         │
+│  Gravity drives flow            ↔  Spacetime curvature drives flow │
 └─────────────────────────────────────────────────────────────────────┘
 ```
+
+**Key Insight:** Just as the PC cooling system self-regulates through natural phase transitions (no external pump!), the universe self-regulates its expansion through thermodynamic phase transitions (no external "force" or "dark energy driver"!). Both are **closed, self-contained systems** governed by thermodynamics.
 
 ### Physical Mechanism
 
