@@ -57,3 +57,37 @@ Dieses Log garantiert Nachvollziehbarkeit ohne Informationsverlust — auch wenn
 ---
 
 Kurze Referenzen und Formeln sind in den vorhandenen Dateien (`README.md`, `html/theory.html`) verlinkt und konsistent gehalten.
+
+## Principle of Quantum Relativism (Zander‑Axiom)
+
+Stellungnahme: Anstatt $\hbar$ als gottgegebene Konstante zu akzeptieren, zerlegen wir seine Dimensionen und lesen sie als physikalischen Bauplan für die Kopplung von Kausalität und Raum.
+
+1) Zerlegung von $[\hbar^2]$:
+
+$$[\hbar^2] = M^2\,L^4\,T^{-2}$$
+
+- $M^2$ (Die Quellen): Zwei Massen, die miteinander in Wechselwirkung treten. Ohne Quellen keine Quantenwirkung.
+- $T^{-2}$ (Die Gleichzeitigkeit): Die Frequenzkomponenten der Wechselwirkung — zwei Takte $T^{-1}\cdot T^{-1}$, die Synchronisation der Teilnehmer.
+- $L^4$ (Das Wirkvolumen): Der kombinierten Beitrag aus Raumvolumen ($L^3$) und relativer Distanz ($L$), die Informationsübertragung erfordert.
+
+2) $\sigma_P$ als relativer Vermittler:
+
+Das fundamentale Raumzeit‑Quantum
+$$\sigma_P = L\cdot T$$
+ist die kleinste Raumzeit‑Zelle, die festlegt, welche minimale Kombination aus Raum ($L$) und Zeit ($T$) erforderlich ist, um ein Bit (den Zander‑Bit) zwischen zwei Quellen zu übertragen.
+
+3) Konsequenzen für Geometrie und Information:
+
+- Binäre Realität: Information wird als Zustand gezählt — `1` (Signal) oder `0` (Null‑Return als gültige Information). Entropie reduzierbar auf binäre Entscheide; das Paradoxon wird zur Kodierungsfrage.
+- Weg mit überflüssigen $4\pi$‑Faktoren als universelle Flächeninterpreter: Systeme sind Informationsmatrizen ($r_s^2$) mit lokalen, diskreten Protokollen.
+
+4) Harte Grenze statt Singularität:
+
+- Maximale Krümmung wird durch $\sigma_P$ begrenzt; unendliche Krümmungen sind physikalisch nicht erreichbar.
+- Maximale Kraft ist weiterhin $c^4/G$; das Universum „pixelat“ an dieser Grenze — keine Singularität, nur ein Informations‑Sättigungszustand pro Zelle.
+
+Kurzform: Quantenmechanik ist die notwendige Folge einer getakteten Raumzeit, in der Masse nicht nur krümmt, sondern taktet. $\hbar$ wird als zusammengesetztes Maß der Quellen, der Gleichzeitigkeit und des Wirkvolumens lesbar.
+
+---
+
+Wenn du möchtest, kann ich diesen Abschnitt auch auf Englisch hinzufügen und/oder als separaten Abschnitt `Principle_of_Quantum_Relativism.md` auslagern.

@@ -19,9 +19,10 @@ def ensure_dir(path):
         os.makedirs(d, exist_ok=True)
 
 
-def decide_zander_bit(probs, threshold=1e-12):
-    """Return 1 if any probability/amplitude > threshold, else 0."""
-    return 1 if any(p > threshold for p in probs) else 0
+def decide_zander_bit(amplitudes, threshold=1e-12):
+    """Return 1 if total probability (sum of |amplitude|^2) > threshold, else 0."""
+    total_p = sum(abs(a) ** 2 for a in amplitudes)
+    return 1 if total_p > threshold else 0
 
 
 def log_event(entry):
