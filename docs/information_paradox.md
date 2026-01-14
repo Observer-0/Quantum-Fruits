@@ -74,7 +74,7 @@ $$[\hbar^2] = M^2\,L^4\,T^{-2}$$
 
 Das fundamentale Raumzeit‑Quantum
 $$\sigma_P = L\cdot T$$
-ist die kleinste Raumzeit‑Zelle, die festlegt, welche minimale Kombination aus Raum ($L$) und Zeit ($T$) erforderlich ist, um ein Bit (den Zander‑Bit) zwischen zwei Quellen zu übertragen.
+ist die kleinste Raumzeit‑Zelle, die festlegt, welche minimale Kombination aus Raum ($L$) und Zeit ($T$) erforderlich ist, Information zwischen zwei Quellen zu übertragen.
 
 3) Konsequenzen für Geometrie und Information:
 
