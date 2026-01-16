@@ -199,5 +199,145 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         simControls.appendChild(toggleNetwork);
     }
+
+    // Initialize Zander Galaxy Plot if dashboard exists
+    if (document.getElementById('zander-galaxy-dashboard')) {
+        simulateZanderGalaxy();
+    }
 });
+
+/**
+ * Zander Entropy (S_Z) & Galactic Rotation Curves
+ * Visualizes the "Geometric Mass Burden" inducing the MOND effect.
+ */
+function simulateZanderGalaxy() {
+    const numStars = 200;
+    const galaxyRadius = 20; // kpc
+    const centralMassConcentration = 0.8;
+    const k_B = 1;
+    const hf_base = 100;
+
+    let radii = [];
+    let rotationalVelocities = [];
+    let szValues = [];
+    let actionDominance = [];
+    let massBurden = [];
+
+    for (let i = 0; i < numStars; i++) {
+        let r = Math.random() * galaxyRadius;
+        radii.push(r);
+
+        let massAtRadius;
+        if (r < galaxyRadius * centralMassConcentration) {
+            massAtRadius = 0.5 + 0.5 * (1 - r / (galaxyRadius * centralMassConcentration));
+        } else {
+            massAtRadius = 0.5;
+        }
+
+        // mc^2 ("Bound Energy") and hf ("Free Energy")
+        let mc2_val = massAtRadius * 100 * (1 + (r / galaxyRadius) * 2);
+        let hf_val = hf_base / (1 + (r / galaxyRadius) * 0.5);
+
+        // Zander Entropy S_Z
+        let sz = k_B * Math.log(mc2_val / hf_val);
+        szValues.push(sz);
+
+        // Entropy Operators
+        let s_pa = k_B * Math.log(hf_val / mc2_val); // High action in center
+        let s_mb = k_B * Math.log(mc2_val / hf_val); // High mass-burden at edge
+        actionDominance.push(s_pa);
+        massBurden.push(s_mb);
+
+        // Classical Newton (no DM)
+        let v_newton = Math.sqrt(massAtRadius * 5 / (r + 0.1));
+
+        // Modified velocity via Zander Entropy (Geometric Inertia)
+        // High S_Z (Mass Burden) makes spacetime "stiffer", inducing MOND-like curves
+        let v_zander = v_newton * (1 + sz * 0.05);
+        rotationalVelocities.push(v_zander);
+    }
+
+    // Sort for better plotting
+    const sortedData = radii.map((r, i) => ({
+        r: r,
+        v: rotationalVelocities[i],
+        sz: szValues[i],
+        spa: actionDominance[i],
+        smb: massBurden[i]
+    })).sort((a, b) => a.r - b.r);
+
+    radii = sortedData.map(d => d.r);
+    rotationalVelocities = sortedData.map(d => d.v);
+    szValues = sortedData.map(d => d.sz);
+    actionDominance = sortedData.map(d => d.spa);
+    massBurden = sortedData.map(d => d.smb);
+
+    const traceVel = {
+        x: radii,
+        y: rotationalVelocities,
+        mode: 'lines+markers',
+        name: 'Rotation Speed ($v_{Zander}$)',
+        marker: { color: '#00f2ff', size: 5 },
+        line: { color: '#00f2ff', width: 3 }
+    };
+
+    const traceMB = {
+        x: radii,
+        y: massBurden,
+        name: 'Mass-Burden ($S_{MB}$)',
+        yaxis: 'y2',
+        mode: 'lines',
+        line: { color: '#ef4444', dash: 'dot', width: 2 },
+        fill: 'tozeroy',
+        fillcolor: 'rgba(239, 68, 68, 0.1)'
+    };
+
+    const traceSPA = {
+        x: radii,
+        y: actionDominance,
+        name: 'Action-Dominance ($S_{PA}$)',
+        yaxis: 'y2',
+        mode: 'lines',
+        line: { color: '#10b981', dash: 'dash', width: 2 },
+        fill: 'tozeroy',
+        fillcolor: 'rgba(16, 185, 129, 0.1)'
+    };
+
+    const layout = {
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: '#94a3b8', family: '"JetBrains Mono", monospace' },
+        showlegend: true,
+        legend: { orientation: 'h', y: -0.2, font: { size: 10 } },
+        margin: { t: 30, b: 60, l: 60, r: 60 },
+        xaxis: { title: 'Radius (kpc)', color: '#94a3b8', gridcolor: 'rgba(255,255,255,0.05)' },
+        yaxis: {
+            title: 'Velocity (km/s)',
+            color: '#00f2ff',
+            gridcolor: 'rgba(255,255,255,0.05)',
+            range: [0, Math.max(...rotationalVelocities) * 1.2]
+        },
+        yaxis2: {
+            title: 'Zander Entropy ($S_Z$)',
+            color: '#ef4444',
+            overlaying: 'y',
+            side: 'right',
+            gridcolor: 'rgba(255,255,255,0.05)',
+            range: [Math.min(...actionDominance) * 1.2, Math.max(...massBurden) * 1.2]
+        }
+    };
+
+    Plotly.newPlot('galaxy-plot', [traceVel, traceSPA, traceMB], layout);
+
+    let currentIdx = 0;
+    setInterval(() => {
+        const radEl = document.getElementById('current-radius');
+        const szEl = document.getElementById('current-sz');
+        if (radEl && szEl) {
+            radEl.innerText = radii[currentIdx].toFixed(2);
+            szEl.innerText = massBurden[currentIdx].toFixed(2);
+        }
+        currentIdx = (currentIdx + 10) % radii.length;
+    }, 100);
+}
 
