@@ -175,6 +175,40 @@
 
         <div id="kerr-smear-note">Initializing Horizon Metrics...</div>
 
+        <div class="qg-box" style="margin-top: 2rem; border-color: rgba(188, 0, 255, 0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3>Inertia Braking Monte Carlo</h3>
+                <button onclick="runBrakingMC()" class="action-btn"
+                    style="background: #bc00ff; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer;">Simulate
+                    Spin Braking</button>
+            </div>
+            <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 1.5rem;">
+                Simulates core spin decay through stochastic mass-interaction. Based on the Zander-Framework: $\hbar$
+                (Action) vs $G$ (Gravity).
+            </p>
+            <div id="braking-mc-results" style="display: none;">
+                <div class="monitor-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Net Netto-Potential</span>
+                        <span class="stat-value" id="mc-pot-final" style="color: #bc00ff;">--</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Avg Braking Force</span>
+                        <span class="stat-value" id="mc-force-avg" style="color: #bc00ff;">--</span>
+                    </div>
+                </div>
+                <div class="progress-bg" style="height: 12px; margin-top: 1.5rem;">
+                    <div id="mc-braking-fill" class="progress-fill"
+                        style="background: linear-gradient(90deg, #bc00ff, #3b82f6); width: 100%;"></div>
+                </div>
+                <div id="mc-braking-status"
+                    style="font-size: 0.85rem; color: #10b981; margin-top: 1rem; text-align: center; font-weight: bold;">
+                </div>
+                <div style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.5rem; text-align: center;">Remaining
+                    Action Potential ($i_{max} \to 0$)</div>
+            </div>
+        </div>
+
         <div class="theory-box qg-box" style="margin-top: 3rem; border-color: rgba(255,255,255,0.1);">
             <h3>Why Kerr Black Holes are never "Perfect"</h3>
             <p style="font-size: 0.95rem; color: #94a3b8; line-height: 1.6;">

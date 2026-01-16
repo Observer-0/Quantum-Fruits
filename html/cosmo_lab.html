@@ -166,6 +166,33 @@
             <div id="cosmo-alert">Monitoring Spacetime...</div>
         </div>
 
+        <div class="qg-box" style="margin-top: 2rem; border-color: rgba(16, 185, 129, 0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3>Hubble Tension Monte Carlo</h3>
+                <button onclick="runHubbleMC()" class="action-btn">Run Simulation</button>
+            </div>
+            <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 1.5rem;">
+                Simulates 5000 universe variations with phase shifts and temperature fluctuations (20K-61K) to resolve
+                the Hubble Tension via observer variance.
+            </p>
+            <div id="hubble-mc-results" style="display: none;">
+                <div class="monitor-grid" style="grid-template-columns: 1fr 1fr;">
+                    <div class="stat-card" style="padding: 1rem;">
+                        <span class="stat-label">MC Mean H₀</span>
+                        <span class="stat-value" id="mc-h0-mean" style="color: #3b82f6;">--</span>
+                    </div>
+                    <div class="stat-card" style="padding: 1rem;">
+                        <span class="stat-label">Phase Distribution</span>
+                        <span class="stat-value" id="mc-phase-ratio" style="color: #3b82f6;">--</span>
+                    </div>
+                </div>
+                <div id="hubble-distribution-viz"
+                    style="height: 60px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-top: 1rem; overflow: hidden; display: flex; align-items: flex-end; gap: 1px; padding: 0 5px;">
+                    <!-- Distribution bars will be injected here -->
+                </div>
+            </div>
+        </div>
+
         <div class="qg-box" style="margin-top: 3rem; border-color: rgba(255,255,255,0.1);">
             <h3>Theory: The $R \cdot t$ Coupling</h3>
             <p style="font-size: 0.95rem; color: #94a3b8;">
