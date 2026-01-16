@@ -148,29 +148,39 @@ if (urmLatticeCanvas) {
         if (!body) return;
 
         const objects = [
-            { name: "Electron", r: 2.8e-15, m: 9.1e-31 },
-            { name: "Planck Scale", r: 1.6e-35, m: 2.1e-8 },
-            { name: "Human (Average)", r: 1.0, m: 70 },
-            { name: "Earth", r: 6.3e6, m: 5.9e24 },
-            { name: "Sun", r: 6.9e8, m: 1.9e30 },
-            { name: "Sgr A* (Black Hole)", r: 1.2e10, m: 8.2e36 },
-            { name: "Milky Way", r: 4.7e20, m: 1.2e42 }
+            { name: "Electron", r: 2.8e-15, m: 9.1e-31, type: "quantum" },
+            { name: "Planck Scale", r: 1.6e-35, m: 2.1e-8, type: "fundamental" },
+            { name: "Usain Bolt (Dash)", r: 1.95, m: 94, action: 7.82e5, type: "macro" },
+            { name: "Pkw (Accel)", r: 4.5, m: 1500, action: 2.9e6, type: "macro" },
+            { name: "Earth", r: 6.3e6, m: 5.9e24, type: "cosmo" },
+            { name: "Sun", r: 6.9e8, m: 1.9e30, type: "cosmo" },
+            { name: "Sgr A* (Black Hole)", r: 1.2e10, m: 8.2e36, type: "extreme" }
         ];
 
         body.innerHTML = '';
         objects.forEach(obj => {
-            const mc2 = obj.m * Math.pow(c_const, 2);
-            const hf = hbar * (c_const / obj.r);
-            const ratio = mc2 / hf;
-            const actionDensity = (sigmaP * ratio).toExponential(3);
+            let actionDensity;
+
+            if (obj.action) {
+                // For macro events: density derived from total macro action
+                actionDensity = (sigmaP * (obj.action / hbar)).toExponential(3);
+            } else {
+                // For steady states: scaling ratio = mc^2 / hf
+                const mc2 = obj.m * Math.pow(c_const, 2);
+                const hf = hbar * (c_const / obj.r);
+                const ratio = mc2 / hf;
+                actionDensity = (sigmaP * ratio).toExponential(3);
+            }
 
             const tr = document.createElement('tr');
             tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+            const color = obj.type === 'macro' ? '#fbbf24' : (obj.type === 'extreme' ? '#ef4444' : '#3b82f6');
+
             tr.innerHTML = `
-                <td style="padding: 10px; color: white; font-weight: bold;">${obj.name}</td>
+                <td style="padding: 10px; color: white; font-weight: bold;">${obj.name} <span style="font-size: 0.6rem; color: ${color}; text-transform: uppercase;">[${obj.type}]</span></td>
                 <td style="padding: 10px;">${obj.r.toExponential(2)} m</td>
                 <td style="padding: 10px;">${obj.m.toExponential(2)} kg</td>
-                <td style="padding: 10px; color: #ef4444; font-family: 'JetBrains Mono';">${actionDensity} m²s</td>
+                <td style="padding: 10px; color: ${color}; font-family: 'JetBrains Mono';">${actionDensity} m²s</td>
             `;
             body.appendChild(tr);
         });

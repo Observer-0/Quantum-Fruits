@@ -811,18 +811,17 @@ const toolHandlers = {
     return data.map(obj => {
       const sigma_eff = obj.length * obj.time;
       const action = obj.energyJ * obj.time;
-      const ticks = action / sigma_eff; // structurally: E*t / (L*t) = E/L which is force? 
+      const ticks = action / sigma_eff; // structurally: E*t / (L*t) = E/L  
       // Actually N = Action / sigma_eff
       const temp_j = obj.energyJ / (action / sigma_eff);
       // Simplified: T = E / ( (E*t)/(L*t) ) = L. 
-      // The user's joke: T_eff = E_total / N.
+      // T_eff = E_total / N.
       // E_total / ( (E_total * t) / (L * t) ) = L.
       // Wait, the structural beauty is: T_eff = E / N.
 
       const n_ticks = obj.energyJ * obj.time / (obj.length * obj.time); // = E/L
       const t_eff = obj.energyJ / n_ticks; // = L!
 
-      // Let's use the actual thermal "energy per tick" interpretation:
       const result = `
 --- ${obj.name} ---
 Effective Cell (σ_eff): ${sigma_eff.toFixed(2)} m·s
