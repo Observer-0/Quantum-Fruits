@@ -339,122 +339,162 @@
         </div>
       </section>
 
-      <section class="tools">
-        <div class="tools-header">
-          <div>
-            <h2>Quantum-Gravity Tools</h2>
-            <p>Choose a tool, see immediately which one is active, and allow a maximum of limited parallel calculations.
-            </p>
+      <section class="simulation-lab" id="labs" style="padding: 4rem 2rem; background: rgba(15, 23, 42, 0.5);">
+        <div style="max-width: 1200px; margin: 0 auto;">
+          <div style="text-align: center; margin-bottom: 4rem;">
+            <h2
+              style="font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(90deg, #00f2ff, #bc00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+              Simulation Lab</h2>
+            <p style="font-size: 1.2rem; color: #94a3b8; max-width: 700px; margin: 0 auto;">Experience the Universal
+              Resonance Model through interactive, parameter-free physics simulations. No dark matter, no free
+              parameters—just geometry.</p>
           </div>
-          <div class="selector-state" aria-live="polite">
-            <span class="label">Active:</span>
-            <span id="selectedToolLabel">No selection</span>
-          </div>
-          <!-- N_sigma live display -->
-          <div id="nSigmaPanel" style="margin-left: 1.5rem; text-align: left;">
-            <div style="font-size:0.8rem; color:#9CA3AF;">Fundamental Ticks (N_σ)</div>
-            <div id="nSigmaValue" style="font-weight:800; font-size:1rem; color:var(--accent-primary);">—</div>
-            <div id="nSigmaExplanations" style="font-size:0.85rem; color:#cbd5e1; margin-top:0.5rem;">
-              <div><strong>For Laypeople:</strong> Our simulation respects a tiny cosmic "pixel" (σₚ). N_σ says how many
-                of these pixels fit into your time-space window.</div>
-              <div style="margin-top:0.4rem;"><strong>For Experts:</strong> $N_\sigma = \dfrac{R\, t}{\sigma_P}$ —
-                displayed in scientific notation.</div>
+
+          <div class="lab-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem;">
+
+            <!-- Galaxy Rotation Lab -->
+            <div class="lab-card"
+              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+              <div
+                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #00f2ff, #bc00ff);">
+              </div>
+              <h3 style="color: #00f2ff; margin-bottom: 1rem; font-size: 1.5rem;">Galaxy Rotation</h3>
+              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Witness galaxy
+                dynamics without Dark Matter. See how $\sigma_P$ coupling explains flat rotation curves naturally
+                through emergent gravity.</p>
+              <div style="margin-top: auto;">
+                <a href="html/galaxy_lab.html"
+                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(0, 242, 255, 0.1); color: #00f2ff; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(0, 242, 255, 0.2); transition: all 0.3s;">Launch
+                  Simulation &rarr;</a>
+              </div>
             </div>
+
+            <!-- TSF Cycle Lab -->
+            <div class="lab-card"
+              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+              <div
+                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #ef4444, #f59e0b);">
+              </div>
+              <h3 style="color: #ef4444; margin-bottom: 1rem; font-size: 1.5rem;">TSF Cycle</h3>
+              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">The "Breath of the
+                Universe". Explore Thermal Spacetime Feedback and the phase transitions between big bangs and collapses.
+              </p>
+              <div style="margin-top: auto;">
+                <a href="html/tsf_sim.html"
+                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(239, 68, 68, 0.1); color: #ef4444; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(239, 68, 68, 0.2); transition: all 0.3s;">Launch
+                  Simulation &rarr;</a>
+              </div>
+            </div>
+
+            <!-- Black Hole Lab -->
+            <div class="lab-card"
+              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+              <div
+                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #bc00ff, #3b82f6);">
+              </div>
+              <h3 style="color: #bc00ff; margin-bottom: 1rem; font-size: 1.5rem;">Evaporation Lab</h3>
+              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Watch black holes
+                evaporate along the Unitary Page Curve. No information loss, just a stable Planck remnant at the end.
+              </p>
+              <div style="margin-top: auto;">
+                <a href="html/evaporation_lab.html"
+                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(188, 0, 255, 0.1); color: #bc00ff; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(188, 0, 255, 0.2); transition: all 0.3s;">Launch
+                  Simulation &rarr;</a>
+              </div>
+            </div>
+
+            <!-- URM Lattice Lab -->
+            <div class="lab-card"
+              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+              <div
+                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #3b82f6, #10b981);">
+              </div>
+              <h3 style="color: #3b82f6; margin-bottom: 1rem; font-size: 1.5rem;">URM Lattice</h3>
+              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Simulate the
+                fundamental fabric of spacetime. Observe how topological feedback creates self-organizing resonance
+                patterns.</p>
+              <div style="margin-top: auto;">
+                <a href="html/lattice_lab.html"
+                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(59, 130, 246, 0.1); color: #3b82f6; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(59, 130, 246, 0.2); transition: all 0.3s;">Launch
+                  Simulation &rarr;</a>
+              </div>
+            </div>
+
+            <!-- Cosmo Monitor Lab -->
+            <div class="lab-card"
+              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+              <div
+                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #10b981, #00f2ff);">
+              </div>
+              <h3 style="color: #10b981; margin-bottom: 1rem; font-size: 1.5rem;">Cosmology Monitor</h3>
+              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Track the "LCDM
+                Breach". Compare standard cosmology with geometric scaling across different cosmic epochs.</p>
+              <div style="margin-top: auto;">
+                <a href="html/cosmo_lab.html"
+                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(16, 185, 129, 0.1); color: #10b981; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(16, 185, 129, 0.2); transition: all 0.3s;">Launch
+                  Simulation &rarr;</a>
+              </div>
+            </div>
+
+            <!-- Static Overview -->
+            <div class="lab-card"
+              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+              <div
+                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #94a3b8, #ffffff);">
+              </div>
+              <h3 style="color: #ffffff; margin-bottom: 1rem; font-size: 1.5rem;">Framework Overview</h3>
+              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Deep dive into the
+                infographics and dimensional verification of the $\sigma_P$ framework. The map of the territory.</p>
+              <div style="margin-top: auto;">
+                <a href="html/sigma_p_overview.html"
+                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(255, 255, 255, 0.1); color: #ffffff; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s;">View
+                  Overview &rarr;</a>
+              </div>
+            </div>
+
+            <!-- Kerr Black Hole Lab -->
+            <div class="lab-card"
+              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+              <div
+                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #bc00ff, #3b82f6);">
+              </div>
+              <h3 style="color: #bc00ff; margin-bottom: 1rem; font-size: 1.5rem;">Kerr Lab</h3>
+              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Explore rotating
+                black holes and the Teukolsky smearing limit. See how $\sigma_P$ introduces non-thermality to horizons.
+              </p>
+              <div style="margin-top: auto;">
+                <a href="html/kerr_lab.html"
+                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(188, 0, 255, 0.1); color: #bc00ff; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(188, 0, 255, 0.2); transition: all 0.3s;">Launch
+                  Simulation &rarr;</a>
+              </div>
+            </div>
+
           </div>
-        </div>
-        <div class="controls">
-          <label class="control" for="qgSelect">Select tool</label>
-          <select id="qgSelect" name="qgSelect">
-            <option value="none" selected>Please choose...</option>
-            <option value="pageFruits">Page Curves (classical)</option>
-            <option value="fruitEntropy">Fruit Entropy</option>
-            <option value="fruitRs">Schwarzschild Radius</option>
-            <option value="fruitHawking">Hawking Temperatures</option>
-            <option value="tickRatio">Tick Ratio (S1/s2)</option>
-            <option value="entropyOperator">Entropy Operator (S_hat)</option>
-            <option value="macroHawking">Generalized Hawking (Macro)</option>
-            <option value="asciiPlot">ASCII Page Curve (classical)</option>
-            <option value="smoothPage">Smooth Page Curve (unitary, Remnant)</option>
-            <option value="kinematicMotor">Kinematic Motor (Action vs Gravity)</option>
-          </select>
-        </div>
-        <div class="controls" style="margin-top: 1rem; justify-content: center; gap: 2rem;">
-          <label class="control" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-            <input type="checkbox" id="dynamicWindowToggle" style="width: auto;">
-            <span>Activate Dynamic Window (p=1.6)</span>
-          </label>
-        </div>
-        <p class="limit-note" id="limitNote" aria-live="polite"></p>
-        <!-- ADDED VIS CONTAINER -->
-        <div id="visContainer" style="margin-top: 1rem; position: relative;">
-          <canvas id="qgChart" style="display:none; max-height: 400px; width: 100%;"></canvas>
-          <pre id="qgOutput" class="qg-output" aria-live="polite"></pre>
-          <div id="adaptiveBadge"
-            style="position:absolute; top:8px; left:8px; background:rgba(0,0,0,0.6); color:#fff; padding:6px 10px; border-radius:6px; font-size:0.8rem; display:none;">
-            Adaptive steps active</div>
         </div>
       </section>
 
-      <section style="max-width:900px; margin: 2rem auto;">
-        <label for="integratorSelect" style="font-weight:bold; display:block; margin-bottom:0.5rem;">Integrator</label>
-        <select id="integratorSelect" style="padding:0.5rem; border-radius:6px;">
-          <option value="euler">Euler (legacy)</option>
-          <option value="rk4" selected>Runge‑Kutta 4 (recommended)</option>
-        </select>
-        <p style="font-size:0.9rem; color:#94a3b8; margin-top:0.5rem;">Select the integrator for simulations. RK4 offers
-          better accuracy for smooth systems.</p>
-      </section>
+      <style>
+        .lab-card:hover {
+          transform: translateY(-10px);
+          background: rgba(255, 255, 255, 0.05) !important;
+          border-color: rgba(255, 255, 255, 0.2) !important;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
 
-      <section class="fruit-filter">
-        <div class="filter-header">
-          <h2>Object List</h2>
-          <p>Search, filter by shape and color, and always keep names nicely capitalized.</p>
-        </div>
+        .lab-card a:hover {
+          background: rgba(255, 255, 255, 0.2) !important;
+          color: white !important;
+        }
+      </style>
 
-        <div class="filterBox">
-          <!-- New Category Selector -->
-          <label for="datasetSelect" class="control">Category</label>
-          <select id="datasetSelect">
-            <option value="fruits" selected>Fruits</option>
-            <option value="bhs">Black Holes</option>
-            <option value="galaxies">Galaxies (Rotation)</option>
-            <option value="macro">Macro Systems (Bolt Mode)</option>
-          </select>
-
-          <label for="suchfeld" class="control">Search</label>
-          <input type="text" id="suchfeld" placeholder="Search..." />
-
-          <!-- Fruit specific controls wrapped -->
-          <div id="fruitControls" style="display: contents;">
-            <label for="formSelect" class="control">Shape</label>
-            <select id="formSelect">
-              <option value="alle">All</option>
-              <option value="rund">Round</option>
-              <option value="oval">Oval</option>
-            </select>
-            <label for="farbeSelect" class="control">Color</label>
-            <select id="farbeSelect">
-              <option value="alle">All</option>
-              <option value="rot">Red</option>
-              <option value="gelb">Yellow</option>
-              <option value="gruen">Green</option>
-              <option value="orange">Orange</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="lists">
-          <div>
-            <h3>Available Objects</h3>
-            <ul id="meineListe" class="fruit-list"></ul>
-          </div>
-          <div>
-            <h3>Results</h3>
-            <ul id="ergebnisListe" class="fruit-list"></ul>
-          </div>
-        </div>
-      </section>
   </main>
+
+  <footer
+    style="margin-top: 5rem; padding: 4rem 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: #64748b;">
+    <p style="margin-bottom: 1rem;">&copy; 2026 Quantum Fruits. All rights reserved.</p>
+    <p style="font-size: 1.1rem; color: #94a3b8; font-style: italic;">physics for everyday people &lt;3</p>
+  </footer>
 
   <script src="js/main.js"></script>
 </body>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Fruits | Kerr Black Hole Lab</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        body {
+            background: #020617;
+            min-height: 100vh;
+            color: white;
+            padding: 2rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lab-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #bc00ff, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .stat-label {
+            display: block;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #bc00ff;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .slider-box {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .control-row {
+            margin-bottom: 2rem;
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        input[type=range] {
+            width: 100%;
+            accent-color: #bc00ff;
+        }
+
+        .toggle-box {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #bc00ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #kerr-smear-note {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(188, 0, 255, 0.05);
+            border-left: 4px solid #bc00ff;
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #d8b4fe;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lab-container">
+        <a href="../index.html" class="back-link">&larr; Back to Cosmos</a>
+        <div class="header">
+            <h1>Kerr Black Hole Lab</h1>
+            <p>Spinning Horizons & The Teukolsky Smearing Limit</p>
+        </div>
+
+        <div class="slider-box">
+            <div class="control-row">
+                <div class="label-row">
+                    <span>Black Hole Mass</span>
+                    <span id="val-kerr-m">-- M☉</span>
+                </div>
+                <input type="range" id="kerr-mass" min="3" max="100" step="0.1" value="10">
+            </div>
+
+            <div class="control-row">
+                <div class="label-row">
+                    <span>Dimensionless Spin ($\chi$)</span>
+                    <span id="val-kerr-chi">0.50</span>
+                </div>
+                <input type="range" id="kerr-spin" min="0" max="0.99" step="0.01" value="0.5">
+            </div>
+
+            <div class="toggle-box">
+                <input type="checkbox" id="kerr-sigmap-toggle" checked>
+                <label for="kerr-sigmap-toggle">Enable $\sigma_P$ Smearing Resolution</label>
+            </div>
+        </div>
+
+        <div class="lab-grid">
+            <div class="stat-card">
+                <span class="stat-label">Event Horizon ($r_+$)</span>
+                <span class="stat-value" id="val-kerr-rp">--</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Hawking Temp ($T_H$)</span>
+                <span class="stat-value" id="val-kerr-th">--</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Spatial Smearing ($c_0^s$)</span>
+                <span class="stat-value" id="val-kerr-c0s">--</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Temporal Smearing ($c_0^t$)</span>
+                <span class="stat-value" id="val-kerr-c0t">--</span>
+            </div>
+            <div class="stat-card" style="grid-column: span 2;">
+                <span class="stat-label">Total Non-Thermality ($c_0$)</span>
+                <span class="stat-value" id="val-kerr-c0" style="color: #fff;">--</span>
+            </div>
+        </div>
+
+        <div id="kerr-smear-note">Initializing Horizon Metrics...</div>
+
+        <div class="theory-box qg-box" style="margin-top: 3rem; border-color: rgba(255,255,255,0.1);">
+            <h3>Why Kerr Black Holes are never "Perfect"</h3>
+            <p style="font-size: 0.95rem; color: #94a3b8; line-height: 1.6;">
+                In General Relativity, a Kerr black hole is a mathematical ideal.
+                However, once we introduce the $\sigma_P$ limit, the horizon becomes slightly "smeared".
+                This results in a small but calculated departure from a perfect thermal black-body spectrum.
+                This coefficient $c_0$ represents the intrinsic non-thermality required by the quantization of
+                spacetime.
+            </p>
+        </div>
+    </div>
+
+    <!-- Script to ensure ID exists during init -->
+    <div id="tab-kerr" style="display:none;"></div>
+
+    <script src="../js/kerr-lab.js"></script>
+</body>
+
+</html>

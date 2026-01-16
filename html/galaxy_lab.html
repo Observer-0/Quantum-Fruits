@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Fruits | Galaxy Rotation Lab</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        body {
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 2rem;
+        }
+
+        .lab-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #00f2ff, #bc00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .sim-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        canvas {
+            width: 100%;
+            height: 400px;
+            border-radius: 12px;
+            background: #020617;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 100px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn.active {
+            background: var(--accent-primary);
+            color: #0f172a;
+            border-color: var(--accent-primary);
+        }
+
+        .explanation {
+            margin-top: 3rem;
+            line-height: 1.7;
+            color: #94a3b8;
+        }
+
+        .explanation h2 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lab-container">
+        <a href="../index.html" class="back-link">&larr; Back to Cosmos</a>
+        <div class="header">
+            <h1>Galaxy Rotation Lab</h1>
+            <p>The "Dark Matter" Illusion: Emergent Gravity in the $\sigma_P$ Framework</p>
+        </div>
+
+        <div class="sim-box">
+            <canvas id="galaxyCanvas"></canvas>
+            <div class="controls">
+                <button id="toggleGalaxy" class="btn">Pause Simulation</button>
+                <button id="toggleNetwork" class="btn">Toggle Spacetime Grid</button>
+                <button id="toggleFlow" class="btn active">Toggle Zander-Flow</button>
+            </div>
+        </div>
+
+        <div class="explanation">
+            <h2>The Physics</h2>
+            <p>
+                In classical Newtonian physics, stars at the edge of a galaxy should move slower than stars near the
+                center (Keplerian decline).
+                Observation shows they move at constant speeds. Standard physics "invents" Dark Matter to explain this.
+            </p>
+            <p>
+                In the <strong>$\sigma_P$ Model</strong>, gravity couples with the background action field.
+                At low accelerations, the effective gravitational strength increases naturally due to the
+                quantization of the spacetime 4-vector. No hidden mass is required.
+            </p>
+            <div class="qg-box"
+                style="margin-top: 2rem; border-color: var(--accent-primary); background: rgba(0, 242, 255, 0.05);">
+                <p style="font-family: monospace; color: var(--accent-primary); text-align: center;">
+                    g_obs = g_bar / (1 - exp[-sqrt(g_bar/g_star)])
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/galaxy-sim.js"></script>
+    <script>
+        // Adjust existing script for better control
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnNet = document.getElementById('toggleNetwork');
+            const btnFlow = document.getElementById('toggleFlow');
+
+            btnNet.addEventListener('click', () => {
+                window.galaxySim.params.showNetwork = !window.galaxySim.params.showNetwork;
+                btnNet.classList.toggle('active');
+            });
+
+            btnFlow.addEventListener('click', () => {
+                window.galaxySim.params.showFlow = !window.galaxySim.params.showFlow;
+                btnFlow.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

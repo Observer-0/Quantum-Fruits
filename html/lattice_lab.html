@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Fruits | URM Lattice Simulation</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        body {
+            background: #020202;
+            min-height: 100vh;
+            color: white;
+            padding: 2rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lab-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #3b82f6, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sim-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        canvas {
+            width: 100%;
+            aspect-ratio: 1;
+            background: #000;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-val {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #3b82f6;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        input[type=range] {
+            width: 100%;
+            accent-color: #3b82f6;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            background: #0f172a;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lab-container">
+        <a href="../index.html" class="back-link">&larr; Back to Cosmos</a>
+        <div class="header">
+            <h1>URM Lattice Universe</h1>
+            <p>Emergent Structures in the Universal Resonance Model</p>
+        </div>
+
+        <div class="sim-layout">
+            <canvas id="urmLatticeCanvas" width="600" height="600"></canvas>
+
+            <div class="sidebar">
+                <h3>Parameters</h3>
+                <div class="control-group">
+                    <label>Coupling (k)</label>
+                    <input type="range" id="urmKRange" min="0" max="2" step="0.1" value="1">
+                </div>
+                <div class="control-group">
+                    <label>Nonlinearity (α)</label>
+                    <input type="range" id="urmalphRange" min="0" max="0.1" step="0.01" value="0.01">
+                </div>
+                <div class="control-group">
+                    <label>Integrator</label>
+                    <select id="urmIntegratorSelect">
+                        <option value="verlet" selected>Velocity Verlet</option>
+                        <option value="euler">Euler (Legacy)</option>
+                    </select>
+                </div>
+
+                <div class="stat-box">
+                    <span class="stat-label">Coherence (R)</span>
+                    <div id="urmCoherence" class="stat-val">0.0000</div>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">System Entropy</span>
+                    <div id="urmEntropyDisplay" class="stat-val">0.00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="theory-box qg-box">
+            <h3>Topological Feedback</h3>
+            <p style="font-size: 0.95rem; color: #94a3b8; line-height: 1.6;">
+                The Universal Resonance Model (URM) describes the universe as a coupled lattice of action cells.
+                Unlike standard field theories, URM includes a <strong>Topological Feedback</strong> term:
+                the higher the local curvature (density), the more rigid the spacetime grid becomes.
+                This prevents singularities and leads to the formation of stable, self-organizing structures (mass).
+            </p>
+        </div>
+    </div>
+
+    <!-- Define global state needed by irm-lattice-sim.js if not already robust -->
+    <script>
+        // Placeholders/Globals for the script
+        var x, v, entropy = 0, t = 0;
+        const m = 1.0;
+        function initLattice() {
+            const N = 40;
+            x = Array.from({ length: N }, () => new Float32Array(N).map(() => (Math.random() - 0.5) * 2));
+            v = Array.from({ length: N }, () => new Float32Array(N));
+        }
+        const coherenceText = document.getElementById('urmCoherence');
+    </script>
+    <script src="../js/urm-lattice-sim.js"></script>
+    <script>
+        // Wire up sliders
+        document.getElementById('urmKRange').oninput = (e) => k = parseFloat(e.target.value);
+        document.getElementById('urmalphRange').oninput = (e) => alpha = parseFloat(e.target.value);
+    </script>
+</body>
+
+</html>

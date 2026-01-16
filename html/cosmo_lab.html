@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Fruits | Cosmology Monitor</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        body {
+            background: #0f172a;
+            min-height: 100vh;
+            color: white;
+            padding: 2rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lab-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .monitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .stat-label {
+            display: block;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #10b981;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .slider-box {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+
+        input[type=range] {
+            width: 100%;
+            accent-color: #10b981;
+        }
+
+        .departure-panel {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #ef4444;
+        }
+
+        .progress-bg {
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #ef4444;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        #cosmo-alert {
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #10b981;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lab-container">
+        <a href="../index.html" class="back-link">&larr; Back to Cosmos</a>
+        <div class="header">
+            <h1>Cosmology Monitor</h1>
+            <p>Real-time LCDM Departure Tracking & Geometric Density</p>
+        </div>
+
+        <div class="slider-box">
+            <div class="slider-label">
+                <span>Cosmic Expansion Progress (Window Scaling)</span>
+                <span id="val-cosmo-percent">100%</span>
+            </div>
+            <input type="range" id="cosmo-age-slider" min="1" max="200" value="100">
+        </div>
+
+        <div class="monitor-grid">
+            <div class="stat-card">
+                <span class="stat-label">Cosmic Age (t)</span>
+                <span class="stat-value" id="val-cosmo-t">--</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Horizon Radius (R)</span>
+                <span class="stat-value" id="val-cosmo-r">--</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Energy Density (ρ)</span>
+                <span class="stat-value" id="val-cosmo-rho">--</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Dipole Velocity (V)</span>
+                <span class="stat-value" id="val-cosmo-v">--</span>
+            </div>
+        </div>
+
+        <div class="departure-panel">
+            <span class="stat-label">LCDM Deviation Profile</span>
+            <div class="progress-bg">
+                <div id="cosmo-departure-fill" class="progress-fill"></div>
+            </div>
+            <div id="val-cosmo-dep" style="font-weight: bold;">--% Deviation</div>
+            <div id="cosmo-alert">Monitoring Spacetime...</div>
+        </div>
+
+        <div class="qg-box" style="margin-top: 3rem; border-color: rgba(255,255,255,0.1);">
+            <h3>Theory: The $R \cdot t$ Coupling</h3>
+            <p style="font-size: 0.95rem; color: #94a3b8;">
+                In the $\sigma_P$ framework, the energy density of the universe is not a fixed constant (Dark Energy),
+                but a dynamic property of the coupled spacetime window.
+                As the volume ($R$) and age ($t$) grow, the "cost" of existence ($\sigma_P$) scales proportionately.
+                The LCDM model fails at large scales because it assumes a static vacuum pressure.
+            </p>
+        </div>
+    </div>
+
+    <script src="../js/cosmo-lab.js"></script>
+    <script>
+        document.getElementById('cosmo-age-slider').addEventListener('input', (e) => {
+            document.getElementById('val-cosmo-percent').innerText = e.target.value + '%';
+        });
+    </script>
+</body>
+
+</html>
