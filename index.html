@@ -109,7 +109,7 @@
       style="margin-top: 1.5rem; border-left: 4px solid #f59e0b; background: rgba(245, 158, 11, 0.05); position: relative; overflow: hidden;">
       <div
         style="position: absolute; top: 10px; right: 10px; background: rgba(245, 158, 11, 0.2); color: #f59e0b; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; letter-spacing: 1px;">
-        Empirisch bestätigt</div>
+        Empirical proven</div>
       <h3 style="color: #f59e0b; font-size: 1.1rem; margin-bottom: 0.5rem;">From destructive endpoint to mediator of coupling</h3>
       <p style="font-size: 0.95rem; line-height: 1.5;">
        In classical physics, the description inside black holes ends in a singularity – a theoretical boundary 
@@ -174,35 +174,69 @@
 
     
     <section class="qg-panel" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(0,0,0,0));">
-      <h2>Geometry vs. Cluster (GCE Update)</h2>
-      <div class="theory-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-        <div class="qg-box" style="border-left: 4px solid var(--accent-primary);">
-          <h3>Why Geometry is stubbornly classical?</h3>
-          <p style="font-size: 1rem; line-height: 1.6;">
-            Scientists use billions of compute operations on the SuperMUC-NG cluster to simulate dark matter 
-            into existence.
+      <section class="qg-panel">
+  <h2>Geometry vs. Cluster (GCE Update)</h2>
+  
+  <div class="theory-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+    <div class="qg-box" style="border-left: 4px solid var(--accent-primary); background: rgba(167, 139, 250, 0.05); padding: 1.5rem;">
+      <h3>Why Geometry remains stubbornly classical?</h3>
+      <p style="font-size: 1rem; line-height: 1.6;">
+        Scientists use billions of compute operations on the SuperMUC-NG cluster to simulate dark matter 
+        into existence.
+      </p>
+      <p style="font-size: 1rem; line-height: 1.6; margin-top: 1rem;">
+        The $\sigma_P$ geometry does this directly in the browser: the Galactic Center is simply denser – 
+        the more stars you stack, the more often they collide.
+      </p>
+      <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; margin-top: 1.5rem; border: 1px dashed var(--accent-primary);">
+         <span style="color: var(--accent-primary); font-weight: bold;">Density Contrast:</span>
+         <p style="font-size: 1.2rem; margin: 0.5rem 0;">$C = \frac{\rho_{\text{bulge}}}{\rho_{\text{disk}}} \approx 150 - 200$</p>
+         <small style="color: #888;">The bulge is 200x more crowded than the disk.</small>
+      </div>
+      <a href="html/theory.html" class="tab-btn" style="display: inline-block; margin-top: 1.5rem; text-decoration: none; color: var(--accent-primary);">View Simulation &rarr;</a>
+    </div>
 
-          </p>
-          <p style="font-size: 1rem; line-height: 1.6; margin-top: 1rem;">
-            The σ_P geometry does this directly in the browser: the Galactic Center is simply denser – 
-            the more stars you stack, the more often they collide.
-          </p>
-          <a href="html/theory.html" class="tab-btn"
-            style="display: inline-block; margin-top: 1.5rem; text-decoration: none;">Simulation ansehen &rarr;</a>
-        </div>
-        <div class="qg-box" style="border-left: 4px solid var(--accent-secondary);">
-          <h3>Das GCE-Modell</h3>
-          <p style="font-size: 1rem; line-height: 1.6;">
-            In unserem neuen Paper zeigen wir, dass die Gammastrahlung im Galaktischen Zentrum exakt der Form der Sterne
-            folgt.
-          </p>
-          <p style="font-size: 1rem; line-height: 1.6; margin-top: 1rem;">
-            Keine Dunkle Materie, keine freien Parameter. Nur Newton, Einstein und ein bisschen Geometrie.
-          </p>
-          <a href="assets/papers/Rediscovering Geometry without SuperMUC.tex" class="tab-btn"
-            style="display: inline-block; margin-top: 1.5rem; text-decoration: none;">Paper lesen (.tex) &rarr;</a>
+    <div class="qg-box" style="border-left: 4px solid var(--accent-secondary); background: rgba(16, 185, 129, 0.05); padding: 1.5rem;">
+      <h3>The GCE Model (Density Scaling)</h3>
+      <p style="font-size: 0.95rem; line-height: 1.6;">
+        In our latest analysis, we show that Gamma-ray emission follows the stellar morphology exactly. 
+        High-energy events scale by density:
+      </p>
+
+      <div style="margin-top: 1.5rem;">
+        <h4 style="font-size: 0.8rem; text-transform: uppercase; color: #10b981; margin-bottom: 0.5rem;">Two-Body Mergers (Collisions)</h4>
+        <div style="background: rgba(0,0,0,0.2); padding: 0.8rem; border-radius: 4px; font-family: monospace;">
+          $\Gamma_{\text{bulge}} \approx (220 - 400) \times \Gamma_{\text{disk}}$
         </div>
       </div>
+
+      <div style="margin-top: 1rem;">
+        <h4 style="font-size: 0.8rem; text-transform: uppercase; color: #60a5fa; margin-bottom: 0.5rem;">Steady Population (MSPs)</h4>
+        <div style="background: rgba(0,0,0,0.2); padding: 0.8rem; border-radius: 4px; font-family: monospace;">
+          $\Gamma_{\text{bulge}} \approx (1.5 - 2.0) \times \Gamma_{\text{disk}}$
+        </div>
+      </div>
+
+      <p style="font-size: 0.9rem; margin-top: 1.5rem; font-style: italic; color: #b0b0b0;">
+        "No Dark Matter, no free parameters. Just Newton, Einstein, and a bit of geometry."
+      </p>
+      <div class="qg-box" style="border-left: 4px solid #f59e0b; background: rgba(245, 158, 11, 0.05);">
+      <h3>The "Retro-Physics" Revolution</h3>
+      <p style="font-size: 1rem; line-height: 1.6;">
+       While $\Lambda$CDM was invented 30 years ago to bridge our lack of understanding with "Dark" placeholders, 
+       we return to the foundations. 
+      </p>
+       <blockquote style="border-left: 2px solid #f59e0b; padding-left: 1rem; margin: 1rem 0; font-style: italic;">
+        "We don't do new physics. We do <strong>original</strong> physics. Geometry remains stubbornly classical 
+        because it was never broken—we just stopped looking at the density."
+      </blockquote>
+      </div>
+      
+      <a href="assets/papers/Rediscovering Geometry without SuperMUC.tex" class="tab-btn"
+        style="display: inline-block; margin-top: 1.5rem; text-decoration: none; color: #10b981;">Read Paper (.tex) &rarr;</a>
+    </div>
+  </div>
+</section>
     </section>
 
     <section class="theory">
