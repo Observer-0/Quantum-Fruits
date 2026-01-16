@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -202,7 +202,7 @@
     <div class="hero-bg"></div>
 
     <nav>
-        <a href="../index.html" class="nav-link">← Zurück zur Übersicht</a>
+        <a href="../index.html" class="nav-link">← Back to Overview</a>
     </nav>
 
     <div class="container">
@@ -210,9 +210,8 @@
             <div class="tagline">Sigma-P Framework</div>
             <h1>Evaporation Lab (v2.0)</h1>
             <p style="opacity: 0.6; max-width: 600px; margin: 1.5rem auto;">
-                Simulieren Sie den Zerfall Schwarzer Löcher unter Berücksichtigung des <strong>Axioms der endlichen
-                    Teilbarkeit</strong>. Vergleichen Sie klassische Hawking-Modelle mit der quantisierten
-                Information-Geometrie.
+                Simulate the decay of black holes considering the <strong>Axiom of Finite
+                    Divisibility</strong>. Compare classical Hawking models with quantized information geometry.
             </p>
         </header>
 
@@ -221,18 +220,18 @@
                 <h3>Parameter</h3>
 
                 <div class="control-group">
-                    <label>Objekt-Typ</label>
+                    <label>Object Type</label>
                     <select id="objSelect">
                         <option value="1e12">Primordial (10^12 kg)</option>
                         <option value="1.989e30">Stellar (1 M_sun)</option>
                         <option value="1.989e31">Stellar (10 M_sun)</option>
                         <option value="1.989e36">Supermassive (10^6 M_sun)</option>
-                        <option value="custom">Benutzerdefiniert...</option>
+                        <option value="custom">Custom...</option>
                     </select>
                 </div>
 
                 <div id="customMassInput" class="control-group" style="display: none;">
-                    <label>Masse (kg)</label>
+                    <label>Mass (kg)</label>
                     <input type="number" id="massKg" value="1.989e30" step="1e25">
                 </div>
 
@@ -240,9 +239,9 @@
                     <label>Smoothing (α)</label>
                     <input type="range" id="alphaRange" min="0" max="10" step="0.5" value="4.0">
                     <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-top: 0.3rem;">
-                        <span>Klassisch</span>
+                        <span>Classical</span>
                         <span id="alphaVal">4.0</span>
-                        <span>Stark</span>
+                        <span>Strong</span>
                     </div>
                 </div>
 
@@ -256,13 +255,13 @@
                     </div>
                 </div>
 
-                <button class="btn" id="runBtn">Simulation Starten</button>
+                <button class="btn" id="runBtn">Start Simulation</button>
 
                 <div class="qg-box" style="margin-top: 2rem; border-left: 2px solid var(--accent);">
-                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent);">Physik-Notiz</h4>
+                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent);">Physics Note</h4>
                     <p style="font-size: 0.8rem; line-height: 1.5; color: #ccc;">
-                        Im Zander-Modell führt die Raumzeit-Körnung ($\sigma_P$) dazu, dass die Temperatur nicht
-                        unendlich steigt. Der Zerfall stoppt bei der Planck-Masse.
+                        In the Zander model, spacetime graining ($\sigma_P$) means the temperature does not
+                        increase infinitely. The decay stops at the Planck mass.
                     </p>
                 </div>
             </aside>
@@ -271,10 +270,10 @@
                 <div class="chart-card">
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                        <h3 style="margin: 0;">Page-Kurven Vergleich</h3>
+                        <h3 style="margin: 0;">Page Curves Comparison</h3>
                         <div
                             style="font-size: 0.8rem; background: rgba(0,242,255,0.1); padding: 4px 12px; border-radius: 4px; color: var(--primary);">
-                            UNITÄR vs. STOCHASTISCH</div>
+                            UNITARY vs. STOCHASTIC</div>
                     </div>
                     <div style="height: 350px;">
                         <canvas id="pageChart"></canvas>
@@ -288,16 +287,16 @@
                     </div>
                     <div class="stat-item">
                         <span class="stat-val" id="stat-tau">-</span>
-                        <span class="stat-label">Lebensdauer (s)</span>
+                        <span class="stat-label">Lifespan (s)</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-val" id="stat-entropy">-</span>
-                        <span class="stat-label">Rest-Entropie</span>
+                        <span class="stat-label">Residual Entropy</span>
                     </div>
                 </div>
 
                 <div class="chart-card">
-                    <h3 style="margin-bottom: 1.5rem;">Massen-Abnahme ($M/M_0$)</h3>
+                    <h3 style="margin-bottom: 1.5rem;">Mass Decrease ($M/M_0$)</h3>
                     <div style="height: 250px;">
                         <canvas id="massChart"></canvas>
                     </div>
@@ -364,14 +363,14 @@
                     labels: q.t.map(t => (t / q.tau_eff).toFixed(2)),
                     datasets: [
                         {
-                            label: 'Klassisch (Hawking)',
+                            label: 'Classical (Hawking)',
                             data: sc.Srad.map(s => s / Math.max(...sc.Srad)),
                             borderColor: 'rgba(255, 99, 132, 0.4)',
                             borderDash: [5, 5],
                             pointRadius: 0
                         },
                         {
-                            label: 'Zander (Quantisiert)',
+                            label: 'Zander (Quantized)',
                             data: q.Srad.map(s => s / Math.max(...q.Srad)),
                             borderColor: 'rgba(0, 242, 255, 1)',
                             borderWidth: 3,
@@ -390,7 +389,7 @@
                             grid: { color: 'rgba(255,255,255,0.05)' }
                         },
                         x: {
-                            title: { display: true, text: 'Normalisierte Zeit (t/τ)', color: '#888' },
+                            title: { display: true, text: 'Normalized Time (t/τ)', color: '#888' },
                             grid: { display: false }
                         }
                     },
@@ -406,7 +405,7 @@
                 data: {
                     labels: q.t.map(t => (t / q.tau_eff).toFixed(2)),
                     datasets: [{
-                        label: 'Massen-Trend',
+                        label: 'Mass Trend',
                         data: q.M.map(m => m / M0),
                         borderColor: '#7000ff',
                         backgroundColor: 'rgba(112, 0, 255, 0.2)',

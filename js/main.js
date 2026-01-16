@@ -243,19 +243,19 @@ function simulatePageCurve(M0, steps = 200) {
         break;
       }
     }
-    }
-    // Safety break if simulation runs too long
-    if (timePoints.length > steps * 2) break;
   }
+  // Safety break if simulation runs too long
+  if (timePoints.length > steps * 2) break;
+}
 
-  return {
-    time: timePoints,
-    mass: massPoints,
-    s_bh: sbhPoints,
-    s_rad_accum: sradPoints,
-    tau_limit: tau
-    , adaptive_used: adaptiveUsed, max_substeps: maxSubSteps
-  };
+return {
+  time: timePoints,
+  mass: massPoints,
+  s_bh: sbhPoints,
+  s_rad_accum: sradPoints,
+  tau_limit: tau
+  , adaptive_used: adaptiveUsed, max_substeps: maxSubSteps
+};
 }
 
 // --- Galactic Dynamics (The Dark Matter Illusion) ---
@@ -354,14 +354,14 @@ function simulateRotationCurve(M_solar, R_kpc_max = 50) {
 
 // --- main.js CONTENT (Adapted) ---
 
-// === Daten ===
+// === Data ===
 const FRUITS = [
-  { name: "Apfel", shape: "rund", color: "rot", massKg: 0.2 },
-  { name: "Birne", shape: "rund", color: "gelb", massKg: 0.18 },
-  { name: "Banane", shape: "oval", color: "gelb", massKg: 0.12 },
-  { name: "Orange", shape: "rund", color: "orange", massKg: 0.15 },
-  { name: "Kiwi", shape: "oval", color: "gruen", massKg: 0.075 },
-  { name: "Melone", shape: "rund", color: "gruen", massKg: 3.0 }
+  { name: "Apple", shape: "round", color: "red", massKg: 0.2 },
+  { name: "Pear", shape: "round", color: "yellow", massKg: 0.18 },
+  { name: "Banana", shape: "oval", color: "yellow", massKg: 0.12 },
+  { name: "Orange", shape: "round", color: "orange", massKg: 0.15 },
+  { name: "Kiwi", shape: "oval", color: "green", massKg: 0.075 },
+  { name: "Melon", shape: "round", color: "green", massKg: 3.0 }
 ];
 
 const REAL_BHS = [
@@ -410,7 +410,7 @@ const MACRO_SYSTEMS = [
   }
 ];
 
-// === DOM Elemente ===
+// === DOM Elements ===
 const searchField = document.querySelector("#suchfeld");
 const formSelect = document.querySelector("#formSelect");
 const colorSelect = document.querySelector("#farbeSelect");
@@ -533,7 +533,7 @@ function filterFruits() {
 
   if (!matches.length) {
     const li = document.createElement("li");
-    li.textContent = "Keine Objekte gefunden.";
+    li.textContent = "No objects found.";
     resultList.appendChild(li);
     return;
   }
@@ -714,7 +714,7 @@ let limitTimer;
 
 function withToolLimit(fn) {
   if (activeToolRuns >= MAX_TOOL_RUNS) {
-    limitNote.textContent = `Maximal ${MAX_TOOL_RUNS} Funktionen dürfen gleichzeitig laufen.`;
+    limitNote.textContent = `Maximum ${MAX_TOOL_RUNS} functions can run simultaneously.`;
     return;
   }
   activeToolRuns += 1;
@@ -733,14 +733,14 @@ const toolHandlers = {
   pageFruits: () => {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
-    return "Bitte nutze die 'Glatte Page-Kurve'. Die klassische Ansicht ist veraltet.";
+    return "Please use the 'Smooth Page Curve'. The classic view is deprecated.";
   },
   fruitEntropy: () => {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
     const data = getActiveDataset();
     // Check if handling galaxies (no entropy calc for now)
-    if (currentDatasetName === 'galaxies') return "Entropie-Berechnung für ganze Galaxien steht noch aus.";
+    if (currentDatasetName === 'galaxies') return "Entropy calculation for entire galaxies is pending.";
 
     return data.map(
       (obj) => `S(${obj.name}) = ${bekensteinHawkingEntropy(obj.massKg).toExponential(3)} J/K`
@@ -750,7 +750,7 @@ const toolHandlers = {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
     const data = getActiveDataset();
-    if (currentDatasetName === 'galaxies') return "Schwarzschild-Radius irrelevant für diffuse Galaxien-Metrik.";
+    if (currentDatasetName === 'galaxies') return "Schwarzschild radius irrelevant for diffuse galaxy metrics.";
 
     return data.map(
       (obj) => `R_s(${obj.name}) = ${schwarzschildRadius(obj.massKg).toExponential(3)} m`
@@ -760,7 +760,7 @@ const toolHandlers = {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
     const data = getActiveDataset();
-    if (currentDatasetName === 'galaxies') return "Galaxien strahlen nicht wie Hawking-Körper.";
+    if (currentDatasetName === 'galaxies') return "Galaxies do not radiate like Hawking bodies.";
 
     return data.map(
       (obj) => `T_H(${obj.name}) = ${hawkingTemperature(obj.massKg).toExponential(3)} K`
@@ -799,14 +799,14 @@ const toolHandlers = {
       // Zander-Entropy S_Z = kB * ln( mc^2 / hf )
       const S_val = kB * Math.log(energy / hf);
 
-      return `--- ${obj.name} ---\nZander-Entropie (S_Z): ${S_val.toExponential(4)} J/K\n(Geometrische Bremslast)`;
+      return `--- ${obj.name} ---\nZander Entropy (S_Z): ${S_val.toExponential(4)} J/K\n(Geometric Braking Load)`;
     }).join("\n\n");
   },
   macroHawking: () => {
     qgChartCanvas.style.display = 'none';
     qgOutput.style.display = 'block';
     const data = getActiveDataset();
-    if (currentDatasetName !== 'macro') return "Bitte 'Makro-Systeme' wählen.";
+    if (currentDatasetName !== 'macro') return "Please select 'Macro Systems'.";
 
     return data.map(obj => {
       const sigma_eff = obj.length * obj.time;
@@ -825,10 +825,10 @@ const toolHandlers = {
       // Let's use the actual thermal "energy per tick" interpretation:
       const result = `
 --- ${obj.name} ---
-Effektive Zelle (σ_eff): ${sigma_eff.toFixed(2)} m·s
-Anzahl Ticks (N): ${n_ticks.toFixed(2)}
-Energie pro Tick (T_eff): ${t_eff.toFixed(2)} Joule
-Entropie-Export: ${(obj.energyJ * 0.92).toFixed(1)} J (Dissipation)
+Effective Cell (σ_eff): ${sigma_eff.toFixed(2)} m·s
+Number of Ticks (N): ${n_ticks.toFixed(2)}
+Energy per Tick (T_eff): ${t_eff.toFixed(2)} Joule
+Entropy Export: ${(obj.energyJ * 0.92).toFixed(1)} J (Dissipation)
       `;
       return result;
     }).join("\n");
@@ -872,7 +872,7 @@ Entropie-Export: ${(obj.energyJ * 0.92).toFixed(1)} J (Dissipation)
 function handleToolChange(event) {
   const selectedValue = event.target.value;
   const selectedLabel = event.target.options[event.target.selectedIndex].textContent;
-  selectedToolLabel.textContent = selectedValue === "none" ? "Keine Auswahl" : selectedLabel;
+  selectedToolLabel.textContent = selectedValue === "none" ? "No Selection" : selectedLabel;
 
   if (!toolHandlers[selectedValue]) {
     qgOutput.textContent = "";

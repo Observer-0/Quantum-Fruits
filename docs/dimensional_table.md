@@ -1,31 +1,28 @@
-Kurzreferenz: Symbole und Einheiten (σP-Framework)
+Quick Reference: Symbols and Units (σP Framework)
 
-- **σP** : Fundamental grain — σP = ħ G / c^4  → Einheit: [L·T] (m·s)
+- **σP** : Fundamental grain — σP = ħ G / c^4  → Unit: [L·T] (m·s)
 
-- **ℓP** : räumliche Projektion — ℓP = sqrt(σP · c) → Einheit: [L] (m)
+- **ℓP** : spatial projection — ℓP = sqrt(σP · c) → Unit: [L] (m)
 
-- **tP** : zeitliche Projektion — tP = sqrt(σP / c) → Einheit: [T] (s)
-  - Folge: tP^2 = σP / c (wird als minimaler Schwinger‑Parameter `s_min` verwendet)
+- **tP** : temporal projection — tP = sqrt(σP / c) → Unit: [T] (s)
+  - Result: tP^2 = σP / c (used as minimal Schwinger parameter `s_min`)
 
-- **Planck‑Frequenz**: fP = 1 / tP  → Einheit: [T^-1] (Hz)
+- **Planck Frequency**: fP = 1 / tP  → Unit: [T^-1] (Hz)
 
-- **Planck‑Energie**: E_P = ħ / tP  → Einheit: [Energy]
-  - Alternative (nicht empfohlen): E = n σP c^2 ist dimensionsmäßig inkonsistent (Energy vs L·T).
+- **Planck Energy**: E_P = ħ / tP  → Unit: [Energy]
+  - Alternative (not recommended): E = n σP c^2 is dimensionally inconsistent (Energy vs L·T).
 
-- **Fluss/Anzahl**: Bei diskreter Zählung von Körnern n gilt für Energiebeschreibungen vorzugsweise
+- **Flow/Count**: For discrete counting of grains n, for energy descriptions preferably:
   - E = n · E_P = n · (ħ / tP)
 
-- **Heat‑Kernel / Schwinger**:
-  - Schwinger‑Parameter `s` hat Dimension [T^2] bzw. [L^2] (Konvention beachten); minimaler cutoff:
+- **Heat Kernel / Schwinger**:
+  - Schwinger parameter `s` has dimension [T^2] or [L^2] (note convention); minimal cutoff:
     `s_min = tP^2 = σP / c`
 
-- **Planck‑Area / Volume (Projektionen)**:
-  - ℓP^2 = σP · c  → Einheit: [L^2]
-  - (σP c)^{3/2} = ℓP^3 = Projektions‑Volumen (keine fundamentale Bedeutung, nur Projektion)
+- **Planck Area / Volume (Projections)**:
+  - ℓP^2 = σP · c  → Unit: [L^2]
+  - (σP c)^{3/2} = ℓP^3 = Projection volume (no fundamental meaning, only projection)
 
-- **Kosmologische Größen**:
-  - Anzahl Körner in Fenster (R,t): N_σ = (R · t) / σP  → Einheitlos
-  - Vorschlag: Λ_eff ∼ 1/(c R t) (Dimension: L^-2) — bitte Herleitung klar darstellen
-
-
-
+- **Cosmological Quantities**:
+  - Number of grains in window (R,t): N_σ = (R · t) / σP  → Dimensionless
+  - Suggestion: Λ_eff ∼ 1/(c R t) (Dimension: L^-2) — please present derivation clearly
