@@ -7,6 +7,7 @@
     <title>Quantum Fruits | Cosmology Monitor</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/components.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         body {
             background: #0f172a;
@@ -193,15 +194,43 @@
             </div>
         </div>
 
-        <div class="qg-box" style="margin-top: 3rem; border-color: rgba(255,255,255,0.1);">
-            <h3>Theory: The $R \cdot t$ Coupling</h3>
-            <p style="font-size: 0.95rem; color: #94a3b8;">
-                In the $\sigma_P$ framework, the energy density of the universe is not a fixed constant (Dark Energy),
-                but a dynamic property of the coupled spacetime window.
-                As the volume ($R$) and age ($t$) grow, the "cost" of existence ($\sigma_P$) scales proportionately.
-                The LCDM model fails at large scales because it assumes a static vacuum pressure.
-            </p>
+    </div>
+
+    <!-- NEW: Universe Phase-Breathing Simulator (σₚ-Regulated) -->
+    <div id="zander-universe-dashboard" class="qg-box"
+        style="margin-top: 3rem; border-color: var(--accent-primary); background: rgba(0, 242, 255, 0.02);">
+        <h3 style="color: var(--accent-primary); text-align: center; margin-bottom: 1.5rem;">Universe Phase-Breathing
+            Simulator (σₚ-Regulated)</h3>
+        <div id="phase-plot" style="border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
         </div>
+        <div id="status-panel"
+            style="display: flex; justify-content: space-around; margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+            <div class="stat-card" style="background: transparent; border: none; padding: 0;">
+                <span class="stat-label">Cosmic Phase</span>
+                <span id="current-phase" class="stat-value"
+                    style="font-size: 1.1rem; color: var(--accent-primary);">Initializing...</span>
+            </div>
+            <div class="stat-card" style="background: transparent; border: none; padding: 0;">
+                <span class="stat-label">H₀ Value</span>
+                <span id="current-h" class="stat-value"
+                    style="font-size: 1.1rem; color: var(--accent-primary);">0</span>
+            </div>
+            <div class="stat-card" style="background: transparent; border: none; padding: 0;">
+                <span class="stat-label">Cosmic Temp</span>
+                <span id="current-t" class="stat-value" style="font-size: 1.1rem; color: #ef4444;">0</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="qg-box" style="margin-top: 3rem; border-color: rgba(255,255,255,0.1);">
+        <h3>Theory: The $R \cdot t$ Coupling</h3>
+        <p style="font-size: 0.95rem; color: #94a3b8;">
+            In the $\sigma_P$ framework, the energy density of the universe is not a fixed constant (Dark Energy),
+            but a dynamic property of the coupled spacetime window.
+            As the volume ($R$) and age ($t$) grow, the "cost" of existence ($\sigma_P$) scales proportionately.
+            The LCDM model fails at large scales because it assumes a static vacuum pressure.
+        </p>
+    </div>
     </div>
 
     <script src="../js/cosmo-lab.js"></script>

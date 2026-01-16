@@ -137,10 +137,103 @@ function runHubbleMC() {
     });
 }
 
+/**
+ * Universe Phase-Breathing Simulator (σₚ-Regulated)
+ * Simulates the "Cosmic Breath" phase transitions using a tanh switch.
+ */
+function simulateCosmicBreath() {
+    const steps = 400;
+    const time = [];
+    const H_values = [];
+    const T_values = [];
+    const phases = [];
+
+    // Constants from the Zander Model
+    const Tc = 61.0;    // Critical "Boiling Temperature" (Analog to Aqua Exhalare cooling)
+    const H_low = 67.4;  // Deflation H (Planck/CMB)
+    const H_high = 73.2; // Expansion H (Riess/SNe Ia)
+    const alpha = 0.5;   // Sharpness of the phase transition
+
+    for (let i = 0; i < steps; i++) {
+        let t = i / 20;
+        time.push(t);
+
+        // Sinusoidal Temperature Oscillation (The Breath)
+        // The universe cools, matter contracts it, Hawking radiation heats it back up...
+        let T = Tc + 10 * Math.sin(t);
+        T_values.push(T);
+
+        // The decisive Zander-Switch: w = tanh(alpha * (T - Tc))
+        // Determines if we are in the Gas phase (H=73) or Liquid phase (H=67)
+        let phaseSwitch = Math.tanh(alpha * (T - Tc));
+
+        // Hubble parameter calculated relative to the phase state
+        let H = ((H_high + H_low) / 2) + ((H_high - H_low) / 2) * phaseSwitch;
+        H_values.push(H);
+
+        phases.push(phaseSwitch > 0 ? "Expansion (SNe Ia Phase)" : "Deflation (CMB Phase)");
+    }
+
+    const traceH = {
+        x: time,
+        y: H_values,
+        name: 'Hubble Parameter (H₀)',
+        type: 'scatter',
+        line: { color: '#38bdf8', width: 3 }
+    };
+
+    const traceT = {
+        x: time,
+        y: T_values,
+        name: 'Cosmic Temp (T)',
+        yaxis: 'y2',
+        type: 'scatter',
+        line: { color: '#ef4444', width: 2, dash: 'dot' }
+    };
+
+    const layout = {
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        showlegend: true,
+        legend: { font: { color: '#94a3b8', size: 10 }, orientation: 'h', y: -0.2 },
+        margin: { t: 20, b: 60, l: 50, r: 50 },
+        xaxis: { title: 'Cosmic Ticks (Time)', color: '#94a3b8', gridcolor: 'rgba(255,255,255,0.05)' },
+        yaxis: { title: 'H₀ (km/s/Mpc)', color: '#38bdf8', gridcolor: 'rgba(255,255,255,0.05)', range: [65, 75] },
+        yaxis2: {
+            title: 'Temperature (T)',
+            color: '#ef4444',
+            overlaying: 'y',
+            side: 'right',
+            range: [40, 80]
+        }
+    };
+
+    Plotly.newPlot('phase-plot', [traceH, traceT], layout);
+
+    // Live-Update Effect
+    let counter = 0;
+    setInterval(() => {
+        let idx = counter % steps;
+        const phaseEl = document.getElementById('current-phase');
+        const hEl = document.getElementById('current-h');
+        const tEl = document.getElementById('current-t');
+
+        if (phaseEl) phaseEl.innerText = phases[idx];
+        if (hEl) hEl.innerText = H_values[idx].toFixed(2);
+        if (tEl) tEl.innerText = T_values[idx].toFixed(2) + "°C_rel";
+        counter++;
+    }, 50);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const ageSlider = document.getElementById('cosmo-age-slider');
     if (ageSlider) {
         ageSlider.oninput = updateCosmoMonitor;
         updateCosmoMonitor();
+    }
+
+    // Initialize Cosmic Breath if the dashboard exists
+    if (document.getElementById('zander-universe-dashboard')) {
+        simulateCosmicBreath();
     }
 });
