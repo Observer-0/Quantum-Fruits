@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation Cockpit — Quantum Fruits Labs</title>
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="icon" href="../assets/favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        .cockpit-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .hub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 2rem;
+        }
+
+        .system-status {
+            display: flex;
+            gap: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-primary);
+        }
+
+        .status-item span {
+            display: block;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .lab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .lab-deck {
+            position: relative;
+            padding-top: 1.5rem;
+        }
+
+        .lab-deck::before {
+            content: attr(data-id);
+            position: absolute;
+            top: 0;
+            left: 1.5rem;
+            background: var(--bg-deep);
+            padding: 0 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent-primary);
+            z-index: 1;
+            border: 1px solid var(--glass-border);
+            border-radius: 4px;
+        }
+
+        .lab-preview {
+            height: 200px;
+            background: #000;
+            border-radius: var(--radius-sm);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .lab-preview svg {
+            width: 100px;
+            height: 100px;
+            opacity: 0.2;
+            filter: drop-shadow(0 0 10px var(--accent-primary));
+        }
+
+        .lab-card-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .lab-card-content p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .lab-badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="../js/sigma-bg.js"></script>
+
+    <div class="cockpit-container">
+        <header class="hub-header">
+            <div>
+                <a href="../index.html"
+                    style="color: var(--accent-primary); text-decoration: none; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">&larr;
+                    Return to Gateway</a>
+                <h1 style="font-size: 3rem; margin-top: 1rem;">Simulation Cockpit</h1>
+            </div>
+            <div class="system-status">
+                <div class="status-item">
+                    <span>Grid State</span>
+                    σₚ Nominal
+                </div>
+                <div class="status-item">
+                    <span>Curvature</span>
+                    Non-Singular
+                </div>
+                <div class="status-item">
+                    <span>Sync</span>
+                    Unitary
+                </div>
+            </div>
+        </header>
+
+        <div class="lab-grid">
+            <!-- MOTOR LAB -->
+            <div class="lab-deck" data-id="LAB-001">
+                <div class="qg-card">
+                    <div class="lab-preview">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="2" />
+                            <path d="M50 20 L50 80 M20 50 L80 50" stroke="currentColor" stroke-width="1" />
+                        </svg>
+                    </div>
+                    <div class="lab-card-content">
+                        <span class="lab-badge">Extreme Geometry</span>
+                        <h3>Kinematic Motor</h3>
+                        <p>The ℏ-Spin Stator vs. The Mass Rotor Burden. Explore the mechanical coupling between quantum
+                            action and classical gravity.</p>
+                        <a href="motor.html" class="action-btn"
+                            style="background: var(--accent-primary); color: #000; width: 100%; justify-content: center;">Access
+                            Simulation</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GALAXY LAB -->
+            <div class="lab-deck" data-id="LAB-002">
+                <div class="qg-card">
+                    <div class="lab-preview">
+                        <svg viewBox="0 0 100 100">
+                            <path d="M50 10 Q 90 50 50 90 Q 10 50 50 10" fill="none" stroke="currentColor"
+                                stroke-width="1" opacity="0.5" />
+                            <circle cx="50" cy="50" r="5" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <div class="lab-card-content">
+                        <span class="lab-badge"
+                            style="color: var(--accent-emerald); background: rgba(16, 185, 129, 0.1);">Large
+                            Scale</span>
+                        <h3>Galaxy Rotation</h3>
+                        <p>Witness galactic dynamics without Dark Matter. See how $\sigma_P$ coupling explains flat
+                            rotation curves naturally.</p>
+                        <a href="galaxy_lab.html" class="action-btn"
+                            style="background: var(--accent-emerald); color: #000; width: 100%; justify-content: center;">Access
+                            Simulation</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COSMO LAB -->
+            <div class="lab-deck" data-id="LAB-003">
+                <div class="qg-card">
+                    <div class="lab-preview">
+                        <svg viewBox="0 0 100 100">
+                            <rect x="20" y="20" width="60" height="60" fill="none" stroke="currentColor"
+                                stroke-width="1" />
+                            <path d="M20 50 L80 50" stroke="currentColor" stroke-width="0.5" />
+                        </svg>
+                    </div>
+                    <div class="lab-card-content">
+                        <span class="lab-badge"
+                            style="color: var(--accent-rose); background: rgba(244, 63, 94, 0.1);">Global
+                            Evolution</span>
+                        <h3>Cosmology Monitor</h3>
+                        <p>Track the departure from $\Lambda$CDM. Monitor global evolution and the Eternal Breath of the
+                            vacuum.</p>
+                        <a href="cosmo_lab.html" class="action-btn"
+                            style="background: var(--accent-rose); color: #fff; width: 100%; justify-content: center;">Access
+                            Simulation</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LATTICE LAB -->
+            <div class="lab-deck" data-id="LAB-004">
+                <div class="qg-card">
+                    <div class="lab-preview">
+                        <svg viewBox="0 0 100 100">
+                            <path
+                                d="M10 10 L90 10 L90 90 L10 90 Z M10 30 L90 30 M10 50 L90 50 M10 70 L90 70 M30 10 L30 90 M50 10 L50 90 M70 10 L70 90"
+                                fill="none" stroke="currentColor" stroke-width="0.5" />
+                        </svg>
+                    </div>
+                    <div class="lab-card-content">
+                        <span class="lab-badge"
+                            style="color: var(--accent-tertiary); background: rgba(168, 85, 247, 0.1);">Foundation</span>
+                        <h3>URM Lattice</h3>
+                        <p>Interact with the fundamental fabric of spacetime. Observe how topological resonance patterns
+                            emerge from the grid.</p>
+                        <a href="lattice_lab.html" class="action-btn"
+                            style="background: var(--accent-tertiary); color: #fff; width: 100%; justify-content: center;">Access
+                            Simulation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer
+        style="padding: 4rem 2rem; text-align: center; color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.7rem;">
+        SYSTEM_CLOCK_2026 // σₚ_CORE_V1.2
+    </footer>
+</body>
+
+</html>

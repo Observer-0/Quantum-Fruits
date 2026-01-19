@@ -2,571 +2,220 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>From Quantum to Cosmos - About Spacetime and Entropy, Mass and Inertia</title>
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/components.css" />
-  <link rel="icon" href="assets/favicon.svg" />
-  <!-- KaTeX for client-side formula rendering -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Fruits — The Universal Resonance Model</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="icon" href="assets/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=JetBrains+Mono&display=swap"
+    rel="stylesheet">
+  <!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .hero-section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, var(--accent-primary) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      letter-spacing: -2px;
+    }
+
+    .hero-tagline {
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 4rem;
+    }
+
+    .gateway-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    @media (max-width: 900px) {
+      .gateway-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-section {
+        height: auto;
+        padding-top: 10rem;
+      }
+    }
+
+    .gateway-card {
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .gateway-card i {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .card-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      border: 1px solid var(--glass-border);
+      transition: all 0.3s;
+    }
+
+    .gateway-card:hover .card-icon {
+      background: var(--accent-primary);
+      color: #000;
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .manifesto-shimmer {
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <div
-    style="background: linear-gradient(90deg, #bc00ff, #00f2ff); color: #000; padding: 0.5rem; text-align: center; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
-    Sgr A* supports the model — Black Holes as Stellar Creators (Peißker 2026)
-  </div>
-  <header class="page-header">
-    <div class="hero hero-content">
-      <p class="eyebrow glow-text">The Spacetime Quantization (ħG/c^4)</p>
-      <h1 class="glow-text">From Quantum to Cosmos</h1>
-      <p class="tagline">Quantized by Spacetime, geometrised by Einstein.</p>
+  <!-- Interactive Background -->
+  <script src="js/sigma-bg.js"></script>
 
-      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
-        <a href="html/motor.html" class="action-btn"
-          style="background: linear-gradient(90deg, #38bdf8, #a855f7); color: white;">
-          Black Hole Lab &rarr;
-        </a>
-        <a href="html/theory.html" class="action-btn"
-          style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
-          The Theory
-        </a>
-        <a href="html/cosmo_lab.html" class="action-btn"
-          style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: #10b981;">
-          Cosmology Monitor
-        </a>
-      </div>
-    </div>
-  </header>
+  <!-- Top Status Bar -->
+  <div
+    style="position: fixed; top: 0; width: 100%; background: rgba(56, 189, 248, 0.1); backdrop-filter: blur(8px); border-bottom: 1px solid var(--glass-border); z-index: 1000; padding: 0.5rem; text-align: center; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">
+    Empirical Discovery: Sgr A* orbits confirm Zander-Scaffold Precession (2026)
+  </div>
 
   <main>
-    <!-- The Manifesto Section -->
-    <section class="manifesto-section" style="margin: 4rem 0; text-align: center;">
-      <div class="qg-card manifesto-card"
-        style="background: linear-gradient(145deg, rgba(56, 189, 248, 0.05), rgba(168, 85, 247, 0.05)); border: 1px solid rgba(255,255,255,0.05); padding: 4rem 2rem; position: relative; overflow: hidden;">
-        <div
-          style="position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(56, 189, 248, 0.1), transparent 70%); filter: blur(40px);">
-        </div>
-
-        <p
-          style="font-size: 1.4rem; color: var(--accent-primary); font-family: var(--font-mono); margin-bottom: 2rem; letter-spacing: -1px;">
-          "Entropy is the natural order of the Universe."
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="animate-fade">
+        <span class="pill-blue"
+          style="background: rgba(56, 189, 248, 0.1); color: var(--accent-primary); padding: 0.5rem 1rem; border-radius: 100px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; display: inline-block;">
+          Quantized Spacetime Framework — σₚ
+        </span>
+        <h1 class="hero-title">Quantum Fruits</h1>
+        <p class="hero-tagline">
+          The Universal Resonance Model: A unified vision of entropy, mass, and information.
         </p>
 
-        <div style="max-width: 750px; margin: 0 auto; line-height: 2; font-size: 1.15rem; color: #cbd5e1;">
+        <div class="gateway-grid">
+          <a href="html/theory.html" class="qg-card gateway-card" style="border-top: 4px solid var(--accent-primary);">
+            <div class="card-icon">📖</div>
+            <h3>The Theory</h3>
+            <p style="font-size: 0.9rem; margin-top: 1rem; color: var(--text-secondary);">
+              Deep dive into the 20 Pillars of Discovery and the Einstein-Zander Field Equations.
+            </p>
+          </a>
+
+          <a href="#manifesto" class="qg-card gateway-card" style="border-top: 4px solid var(--accent-secondary);">
+            <div class="card-icon">📜</div>
+            <h3>The Manifesto</h3>
+            <p style="font-size: 0.9rem; margin-top: 1rem; color: var(--text-secondary);">
+              Why we moved from 26 dimensions back to the fundamental pixel of spacetime.
+            </p>
+          </a>
+
+          <a href="html/labs.html" class="qg-card gateway-card" style="border-top: 4px solid var(--accent-tertiary);">
+            <div class="card-icon">🔬</div>
+            <h3>Simulation Lab</h3>
+            <p style="font-size: 0.9rem; margin-top: 1rem; color: var(--text-secondary);">
+              Interactive labs for black hole motors, galaxy rotation, and URM lattices.
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MANIFESTO SECTION -->
+    <section id="manifesto" style="padding: 10rem 2rem; max-width: 900px; margin: 0 auto; text-align: center;">
+      <div class="qg-card"
+        style="padding: 5rem 3rem; background: radial-gradient(circle at top right, rgba(251, 191, 36, 0.05), transparent);">
+        <span
+          style="color: var(--accent-secondary); font-family: var(--font-mono); font-size: 1.2rem; display: block; margin-bottom: 2rem;">"Reality
+          defines itself through negation."</span>
+
+        <div style="line-height: 2; font-size: 1.25rem; color: var(--text-secondary); text-align: left;">
           <p>Every event is binary: it happens, or it does not.</p>
           <p>The information lies not in what occurred, but in all the paths that were never taken.</p>
-          <p>Reality defines itself through negation.</p>
-          <p style="font-weight: 800; color: #fff; margin: 2rem 0; font-size: 1.8rem;">S = 1</p>
 
           <div
-            style="margin: 3rem 0; padding: 2rem; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1);">
-            <p style="font-size: 0.95rem; opacity: 0.7; margin-bottom: 1.5rem;">They did this with chalk — Minkowski,
-              Schwarzschild, Lorentz, Planck, Einstein.</p>
-            <div style="font-size: 1.5rem; color: var(--accent-secondary); margin-bottom: 1.5rem;">
-              $$ G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2} R g_{\mu\nu} $$
-            </div>
-            <p style="font-size: 0.95rem; opacity: 0.7;">109 years later we have Fugaku, JWST, Hubble and AI. What's our
-              excuse? <br> 26 dimensions and $10^{500}$ vacua?</p>
+            style="margin: 4rem 0; padding: 3rem; background: rgba(0,0,0,0.4); border-radius: 20px; border: 1px solid var(--glass-border); text-align: center;">
+            <span
+              style="font-size: 0.8rem; color: var(--accent-secondary); letter-spacing: 2px; text-transform: uppercase;">Axiom
+              of Unitarity</span>
+            <h2 style="font-size: 4rem; margin: 1rem 0; color: #fff;">S = 1</h2>
+            <p style="font-size: 1rem; opacity: 0.5;">The total probability of all states remains conserved by the
+              $\sigma_P$ grid.</p>
           </div>
 
-          <p style="margin-top: 2rem;">The answer was always hidden in plain sight, encoded in the units:</p>
-          <p style="font-size: 1.6rem; color: var(--accent-primary); font-weight: 800; margin: 1rem 0;">$\sigma_P = [L
-            \cdot T]$</p>
-          <p style="font-size: 1.1rem; opacity: 0.8; font-style: italic;">The Natural Structure of curved Spacetime.</p>
+          <p>While physics lost itself in twenty-six dimensions, the simplest truth remained uncounted: We never
+            finished counting the four fundamental vectors of spacetime.</p>
 
-          <p style="margin-top: 3rem; font-size: 1rem; color: #94a3b8;">
-            Space and time are not separate stages; they are the shared currency of causality.
-            Whether I look East or West, North or South, up or down—space and time flow indistinguishably in the same
-            direction:
-            <strong>That of the Observer.</strong>
-          </p>
-
-          <p style="margin-top: 2rem; font-size: 1rem; color: #94a3b8;">
-            While physics lost itself in twenty-six dimensions, the simplest truth remained uncounted:
-            We never finished counting the four fundamental vectors of spacetime.
-          </p>
-
-          <p style="margin-top: 2rem; font-size: 1.25rem; color: #fff; font-weight: bold;">
+          <p style="margin-top: 3rem; font-weight: 700; color: #fff;">
             "We searched for the Theory of Everything in infinity, only to find it was just one line long."
           </p>
         </div>
 
-        <cite
-          style="display: block; margin-top: 4rem; font-size: 0.9rem; color: var(--accent-secondary); font-weight: bold; font-style: normal;">
-          — Adrian Zander, From Quantum to Cosmos
-        </cite>
-      </div>
-
-      <div style="margin-top: 3rem; text-align: center;">
-        <h2
-          style="font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; color: #94a3b8; border: none; padding: 0;">
-          σₚ Quantized Spacetime Framework Overview</h2>
-        <p style="font-size: 0.9rem; opacity: 0.6;">A Minimal, Parameter-Free Approach to Quantum Gravity</p>
-      </div>
-    </section>
-    <section class="qg-panel">
-      <h2 class="section-title">The Pillars of Existence</h2>
-
-      <div class="grid-2">
-        <div class="qg-card">
-          <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">1. Universal Wave Command</h3>
-          <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 1.5rem;">
-            The master field equation governing the quantized flow of information and energy density.
-          </p>
-          <div class="formula-block">
-            $$ \Box \phi + \gamma \partial^\beta \phi + \alpha \phi^3 = qE_{\text{Res}} + \lambda \langle \hat{Q}
-            \rangle $$
-          </div>
-          <p style="font-size: 0.8rem; color: #64748b; font-style: italic; margin-top: 1rem;">
-            *Simplified form. Full resonance includes higher order couplings.
-          </p>
-        </div>
-
-        <div class="qg-card">
-          <h3 style="color: #10b981; margin-bottom: 1rem;">2. Einstein-Zander Coupling</h3>
-          <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 1.5rem;">
-            The dynamic link between geometric curvature and quantized field action.
-          </p>
-          <div class="formula-block" style="border-color: #10b981;">
-            $$ G_{\beta\nu} + \beta \langle \phi^2 \rangle g_{\beta\nu} = 8\pi G(T_{\text{std}} + T_\phi) $$
-          </div>
-          <p style="font-size: 0.8rem; color: #64748b; font-style: italic; margin-top: 1rem;">
-            Gravity is the macroscopic manifestation of tick-density moderation.
-          </p>
-        </div>
-      </div>
-
-      <div class="qg-card"
-        style="margin-top: 2rem; border-left: 5px solid var(--accent-secondary); background: rgba(168, 85, 247, 0.05); text-align: center;">
-        <p style="font-size: 1.2rem; line-height: 1.6; font-style: italic;">
-          "The information paradox resolves when action (ħ) wins against the burden of matter(G). If action loses,
-          entropy takes over. If it wins, information returns unitarily."
-        </p>
-        <p style="margin-top: 1rem; font-weight: bold; color: var(--accent-secondary);">— Adrian Zander</p>
-      </div>
-
-      <div class="monitor-grid" style="margin-top: 3rem;">
-        <div class="qg-card" style="text-align: center; padding: 1.5rem;">
-          <span class="stat-label">Planck Limit</span>
-          <span class="stat-value"
-            style="display: block; color: var(--accent-primary); font-size: 1.2rem; font-weight: 800;">c^4 / G</span>
-        </div>
-        <div class="qg-card" style="text-align: center; padding: 1.5rem;">
-          <span class="stat-label">Information</span>
-          <span class="stat-value"
-            style="display: block; color: var(--accent-secondary); font-size: 1.2rem; font-weight: 800;">S_Z</span>
-        </div>
-        <div class="qg-card" style="text-align: center; padding: 1.5rem;">
-          <span class="stat-label">Spacetime Pixel</span>
-          <span class="stat-value"
-            style="display: block; color: var(--accent-primary); font-size: 1.2rem; font-weight: 800;">σₚ</span>
+        <div style="margin-top: 5rem; border-top: 1px solid var(--glass-border); padding-top: 3rem;">
+          <a href="html/theory.html" class="action-btn" style="background: var(--accent-primary); color: #000;">
+            Begin the Deep Dive &rarr;
+          </a>
         </div>
       </div>
     </section>
 
-
-    <div class="qg-box"
-      style="margin-top: 1.5rem; border-left: 4px solid #f59e0b; background: rgba(245, 158, 11, 0.05); position: relative; overflow: hidden;">
-      <div
-        style="position: absolute; top: 10px; right: 10px; background: rgba(245, 158, 11, 0.2); color: #f59e0b; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; letter-spacing: 1px;">
-        Empirically proven</div>
-      <h3 style="color: #f59e0b; font-size: 1.1rem; margin-bottom: 0.5rem;">From destructive endpoint to mediator of
-        coupling</h3>
-      <p style="font-size: 0.95rem; line-height: 1.5;">
-        In classical physics, the description inside black holes ends in a singularity – a theoretical boundary
-        where spacetime geometry becomes undefined.
-      <p>However, new observations by <strong>Florian Peißker (Sgr A*)</strong> confirm our model:</p>
+    <!-- FOOTER -->
+    <footer style="padding: 6rem 2rem; text-align: center; border-top: 1px solid var(--glass-border);">
+      <p style="font-style: italic; color: var(--accent-secondary); margin-bottom: 3rem;">
+        "Gott würfelt nicht mit dem Baum, aber er lässt die Früchte nach dem Zufallsprinzip reifen."
       </p>
-      <section
-        style="background: rgba(10, 10, 15, 0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 2rem; font-family: 'Inter', sans-serif; color: #e0e0e0; max-width: 900px; margin: 2rem auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
-
-        <h3
-          style="color: #00d4ff; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; border-bottom: 2px solid #00d4ff; display: inline-block; padding-bottom: 5px;">
-          Spin-Brake: Quantum Action (ħ) vs. Classical Gravity (Newton)
-        </h3>
-
-        <p style="line-height: 1.6; margin-bottom: 1.5rem;">
-          The resolution of the black hole information paradox lies not in information loss, but in mechanical coupling
-          between the black hole and its environment.
-          A black hole is not an abyss, but a cosmic dynamo that redistributes energy and angular momentum.
-        </p>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem;">
-
-          <div style="border-right: 1px solid rgba(255,255,255,0.1); padding-right: 1.5rem;">
-            <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.8rem; display: flex; align-items: center;">
-              <span style="margin-right: 10px;"></span> Spin(ℏ) - Brake (Newton)
-            </h4>
-            <p style="font-size: 0.9rem; color: #b0b0b0; line-height: 1.5;">
-              The <strong>massless quantum action</strong> rotates at the Planck limit ($c^4/G$). Without external
-              load, entanglement is maximal (rise of the Page curve).
-              Pure action $\sim \hbar\omega$, maximal spin, strong magnetic field, yet minimal "burden" by mass.
-              As soon as matter ($M_{ext}$) accumulates, it acts as <strong>classical gravity upon the core</strong>.
-            <p>This friction converts kinetic energy into structured matter (stars).</p>
-            </p>
-            <div
-              style="background: rgba(0, 212, 255, 0.05); border-left: 3px solid #00d4ff; padding: 0.5rem; margin-top: 1rem; font-family: monospace; font-size: 0.85rem; color: #00d4ff;">
-              F_brake = (G * M_ext) / r_s²
-            </div>
-          </div>
-
-          <div>
-            <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.8rem; display: flex; align-items: center;">
-              <span style="margin-right: 10px;">⚓</span> The Galactic Anchor
-            </h4>
-            <p style="font-size: 0.9rem; color: #b0b0b0; line-height: 1.5;">
-              Black holes are the architects of order. Through classical gravity, the spin is stabilized and the
-              black hole becomes the <strong>geometric anchor</strong> for entire galaxies.
-              At the end of the Page curve, there is no nothingness, but a stable, geometric rotation.
-            </p>
-            <div
-              style="margin-top: 1rem; padding: 0.5rem; border: 1px dashed rgba(255,255,255,0.2); border-radius: 4px; text-align: center;">
-              <span style="font-size: 0.75rem; color: #888; text-transform: uppercase;">Status:</span>
-              <span style="color: #00ff88; font-weight: bold;">Unitary Information Preserved</span>
-            </div>
-          </div>
-
-        </div>
-
-        <div
-          style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; color: #666; font-style: italic; text-align: right;">
-          "Entanglement is the geometry’s way of saying: you haven’t zoomed in far enough."
-        </div>
-      </section>
-      </section>
-
-
-      <section class="qg-panel" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(0,0,0,0));">
-        <section class="qg-panel">
-          <h2>Geometry vs. Cluster (GCE Update)</h2>
-
-          <div class="theory-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-            <div class="qg-box"
-              style="border-left: 4px solid var(--accent-primary); background: rgba(167, 139, 250, 0.05); padding: 1.5rem;">
-              <h3>Why Geometry remains stubbornly classical?</h3>
-              <p style="font-size: 1rem; line-height: 1.6;">
-                Scientists use billions of compute operations on the SuperMUC-NG cluster to simulate dark matter
-                into existence.
-              </p>
-              <p style="font-size: 1rem; line-height: 1.6; margin-top: 1rem;">
-                The $\sigma_P$ geometry does this directly in the browser: the Galactic Center is simply denser –
-                the more stars you stack, the more often they collide.
-              </p>
-              <div
-                style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; margin-top: 1.5rem; border: 1px dashed var(--accent-primary);">
-                <span style="color: var(--accent-primary); font-weight: bold;">Density Contrast:</span>
-                <p style="font-size: 1.2rem; margin: 0.5rem 0;">$C = \frac{\rho_{\text{bulge}}}{\rho_{\text{disk}}}
-                  \approx 150 - 200$</p>
-                <small style="color: #888;">The bulge is 200x more crowded than the disk.</small>
-              </div>
-              <a href="html/theory.html" class="tab-btn"
-                style="display: inline-block; margin-top: 1.5rem; text-decoration: none; color: var(--accent-primary);">View
-                Simulation &rarr;</a>
-            </div>
-
-            <div class="qg-box"
-              style="border-left: 4px solid var(--accent-secondary); background: rgba(16, 185, 129, 0.05); padding: 1.5rem;">
-              <h3>The GCE Model (Density Scaling)</h3>
-              <p style="font-size: 0.95rem; line-height: 1.6;">
-                In our latest analysis, we show that Gamma-ray emission follows the stellar morphology exactly.
-                High-energy events scale by density:
-              </p>
-
-              <div style="margin-top: 1.5rem;">
-                <h4 style="font-size: 0.8rem; text-transform: uppercase; color: #10b981; margin-bottom: 0.5rem;">
-                  Two-Body Mergers (Collisions)</h4>
-                <div style="background: rgba(0,0,0,0.2); padding: 0.8rem; border-radius: 4px; font-family: monospace;">
-                  $\Gamma_{\text{bulge}} \approx (220 - 400) \times \Gamma_{\text{disk}}$
-                </div>
-              </div>
-
-              <div style="margin-top: 1rem;">
-                <h4 style="font-size: 0.8rem; text-transform: uppercase; color: #60a5fa; margin-bottom: 0.5rem;">Steady
-                  Population (MSPs)</h4>
-                <div style="background: rgba(0,0,0,0.2); padding: 0.8rem; border-radius: 4px; font-family: monospace;">
-                  $\Gamma_{\text{bulge}} \approx (1.5 - 2.0) \times \Gamma_{\text{disk}}$
-                </div>
-              </div>
-
-              <p style="font-size: 0.9rem; margin-top: 1.5rem; font-style: italic; color: #b0b0b0;">
-                "No Dark Matter, no free parameters. Just Newton, Einstein, and a bit of geometry."
-              </p>
-              <div class="qg-box" style="border-left: 4px solid #f59e0b; background: rgba(245, 158, 11, 0.05);">
-                <h3>The "Retro-Physics" Revolution</h3>
-                <p style="font-size: 1rem; line-height: 1.6;">
-                  While $\Lambda$CDM was invented 30 years ago to bridge our lack of understanding with "Dark"
-                  placeholders,
-                  we return to the foundations.
-                </p>
-                <blockquote
-                  style="border-left: 2px solid #f59e0b; padding-left: 1rem; margin: 1rem 0; font-style: italic;">
-                  "We don't do new physics. We do <strong>original</strong> physics. Geometry remains stubbornly
-                  classical
-                  because it was never broken—we just stopped looking at the density."
-                </blockquote>
-              </div>
-
-              <div class="qg-box"
-                style="border-left: 4px solid #ef4444; background: rgba(239, 68, 68, 0.05); padding: 2rem;">
-                <h3>It's not Rocket Science – It's Statistics</h3>
-
-                <div style="display: flex; gap: 2rem; align-items: center;">
-                  <div style="flex: 1;">
-                    <p style="font-size: 1.1rem; line-height: 1.6;">
-                      Think of the Galactic Center as <strong>Rush Hour in Manhattan</strong>, while the outer disk is a
-                      <strong>quiet country road</strong>.
-                    </p>
-                    <p style="margin-top: 1rem; color: #ccc;">
-                      If you have 200 times more cars in the same space, do you need "Ghost Cars" (Dark Matter) to
-                      explain
-                      why there are more fender benders? No. <strong>It’s pure statistics.</strong>
-                    </p>
-                  </div>
-
-                  <div
-                    style="flex: 1; background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
-                    <div style="font-size: 0.8rem; text-transform: uppercase; color: #888;">Collision Probability</div>
-                    <div style="font-size: 2.5rem; font-weight: bold; color: #ef4444;">$\propto n^2$</div>
-                    <div style="font-size: 0.9rem; color: #ef4444;">Quadratic Density Scaling</div>
-                  </div>
-                </div>
-
-                <p style="margin-top: 1.5rem; font-style: italic; text-align: center; color: var(--accent-secondary);">
-                  The Galactic Center Excess isn't a mystery of "New Physics"—it's the inevitable result of
-                  putting too many stars in one room.
-                </p>
-              </div>
-
-              <a href="assets/papers/Rediscovering Geometry without SuperMUC.tex" class="tab-btn"
-                style="display: inline-block; margin-top: 1.5rem; text-decoration: none; color: #10b981;">Read Paper
-                (.tex) &rarr;</a>
-            </div>
-          </div>
-        </section>
-      </section>
-
-      <section class="theory">
-        <h2>Theory: Dual Structure of QM &amp; GR</h2>
-        <p>Unification is achieved not through new particles, but through the quantization of geometry itself.</p>
-
-        <div class="theory-grid">
-          <div class="theory-card">
-            <h3>Fundamental Scale</h3>
-            <div class="math-content">
-              $$\sigma_P = \frac{\hbar G}{c^4}$$
-            </div>
-            <div class="card-footer">
-              The "pixel" of spacetime. Space × Time (L·T) — the fundamental spacetime 2‑cell.
-            </div>
-          </div>
-
-          <div class="theory-card">
-            <h3>Spin-2 Scales</h3>
-            <div class="math-content">
-              $$Z \cdot A_G = \sigma_P$$
-            </div>
-            <div class="card-footer">
-              Coupling quantum momentum ($Z$) with gravitational area ($A_G$).
-            </div>
-          </div>
-
-          <div class="theory-card">
-            <h3>Coupling</h3>
-            <div class="math-content">
-              $$\alpha_G(M) = \frac{G M^2}{\hbar c}$$
-            </div>
-            <div class="card-footer">
-              The gravitational fine-structure constant determines interaction strength.
-            </div>
-          </div>
-
-          <div class="theory-card">
-            <h3>Hawking Tick</h3>
-            <div class="math-content">
-              $$E_H \cdot t_H = \hbar$$
-            </div>
-            <div class="card-footer">
-              Every event carries exactly one quantum of action. Unitarity is preserved.
-            </div>
-          </div>
-        </div>
-
-        <div class="qg-box" style="margin-top: 2rem; border-color: var(--accent-secondary);">
-          <p class="qg-footnote" style="text-align: center; margin: 0;">
-            <strong>Note:</strong> $4\pi$ factors are purely topological in nature. The fundamental physics is dictated
-            by $\sigma_P$.
-          </p>
-        </div>
-      </section>
-
-      <section class="simulation-lab" id="labs" style="padding: 4rem 2rem; background: rgba(15, 23, 42, 0.5);">
-        <div style="max-width: 1200px; margin: 0 auto;">
-          <div style="text-align: center; margin-bottom: 4rem;">
-            <h2
-              style="font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(90deg, #00f2ff, #bc00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-              Simulation Lab</h2>
-            <p style="font-size: 1.2rem; color: #94a3b8; max-width: 700px; margin: 0 auto;">Experience the Universal
-              Resonance Model through interactive, parameter-free physics simulations. No dark matter, no free
-              parameters—just geometry.</p>
-          </div>
-
-          <div class="lab-grid"
-            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem;">
-
-            <!-- Galaxy Rotation Lab -->
-            <div class="lab-card"
-              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
-              <div
-                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #00f2ff, #bc00ff);">
-              </div>
-              <h3 style="color: #00f2ff; margin-bottom: 1rem; font-size: 1.5rem;">Galaxy Rotation</h3>
-              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Witness galaxy
-                dynamics without Dark Matter. See how $\sigma_P$ coupling explains flat rotation curves naturally
-                through emergent gravity.</p>
-              <div style="margin-top: auto;">
-                <a href="html/galaxy_lab.html"
-                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(0, 242, 255, 0.1); color: #00f2ff; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(0, 242, 255, 0.2); transition: all 0.3s;">Launch
-                  Simulation &rarr;</a>
-              </div>
-            </div>
-
-            <!-- TSF Cycle Lab -->
-            <div class="lab-card"
-              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
-              <div
-                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #ef4444, #f59e0b);">
-              </div>
-              <h3 style="color: #ef4444; margin-bottom: 1rem; font-size: 1.5rem;">TSF Cycle</h3>
-              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">The "Breath of the
-                Universe". Explore Thermal Spacetime Feedback and the phase transitions between big bangs and collapses.
-              </p>
-              <div style="margin-top: auto;">
-                <a href="html/tsf_sim.html"
-                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(239, 68, 68, 0.1); color: #ef4444; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(239, 68, 68, 0.2); transition: all 0.3s;">Launch
-                  Simulation &rarr;</a>
-              </div>
-            </div>
-
-            <!-- Black Hole Lab -->
-            <div class="lab-card"
-              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
-              <div
-                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #bc00ff, #3b82f6);">
-              </div>
-              <h3 style="color: #bc00ff; margin-bottom: 1rem; font-size: 1.5rem;">Evaporation Lab</h3>
-              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Watch black holes
-                evaporate along the Unitary Page Curve. No information loss, just a stable Planck remnant at the end.
-              </p>
-              <div style="margin-top: auto;">
-                <a href="html/evaporation_lab.html"
-                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(188, 0, 255, 0.1); color: #bc00ff; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(188, 0, 255, 0.2); transition: all 0.3s;">Launch
-                  Simulation &rarr;</a>
-              </div>
-            </div>
-
-            <!-- URM Lattice Lab -->
-            <div class="lab-card"
-              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
-              <div
-                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #3b82f6, #10b981);">
-              </div>
-              <h3 style="color: #3b82f6; margin-bottom: 1rem; font-size: 1.5rem;">URM Lattice</h3>
-              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Simulate the
-                fundamental fabric of spacetime. Observe how topological feedback creates self-organizing resonance
-                patterns.</p>
-              <div style="margin-top: auto;">
-                <a href="html/lattice_lab.html"
-                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(59, 130, 246, 0.1); color: #3b82f6; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(59, 130, 246, 0.2); transition: all 0.3s;">Launch
-                  Simulation &rarr;</a>
-              </div>
-            </div>
-
-            <!-- Cosmo Monitor Lab -->
-            <div class="lab-card"
-              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
-              <div
-                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #10b981, #00f2ff);">
-              </div>
-              <h3 style="color: #10b981; margin-bottom: 1rem; font-size: 1.5rem;">Cosmology Monitor</h3>
-              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Track the "LCDM
-                Breach". Compare standard cosmology with geometric scaling across different cosmic epochs.</p>
-              <div style="margin-top: auto;">
-                <a href="html/cosmo_lab.html"
-                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(16, 185, 129, 0.1); color: #10b981; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(16, 185, 129, 0.2); transition: all 0.3s;">Launch
-                  Simulation &rarr;</a>
-              </div>
-            </div>
-
-            <!-- Static Overview -->
-            <div class="lab-card"
-              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
-              <div
-                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #94a3b8, #ffffff);">
-              </div>
-              <h3 style="color: #ffffff; margin-bottom: 1rem; font-size: 1.5rem;">Framework Overview</h3>
-              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Deep dive into the
-                infographics and dimensional verification of the $\sigma_P$ framework. The map of the territory.</p>
-              <div style="margin-top: auto;">
-                <a href="html/sigma_p_overview.html"
-                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(255, 255, 255, 0.1); color: #ffffff; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s;">View
-                  Overview &rarr;</a>
-              </div>
-            </div>
-
-            <!-- Kerr Black Hole Lab -->
-            <div class="lab-card"
-              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;">
-              <div
-                style="position: absolute; top:0; left:0; width: 100%; height: 4px; background: linear-gradient(90deg, #bc00ff, #3b82f6);">
-              </div>
-              <h3 style="color: #bc00ff; margin-bottom: 1rem; font-size: 1.5rem;">Kerr Lab</h3>
-              <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Explore rotating
-                black holes and the Teukolsky smearing limit. See how $\sigma_P$ introduces non-thermality to horizons.
-              </p>
-              <div style="margin-top: auto;">
-                <a href="html/kerr_lab.html"
-                  style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(188, 0, 255, 0.1); color: #bc00ff; text-decoration: none; border-radius: 100px; font-weight: bold; border: 1px solid rgba(188, 0, 255, 0.2); transition: all 0.3s;">Launch
-                  Simulation &rarr;</a>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <style>
-        .lab-card:hover {
-          transform: translateY(-10px);
-          background: rgba(255, 255, 255, 0.05) !important;
-          border-color: rgba(255, 255, 255, 0.2) !important;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .lab-card a:hover {
-          background: rgba(255, 255, 255, 0.2) !important;
-          color: white !important;
-        }
-      </style>
-
+      <div style="font-size: 0.8rem; opacity: 0.5; letter-spacing: 1px;">
+        &copy; 2026 QUANTUM FRUITS. BUILT ON THE σₚ FRAMEWORK.
+      </div>
+    </footer>
   </main>
-
-  <footer
-    style="margin-top: 5rem; padding: 4rem 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: #64748b;">
-    <p
-      style="font-size: 1.25rem; color: #cbd5e1; font-style: italic; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-      "Gott würfelt nicht mit dem Baum,<br>aber er lässt die Früchte nach dem Zufallsprinzip reifen."
-    </p>
-    <p style="margin-bottom: 1rem;">&copy; 2026 Quantum Fruits. All rights reserved.</p>
-    <p style="font-size: 1.1rem; color: #94a3b8; font-style: italic;">physics for everyday people &lt;3</p>
-  </footer>
-
-  <script src="js/main.js"></script>
 </body>
 
 </html>
