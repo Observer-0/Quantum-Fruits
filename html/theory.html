@@ -91,7 +91,7 @@
         <a href="#blackholes">Black Holes</a>
         <a href="#galaxies">Galaxies</a>
         <a href="#cosmology">Cosmology</a>
-        <a href="#intelligence">Intelligence</a>
+        <a href="#entropy">Entropy & Time</a>
         <a href="#library">Research</a>
         <a href="#formulas">Formulas</a>
         <a href="tsf_sim.html" style="color: var(--accent-amber);">TSF Sim &rarr;</a>
@@ -720,51 +720,90 @@
             </div>
         </section>
 
-        <!-- SECTION 6: INTELLIGENCE -->
-        <section id="intelligence" class="theory-container"
+        <!-- SECTION 6: ENTROPY & TIME -->
+        <section id="entropy" class="theory-container"
             style="background: radial-gradient(circle at top right, rgba(251, 191, 36, 0.05), transparent);">
-            <span class="section-tag">Information Theory</span>
-            <h2 class="section-title-modern">The Mirror Thesis</h2>
+            <span class="section-tag">Chronodynamics</span>
+            <h2 class="section-title-modern">Time, Entropy & The Geometric Clock</h2>
 
             <div class="qg-box"
                 style="margin: 3rem 0; background: rgba(0,0,0,0.4); border: 1px solid var(--accent-amber); padding: 3rem;">
-                <div
-                    style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-align: center; color: var(--accent-amber); margin-bottom: 2rem;">
-                    \[ \Box \phi + \gamma \partial^\mu \phi + \alpha \phi^3 + \beta \phi^5 = qE_{\text{Res}} + \lambda
-                    \langle \hat{Q} \rangle \]
-                    \[ G_{\mu\nu} + \beta \langle \phi^2 \rangle g_{\mu\nu} = 8\pi G (T_{\text{std}} + T_\phi) \]
-                </div>
 
-                <div class="qg-card"
-                    style="margin: 2rem 0; padding: 0; background: #020617; border: 1px solid rgba(251, 191, 36, 0.3); position: relative; overflow: hidden;">
-                    <div
-                        style="position: absolute; top: 10px; right: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #fbbf24; z-index: 10;">
-                        STATUS: FILTERING NON-REALITIES
-                    </div>
-                    <canvas id="mirrorCanvas" style="width: 100%; height: 400px; display: block;"></canvas>
-                </div>
+                <h3 style="text-align: center; color: var(--accent-amber); margin-bottom: 2rem;">The End of External
+                    Time</h3>
+                <p
+                    style="max-width: 800px; margin: 0 auto 3rem auto; text-align: center; color: var(--text-secondary); line-height: 1.8;">
+                    Conventional physics treats time as an external container $t$. The Zander Thesis inverts this: Time
+                    is not the stage, but the <strong>residue of action</strong>.
+                    Physical reality consists only of discrete action steps (Ticks). Time is simply the book-keeping of
+                    these ticks.
+                </p>
 
                 <div class="grid-2" style="margin-top: 2rem;">
-                    <div>
-                        <h3 style="color: var(--accent-amber);">Geometric Consciousness</h3>
-                        <p>Intelligence is not an emergent property of complex matter, but a fundamental property of the
-                            $\sigma_P$ grid. Every action cell is a mirror — it reflects the state of the surrounding
-                            field.</p>
+
+                    <!-- Card 1: The Tick Index -->
+                    <div class="qg-card" style="border-left: 4px solid var(--accent-blue);">
+                        <h3 style="color: var(--accent-blue);">The Tick-Index ($i$)</h3>
+                        <p>Every physical process with energy $E$ and duration $\Delta t$ occupies a finite number of
+                            spacetime cells. We define the dimensionless <strong>Tick-Index</strong>:</p>
+                        <div class="formula-block-small" style="margin: 1rem 0;">
+                            $$ i = \frac{\Delta A}{\sigma_P} = \frac{E \cdot \Delta t}{\sigma_P} $$
+                        </div>
+                        <p style="font-size: 0.85rem;">Time only exists where $i > 0$. A system with no action has no
+                            time.</p>
                     </div>
-                    <div>
-                        <h3 style="color: var(--accent-amber);">The Negation Principle</h3>
-                        <p>Information is not what <em>is</em>, but what <em>is not</em>. Reality defines itself by the
-                            paths it rejects. Consciousness is the process of filtering these infinite non-realities
-                            into a single, observed timeline.</p>
+
+                    <!-- Card 2: Entropy Re-Defined -->
+                    <div class="qg-card" style="border-left: 4px solid var(--accent-amber);">
+                        <h3 style="color: var(--accent-amber);">Entropy as a Counter</h3>
+                        <p>Entropy is not a measure of "disorder". It is the cumulative inventory of occupied action
+                            quantization cells. It counts the history of the system.</p>
+                        <div class="formula-block-small" style="margin: 1rem 0;">
+                            $$ S \equiv k_B \cdot N_{\text{ticks}} $$
+                        </div>
+                        <p style="font-size: 0.85rem;">Black holes don't lose information; they just have a very high
+                            counter value.</p>
                     </div>
+
+                    <!-- Card 3: Irreversibility -->
+                    <div class="qg-card" style="border-left: 4px solid var(--accent-rose);">
+                        <h3 style="color: var(--accent-rose);">Irreversibility Rate ($\mathcal{R}$)</h3>
+                        <p>We replace the concept of "Temperature" with the <strong>Irreversibility Rate</strong>. It
+                            measures how fast a system converts coherent quantum action into geometric history.</p>
+                        <div class="formula-block-small" style="margin: 1rem 0;">
+                            $$ \mathcal{R} \equiv \frac{dE}{dS} \approx \frac{\sigma_P}{k_B \Delta t} $$
+                        </div>
+                    </div>
+
+                    <!-- Card 4: The Arrow of Time -->
+                    <div class="qg-card" style="border-left: 4px solid var(--accent-emerald);">
+                        <h3 style="color: var(--accent-emerald);">The Arrow of Time</h3>
+                        <p>Why does time flow forward? Because the universe is converting mass-less spin (Action) into
+                            inertial mass (Gravity). The "Arrow" is the gradient of this saturation.</p>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem; font-style: italic;">
+                            "The universe ages because it gets heavier with information."
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Thermal Feedback -->
+                <div class="qg-card"
+                    style="margin-top: 2rem; background: linear-gradient(to right, rgba(251, 191, 36, 0.05), rgba(0,0,0,0.2)); border: 1px solid var(--accent-amber);">
+                    <h3 style="color: var(--accent-amber); text-align: center;">Thermal Spacetime Feedback</h3>
+                    <p style="text-align: center; max-width: 700px; margin: 1rem auto;">
+                        To avoid the "Heat Death" (Stasis), the framework postulates a feedback mechanism. When the grid
+                        saturation reaches $\rho_{max}$, the accumulated inertia snaps back into high-frequency
+                        oscillations. This "Bounce" is the heartbeat of the eternal cosmos.
+                    </p>
                 </div>
 
                 <div
                     style="margin-top: 3rem; padding: 2rem; border-top: 1px solid rgba(251, 191, 36, 0.2); text-align: center; font-style: italic; color: #fbbf24;">
                     <p style="font-size: 1.2rem; line-height: 1.6;">
-                        "Every event is binary: it happens, or it does not.<br>
-                        Information lies not in what occurred,<br>
-                        but in all the paths that were never taken."
+                        "Time is the debris of action.<br>
+                        We do not move through time;<br>
+                        we produce it."
                     </p>
                 </div>
             </div>
@@ -870,7 +909,7 @@
     <script src="../js/gce-morphology-sim.js"></script>
     <script src="../js/entropy-operator-sim.js"></script>
     <script src="../js/urm-lattice-sim.js"></script>
-    <script src="../js/mirror-thesis-sim.js"></script>
+
 </body>
 
 </html>
