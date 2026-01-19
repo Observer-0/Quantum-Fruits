@@ -68,10 +68,10 @@ function updateCosmoMonitor() {
     document.getElementById('val-cosmo-dep').innerText = departure.toFixed(2) + "% Abweichung";
 
     if (departure > 50) {
-        document.getElementById('cosmo-alert').innerText = "⚠️ LCDM-BRUCH: Das Standardmodell weicht massiv von der Geometrie ab!";
-        document.getElementById('cosmo-alert').style.color = "#ef4444";
+        document.getElementById('cosmo-alert').innerText = "✨ DYNAMIC HARMONY: The universe adapts its geometry beyond LCDM limits!";
+        document.getElementById('cosmo-alert').style.color = "#3b82f6";
     } else {
-        document.getElementById('cosmo-alert').innerText = "✓ Geometrische Harmonie: σₚ skaliert mit R*t.";
+        document.getElementById('cosmo-alert').innerText = "✓ Geometric Equilibrium: σₚ scales perfectly with the cosmic breath.";
         document.getElementById('cosmo-alert').style.color = "#10b981";
     }
 }
