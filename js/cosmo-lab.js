@@ -139,39 +139,53 @@ function runHubbleMC() {
 
 /**
  * Universe Phase-Breathing Simulator (σₚ-Regulated)
- * Simulates the "Cosmic Breath" phase transitions using a tanh switch.
+ * Resolves Hubble Tension using the Two-Phase PC Cooling Analogy.
  */
 function simulateCosmicBreath() {
-    const steps = 400;
+    // Simulation Parameters (from Unified_Hubble_Tension.py)
+    let a = 0.5;      // Scale factor
+    let H = 70.0;     // Hubble parameter
+    let T = 65.0;     // Temperature (Cosmic Stress)
+
+    const Tc = 61.0;    // Critical boiling point
+    const alpha = 3.5;  // Phase transition sharpness
+    const rho_0 = 10.0; // Energy density scale
+    const eta = 0.8;    // Adiabatic cooling coefficient
+    const gamma = 0.5;  // Relaxation to Tc
+    const mu = 0.05;    // Hubble damping
+    const dt = 0.05;    // Step size
+    const steps = 600;
+
     const time = [];
     const H_values = [];
     const T_values = [];
     const phases = [];
 
-    // Constants from the Zander Model
-    const Tc = 61.0;    // Critical "Boiling Temperature" (Analog to Aqua Exhalare cooling)
-    const H_low = 67.4;  // Deflation H (Planck/CMB)
-    const H_high = 73.2; // Expansion H (Riess/SNe Ia)
-    const alpha = 0.5;   // Sharpness of the phase transition
-
+    // Numerical integration (Euler-Step for stability in UI demo)
     for (let i = 0; i < steps; i++) {
-        let t = i / 20;
-        time.push(t);
+        // Equation of State: Phase Transition Switch
+        const w = Math.tanh(alpha * (T - Tc));
 
-        // Sinusoidal Temperature Oscillation (The Breath)
-        // The universe cools, matter contracts it, Hawking radiation heats it back up...
-        let T = Tc + 10 * Math.sin(t);
-        T_values.push(T);
+        // Hawking re-heating term (stronger at smaller scale factors)
+        const hawking = 2.0 * Math.exp(-a);
 
-        // The decisive Zander-Switch: w = tanh(alpha * (T - Tc))
-        // Determines if we are in the Gas phase (H=73) or Liquid phase (H=67)
-        let phaseSwitch = Math.tanh(alpha * (T - Tc));
+        // Derivatives
+        const da_dt = a * (H / 100); // Scaled for demo
+        const dH_dt = -(1 + w) * (rho_0 / (a * a)) - mu * H + 70; // Relax towards ensemble 70
+        const dT_dt = -eta * (H / 70) * T + gamma * (Tc - T) + hawking;
 
-        // Hubble parameter calculated relative to the phase state
-        let H = ((H_high + H_low) / 2) + ((H_high - H_low) / 2) * phaseSwitch;
+        // Update states
+        a += da_dt * dt;
+        H += dH_dt * dt;
+        T += dT_dt * dt;
+
+        // Reset scale factor if too large to simulate "cyclic breath" behavior
+        if (a > 5.0) a = 0.5;
+
+        time.push(i * dt);
         H_values.push(H);
-
-        phases.push(phaseSwitch > 0 ? "Expansion (SNe Ia Phase)" : "Deflation (CMB Phase)");
+        T_values.push(T);
+        phases.push(T > Tc ? "Gas Phase (Expansion)" : "Liquid Phase (Deflation)");
     }
 
     const traceH = {

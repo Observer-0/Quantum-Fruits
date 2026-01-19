@@ -224,27 +224,65 @@
 
     </div>
 
-    <!-- NEW: Universe Phase-Breathing Simulator (σₚ-Regulated) -->
+    <!-- Universe Phase-Breathing Simulator (σₚ-Regulated) -->
     <div id="zander-universe-dashboard" class="qg-box"
         style="margin-top: 3rem; border-color: var(--accent-primary); background: rgba(0, 242, 255, 0.02);">
         <h3 style="color: var(--accent-primary); text-align: center; margin-bottom: 1.5rem;">Universe Phase-Breathing
             Simulator (σₚ-Regulated)</h3>
+
         <div id="phase-plot" style="border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
         </div>
+
+        <!-- Analogy Panel -->
+        <div class="grid-2" style="margin-top: 2rem; gap: 1.5rem;">
+            <div class="qg-card" style="background: rgba(16, 185, 129, 0.05); border-color: #10b981;">
+                <h4 style="color: #10b981; margin-top: 0;">Analogy: Two-Phase Cooling</h4>
+                <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5;">
+                    Just as a <b>Two-Phase Immersion Cooling</b> (like the <i>Aqua Exhalare</i>) self-regulates via
+                    boiling and condensation without a pump, the universe self-regulates its expansion via thermodynamic
+                    phase transitions.
+                </p>
+                <ul style="font-size: 0.8rem; color: #cbd5e1; padding-left: 1.2rem; margin-top: 1rem;">
+                    <li><b>Liquid Phase</b> (Coolant) &harr; <b>Deflation</b> ($H_0 \approx 67$)</li>
+                    <li><b>Gas Phase</b> (Vapor) &harr; <b>Expansion</b> ($H_0 \approx 73$)</li>
+                    <li><b>No Pump</b> &harr; No external "Dark Energy" driver required.</li>
+                </ul>
+            </div>
+
+            <div class="qg-card" style="background: rgba(59, 130, 246, 0.05); border-color: #3b82f6;">
+                <h4 style="color: #3b82f6; margin-top: 0;">Hubble Tension Resolution</h4>
+                <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5;">
+                    The discrepancy between CMB (~67) and SNe Ia (~73) is not an error, but a sampling bias:
+                </p>
+                <div style="margin-top: 1rem; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 5px;">
+                        <span>CMB Epoch:</span> <span style="color: #10b981;">Liquid Phase</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem;">
+                        <span>Local Epoch:</span> <span style="color: #3b82f6;">Gas Phase</span>
+                    </div>
+                </div>
+                <p
+                    style="font-size: 0.75rem; color: #64748b; margin-top: 0.8rem; text-align: center; font-style: italic;">
+                    "The universe is not expanding uniformly — it breathes."
+                </p>
+            </div>
+        </div>
+
         <div id="status-panel"
             style="display: flex; justify-content: space-around; margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
             <div class="stat-card" style="background: transparent; border: none; padding: 0;">
-                <span class="stat-label">Cosmic Phase</span>
+                <span class="stat-label">Phase State</span>
                 <span id="current-phase" class="stat-value"
                     style="font-size: 1.1rem; color: var(--accent-primary);">Initializing...</span>
             </div>
             <div class="stat-card" style="background: transparent; border: none; padding: 0;">
-                <span class="stat-label">H₀ Value</span>
+                <span class="stat-label">Instant H₀</span>
                 <span id="current-h" class="stat-value"
                     style="font-size: 1.1rem; color: var(--accent-primary);">0</span>
             </div>
             <div class="stat-card" style="background: transparent; border: none; padding: 0;">
-                <span class="stat-label">Cosmic Temp</span>
+                <span class="stat-label">Critical Stress (T)</span>
                 <span id="current-t" class="stat-value" style="font-size: 1.1rem; color: #ef4444;">0</span>
             </div>
         </div>

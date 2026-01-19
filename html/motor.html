@@ -6,94 +6,195 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kinematic Motor Black Hole Lab — From Quantum to Cosmos</title>
   <link rel="stylesheet" href="../css/motor.css">
+  <link rel="stylesheet" href="../css/components.css">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 </head>
 
 <body>
-  <div class="lab-container">
+  <div class="lab-container" style="max-width: 1400px; padding: 2rem;">
     <a href="theory.html" class="back-link">&larr; Back to Theory</a>
 
-    <div class="header">
-      <h1 class="glow-text">Kinematic Black Hole Motor</h1>
-      <p>Interplay: Pure Action (ℏ) vs. Mass Burden (Gravity)</p>
+    <div class="header" style="text-align: center; margin-bottom: 3rem;">
+      <h1 class="glow-text" style="font-size: 3.5rem;">Kinematic Black Hole Motor</h1>
+      <p style="font-size: 1.2rem; color: #94a3b8;">The ℏ-Spin Stator vs. The Mass Rotor Burden</p>
     </div>
 
-    <div class="grid-2">
+    <!-- Main Simulator Section -->
+    <div class="grid-2" style="grid-template-columns: 1.5fr 1fr; gap: 2rem; align-items: start;">
+
       <div class="qg-card"
-        style="padding: 0; min-height: 500px; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, #0a0a15, #000);">
-        <canvas id="motorCanvas" style="max-width: 100%; height: auto;"></canvas>
+        style="padding: 0; min-height: 700px; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, #0a1122, #000); border: 2px solid rgba(56, 189, 248, 0.2); box-shadow: 0 0 50px rgba(0,0,0,0.8);">
+        <canvas id="motorCanvas" style="width: 100%; height: auto; display: block;"></canvas>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div class="qg-card">
+          <h3 class="glow-text">The Kinematic Transformer</h3>
+          <p style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6;">
+            The black hole core functions like a kinematic motor: pure action at first, later mass load, heat, and
+            radiation – instead of a static "abyss."
+          </p>
+
+          <div class="formula-block" style="margin: 1.5rem 0;">
+            $$ E_{\text{core}} \sim \hbar \omega_{\max} + \eta M_{\text{load}} \text{ (Rotational Burden)} $$
+          </div>
+
+          <div class="control-group" style="margin-bottom: 1.5rem;">
+            <label for="spinRate">Core Action Frequency (ℏ-Spin)</label>
+            <input type="range" id="spinRate" min="1" max="100" value="80">
+          </div>
+
+          <div class="control-group" style="margin-bottom: 1.5rem;">
+            <label for="massBurden">Mass Rotor Burden (G-Braking)</label>
+            <input type="range" id="massBurden" min="0" max="100" value="10">
+          </div>
+
+          <button id="mergerBtn" class="action-btn" style="width: 100%; margin-top: 1rem;">Initiate Hierarchical
+            Merger</button>
+        </div>
+
+        <div class="monitor-grid" style="grid-template-columns: 1fr; gap: 1rem;">
+          <div class="qg-card" style="padding: 1.5rem; border-left: 4px solid var(--accent-primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="stat-label">Action Potential ($i_{max}$)</span>
+              <span class="stat-value" id="netPotential"
+                style="font-size: 1.4rem; color: var(--accent-primary);">--</span>
+            </div>
+          </div>
+          <div class="qg-card" style="padding: 1.5rem; border-left: 4px solid var(--accent-secondary);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="stat-label">Spacetime State</span>
+              <span class="stat-value" id="tickDensity"
+                style="font-size: 1.1rem; color: var(--accent-secondary);">Initializing...</span>
+            </div>
+          </div>
+          <!-- New: Non-Thermality Monitor -->
+          <div class="qg-card"
+            style="padding: 1rem; border-left: 4px solid #818cf8; background: rgba(129, 140, 248, 0.05);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="stat-label" style="font-size: 0.7rem;">Non-Thermality ($c_0$)</span>
+              <span style="font-size: 0.8rem; color: #818cf8; font-family: monospace;">Departure from Noise</span>
+            </div>
+            <div
+              style="margin-top: 0.5rem; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+              <div id="c0Bar" style="height: 100%; width: 40%; background: #818cf8; transition: width 0.3s ease;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qg-card" style="border-color: #38bdf8; background: rgba(56, 189, 248, 0.05); text-align: center;">
+          <span id="statusText" class="glow-text" style="font-weight: 800; letter-spacing: 1px;">Ready</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Page Curve Visualization -->
+    <section style="margin-top: 4rem;">
+      <h2 class="section-title">Live Information Paradox Resolve</h2>
+      <div class="qg-card" style="border-color: #ef4444; position: relative;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; align-items: center;">
+          <h3 style="color: #ef4444; margin: 0;">Unitarity Tracker (The Page Curve)</h3>
+          <div style="display: flex; gap: 1.5rem; font-size: 0.8rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <div style="width: 12px; height: 12px; background: rgba(239, 68, 68, 0.3); border: 1px solid #ef4444;">
+              </div>
+              <span style="color: #ef4444;">Hawking (Information Loss)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <div style="width: 12px; height: 12px; background: #38bdf8;"></div>
+              <span style="color: #38bdf8;">Zander (Unitary Return)</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="pageCurvePlot"
+          style="height: 300px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 0 20px; gap: 4px; box-shadow: inset 0 0 20px #000;">
+          <!-- Live bars injected here -->
+        </div>
+        <div
+          style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #94a3b8; font-family: 'Outfit', sans-serif; padding: 1rem 10px;">
+          <span>$\sigma_P$ Formation</span>
+          <span style="color: #ef4444; font-weight: 800;">Page Time (Max Entropy)</span>
+          <span>Unitary Restoration</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deep Theory Section -->
+    <div class="grid-2" style="margin-top: 4rem; gap: 2rem;">
+
+      <div class="qg-card">
+        <h3 class="glow-text">The Kinematic Analogy</h3>
+        <p style="color: #cbd5e1; line-height: 1.8;">
+          <strong>Stator / Field Coil &harr; Pure Action Core:</strong><br>
+          In an electric motor, the field (stator) generates a torque before any load is attached. The
+          <em>Pure Action Core</em> is such a source: pure action $ \sim \hbar \omega $, maximum spin,
+          strong magnetic field, yet hardly any "load" from mass.
+        </p>
+        <p style="color: #cbd5e1; line-height: 1.8; margin-top: 1rem;">
+          <strong>Rotor with Load &harr; Mass Burden / Braking:</strong><br>
+          If you attach a load to the shaft, speed decreases and heat increases. Accreted mass at the event horizon
+          takes on this role: it brakes the spin, coupling energy into <strong>classical gravity</strong>,
+          heat, radiation, and eventually star formation.
+        </p>
       </div>
 
       <div class="qg-card">
-        <h3>Control Interface</h3>
-        <div class="control-group" style="margin-bottom: 2rem;">
-          <label for="spinRate">Core Action Frequency (ℏ-Spin)</label>
-          <input type="range" id="spinRate" min="1" max="100" value="80">
-        </div>
-
-        <div class="control-group" style="margin-bottom: 2rem;">
-          <label for="massBurden">Mass Burden (G-Braking)</label>
-          <input type="range" id="massBurden" min="0" max="100" value="10">
-        </div>
-
-        <div class="monitor-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
-          <div class="qg-card" style="padding: 1rem; text-align: center; background: rgba(0,0,0,0.3);">
-            <span class="stat-label">Action Potential</span>
-            <span class="stat-value" id="netPotential"
-              style="display: block; font-size: 1.2rem; color: var(--accent-primary);">--</span>
-          </div>
-          <div class="qg-card" style="padding: 1rem; text-align: center; background: rgba(0,0,0,0.3);">
-            <span class="stat-label">Tick Density</span>
-            <span class="stat-value" id="tickDensity"
-              style="display: block; font-size: 1.2rem; color: var(--accent-secondary);">Max</span>
-          </div>
-        </div>
-
-        <div id="status-panel"
-          style="margin-top: 2rem; padding: 1rem; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1); text-align: center;">
-          <span id="statusText" class="glow-text">Initializing Core...</span>
-        </div>
-
-        <div style="margin-top: 2rem;">
-          <button id="mergerBtn" class="action-btn" style="width: 100%;">Initiate Hierarchical Merger</button>
-        </div>
+        <h3 class="glow-text" style="color: var(--accent-secondary);">Why the Page Curve Matters</h3>
+        <p style="color: #cbd5e1; line-height: 1.8;">
+          The Page curve describes how information develops over a black hole's lifetime.
+          When a hole radiates, entropy inside seems to rise (randomness). Later, quantum mechanics demands
+          that the radiation returns information about the interior.
+        </p>
+        <p style="color: #cbd5e1; line-height: 1.8; margin-top: 1rem;">
+          <strong>Unitary Restoration:</strong><br>
+          A curve that only rises would mean information vanishes. A Page curve with a rise, maximum, and fall
+          is the criteria for a <em>unitary</em> (information-preserving) evolution. In our motor model,
+          the "falling" entropy represents the core giving its ordered spin-energy back to the universe as new
+          structure.
+        </p>
       </div>
+
     </div>
 
-    <!-- Live Page Curve Section -->
-    <div class="qg-card" style="margin-top: 2rem; border-color: #ef4444;">
-      <h3 style="color: #ef4444;">Live Information Paradox Resolve (Page Curve)</h3>
-      <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 1.5rem;">
-        Watch how the entropy transitions from growing disorder (Hawking) to ordered return as the mass brakes the core
-        spin.
-      </p>
-      <div id="pageCurvePlot"
-        style="height: 200px; background: rgba(0,0,0,0.2); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 0 10px; gap: 2px;">
-        <!-- Live bars injected here -->
+    <!-- Detailed Logic Cards -->
+    <div class="grid-2" style="margin-top: 2rem; gap: 2rem;">
+      <div class="qg-card">
+        <h4
+          style="color: var(--accent-primary); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+          Pure Action Core</h4>
+        <p style="font-size: 0.9rem; line-height: 1.6; color: #94a3b8;">
+          In the zero-mass limit, the core carries energy almost exclusively as angular momentum. Spin generates a
+          magnetic field and an action-based "attraction" $\hbar$.
+        </p>
       </div>
-      <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #666; margin-top: 0.5rem;">
-        <span>Formation</span>
-        <span>Page Time (Equilibrium)</span>
-        <span>Unitarity Return</span>
+      <div class="qg-card">
+        <h4
+          style="color: var(--accent-secondary); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+          Mass Loading & Braking</h4>
+        <p style="font-size: 0.9rem; line-height: 1.6; color: #94a3b8;">
+          Growing surrounding masses act as a mechanical load. They couple to the spin and brake it in favor of
+          classical gravity ($G, M, r_s$).
+        </p>
       </div>
-    </div>
-
-    <div class="qg-card" style="margin-top: 2rem;">
-      <h3 class="glow-text">Theory: The Motor Analogy</h3>
-      <div class="formula-block">
-        $$ E_{\text{motor}} = \int \omega \, dJ - \int \text{Load} \, dt $$
-      </div>
-      <p style="font-size: 0.95rem; line-height: 1.6;">
-        In the $\sigma_P$ framework, a Black Hole isn't a static trap. It is a <strong>kinematic transformer</strong>.
-        The initial high spin (Pure Action) is gradually converted into classical weight and entropy as surrounding mass
-        "brakes" the core.
-        Once the spin limit matches the surface area (Holography), information is net-exported back to the universe.
-      </p>
     </div>
 
   </div>
 
   <script src="../js/kinematic-motor.js"></script>
+  <script>
+    // KaTeX auto-render for the new dynamic content
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body);
+      }
+    });
+  </script>
 </body>
 
 </html>

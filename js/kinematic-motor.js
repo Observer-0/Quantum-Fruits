@@ -9,26 +9,42 @@ const tickDensityVal = document.getElementById('tickDensity');
 const statusText = document.getElementById('statusText');
 const pageCurvePlot = document.getElementById('pageCurvePlot');
 
-canvas.width = 500;
-canvas.height = 500;
+canvas.width = 700;
+canvas.height = 700;
+
+// Fundamental Constants for Physics Engine
+const PHYSICS = {
+    hbar: 1.054571817e-34,
+    c: 2.99792458e8,
+    G: 6.67430e-11,
+    kB: 1.380649e-23,
+    sigmaP: (1.054571817e-34 * 6.67430e-11) / Math.pow(2.99792458e8, 4),
+    MP: Math.sqrt((1.054571817e-34 * 2.99792458e8) / 6.67430e-11),
+    iMax: Math.pow(2.99792458e8, 4) / 6.67430e-11
+};
 
 let time = 0;
 let mergerPulse = 0;
 let entropyPoints = [];
-const maxEntropyPoints = 100;
+let naiveEntropyPoints = []; // Hawking data
+const maxEntropyPoints = 120;
 
 // Initialize Page Curve data
-for (let i = 0; i < maxEntropyPoints; i++) entropyPoints.push(0);
+// Initialize Page Curve data
+for (let i = 0; i < maxEntropyPoints; i++) {
+    entropyPoints.push(0);
+    naiveEntropyPoints.push(0);
+}
 
 function drawGrid(x, y, burden) {
     const spacing = 30;
     ctx.strokeStyle = '#1e293b';
     ctx.lineWidth = 1;
 
-    for (let i = -10; i < 10; i++) {
+    for (let i = -14; i < 14; i++) {
         // Vertical lines
         ctx.beginPath();
-        for (let j = -10; j < 10; j++) {
+        for (let j = -14; j < 14; j++) {
             const gx = x + i * spacing;
             const gy = y + j * spacing;
 
@@ -43,14 +59,14 @@ function drawGrid(x, y, burden) {
             const wx = gx - (dx / dist) * warp;
             const wy = gy - (dy / dist) * warp;
 
-            if (j === -10) ctx.moveTo(wx, wy);
+            if (j === -14) ctx.moveTo(wx, wy);
             else ctx.lineTo(wx, wy);
         }
         ctx.stroke();
 
         // Horizontal lines
         ctx.beginPath();
-        for (let j = -10; j < 10; j++) {
+        for (let j = -14; j < 14; j++) {
             const gx = x + j * spacing;
             const gy = y + i * spacing;
 
@@ -64,7 +80,7 @@ function drawGrid(x, y, burden) {
             const wx = gx - (dx / dist) * warp;
             const wy = gy - (dy / dist) * warp;
 
-            if (j === -10) ctx.moveTo(wx, wy);
+            if (j === -14) ctx.moveTo(wx, wy);
             else ctx.lineTo(wx, wy);
         }
         ctx.stroke();
@@ -135,29 +151,54 @@ function updateStats() {
     const spin = parseFloat(spinSlider.value);
     const burden = parseFloat(massSlider.value);
 
-    const iMax = 1.21e44;
-    const net = iMax * (spin / 100) * (1 - (burden / 150));
-
+    // 1. Action Potential (Planck Force based)
+    const net = PHYSICS.iMax * (spin / 100) * (1 - (burden / 150));
     netPotentialVal.innerText = net.toExponential(2);
-    tickDensityVal.innerText = burden > 70 ? "σ_P Saturated" : (spin > 80 ? "Quantum Max" : "Nominal");
-    tickDensityVal.style.color = burden > 70 ? "#ef4444" : "#38bdf8";
+
+    // 2. Singularity Diagnostic: r_Pl / r_s ratio
+    // Near 1.0 means quantum curvature dominates (The "Quantum Core")
+    const r_s = (burden + 1) * 2; // Schematic radius
+    const r_pl = 50; // Reference Planckian curvature scale for visual demo
+    const diagRatio = r_pl / r_s;
+
+    // 3. Non-Thermality Coefficient (c0) from Hawking_Full_Quantum.py
+    // Represented as 'Information Content' of the radiation
+    const epsilon = (101 - spin) / 1000; // departure from ideal spin
+    const s_slope = burden / 100;
+    const c0 = (Math.PI ** 2 / 6) * (epsilon ** 2) + 0.5 * (s_slope ** 2) * (epsilon ** 2);
+    const nonThermality = Math.min(100, c0 * 2e7); // Re-scaled for visibility
+    const c0Bar = document.getElementById('c0Bar');
+    if (c0Bar) c0Bar.style.width = nonThermality + "%";
+
+    tickDensityVal.innerText = burden > 70 ? "σ_P Saturated" : (diagRatio > 1.5 ? "Pure Action Core" : "Mass Loaded");
+    tickDensityVal.style.color = diagRatio > 1.5 ? "#38bdf8" : "#f43f5e";
 
     if (burden < 20) {
-        statusText.innerText = 'Pure Action (ℏ) Phase';
+        statusText.innerText = 'Phase: Pure Action (ℏ-Stator)';
         statusText.style.color = '#38bdf8';
     } else if (burden > 80) {
-        statusText.innerText = 'Gravitational Braking Active';
+        statusText.innerText = 'Phase: Gravitational Braking (Mass Rotor)';
         statusText.style.color = '#f43f5e';
     } else {
-        statusText.innerText = 'Unitary Transformer Equilibrium';
+        statusText.innerText = 'Phase: Unitary Transformer Equilibrium';
         statusText.style.color = '#a855f7';
     }
 
-    // Update Page Curve logic
-    // Entropy rises with mass burden, then falls as information returns (spin matching)
-    const targetEntropy = (burden / 100) * (1 - Math.abs(burden - spin) / 100);
-    entropyPoints.push(Math.max(0, targetEntropy));
-    if (entropyPoints.length > maxEntropyPoints) entropyPoints.shift();
+    // Update Page Curve logic (Unitary vs Naive)
+    // S_naive grows with burden (Hawking's original problem)
+    const sNaive = (burden / 100) * (1 + time * 0.001);
+
+    // S_unitary (EZ-Framework): Follows (1-exp(-7x))*exp(-4x) shape
+    const progress = (burden / 100);
+    const sUnitary = (1 - Math.exp(-7 * progress)) * Math.exp(-4 * progress) * 2.8;
+
+    entropyPoints.push(Math.max(0, sUnitary));
+    naiveEntropyPoints.push(Math.max(0, sNaive));
+
+    if (entropyPoints.length > maxEntropyPoints) {
+        entropyPoints.shift();
+        naiveEntropyPoints.shift();
+    }
 
     renderPageCurve();
 }
@@ -165,12 +206,34 @@ function updateStats() {
 function renderPageCurve() {
     pageCurvePlot.innerHTML = '';
     entropyPoints.forEach((val, i) => {
-        const bar = document.createElement('div');
-        bar.style.flex = "1";
-        bar.style.height = (val * 100) + "%";
-        bar.style.background = `linear-gradient(to top, #ef4444, #38bdf8)`;
-        bar.style.opacity = i / maxEntropyPoints;
-        pageCurvePlot.appendChild(bar);
+        const barContainer = document.createElement('div');
+        barContainer.style.flex = "1";
+        barContainer.style.height = "100%";
+        barContainer.style.display = "flex";
+        barContainer.style.flexDirection = "column";
+        barContainer.style.justifyContent = "flex-end";
+        barContainer.style.position = "relative";
+
+        // Unitary Bar (Zander)
+        const barU = document.createElement('div');
+        barU.style.width = "100%";
+        barU.style.height = (val * 80) + "%";
+        barU.style.background = `linear-gradient(to top, #38bdf8, #818cf8)`;
+        barU.style.opacity = i / maxEntropyPoints;
+        barU.style.zIndex = "2";
+
+        // Naive Bar (Hawking - Phantom)
+        const barN = document.createElement('div');
+        barN.style.width = "100%";
+        barN.style.height = (naiveEntropyPoints[i] * 80) + "%";
+        barN.style.background = `rgba(239, 68, 68, 0.3)`;
+        barN.style.position = "absolute";
+        barN.style.bottom = "0";
+        barN.style.zIndex = "1";
+
+        barContainer.appendChild(barN);
+        barContainer.appendChild(barU);
+        pageCurvePlot.appendChild(barContainer);
     });
 }
 
@@ -186,9 +249,12 @@ function animate() {
     const burden = parseFloat(massSlider.value);
     const effectiveSpin = spin * (1 - burden / 200);
 
-    drawGrid(250, 250, burden);
-    drawAccretionDisk(250, 250, 60, effectiveSpin, burden);
-    drawCore(250, 250, 40, effectiveSpin, burden);
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+
+    drawGrid(centerX, centerY, burden);
+    drawAccretionDisk(centerX, centerY, 80, effectiveSpin, burden);
+    drawCore(centerX, centerY, 50, effectiveSpin, burden);
 
     if (mergerPulse > 0) mergerPulse *= 0.95;
 
