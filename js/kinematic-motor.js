@@ -30,7 +30,6 @@ let naiveEntropyPoints = []; // Hawking data
 const maxEntropyPoints = 120;
 
 // Initialize Page Curve data
-// Initialize Page Curve data
 for (let i = 0; i < maxEntropyPoints; i++) {
     entropyPoints.push(0);
     naiveEntropyPoints.push(0);
