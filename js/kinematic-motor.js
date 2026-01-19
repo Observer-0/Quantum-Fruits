@@ -238,6 +238,11 @@ function renderPageCurve() {
 
 mergerBtn.onclick = () => {
     mergerPulse = 1.0;
+    statusText.innerText = "Sequential Relaxation Initiated...";
+    setTimeout(() => {
+        statusText.innerText = '"Once spacetime is quantised, a black hole can never merge just once."';
+        statusText.style.color = 'var(--accent-emerald)';
+    }, 2000);
 };
 
 function animate() {

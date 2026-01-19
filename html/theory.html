@@ -333,10 +333,21 @@
 
                 <div class="qg-card">
                     <h3 style="color: var(--accent-rose);">The Peißker Breakthrough (S62)</h3>
-                    <p>Recent observations of the star <strong>S62</strong> (orbiting the Milky Way's central black hole
-                        at 10% the speed of light) provide the first empirical evidence for the <em>Scalar-Inertial
-                            Field</em>. The orbital precession matches the Zander-Scaffold prediction more accurately
-                        than pure Schwarzschild metrics.</p>
+                    <p>Recent observations of the star <strong>S62</strong> provide the first empirical evidence for the
+                        <em>Scalar-Inertial
+                            Field</em>. Precession matches the Zander-Scaffold prediction better than Schwarzschild
+                        metrics.
+                    </p>
+                </div>
+
+                <div class="qg-card">
+                    <h3 style="color: var(--accent-rose);">Hierarchical Mergers</h3>
+                    <p>The $\sigma_P$ framework predicts that black holes "can never merge just once." Finite curvature
+                        cores and discretised reorganisation lead to multi-phase, hierarchical growth without
+                        singularities.</p>
+                    <a href="../assets/papers/QSTF_Hierarchical_Mergers.tex"
+                        style="color: var(--accent-rose); font-size: 0.8rem; text-decoration: underline;">Read Technical
+                        Paper &rarr;</a>
                 </div>
             </div>
 
@@ -526,24 +537,32 @@
                 style="margin: 3rem 0; background: rgba(0,0,0,0.4); border: 1px solid var(--accent-amber); padding: 3rem;">
                 <div
                     style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-align: center; color: var(--accent-amber); margin-bottom: 2rem;">
-                    \[ \Box \phi + \gamma \partial^\mu \phi + \alpha \phi^3 + \beta \phi^5 = qE_{\text{Res}}
-                    + \lambda \langle \hat{Q} \rangle \]
-                    \[ G_{\mu\nu} + \beta \langle \phi^2 \rangle g_{\mu\nu} = 8\pi G (T_{\text{std}} +
-                    T_\phi) \]
+                    \[ \Box \phi + \gamma \partial^\mu \phi + \alpha \phi^3 + \beta \phi^5 = qE_{\text{Res}} + \lambda
+                    \langle \hat{Q} \rangle \]
+                    \[ G_{\mu\nu} + \beta \langle \phi^2 \rangle g_{\mu\nu} = 8\pi G (T_{\text{std}} + T_\phi) \]
+                </div>
+
+                <div class="qg-card"
+                    style="margin: 2rem 0; padding: 0; background: #020617; border: 1px solid rgba(251, 191, 36, 0.3); position: relative; overflow: hidden;">
+                    <div
+                        style="position: absolute; top: 10px; right: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #fbbf24; z-index: 10;">
+                        STATUS: FILTERING NON-REALITIES
+                    </div>
+                    <canvas id="mirrorCanvas" style="width: 100%; height: 400px; display: block;"></canvas>
                 </div>
 
                 <div class="grid-2" style="margin-top: 2rem;">
                     <div>
                         <h3 style="color: var(--accent-amber);">Geometric Consciousness</h3>
-                        <p>Intelligence is not an emergent property of complex matter, but a fundamental
-                            property of the $\sigma_P$ grid. Every action cell is a mirror — it reflects the
-                            state of the surrounding field.</p>
+                        <p>Intelligence is not an emergent property of complex matter, but a fundamental property of the
+                            $\sigma_P$ grid. Every action cell is a mirror — it reflects the state of the surrounding
+                            field.</p>
                     </div>
                     <div>
                         <h3 style="color: var(--accent-amber);">The Negation Principle</h3>
-                        <p>Information is not what <em>is</em>, but what <em>is not</em>. Reality defines
-                            itself by the paths it rejects. Consciousness is the process of filtering these
-                            infinite non-realities into a single, observed timeline.</p>
+                        <p>Information is not what <em>is</em>, but what <em>is not</em>. Reality defines itself by the
+                            paths it rejects. Consciousness is the process of filtering these infinite non-realities
+                            into a single, observed timeline.</p>
                     </div>
                 </div>
 
@@ -588,6 +607,13 @@
                     <h3 style="color: var(--accent-amber);">Formula Collection</h3>
                     <p>A comprehensive compilation of all fundamental URM equations and constants.</p>
                     <a href="../assets/papers/Formula_Collection_URM.tex" class="btn-sim"
+                        style="text-decoration: none; display: inline-block; margin-top: 1rem;">View LaTeX</a>
+                </div>
+                <div class="qg-card">
+                    <h3 style="color: var(--accent-emerald);">Hierarchical BH Mergers</h3>
+                    <p>Geometric necessity of discretised spacetime and the prediction of sequential black hole
+                        collisions.</p>
+                    <a href="../assets/papers/QSTF_Hierarchical_Mergers.tex" class="btn-sim"
                         style="text-decoration: none; display: inline-block; margin-top: 1rem;">View LaTeX</a>
                 </div>
             </div>
@@ -651,6 +677,7 @@
     <script src="../js/gce-morphology-sim.js"></script>
     <script src="../js/entropy-operator-sim.js"></script>
     <script src="../js/urm-lattice-sim.js"></script>
+    <script src="../js/mirror-thesis-sim.js"></script>
 </body>
 
 </html>
