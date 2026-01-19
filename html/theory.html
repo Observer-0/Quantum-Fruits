@@ -11,7 +11,130 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
     <style>
-        /* See css/tabs.css for Styles */
+        :root {
+            --theme-bh: #a855f7;
+            --theme-galaxy: #ec4899;
+            --theme-cosmo: #10b981;
+            --theme-intel: #fbbf24;
+            --theme-intro: #38bdf8;
+        }
+
+        .theory-content {
+            animation: fadeInPage 1s ease-out;
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                filter: blur(10px);
+            }
+
+            to {
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        .qg-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .qg-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .qg-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.03), transparent 60%);
+            pointer-events: none;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(to right, #fff, var(--text-secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Categorized Background Glows */
+        #tab-intro.active {
+            background: radial-gradient(circle at 50% -10%, rgba(56, 189, 248, 0.1), transparent 50%);
+        }
+
+        #tab-quantum.active {
+            background: radial-gradient(circle at 50% -10%, rgba(129, 140, 248, 0.15), transparent 50%);
+        }
+
+        #tab-blackholes.active {
+            background: radial-gradient(circle at 50% -10%, rgba(168, 85, 247, 0.1), transparent 50%);
+        }
+
+        #tab-galaxies.active {
+            background: radial-gradient(circle at 50% -10%, rgba(236, 72, 153, 0.1), transparent 50%);
+        }
+
+        #tab-cosmology.active {
+            background: radial-gradient(circle at 50% -10%, rgba(16, 185, 129, 0.1), transparent 50%);
+        }
+
+        #tab-intelligence.active {
+            background: radial-gradient(circle at 50% -10%, rgba(251, 191, 36, 0.1), transparent 50%);
+        }
+
+
+        /* Glass Formula Highlight */
+        .formula-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .formula-block::after {
+            content: 'QUANTIZED';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 800;
+        }
+
+        .action-btn-glow {
+            border-color: var(--accent-primary) !important;
+            color: var(--accent-primary) !important;
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 5px rgba(56, 189, 248, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 0 5px rgba(56, 189, 248, 0.2);
+            }
+        }
     </style>
     <link rel="stylesheet" href="../css/tabs.css">
     <script>
@@ -30,24 +153,30 @@
 </head>
 
 <body>
-    <header class="page-header">
+    <header class="page-header"
+        style="background: radial-gradient(circle at top, rgba(56, 189, 248, 0.15), transparent 70%); border-bottom: 1px solid rgba(255,255,255,0.05);">
         <div class="hero">
-            <a href="../index.html" class="back-link">← Back to Overview</a>
-            <p class="eyebrow">Foundations</p>
-            <h1>The Quantum-Geometric Coupling</h1>
-            <p class="tagline">Entropy as the Rhythm of Spacetime</p>
+            <a href="../index.html" class="back-link"
+                style="opacity: 0.6; transition: opacity 0.3s; margin-bottom: 3rem;">&larr; Back to Overview</a>
+            <p class="eyebrow"
+                style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.2); color: var(--theme-intro);">
+                The Zander Thesis</p>
+            <h1 class="glow-text" style="filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.3));">The Quantum-Geometric
+                Coupling</h1>
+            <p class="tagline" style="color: #64748b; font-weight: 500;">Entropy as the Rhythm of Spacetime Quantization
+            </p>
 
             <nav class="tab-nav">
-                <button class="tab-btn active" onclick="switchTab('intro')">Introduction</button>
-                <button class="tab-btn" onclick="switchTab('blackholes')">Black Holes</button>
-                <button class="tab-btn" onclick="switchTab('galaxies')">Galaxies</button>
-                <button class="tab-btn" onclick="switchTab('cosmology')">Cosmology</button>
-                <button class="tab-btn" onclick="switchTab('intelligence')">Emergent Intelligence</button>
-                <button class="tab-btn" onclick="switchTab('papers')">Library</button>
-                <button class="tab-btn" onclick="switchTab('formulas')">Formulas</button>
-                <a href="tsf_sim.html" class="tab-btn"
-                    style="text-decoration: none; display: inline-block; border-color: var(--accent-primary); color: var(--accent-primary);">🚀
-                    TSF Sim</a>
+                <button class="tab-btn active" data-tab="intro" onclick="switchTab('intro')">Introduction</button>
+                <button class="tab-btn" data-tab="quantum" onclick="switchTab('quantum')">Quantum Foundations</button>
+                <button class="tab-btn" data-tab="blackholes" onclick="switchTab('blackholes')">Black Holes</button>
+                <button class="tab-btn" data-tab="galaxies" onclick="switchTab('galaxies')">Galaxies</button>
+                <button class="tab-btn" data-tab="cosmology" onclick="switchTab('cosmology')">Cosmology</button>
+                <button class="tab-btn" data-tab="intelligence"
+                    onclick="switchTab('intelligence')">Intelligence</button>
+                <button class="tab-btn" data-tab="papers" onclick="switchTab('papers')">Library</button>
+                <button class="tab-btn" data-tab="formulas" onclick="switchTab('formulas')">Formulas</button>
+                <a href="tsf_sim.html" class="tab-btn action-btn-glow" style="text-decoration: none;">🚀 TSF Sim</a>
             </nav>
         </div>
     </header>
@@ -1019,6 +1148,99 @@
             </div>
 
             <!-- TAB 3: BLACK HOLES -->
+            <div id="tab-quantum" class="tab-content">
+                <h2 class="section-title">Quantum Realism: The Binary Floor</h2>
+
+                <div class="grid-2">
+                    <div class="qg-card" style="border-left: 4px solid var(--theme-quantum); border-color: #818cf8;">
+                        <h3 style="color: #818cf8;">1. The 50/50 Lotto Principle ($S=1$)</h3>
+                        <p>
+                            In the macroscopic world, winning the lottery is a 1 in 140,000,000 event.
+                            In the <strong>$\sigma_P$ quantized world</strong>, there is no such complexity.
+                        </p>
+                        <blockquote
+                            style="background: rgba(129, 140, 248, 0.05); padding: 1.5rem; border-radius: 8px; font-style: italic; color: #cbd5e1; margin: 1rem 0;">
+                            "The chance is always 50/50: Either an event becomes real, or it does not. On the quantum
+                            floor, <b>S = 1</b>. Reality defines itself through <b>negation</b> — the information lies
+                            in all the paths that were never taken."
+                        </blockquote>
+                        <p style="font-size: 0.9rem;">
+                            This reduces the entire wave-function collapse to a single bit-op ($0$ or $1$) within the
+                            action mesh.
+                            Complexity only emerges when we count trillions of these binary choices over time.
+                        </p>
+                    </div>
+
+                    <div class="qg-card" style="border-left: 4px solid #6366f1;">
+                        <h3 style="color: #6366f1;">2. The Myth of Reversibility</h3>
+                        <p>
+                            Current physics often claims quantum processes are perfectly reversible.
+                            The <em>Zander Frame</em> distinguishes between <strong>Mathematical Reversal</strong> and
+                            <strong>Temporal Integrity</strong>.
+                        </p>
+                        <p style="font-size: 1rem; color: #fff;">
+                            "Just because we can 'reverse engineer' a state back to its origin doesn't mean we've
+                            changed the fact that it occurred at time $x$."
+                        </p>
+                        <p style="font-size: 0.9rem; color: #94a3b8;">
+                            Being able to reconstruct a broken cup doesn't delete the history of it breaking.
+                            Reality is a permanent recording in the $\sigma_P$ lattice — reverse execution is an
+                            operation, not an undo-button for existence.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="qg-card"
+                    style="margin-top: 3rem; background: linear-gradient(to right, rgba(129, 140, 248, 0.1), transparent);">
+                    <h3 class="glow-text">Null-Information is Structure</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8;">
+                        Every state that does <strong>not</strong> happen still contributes information to the universe.
+                        The "Zero" in a bitstream is as critical as the "One".
+                        This <strong>Null-Information</strong> defines the negative space of reality, providing the
+                        "stiffness" of the spacetime mesh.
+                    </p>
+                    <div class="formula-block" style="text-align: center; border-color: #818cf8;">
+                        $$ I_{\text{Total}} = I_{\text{Active}} \oplus I_{\text{Null}} \equiv \sigma_P $$
+                    </div>
+                </div>
+
+                <!-- Interaction Placeholder for 50/50 Lotto -->
+                <div class="qg-box" style="margin-top: 3rem; text-align: center; border-color: #818cf8;">
+                    <h4 style="color: #818cf8;">Interactive: The Quantum Lotto</h4>
+                    <div id="lotto-sim"
+                        style="height: 200px; display: flex; align-items: center; justify-content: center; gap: 2rem;">
+                        <div id="ball-box"
+                            style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid #818cf8; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: #818cf8; transition: all 0.5s;">
+                            ?</div>
+                        <div style="text-align: left;">
+                            <button onclick="drawQuantumBall()" class="action-btn"
+                                style="background: #818cf8; color: white;">Draw Reality</button>
+                            <p id="lotto-result" style="margin-top: 1rem; font-family: monospace; font-size: 0.8rem;">
+                                State: Superposition</p>
+                        </div>
+                    </div>
+                    <script>
+                        function drawQuantumBall() {
+                            const box = document.getElementById('ball-box');
+                            const res = document.getElementById('lotto-result');
+                            const isWin = Math.random() > 0.5;
+
+                            box.style.transform = 'scale(1.2) rotate(360deg)';
+                            box.innerText = isWin ? '1' : '0';
+                            box.style.borderColor = isWin ? '#10b981' : '#f43f5e';
+                            box.style.color = isWin ? '#10b981' : '#f43f5e';
+                            box.style.boxShadow = isWin ? '0 0 30px #10b981' : '0 0 30px #f43f5e';
+
+                            res.innerText = isWin ? "State: Reality 1 (Win) - Information Recorded." : "State: Reality 0 (Null) - Structure Stabilized.";
+
+                            setTimeout(() => {
+                                box.style.transform = 'scale(1) rotate(0)';
+                            }, 500);
+                        }
+                    </script>
+                </div>
+            </div>
+
             <div id="tab-blackholes" class="tab-content">
                 <h2>The Anatomy of the Black Hole</h2>
                 <p>
