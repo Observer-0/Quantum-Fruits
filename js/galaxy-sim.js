@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btn) {
         btn.addEventListener('click', () => {
             window.galaxySim.toggle();
-            btn.textContent = window.galaxySim.isRunning ? 'Simulation pausieren' : 'Simulation starten';
+            btn.textContent = window.galaxySim.isRunning ? 'Pause Simulation' : 'Start Simulation';
         });
     }
 
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const simControls = document.querySelector('.simulation-controls');
     if (simControls) {
         const toggleNetwork = document.createElement('button');
-        toggleNetwork.textContent = 'Pull-Hold Gitter an/aus';
+        toggleNetwork.textContent = 'Toggle Pull-Hold Grid';
         toggleNetwork.addEventListener('click', () => {
             window.galaxySim.params.showNetwork = !window.galaxySim.params.showNetwork;
         });

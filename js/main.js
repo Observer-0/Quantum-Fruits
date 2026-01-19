@@ -243,19 +243,19 @@ function simulatePageCurve(M0, steps = 200) {
         break;
       }
     }
+    // Safety break if simulation runs too long
+    if (timePoints.length > steps * 2) break;
   }
-  // Safety break if simulation runs too long
-  if (timePoints.length > steps * 2) break;
-}
 
-return {
-  time: timePoints,
-  mass: massPoints,
-  s_bh: sbhPoints,
-  s_rad_accum: sradPoints,
-  tau_limit: tau
-  , adaptive_used: adaptiveUsed, max_substeps: maxSubSteps
-};
+  return {
+    time: timePoints,
+    mass: massPoints,
+    s_bh: sbhPoints,
+    s_rad_accum: sradPoints,
+    tau_limit: tau,
+    adaptive_used: adaptiveUsed,
+    max_substeps: maxSubSteps
+  };
 }
 
 // --- Galactic Dynamics (The Dark Matter Illusion) ---
@@ -391,16 +391,16 @@ const MACRO_SYSTEMS = [
     desc: "100m World Record Dash"
   },
   {
-    name: "Glühbirne (60W)",
+    name: "Light Bulb (60W)",
     massKg: 0.1,
     energyJ: 60,
     length: 0.1,
     time: 1,
     type: "macro",
-    desc: "1 Sekunde Leuchten"
+    desc: "1 second of operation"
   },
   {
-    name: "Pkw (Beschleunigung)",
+    name: "Passenger Car (Accel)",
     massKg: 1500,
     energyJ: 580000,
     length: 5,
@@ -425,6 +425,10 @@ const limitNote = document.querySelector("#limitNote");
 // Dataset Selector (now in HTML)
 const datasetSelect = document.querySelector("#datasetSelect");
 const fruitControls = document.querySelector("#fruitControls");
+
+const safeAddEventListener = (el, type, fn) => {
+  if (el) el.addEventListener(type, fn);
+};
 
 let currentDatasetName = "fruits"; // fruits, bhs, galaxies
 
@@ -497,14 +501,14 @@ function renderBaseList() {
       // Action depends on type
       if (currentDatasetName === 'galaxies') {
         drawRotationCurveChart(item.massSolar, item.name);
-        qgSelect.value = "smoothPage"; // Abuse this value to show active state
-        selectedToolLabel.textContent = `Galaxie-Rotation (${item.name})`;
+        if (qgSelect) qgSelect.value = "smoothPage"; // Abuse this value to show active state
+        if (selectedToolLabel) selectedToolLabel.textContent = `Galaxy Rotation (${item.name})`;
       } else {
         // Mass conversion for non-galaxies is direct kg
         const m = item.massKg || item.massSolar; // Fail safe
         drawPageCurveChart(item.massKg, item.name);
-        qgSelect.value = "smoothPage";
-        selectedToolLabel.textContent = `Glatte Page-Kurve (${item.name})`;
+        if (qgSelect) qgSelect.value = "smoothPage";
+        if (selectedToolLabel) selectedToolLabel.textContent = `Smooth Page Curve (${item.name})`;
       }
     });
 
@@ -893,10 +897,10 @@ function handleToolChange(event) {
 // Auto-detect loaded UI state or just run default
 handleDatasetChange(); // Force render of list based on default
 updateNSigmaDisplay();
-searchField.addEventListener("input", filterFruits);
-formSelect.addEventListener("change", filterFruits);
-colorSelect.addEventListener("change", filterFruits);
-const dynamicToggle = document.getElementById('dynamicWindowToggle');
+safeAddEventListener(searchField, "input", filterFruits);
+safeAddEventListener(formSelect, "change", filterFruits);
+safeAddEventListener(colorSelect, "change", filterFruits);
+
 if (dynamicToggle) {
   dynamicToggle.addEventListener("change", () => {
     // Re-run current tool or update display if needed
@@ -906,4 +910,4 @@ if (dynamicToggle) {
   });
 }
 
-qgSelect.addEventListener("change", handleToolChange);
+safeAddEventListener(qgSelect, "change", handleToolChange);

@@ -4,149 +4,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kinematic Motor Black HoleLab — From Quantum to Cosmos</title>
+  <title>Kinematic Motor Black Hole Lab — From Quantum to Cosmos</title>
   <link rel="stylesheet" href="../css/motor.css">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
+  <div class="lab-container">
+    <a href="theory.html" class="back-link">&larr; Back to Theory</a>
 
-  <div class="motor-container">
-    <h1 class="lab-title">The Kinematic Motor</h1>
-    <p class="lab-subtitle">Interplay: Pure Action (Spin) vs. Mass Burden (Gravity)</p>
-
-    <div class="interplay-canvas-wrapper">
-      <canvas id="motorCanvas"></canvas>
-      <div id="magneticField"></div>
+    <div class="header">
+      <h1 class="glow-text">Kinematic Black Hole Motor</h1>
+      <p>Interplay: Pure Action (ℏ) vs. Mass Burden (Gravity)</p>
     </div>
 
-    <div class="controls-panel">
-      <div class="control-group">
-        <label for="spinRate">Core Action Frequency (Hz)</label>
-        <input type="range" id="spinRate" min="1" max="100" value="80">
+    <div class="grid-2">
+      <div class="qg-card"
+        style="padding: 0; min-height: 500px; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, #0a0a15, #000);">
+        <canvas id="motorCanvas" style="max-width: 100%; height: auto;"></canvas>
       </div>
 
-      <div class="control-group">
-        <label for="massBurden">Newtonian Mass Burden (G-Load)</label>
-        <input type="range" id="massBurden" min="0" max="100" value="10">
-      </div>
+      <div class="qg-card">
+        <h3>Control Interface</h3>
+        <div class="control-group" style="margin-bottom: 2rem;">
+          <label for="spinRate">Core Action Frequency (ℏ-Spin)</label>
+          <input type="range" id="spinRate" min="1" max="100" value="80">
+        </div>
 
-      <div class="stats-display">
-        <div class="stat-item">
-          <div class="stat-value" id="netPotential">1.21e44</div>
-          <div class="stat-label">Net Action Potential (N)</div>
+        <div class="control-group" style="margin-bottom: 2rem;">
+          <label for="massBurden">Mass Burden (G-Braking)</label>
+          <input type="range" id="massBurden" min="0" max="100" value="10">
         </div>
-        <div class="stat-item">
-          <div class="stat-value" id="magneticFlux">High</div>
-          <div class="stat-label">Magnetic Field Strength</div>
+
+        <div class="monitor-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="qg-card" style="padding: 1rem; text-align: center; background: rgba(0,0,0,0.3);">
+            <span class="stat-label">Action Potential</span>
+            <span class="stat-value" id="netPotential"
+              style="display: block; font-size: 1.2rem; color: var(--accent-primary);">--</span>
+          </div>
+          <div class="qg-card" style="padding: 1rem; text-align: center; background: rgba(0,0,0,0.3);">
+            <span class="stat-label">Tick Density</span>
+            <span class="stat-value" id="tickDensity"
+              style="display: block; font-size: 1.2rem; color: var(--accent-secondary);">Max</span>
+          </div>
         </div>
-        <div class="stat-item">
-          <div class="stat-value" id="tickDensity">Max</div>
-          <div class="stat-label">Tick Density (σ_P)</div>
+
+        <div id="status-panel"
+          style="margin-top: 2rem; padding: 1rem; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1); text-align: center;">
+          <span id="statusText" class="glow-text">Initializing Core...</span>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <button id="mergerBtn" class="action-btn" style="width: 100%;">Initiate Hierarchical Merger</button>
         </div>
       </div>
     </div>
 
-    <div class="info-box">
-      The <span id="statusText">Pure Action Core</span> uses pure action (ℏ) as its drive source.
-      Increasing <span id="loadText">mass load</span> acts like a brake,
-      slowing down the spin and step-by-step transforming action into classical gravity
-      and radiation.
+    <!-- Live Page Curve Section -->
+    <div class="qg-card" style="margin-top: 2rem; border-color: #ef4444;">
+      <h3 style="color: #ef4444;">Live Information Paradox Resolve (Page Curve)</h3>
+      <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 1.5rem;">
+        Watch how the entropy transitions from growing disorder (Hawking) to ordered return as the mass brakes the core
+        spin.
+      </p>
+      <div id="pageCurvePlot"
+        style="height: 200px; background: rgba(0,0,0,0.2); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 0 10px; gap: 2px;">
+        <!-- Live bars injected here -->
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #666; margin-top: 0.5rem;">
+        <span>Formation</span>
+        <span>Page Time (Equilibrium)</span>
+        <span>Unitarity Return</span>
+      </div>
     </div>
 
-    <a href="theory.html" style="margin-top:2rem; color:#666; text-decoration:none; font-size:0.8rem;">Back to
-      Theory</a>
+    <div class="qg-card" style="margin-top: 2rem;">
+      <h3 class="glow-text">Theory: The Motor Analogy</h3>
+      <div class="formula-block">
+        $$ E_{\text{motor}} = \int \omega \, dJ - \int \text{Load} \, dt $$
+      </div>
+      <p style="font-size: 0.95rem; line-height: 1.6;">
+        In the $\sigma_P$ framework, a Black Hole isn't a static trap. It is a <strong>kinematic transformer</strong>.
+        The initial high spin (Pure Action) is gradually converted into classical weight and entropy as surrounding mass
+        "brakes" the core.
+        Once the spin limit matches the surface area (Holography), information is net-exported back to the universe.
+      </p>
+    </div>
+
   </div>
-
-  <section class="theory-cards">
-    <article class="theory-card">
-      <h2>Pure Action Core</h2>
-      <p>In the zero-mass limit, the core carries energy almost exclusively as angular momentum
-        \(E_{\text{core}} \sim \hbar \omega_{\max}\). Spin generates a magnetic field and an
-        action-based "attraction" ℏ.</p>
-    </article>
-
-    <article class="theory-card">
-      <h2>Mass Loading & Braking</h2>
-      <p>Growing surrounding masses act as a mechanical load. They couple to the spin
-        and brake it in favor of classical gravity (G, M_ext, r_s).</p>
-    </article>
-
-    <article class="theory-card">
-      <h2>Kinematic Transformer</h2>
-      <p>The black hole core functions like a kinematic motor: pure action at first,
-        later mass load, heat, and radiation – instead of a static "abyss."
-        Analogy: Stator / field coil ↔ Pure Action Core. In an electric motor, the field (stator/excitation winding)
-        generates a torque before any load is attached.
-        The "Pure Action Core" is exactly such a source: pure action ∼ℏω, maximum spin, strong magnetic field, yet
-        hardly any "load" from mass.
-        Rotor with load ↔ Mass Burden / Braking.
-        If you attach a load to the shaft of an electric motor, the speed decreases, current/power loss increases, and
-        part of the "pure" field energy goes out into heat, friction, and work.
-        Accreted mass at the event horizon takes on this role: it brakes the spin, coupling energy into classical
-        gravity, heat, radiation, and eventually star formation.
-        Without mass load, the core runs like an electric motor at idle: pure action (ħ), high spin. With growing mass
-        load, it is braked and its energy ends up in gravity, heat, and radiation.
-      </p>
-
-      </p>
-    </article>
-  </section>
-
-  <section class="theory-section">
-    <h2>The Page Curve – Why It Is Important</h2>
-
-    <p>
-      The <strong>Page curve</strong> describes how the amount of information (entropy) of a
-      black hole develops over its lifetime. It was proposed by Don Page to test whether
-      black holes are compatible with quantum mechanics.
-    </p>
-
-    <h3>What Does the Page Curve Say?</h3>
-    <p>
-      When a black hole radiates particles, the radiation seems to be purely random at first:
-      the measured entropy outside rises. Later, however, as quantum mechanics demands, the
-      radiation must contain more and more information about the interior, so that the entropy
-      falls again after a maximum – the curve thus has a "bell shape" instead of just growing
-      indefinitely.
-    </p>
-    <p>
-      This maximum is called the <em>Page time</em>. It marks the turning point: from here on,
-      the black hole begins to give information net back to the universe, instead of
-      apparently swallowing it.
-    </p>
-
-    <h3>Why Is This Important?</h3>
-    <p>
-      A curve that only rises and never falls would mean: information disappears permanently
-      in a hole – this contradicts quantum mechanics. A Page curve with rise, maximum, and
-      fall is the minimum criterion for a <strong>unitary</strong> (information-preserving)
-      evolution.
-    </p>
-    <p>
-      Every serious solution to the information paradox must therefore deliver a Page-like
-      entropy development: first more disorder and entanglement, later ordered return of the
-      information to the environment.
-    </p>
-
-    <h3>How Does This Fit Our Spin Motor?</h3>
-    <p>
-      In this model, the core starts as an almost "load-free" spin motor after the supernova:
-      pure action, high angular momentum, strong magnetic field. While more and more matter
-      is collected and scattered out again, the entropy of the overall system grows –
-      the Page curve rises.
-    </p>
-    <p>
-      As soon as the gravity of the outer mass shell brakes the inner quantum spin, a
-      turning point is reached: the Page time. From here on, the motor converts its
-      angular momentum energy more and more into radiation and new structure. The hidden
-      entropy in the core decreases, while information becomes accessible again in the
-      environment – the Page curve falls, without information really being lost.
-    </p>
-  </section>
-
-
-
 
   <script src="../js/kinematic-motor.js"></script>
 </body>

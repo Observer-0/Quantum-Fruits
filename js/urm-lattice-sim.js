@@ -112,30 +112,48 @@ if (urmLatticeCanvas) {
         for (let i = 0; i < N; i++) {
             for (let j = 0; j < N; j++) {
                 const amp = Math.abs(x[i][j]);
-                const intensity = Math.min(255, amp * 100);
+                const intensity = Math.min(255, amp * 120);
 
-                // Information Density Color Mapping
-                // Blue = Free Action (Quantum), Red = Frozen Mass (Classical)
-                const r = Math.min(255, intensity * 0.2 + (entropy * 1.5));
-                const g = Math.min(255, intensity * 0.5);
-                const b = Math.min(255, intensity * 1.2 + 50);
+                // Information Density Color Mapping: Vibrant Cyan to Deep Purple
+                const r = Math.min(255, intensity * 0.1 + (entropy * 2));
+                const g = Math.min(255, intensity * 0.4 + 20);
+                const b = Math.min(255, intensity * 1.5 + 40);
 
                 ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+
+                // Glow effect for high intensity cells
+                if (intensity > 150) {
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = `rgb(${r}, ${g}, ${b})`;
+                } else {
+                    ctx.shadowBlur = 0;
+                }
+
                 ctx.fillRect(i * cellSize + 1, j * cellSize + 1, cellSize - 2, cellSize - 2);
+                ctx.shadowBlur = 0; // Reset for next cell
 
                 // The "Write-Head" Indicator (Vector t)
-                if (amp > 2.0) {
-                    ctx.strokeStyle = '#ef4444';
+                if (amp > 2.2) {
+                    ctx.strokeStyle = '#f43f5e';
                     ctx.lineWidth = 2;
                     ctx.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
 
-                    if (Math.random() > 0.99) {
+                    // Add a tiny crosshair for the write head
+                    ctx.beginPath();
+                    ctx.moveTo(i * cellSize + cellSize / 2, j * cellSize);
+                    ctx.lineTo(i * cellSize + cellSize / 2, j * cellSize + cellSize);
+                    ctx.moveTo(i * cellSize, j * cellSize + cellSize / 2);
+                    ctx.lineTo(i * cellSize + cellSize, j * cellSize + cellSize / 2);
+                    ctx.stroke();
+
+                    if (Math.random() > 0.98) {
                         const label = document.getElementById('write-head-label');
                         if (label) {
                             label.style.display = 'block';
                             label.style.top = (j * cellSize) + 'px';
                             label.style.left = (i * cellSize + 40) + 'px';
-                            setTimeout(() => label.style.display = 'none', 1000);
+                            label.innerText = "σ_P WRITE";
+                            setTimeout(() => label.style.display = 'none', 800);
                         }
                     }
                 }
@@ -151,7 +169,7 @@ if (urmLatticeCanvas) {
             { name: "Electron", r: 2.8e-15, m: 9.1e-31, type: "quantum" },
             { name: "Planck Scale", r: 1.6e-35, m: 2.1e-8, type: "fundamental" },
             { name: "Usain Bolt (Dash)", r: 1.95, m: 94, action: 7.82e5, type: "macro" },
-            { name: "Pkw (Accel)", r: 4.5, m: 1500, action: 2.9e6, type: "macro" },
+            { name: "Car (Accel)", r: 4.5, m: 1500, action: 2.9e6, type: "macro" },
             { name: "Earth", r: 6.3e6, m: 5.9e24, type: "cosmo" },
             { name: "Sun", r: 6.9e8, m: 1.9e30, type: "cosmo" },
             { name: "Sgr A* (Black Hole)", r: 1.2e10, m: 8.2e36, type: "extreme" }
@@ -201,4 +219,15 @@ if (urmLatticeCanvas) {
 
     const aSlider = document.getElementById('urmalphRange');
     if (aSlider) aSlider.oninput = (e) => alpha = parseFloat(e.target.value);
+
+    // Global Reset / Impulse Function
+    window.resetURMLattice = () => {
+        initLattice();
+        // Add energy burst
+        for (let i = 15; i < 25; i++) {
+            for (let j = 15; j < 25; j++) {
+                v[i][j] = (Math.random() - 0.5) * 5.0;
+            }
+        }
+    };
 }
