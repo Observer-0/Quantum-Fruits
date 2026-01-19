@@ -209,33 +209,6 @@ All 17 core equations verified:
 4. **Hawking Temperature:** Finite (no divergence at end)
 5. **RAR/BTFR:** Emergent from spacetime (no DM needed)
 
----
-
-## 📚 Implementation
-
-- **TeX:** Full mathematical derivations
-- **Python:** Numerical simulations (`quantum_fruits_lab.py`)
-- **JavaScript:** Interactive web visualizations (`main.js`)
-- **Java:** Additional tools
-
----
-
-## 🌐 Resources
-
-- **Main Site:** [Quantum Fruits](https://your-site.com)
-- **GitHub:** [Repository](https://github.com/your-repo)
-- **Papers:** See `assets/papers/` for LaTeX sources
-- **Simulations:** `tsf_sim.html`, `lattice.html`, `galaxy.html`
-
----
-
-## 📞 Community
-
-**Contributions Welcome:**
-- Dimensional analysis verification
-- Translation (DE/EN)
-- Code review
-- Theoretical feedback
 
 **Contact:** Adrian Zander  
 **License:** MIT
