@@ -7,6 +7,22 @@
     <title>Quantum Fruits | Cosmology Monitor</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/components.css">
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true }
+                ]
+            });
+        });
+    </script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         body {
@@ -18,7 +34,7 @@
         }
 
         .lab-container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
@@ -43,11 +59,18 @@
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 1.5rem;
-            border-radius: 16px;
+            border-radius: 20px;
             text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(16, 185, 129, 0.3);
         }
 
         .stat-label {
@@ -87,10 +110,11 @@
         }
 
         .departure-panel {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border-left: 4px solid #ef4444;
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.05), rgba(0, 0, 0, 0.3));
+            padding: 2rem;
+            border-radius: 20px;
+            border-left: 6px solid #ef4444;
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.1);
         }
 
         .progress-bg {
@@ -127,34 +151,38 @@
     <div class="lab-container">
         <a href="../index.html" class="back-link">&larr; Back to Cosmos</a>
         <div class="header">
-            <h1>Cosmology Monitor</h1>
+            <h1 class="glow-text">Cosmology Monitor</h1>
             <p>Real-time LCDM Departure Tracking & Geometric Density</p>
         </div>
 
-        <div class="slider-box">
+        <div class="qg-card" style="margin-bottom: 2rem;">
             <div class="slider-label">
                 <span>Cosmic Expansion Progress (Window Scaling)</span>
-                <span id="val-cosmo-percent">100%</span>
+                <span id="val-cosmo-percent" class="glow-text">100%</span>
             </div>
             <input type="range" id="cosmo-age-slider" min="1" max="200" value="100">
         </div>
 
-        <div class="monitor-grid">
-            <div class="stat-card">
+        <div class="grid-2" style="margin-bottom: 2rem;">
+            <div class="qg-card" style="padding: 1.5rem; text-align: center;">
                 <span class="stat-label">Cosmic Age (t)</span>
-                <span class="stat-value" id="val-cosmo-t">--</span>
+                <span class="stat-value" id="val-cosmo-t"
+                    style="display: block; font-size: 1.5rem; color: var(--accent-primary); margin-top: 0.5rem;">--</span>
             </div>
-            <div class="stat-card">
+            <div class="qg-card" style="padding: 1.5rem; text-align: center;">
                 <span class="stat-label">Horizon Radius (R)</span>
-                <span class="stat-value" id="val-cosmo-r">--</span>
+                <span class="stat-value" id="val-cosmo-r"
+                    style="display: block; font-size: 1.5rem; color: var(--accent-primary); margin-top: 0.5rem;">--</span>
             </div>
-            <div class="stat-card">
+            <div class="qg-card" style="padding: 1.5rem; text-align: center;">
                 <span class="stat-label">Energy Density (ρ)</span>
-                <span class="stat-value" id="val-cosmo-rho">--</span>
+                <span class="stat-value" id="val-cosmo-rho"
+                    style="display: block; font-size: 1.5rem; color: var(--accent-primary); margin-top: 0.5rem;">--</span>
             </div>
-            <div class="stat-card">
+            <div class="qg-card" style="padding: 1.5rem; text-align: center;">
                 <span class="stat-label">Dipole Velocity (V)</span>
-                <span class="stat-value" id="val-cosmo-v">--</span>
+                <span class="stat-value" id="val-cosmo-v"
+                    style="display: block; font-size: 1.5rem; color: var(--accent-primary); margin-top: 0.5rem;">--</span>
             </div>
         </div>
 
@@ -224,12 +252,53 @@
 
     <div class="qg-box" style="margin-top: 3rem; border-color: rgba(255,255,255,0.1);">
         <h3>Theory: The $R \cdot t$ Coupling</h3>
-        <p style="font-size: 0.95rem; color: #94a3b8;">
+        <p style="font-size: 0.95rem; color: #94a3b8; margin-bottom: 1.5rem;">
             In the $\sigma_P$ framework, the energy density of the universe is not a fixed constant (Dark Energy),
             but a dynamic property of the coupled spacetime window.
-            As the volume ($R$) and age ($t$) grow, the "cost" of existence ($\sigma_P$) scales proportionately.
-            The LCDM model fails at large scales because it assumes a static vacuum pressure.
         </p>
+
+        <div
+            style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; text-align: center;">
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.5rem;">Master Equation for Geometric Energy
+                Density:</p>
+            <div style="font-size: 1.5rem; color: #10b981;">
+                $$ \epsilon = \frac{3c^3}{8 \pi G \cdot R(t) \cdot t} $$
+            </div>
+        </div>
+
+        <p style="font-size: 0.95rem; color: #94a3b8;">
+            As the volume ($R$) and age ($t$) grow, the "cost" of existence ($\sigma_P$) scales proportionately:
+        </p>
+        <div
+            style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; text-align: center;">
+            <div style="font-size: 1.4rem; color: #3b82f6; margin-bottom: 0.5rem;">
+                $$ \sigma_P \propto R(t) \cdot t $$
+            </div>
+            <p style="color: #64748b; font-size: 0.8rem;">The Fundamental Action Scaling</p>
+        </div>
+        <p style="font-size: 0.95rem; color: #94a3b8;">
+            In our framework, the Einstein tensor is not a static geometry, but an <strong>operator</strong>
+            that responds to the discrete $\sigma_P$ grid:
+        </p>
+        <div
+            style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; text-align: center;">
+            <div style="font-size: 1.4rem; color: #a78bfa; margin-bottom: 1rem;">
+                $$ \hat{G}_{\mu\nu}[\sigma_P; W] \, |\Psi_W\rangle = \frac{8\pi G}{c^4} \, \overline{T}_{\mu\nu} \,
+                |\Psi_W\rangle $$
+            </div>
+            <p style="color: #64748b; font-size: 0.8rem;">Dynamical Einstein Equation (Operator Form)</p>
+        </div>
+
+        <div style="margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem;">
+            <h4 style="color: #ef4444;">The 3.7x Dipole Anomaly</h4>
+            <p style="font-size: 0.9rem; color: #94a3b8;">
+                The observed directionality in galaxy counts (the dipole) is 3.7x larger than predicted by the CMB.
+                In the Zander model, this is the "friction" of the discrete spacetime grid:
+            </p>
+            <div style="text-align: center; margin: 1rem 0;">
+                $$ \vec{v}_{\rm dipole} \propto \frac{c^4}{G} \cdot \sigma_P \cdot \nabla \eta $$
+            </div>
+        </div>
     </div>
     </div>
 

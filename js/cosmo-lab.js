@@ -52,9 +52,9 @@ function updateCosmoMonitor() {
 
     // Velocity Anomaly (Dipole): V_anomaly approx relates to the "stiffness" error
     // If LCDM predicts V_lcdm approx 370 km/s (CMB dipole)
-    // Zander observation: 4x faster anomaly.
+    // Zander observation: 3.7x faster anomaly.
     const v_base = 370; // km/s
-    const v_zander = v_base * (1 + (3 * (100 - agePercent) / 100)); // Scaled anomaly logic
+    const v_zander = v_base * (1 + (2.7 * (100 - agePercent) / 100)); // Scaled anomaly logic (3.7x max)
 
     // Update UI
     document.getElementById('val-cosmo-t').innerText = (t / (3600 * 24 * 365.25 * 1e9)).toFixed(2) + " Bio. Jahre";
@@ -68,7 +68,7 @@ function updateCosmoMonitor() {
     document.getElementById('val-cosmo-dep').innerText = departure.toFixed(2) + "% Abweichung";
 
     if (departure > 50) {
-        document.getElementById('cosmo-alert').innerText = "⚠️ LCDM-BREUCH: Die Geometrie weicht massiv vom Standardmodell ab!";
+        document.getElementById('cosmo-alert').innerText = "⚠️ LCDM-BRUCH: Das Standardmodell weicht massiv von der Geometrie ab!";
         document.getElementById('cosmo-alert').style.color = "#ef4444";
     } else {
         document.getElementById('cosmo-alert').innerText = "✓ Geometrische Harmonie: σₚ skaliert mit R*t.";
@@ -192,6 +192,7 @@ function simulateCosmicBreath() {
     };
 
     const layout = {
+        height: 500,
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
         showlegend: true,
