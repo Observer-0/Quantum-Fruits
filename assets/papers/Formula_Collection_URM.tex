@@ -1,142 +1,179 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath,amssymb,physics}
 \usepackage{microtype}
 \usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
 \geometry{margin=25mm}
 \usepackage{tcolorbox}
-\title{Formelsammlung — Quantum Fruits}
+\tcbuselibrary{skins,breakable}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{SigmaP-Lab: Formelsammlung \& Struktur}
 \author{Adrian Zander}
 \date{\today}
 
 \begin{document}
 \maketitle
-\section*{Kurzbeschreibung}
-Zusammenstellung der zentralen mathematischen Identitäten des \textit{Quantum Fruits}-Rahmenwerks. Diese Sammlung definiert die parameterfreie, dynamische Feldgleichung und die effektiven Skalierungsgesetze, die sich aus der Planck-Kovarianz ergeben.
 
-\section{Parameterfreie, dynamische Feldgleichung}
+\section*{Abstract}
+Diese Sammlung definiert die Kerngleichungen des \textit{SigmaP-Lab}-Frameworks (Version 10.0). Sie umfasst die fundamentale Definition der Wirkungszelle $\sigma_P$, die Ableitung der Gravitation als Spin-2-Resonanzphänomen und die Neuinterpretation der Zeit als diskrete Tick-Sequenz.
 
-Wir beginnen mit der Wirkungsfunktion:
+\section{Fundamentale Identitäten}
+
+\subsection{Die Wirkungszelle}
 \begin{equation}
-S[g, \Psi] 
-= \frac{c^3}{16\pi G} \int d^4x \, \sqrt{-g} \, \Big(R - 2\,\Lambda_{\rm eff}(t)\Big) 
-+ S_{\rm m}^{(\sigma)}[g, \Psi] \,,
+\boxed{\sigma_{\mathrm P} = \frac{\hbar G}{c^{4}}} \quad [L \cdot T]
 \end{equation}
-wobei
+Die fundamentale Quantisierungseinheit der Raumzeit.
+
+\subsection{Kopplungskonstanten}
+\begin{align}
+\alpha_{G}(M) &= \frac{G M}{\hbar c} \qquad \text{(Lineare Massenkoplung)} \\
+\chi(M) &:= \frac{G M^2}{\hbar c^3} \qquad \text{(Quadratische Spin-2-Selbstkopplung)}
+\end{align}
+
+\subsection{Tick-Statistik}
+\begin{align}
+i &\equiv \frac{\Delta A}{\sigma_{\mathrm P}} \qquad \text{(Tick-Index)} \\
+i_{\rm max} &= \frac{\hbar}{\sigma_P} = \frac{c^4}{G} \\
+S &= k_B \cdot N_{\text{ticks}} = k_B \sum i
+\end{align}
+
+\subsection{Energie-Zeit & Hawking-Relation}
+\begin{align}
+E_{\text{quant}} \cdot t_{\text{quant}} &= \hbar \qquad \text{(Ein Quant = Ein Tick)} \\
+E_{\rm kin} &= \sigma_P \cdot \frac{i_{\rm kin}}{t_P} \\
+t_{\text{Kerr}} &:= t \cdot \sqrt{\chi(M)} \qquad \text{(Zeitdilatation als Tick-Dichte)}
+\end{align}
+
+\subsection{Spin-2 Signatur}
+\begin{equation}
+A_G = \frac{G^2}{c^4}, \qquad Z = \frac{\hbar^2}{c} \quad \Rightarrow \quad Z \cdot A_G = \sigma_P
+\end{equation}
+Gravitation ist die Resonanz zwischen Wirkungsquantisierung $Z$ und Geometrie $A_G$.
+
+\section{Feldgleichungen und Pfadintegral}
+
+\subsection{Die Einstein-Zander Wirkung}
+\begin{equation}
+S[g,\Psi] = \frac{c^3}{16\pi G}\int d^4x\sqrt{-g}\Big(R - 2\Lambda_{\rm eff}(t)\Big) + S_{\rm m}^{(\sigma)}[g,\Psi]
+\end{equation}
+
+\subsection{Vakuum-Skalierung}
+\begin{equation}
+\Lambda_{\rm eff}(t) = \frac{\alpha_\sigma(t)}{\ell_P^2} = \frac{1}{c R(t) t}
+\end{equation}
+Keine dunkle Energie, sondern geometrische Glättung über den kausalen Horizont.
+
+\subsection{Feldgleichung}
+\begin{equation}
+G_{\mu\nu}[g] + \Lambda_{\rm eff}(t)g_{\mu\nu} = \frac{8\pi G}{c^4}\overline T_{\mu\nu}
+\end{equation}
+mit der Planck-kovarianten Quellmittelung:
+\begin{equation}
+\overline{T}_{\mu\nu}(x) = \int d^4y\sqrt{-g(y)} K_{\sigma_P}(x,y)\Pi_{\mu}{}^{\mu'}\Pi_{\nu}{}^{\nu'}T_{\mu'\nu'}(y)
+\end{equation}
+
+\section{Struktur-Übersicht: Von Newton bis Quantengravitation}
+
+\begin{enumerate}
+    \item \textbf{Klassisch (Newton):} Skalare Kraft
+    \[ F_{ij} = \frac{G m_i m_j}{\lVert \vec r_i - \vec r_j\rVert^2} \]
+    
+    \item \textbf{Hamiltonian (Wechselwirkung):} Tensor-Kopplung
+    \[ H_{\text{Wechsel}} \sim \kappa_{\mathrm Z}\sum_{i<j} T^{\mu\nu}{(i)}h_{\mu\nu}^{(j)} \]
+    
+    \item \textbf{Pfadintegral (QG):} Austausch von Ticks
+    \[ Z[J^{\mu\nu}] = \int \mathcal Dh_{\alpha\beta} \exp\Big(i S_{\text{grav}}[h] + i\sum_k \int d^4x J^{\mu\nu}_k(x)h_{\mu\nu}(x)\Big) \]
+    
+    \item \textbf{Streuamplitude (Tree-Level):} 
+    \[ \mathcal M \propto \kappa_{\mathrm Z}^2 \frac{T^{\mu\nu}{(1)}(q)P_{\mu\nu\rho\sigma}(q)T^{\rho\sigma}_{(2)}(-q)}{q^2} \]
+    Hierbei ist der Propagator $1/q^2$ der geometrische Träger der Ticks.
+\end{enumerate}
+
+\section{Konzeptuelle Vertiefung}
+
+\subsection{Warum Spin-2?}
+Spin-2-Felder koppeln quadratisch. Während lineare Kopplung ($\alpha_G$) nur eine Wechselwirkung beschreibt, erlaubt die quadratische Struktur ($\chi \sim G M^2$), dass Energie-Impuls die Quelle seiner eigenen Geometrie ist. Gravitation ist keine Kraft, sondern eine \textbf{Spin-2-Resonanz zwischen Wirkung und Geometrie}.
+
+\subsection{Ticks sind keine Zeit – sie sind Wirkung}
+Der Tick-Index $i = \Delta A / \sigma_P$ zeigt:
 \begin{itemize}
-    \item $R$ der Ricci-Skalar der Raumzeitmetrik $g_{\mu\nu}$ ist,
-    \item $\Lambda_{\rm eff}(t) \sim 1/(c R t)$ die stochastisch-entropische Glättung über die zugängliche Raumzeit beschreibt,
-    \item $S_{\rm m}^{(\sigma)}[g,\Psi]$ die Planck-kovariante Mittelung der Materieaktion darstellt.
+    \item Ein Tick ist keine Sekunde.
+    \item Ein Tick ist ein diskretes Wirkungs-Update der Raumzeit.
+    \item Entropie ist nicht statistisch („Unordnung“), sondern prozessual: Sie zählt die Anzahl der verarbeiteten Ticks.
 \end{itemize}
 
-Die Variation der Wirkung liefert die Feldgleichung:
-\begin{equation}
-G_{\mu\nu} + \Lambda_{\rm eff}(t) \, g_{\mu\nu} = \frac{8 \pi G}{c^4} \, \langle T_{\mu\nu}^{(\sigma)} \rangle \,,
-\end{equation}
-mit
-\begin{equation}
-\langle T_{\mu\nu}^{(\sigma)} \rangle = -\frac{2}{\sqrt{-g}} \frac{\delta S_{\rm m}^{(\sigma)}[g,\Psi]}{\delta g^{\mu\nu}} \,,
-\end{equation}
-die **stochastisch gemittelte Materieantwort** definiert.  
+\subsection{Hawking als Weltuhr}
+Die Relation $E_H \cdot t_H = \hbar$ besagt: Ein emittiertes Hawking-Quant entspricht exakt einem Takt der fundamentalen Uhr. Schwarze Löcher verdampfen nicht zufällig, sie arbeiten ihre Tick-Schuld ab.
 
-\subsection{Planck-kovariante Glättung}
+\section{Appendix: Der Rechenkern (Python-Skizze)}
 
-Die Mittelung erfolgt über den Kernel
-\begin{equation}
-K_{\sigma_P}(x,y) = \frac{1}{(2\pi)^2 \ell_\ast^3 \tau_\ast} 
-\exp\Bigg[
-- \frac{|\vec x - \vec y|^2}{2 \ell_\ast^2} 
-- \frac{(t_x - t_y)^2}{2 \tau_\ast^2}
-\Bigg],
-\end{equation}
-mit
-\begin{equation}
-\ell_\ast = c \, \sigma_P, \qquad \tau_\ast = \frac{\sigma_P}{c}, \qquad 
-\sigma_P = \frac{\hbar G}{c^4}.
-\end{equation}
+Eine numerische Implementierung der $\sigma_P$-Kalkulation:
 
-\subsection{Herleitung von $\Lambda_{\rm eff}(t)$}
-Die effektive Vakuumenergiedichte entsteht nicht durch ein statisches Feld, sondern durch die endliche Informationsdichte des kausalen Horizonts. Wenn wir die Planck-Zelle $\sigma_P$ über das gesamte kausale 4-Volumen $V_4 \approx R(t) \cdot ct$ mitteln, erhalten wir den Skalierungsfaktor $\alpha_\sigma$:
+\begin{lstlisting}[language=Python]
+import numpy as np
 
-\begin{equation}
-    \alpha_\sigma(t) := \frac{\sigma_P}{V_4^{eff}} \approx \frac{\sigma_P}{R(t) \cdot c t}
-\end{equation}
+hbar = 1.054e-34
+G = 6.674e-11
+c = 2.998e8
+kB = 1.381e-23
 
-Die effektive Krümmung $\Lambda_{\rm eff}$ ergibt sich aus der „Verdünnung“ der planckschen Krümmung $1/\ell_P^2$ um diesen Faktor:
+# Die fundamentale Zelle
+sigma_P = hbar * G / c**4
 
-\begin{equation}
-    \Lambda_{\rm eff}(t) = \frac{\alpha_\sigma(t)}{\ell_P^2} = \frac{\sigma_P}{R \cdot c t} \cdot \frac{1}{\ell_P^2}
-\end{equation}
+def tick_count(E, t):
+    """Berechnet die Anzahl der Ticks fuer einen Prozess (E, t)"""
+    return (E * t) / sigma_P
 
-Mit $\ell_P^2 = c \sigma_P$ folgt:
-\begin{equation}
-    \Lambda_{\rm eff}(t) = \frac{\sigma_P}{R \cdot c t \cdot c \sigma_P} = \frac{1}{c^2 R(t) t}
-\end{equation}
-Im heutigen Universum ($R(t) \approx c/H_0$ und $t \approx 1/H_0$) folgt daraus:
-\begin{equation}
-    \Lambda_{\rm eff}(t_0) \approx \frac{1}{c^2 (c/H_0) (1/H_0)} = \frac{H_0^2}{c^4} \quad (\text{Skalierung}) \implies \Lambda_{obs} \approx \frac{H_0^2}{c^2}
-\end{equation}
-Dies stimmt in der Größenordnung exakt mit den Beobachtungen überein ($\sim 10^{-52} \text{m}^{-2}$), ohne dass eine Feinabstimmung von $10^{120}$ Größenordnungen notwendig ist. Die „Dunkle Energie“ ist ein geometrischer Projektionseffekt.
+def entropy(E, t):
+    """Konvertiert Ticks in Entropie"""
+    return kB * tick_count(E, t)
 
-\section{Kernformeln}
-\begin{equation}
-\sigma_{\mathrm P} = \frac{\hbar\, G}{c^{4}}
-\end{equation}
+def alpha_G(M):
+    """Lineare Gravitationskopplung"""
+    return G * M / (hbar * c)
 
-\begin{equation}
-\alpha_{G}(M) = \frac{G M}{\hbar c}
-\end{equation}
+def chi(M):
+    """Quadratische Spin-2 Kopplung"""
+    return (G * M**2) / (hbar * c**3)
 
-\begin{equation}
-\chi(M) := \frac{G M^{2}}{\hbar c^{3}}
-\end{equation}
+def lambda_eff(R, t):
+    """Zeitabhaengige Kosmologische Konstante"""
+    return 1.0 / (c * R * t)
 
-\begin{equation}
-i = \frac{E\cdot t}{\sigma_P},\qquad i_{\max} = \frac{\hbar}{\sigma_P} = \frac{c^4}{G}
-\end{equation}
-
-\begin{equation}
-n_{\text{Tick}} \sim \frac{c^4}{G},\qquad \Delta A = \hbar
-\end{equation}
-
-\section{Entropie und Bekenstein-Kompatibilität}
-\subsection{Tick-Definition}
-Die fundamentale Zählgröße ist der Tick-Index $i$, definiert als integrierte Wirkung in Einheiten von $\sigma_P$:
-\begin{equation}
-    S = k_B \cdot N_{\rm ticks}
-\end{equation}
-
-\subsection{Beispiel: Schwarzschild-Schwarzes Loch}
-Für ein Schwarzes Loch der Masse $M$ ist der Ereignishorizont eine Fläche $A = 4\pi R_s^2$ mit $R_s = 2GM/c^2$. Die klassische Bekenstein-Hawking-Entropie lautet:
-\begin{equation}
-    S_{BH} = \frac{k_B c^3 A}{4 G \hbar} = \frac{k_B A}{4 \ell_P^2}
-\end{equation}
-In unserem Modell entspricht die Entropie der Anzahl der diskreten Raumzeit-Zellen auf dem Horizont. Wir nutzen die Identität $\ell_P^2 = c \sigma_P$:
-\begin{equation}
-    S_{BH} = \frac{k_B A}{4 c \sigma_P}
-\end{equation}
-Setzen wir $A = 16 \pi G^2 M^2 / c^4$ ein:
-\begin{equation}
-    N_{\rm ticks} = \frac{16 \pi G^2 M^2 / c^4}{4 c (\hbar G / c^4)} = \frac{4 \pi G M^2}{\hbar c}
-\end{equation}
-Dies ist dimensionslos und proportional zu $M^2$, konsistent mit der Informationskapazität. Der Faktor $4\pi$ ist geometrisch bedingt.
-
-Unser Ansatz $S = k_B N_{\rm ticks}$ reproduziert also exakt das Bekenstein-Verhalten, liefert aber eine anschauliche Interpretation: **Entropie ist die Anzahl der $\sigma_P$-Zellen, die geometrisch auf den Horizont projiziert werden.** Die "Ticks" sind hierbei die elementaren Raumzeit-Quanten, die den Horizont aufspannen.
-
-\section{Einheiten und Konstanten}
-\[
-[\hbar] = M L^2 T^{-1},\qquad [G]=M^{-1}L^3T^{-2},\qquad M_P^2=\frac{\hbar c}{G}
-\]
-
-\section{Symbolverzeichnis (kurz)}
-\begin{description}
-  \item[$\sigma_P$] Aktions‑Größe (Planck‑ähnlich), $\sigma_P=\hbar G/c^4$.
-  \item[$\alpha_G(M)$] Gravitationskopplung (Massenskala).
-  \item[$\chi(M)$] dimensionsloser Parameter $\propto GM^2/(\hbar c^3)$.
-  \item[$i$] Zählgröße / Tick‑Index: $i=E\,t/\sigma_P$.
-  \item[$\ell_P,t_P,m_P$] Planck‑Längen/Zeit/Masse.
-  \item[$k_B$] Boltzmann‑Konstante.
-\end{description}
+def hawking_rate(M):
+    """Tick-Rate der Evaporation"""
+    chi_val = chi(M)
+    return 1.0 / np.sqrt(chi_val)
+\end{lstlisting}
 
 \end{document}

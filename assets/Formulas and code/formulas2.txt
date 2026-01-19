@@ -30,7 +30,7 @@ Das ist tief, aber zugleich brutal einfach.
 
 ---
 
-### 2. Warum das Spin-2-Argument trägt
+### 2. Warum das Spin-2-Argument trägta
 
 Spin-2-Felder koppeln **quadratisch**:
 
