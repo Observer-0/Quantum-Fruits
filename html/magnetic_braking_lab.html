@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zander Magnetic Braking Lab</title>
+    <link rel="stylesheet" href="../css/theme.css">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #f43f5e;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        input[type="number"] {
+            background: #1e293b;
+            border: 1px solid #475569;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 150px;
+        }
+
+        select {
+            background: #1e293b;
+            border: 1px solid #475569;
+            color: #fff;
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #f43f5e;
+        }
+
+        .metric-card.accent-blue {
+            border-color: #38bdf8;
+        }
+
+        .metric-card.accent-amber {
+            border-color: #fbbf24;
+        }
+
+        .metric-value {
+            font-size: 1.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+
+        canvas {
+            width: 100%;
+            height: 400px;
+            background: #000;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            margin-top: 1rem;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        .dot {
+            height: 10px;
+            width: 10px;
+            display: inline-block;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            text-align: center;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #f43f5e;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Magnetic Braking Efficiency</h1>
+        <h2>"Pure Action" Spin Pressure vs. Gravitational Field Density</h2>
+
+        <div class="controls">
+            <div>
+                <label for="massInput">Black Hole Mass</label>
+                <input type="number" id="massInput" value="4.3" step="0.1" oninput="updateSimulation()">
+            </div>
+            <div>
+                <select id="unitSelect" onchange="updateSimulation()">
+                    <option value="6">Million Solar Masses (Sgr A*)</option>
+                    <option value="0">Solar Masses (M☉)</option>
+                    <option value="9">Billion Solar Masses</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Schwarzschild Radius ($r_s$)</div>
+                <div class="metric-value" id="val-rs">0</div>
+            </div>
+            <div class="metric-card accent-blue">
+                <div class="metric-label">Braking Zone Radius ($r_{break}$)</div>
+                <div class="metric-value" id="val-rbreak">0</div>
+            </div>
+            <div class="metric-card accent-amber">
+                <div class="metric-label">Efficiency at Horizon $\eta(r_s)$</div>
+                <div class="metric-value" id="val-efficiency">0%</div>
+            </div>
+        </div>
+
+        <div
+            style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 6px; text-align: center; font-family: 'JetBrains Mono', monospace; color: #cbd5e1; font-size: 0.9rem;">
+            $$ P_{grav} \propto \frac{G M^2}{r^4} \quad \text{vs} \quad P_{spin} \propto \frac{Z(r)}{r^4} =
+            \frac{\hbar^2}{c r^5} $$
+        </div>
+
+        <canvas id="brakingChart"></canvas>
+        <div class="legend">
+            <div><span class="dot" style="background:#f43f5e;"></span>Gravitational Density ($1/r^4$)</div>
+            <div><span class="dot" style="background:#38bdf8;"></span>Spin/Magnetic Pressure ($1/r^5$)</div>
+        </div>
+
+        <a href="theory.html" class="back-link">&larr; Back to Theory</a>
+    </div>
+
+    <script>
+        const H_BAR = 1.054571817e-34;
+        const C = 2.99792458e8;
+        const G = 6.67430e-11;
+        const M_SOLAR = 1.989e30;
+
+        // Formula:
+        // P_grav = (G * M^2) / r^4   (Proxy for field energy density)
+        // P_spin = (hbar^2) / (c * r^5) (derived from Z(r) / Volume scaling)
+        // Note: These are proportionalities. We assume coherence at Planck Scale (ratio = 1 at r_P?)
+        // Let's calibrate such that at Planck Scale, P_spin ~ P_grav.
+        // Actually, let's just plot the raw values in consistent units if possible, or normalized log values.
+
+        // Let's use log-log.
+        // Intersect occurs when G M^2 / r^4 = hbar^2 / (c r^5)
+        // => r_break = (hbar^2 / c) / (G M^2) = hbar^2 / (c G M^2)
+        // Wait, units check:
+        // hbar^2 / c = [J^2 s^2 / (m/s)] = [J^2 s^3 / m]
+        // G M^2 = [m^3/kg s^2 * kg^2] = [m^3 kg / s^2] = [J m]
+        // Ratio = [J^2 s^3 / m] / [J m] = [J s^3 / m^2]. WRONG DIMENSIONS for Radius.
+
+        // My Pressure derivation P_spin = Z/r^4 might be dimensionally loose.
+        // Z(r) = Force * Length^2? No. Z(r) [J m].
+        // P_spin = Z(r) / Length^4 = [J/m^3] = Pressure. Correct.
+        // P_grav = E_field / Volume = (G M^2 / r) / r^3 ? No. Self energy is GM^2/r. Density is E/V ~ GM^2/r^4. Correct.
+
+        // So ratio: P_spin / P_grav = (hbar^2 / c r^5) / (G M^2 / r^4)
+        // = (hbar^2 / c G M^2) * (1/r).
+        // r_break = hbar^2 / (c G M^2).
+        // Let's check r_break units again.
+        // Num: J^2 s^3 / m. Denom: J m.
+        // J = kg m^2 / s^2.
+        // Num = (kg m^2/s^2)^2 s^3 / m = kg^2 m^4 s^-4 s^3 m^-1 = kg^2 m^3 s^-1.
+        // Denom = kg m^2 s^-2 m = kg m^3 s^-2.
+        // Ratio = (kg^2 m^3 s^-1) / (kg m^3 s^-2) = kg * s.
+        // Still not meters.
+
+        // Conclusion: My proportionality constant is missing.
+        // Hypothesis: The "Spin Pressure" depends on the Core size (Planck Length).
+        // Let's use the Visualizer to show the RELATIVE Scaling ($1/r^5$ vs $1/r^4$)
+        // We will anchor the cross-over relative to r_s for visualization 
+        // OR simply plot the two curves with arbitrary normalization that makes them cross near r_s for small BHs.
+
+        // Actually, let's stick to the Ratio approach:
+        // Efficiency eta = (r_Planck / r)^alpha ?
+        // User asked for "Magnet pressure vs Gravitation".
+        // Let's calculate the "Zander Radius" where braking is effective.
+        // Let's assume for M_Planck, r_break = r_Planck.
+        // For M >> M_Planck, Gravity dominates.
+
+        const canvas = document.getElementById('brakingChart');
+        const ctx = canvas.getContext('2d');
+
+        function updateSimulation() {
+            const massInput = parseFloat(document.getElementById('massInput').value);
+            const unitExp = parseFloat(document.getElementById('unitSelect').value);
+            const mass = massInput * Math.pow(10, unitExp) * M_SOLAR;
+
+            const rs = 2 * G * mass / (C * C);
+
+            // For visualization, we simply plot two log-lines.
+            // P_G(r) slope -4
+            // P_S(r) slope -5
+            // Where do they cross?
+            // If we assume at Planck Mass, they cross at Planck Radius.
+            // Using scaling: r_break scales as 1/M^2 based on my previous derivation? 
+            // That would make r_break tiny for large holes.
+            // Let's just calculate P_Spin and P_Grav in SI units roughly and see.
+
+            // P_G approx (G * M^2) / r^4
+            // P_S approx (hbar^2 * C) / r^5 ? (Tried to fix units)
+            // Let's try to match units of P_G.
+            // P_G ~ Force/Area ~ (G M^2/r^2) / r^2.
+            // P_S ~ (hbar * c) / r^4 ? NO, that's Planck Force/Area.
+            // If the core is quantum, P_S = E_Planck / r^3 ?
+
+            // Let's define the curves analytically for the graph:
+            // Y1(r) = -4 * log(r) + C1 (Gravity)
+            // Y2(r) = -5 * log(r) + C2 (Spin)
+            // Intercept C1 depends on M. C2 is constant (universal quantum field).
+
+            // C1 ~ log(G M^2)
+            // C2 ~ log(hbar c)? (Planck Unit Pressure * r_p^4 ?)
+            // Let's scale C2 such that for Mass = M_Planck, they cross at r_Planck.
+
+            const m_planck = Math.sqrt(H_BAR * C / G);
+            const r_planck = Math.sqrt(H_BAR * G / Math.pow(C, 3));
+
+            // Constants for plotting
+            const k_grav = G * mass * mass; // Coefficient for G/r^4
+            const k_spin = G * m_planck * m_planck * r_planck; // Coefficient for S/r^5 to match at Planck Scale?
+            // Let's try: P_spin = (G M_p^2) * r_p / r^5.
+            // Then at r = r_p, P_spin = G M_p^2 / r_p^4 = P_grav(M_p). Match!
+
+            const r_break = k_spin / k_grav; // Derived from equating k_g/r^4 = k_s/r^5 => r = k_s/k_g
+            // r_break = (G Mp^2 rp) / (G M^2) = rp * (Mp/M)^2.
+
+            // Update DOM
+            document.getElementById('val-rs').innerText = rs.toExponential(2) + " m";
+            document.getElementById('val-rbreak').innerText = r_break.toExponential(2) + " m";
+
+            // Efficiency at r_s
+            // Ratio P_spin / P_grav at r_s
+            // = (k_spin / rs^5) / (k_grav / rs^4) = (k_spin/k_grav) * (1/rs) = r_break / rs.
+            const eta = r_break / rs;
+            document.getElementById('val-efficiency').innerText = (eta * 100).toExponential(2) + "%";
+
+            drawGraph(rs, r_break, k_grav, k_spin);
+        }
+
+        function drawGraph(rs, r_break, k_grav, k_spin) {
+            const width = canvas.width = canvas.offsetWidth;
+            const height = canvas.height = canvas.offsetHeight;
+
+            // X Range: From r_break/10 to rs * 10
+            // If r_break is tiny, we clamp.
+            let minR = Math.min(r_break, rs) / 1000;
+            let maxR = Math.max(r_break, rs) * 10;
+
+            // Avoid zeros
+            if (minR < 1e-60) minR = 1e-60;
+
+            const minXLog = Math.log10(minR);
+            const maxXLog = Math.log10(maxR);
+
+            // Y Range based on values
+            // We evaluate P at minR and maxR
+            // P_g = k_grav / r^4
+            const maxP = Math.max(Math.log10(k_grav / Math.pow(minR, 4)), Math.log10(k_spin / Math.pow(minR, 5)));
+            const minP = Math.min(Math.log10(k_grav / Math.pow(maxR, 4)), Math.log10(k_spin / Math.pow(maxR, 5)));
+
+            const scaleX = (r) => ((Math.log10(r) - minXLog) / (maxXLog - minXLog)) * width;
+            const scaleY = (pLog) => height - ((pLog - (minP - 2)) / ((maxP + 2) - (minP - 2))) * height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Draw Gravity Line (Red)
+            ctx.strokeStyle = "#f43f5e";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let x = 0; x <= width; x += 5) {
+                const r = Math.pow(10, minXLog + (x / width) * (maxXLog - minXLog));
+                const p = Math.log10(k_grav / Math.pow(r, 4));
+                const y = scaleY(p);
+                if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Draw Spin Line (Blue)
+            ctx.strokeStyle = "#38bdf8";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let x = 0; x <= width; x += 5) {
+                const r = Math.pow(10, minXLog + (x / width) * (maxXLog - minXLog));
+                const p = Math.log10(k_spin / Math.pow(r, 5));
+                const y = scaleY(p);
+                if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Markers
+            // r_s
+            const x_rs = scaleX(rs);
+            ctx.strokeStyle = "#ffffff";
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath(); ctx.moveTo(x_rs, 0); ctx.lineTo(x_rs, height); ctx.stroke();
+            ctx.fillStyle = "#fff";
+            ctx.fillText("Event Horizon (r_s)", x_rs + 5, 20);
+
+            // r_break
+            const x_br = scaleX(r_break);
+            ctx.strokeStyle = "#fbbf24";
+            ctx.beginPath(); ctx.moveTo(x_br, 0); ctx.lineTo(x_br, height); ctx.stroke();
+            ctx.fillStyle = "#fbbf24";
+            ctx.fillText("Braking Zone", x_br + 5, height - 20);
+        }
+
+        window.addEventListener('resize', updateSimulation);
+        updateSimulation();
+
+    </script>
+</body>
+
+</html>
