@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hubble Flow & Entropy Lab</title>
+    <link rel="stylesheet" href="../css/theme.css">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            background: linear-gradient(to right, #38bdf8, #f43f5e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 1rem;
+            border-radius: 8px;
+            border-top: 3px solid;
+            transition: all 0.3s;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+
+        canvas {
+            width: 100%;
+            height: 400px;
+            background: #000;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            text-align: center;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+
+        .phase-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Cosmic Breathing & Hubble Tension</h1>
+        <h2>Constant Information Flow ($S=1$) vs. Oscillating Expansion ($H_0$)</h2>
+
+        <div class="metrics-grid">
+            <div class="metric-card" style="border-color: #10b981;">
+                <div class="metric-label">Information Flux ($\dot{S}$)</div>
+                <div class="metric-value" style="color: #10b981;">1.00</div>
+                <div style="font-size: 0.7rem; opacity: 0.7;">Time never stops</div>
+            </div>
+
+            <div class="metric-card" id="card-hubble" style="border-color: #f43f5e;">
+                <div class="metric-label">Hubble Parameter ($H_0$)</div>
+                <div class="metric-value" id="val-hubble">70.0</div>
+                <div style="font-size: 0.7rem; opacity: 0.7;">km/s/Mpc</div>
+            </div>
+
+            <div class="metric-card" id="card-phase" style="border-color: #fbbf24;">
+                <div class="metric-label">Cosmic Phase</div>
+                <div class="metric-value" id="val-phase" style="font-size: 1.1rem; margin-top: 0.3rem;">Transition</div>
+                <div style="font-size: 0.7rem; opacity: 0.7;">Thermodynamic State</div>
+            </div>
+        </div>
+
+        <div style="position: relative;">
+            <canvas id="flowCanvas"></canvas>
+            <div id="phase-tag" class="phase-indicator">PHASE: NEUTRAL</div>
+        </div>
+
+        <p
+            style="text-align: center; color: #64748b; font-size: 0.9rem; margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            The <strong>Green River</strong> is the relentless flow of Information/Entropy ($S=1$). The <strong>Colored
+                Wave</strong> is the breathing universe (Expansion/Contraction).
+            <br><br>
+            CMB measures the Blue Phase (67). Supernovae measure the Red Phase (73).
+        </p>
+
+        <a href="theory.html" class="back-link">&larr; Back to Theory</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('flowCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let time = 0;
+        const speed = 0.05;
+
+        // Data history
+        const historySize = 300;
+        let flowHistory = new Array(historySize).fill(1.0); // Constant 1
+        let hLineHistory = new Array(historySize).fill(0.0); // Sine wave
+
+        // Particles for the "River"
+        let particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push({
+                x: Math.random() * 800,
+                y: Math.random() * 100, // Top section
+                speed: 1 + Math.random() * 2
+            });
+        }
+
+        function loop() {
+            // Update Physics
+            time += speed;
+
+            // Hubble Oscillation: 67 to 73. Center 70. Amp 3.
+            // Slow breathing cycle
+            const cycleSpeed = 0.02;
+            const phaseRaw = Math.sin(time * 0.5); // -1 to 1
+            const H = 70 + 3 * phaseRaw;
+
+            // Updates
+            document.getElementById('val-hubble').innerText = H.toFixed(2);
+
+            const cardH = document.getElementById('card-hubble');
+            const cardP = document.getElementById('card-phase');
+            const valP = document.getElementById('val-phase');
+            const tag = document.getElementById('phase-tag');
+
+            let phaseColor = "#fff";
+
+            if (H > 71) {
+                // Hot / Expansion (Red)
+                phaseColor = "#f43f5e";
+                valP.innerText = "HOT (Expansion)";
+                valP.style.color = phaseColor;
+                cardH.style.borderColor = phaseColor;
+                cardP.style.borderColor = phaseColor;
+                tag.innerText = "PHASE: DARK ENERGY DOMINATED";
+                tag.style.color = phaseColor;
+            } else if (H < 69) {
+                // Cold / Contraction (Blue)
+                phaseColor = "#38bdf8";
+                valP.innerText = "COLD (Contraction)";
+                valP.style.color = phaseColor;
+                cardH.style.borderColor = phaseColor;
+                cardP.style.borderColor = phaseColor;
+                tag.innerText = "PHASE: DARK MATTER DOMINATED";
+                tag.style.color = phaseColor;
+            } else {
+                phaseColor = "#fbbf24";
+                valP.innerText = "Transition";
+                valP.style.color = phaseColor;
+                cardH.style.borderColor = phaseColor;
+                cardP.style.borderColor = phaseColor;
+                tag.innerText = "PHASE: EQUILIBRIUM";
+                tag.style.color = phaseColor;
+            }
+
+            // Update Graph Arrays
+            hLineHistory.push(H);
+            if (hLineHistory.length > historySize) hLineHistory.shift();
+
+            draw(H, phaseColor);
+            requestAnimationFrame(loop);
+        }
+
+        function draw(currentH, color) {
+            const w = canvas.width = canvas.offsetWidth;
+            const h = canvas.height = canvas.offsetHeight;
+
+            // Clear with slight trail for expensive feel? No, standard clear is cleaner for graphs.
+            // But lets tint background based on phase
+            // Map H (67-73) to opacity of Red/Blue
+            let bgStyle = 'rgba(15, 23, 42, 1)';
+            if (currentH > 70) {
+                const opacity = (currentH - 70) / 10;
+                ctx.fillStyle = `rgba(50, 0, 0, ${opacity})`;
+            } else {
+                const opacity = (70 - currentH) / 10;
+                ctx.fillStyle = `rgba(0, 0, 50, ${opacity})`;
+            }
+            ctx.fillStyle = '#0f172a'; // Reset base
+            ctx.fillRect(0, 0, w, h);
+
+            // --- TOP SECTION: FLUX (S=1) ---
+            // Draw "River" of particles constantly moving right
+            ctx.fillStyle = 'rgba(16, 185, 129, 0.1)';
+            ctx.fillRect(0, 20, w, 80); // River bed
+
+            particles.forEach(p => {
+                p.x += p.speed;
+                if (p.x > w) p.x = -10;
+
+                ctx.fillStyle = '#10b981';
+                ctx.globalAlpha = 0.6;
+                ctx.beginPath();
+                ctx.arc(p.x, 20 + (p.y % 80), 2, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1.0;
+
+            // Draw S=1 Line
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(0, 60); ctx.lineTo(w, 60);
+            ctx.stroke();
+            ctx.fillStyle = '#10b981';
+            ctx.font = "14px 'Inter', sans-serif";
+            ctx.fillText("Constant Information Flux (S=1)", 10, 40);
+
+
+            // --- BOTTOM SECTION: HUBBLE WAVE ---
+            const graphY = h - 150;
+            const amp = 80;
+
+            // Center Line (70)
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.beginPath(); ctx.moveTo(0, graphY); ctx.lineTo(w, graphY); ctx.stroke();
+
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            for (let i = 0; i < historySize; i++) {
+                const x = (i / (historySize - 1)) * w;
+                // Map H (67-73) to Y
+                // 70 -> graphY
+                // 73 -> graphY - amp
+                // 67 -> graphY + amp
+                const val = hLineHistory[i];
+                const y = graphY - ((val - 70) / 3) * amp;
+
+                if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            ctx.fillStyle = color;
+            ctx.fillText("Hubble Param (H)", 10, graphY - amp - 20);
+
+            // Current Value Marker
+            const curY = graphY - ((currentH - 70) / 3) * amp;
+            ctx.beginPath(); ctx.arc(w - 5, curY, 5, 0, Math.PI * 2); ctx.fill();
+
+            // Labels
+            ctx.fillStyle = '#64748b';
+            ctx.fillText("73 km/s/Mpc (Hot)", w - 120, graphY - amp);
+            ctx.fillText("67 km/s/Mpc (Cold)", w - 120, graphY + amp + 10);
+
+        }
+
+        loop(); // Start
+
+    </script>
+</body>
+
+</html>
