@@ -262,8 +262,8 @@ Planck repulsion arises from thermodynamic regularization.
 
 ### 4. σ_P as a Fundamental Quantum
 
-Every Planck volume = 1 tick of spacetime.  
-Entropy = Number of ticks.
+Every Planck volume = 1 Information-Count of spacetime.  
+Entropy = Number of Information-Counts.
 
 ---
 

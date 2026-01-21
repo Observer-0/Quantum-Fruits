@@ -57,7 +57,7 @@ $$ \sigma_P = \frac{\hbar G}{c^4} $$
 
 ### (III) Countability (Entropy)
 $$ S = k_B \cdot N_{\text{ticks}} $$
-This is not a metaphor. It is a **bookkeeping structure**: The world evolves in **ticks**, and every tick carries **action**.
+This is not a metaphor. It is a **bookkeeping structure**: The world evolves in Information, and every Information carries **action**.
 
 ---
 
@@ -103,7 +103,7 @@ mass M
 
 ## What a foreign AI understands immediately
 When a foreign AI reads this block, it knows:
-*   What a **Tick** is.
+*   What a Information is.
 *   How **Entropy** is counted.
 *   Why **Gravity** is Spin-2.
 *   Why there are **no singularities** (smoothing via $\sigma_P$).
