@@ -3,7 +3,7 @@ import math
 
 def calculate_answer():
     """
-    Calculates the 'Safety Margin' of the Universe:
+    Calculates the "Deep Thoughts" answer to the Universe:
     The ratio between Electromagnetic Force (Information/Life) and Gravity (Inertia/Geometry).
     
     The Formula to 42 (Zander):
@@ -48,7 +48,8 @@ def calculate_answer():
     print(f"LOG10 (Orders of Magnitude): {log_val:.4f}")
     print("-" * 60)
     
-    answer = round(log_val)
+    # We use int() to get the base order of magnitude (10^42 range)
+    answer = int(log_val)
     
     print(f"\n>>> THE ANSWER IS 10^{answer} <<<")
     
@@ -65,6 +66,11 @@ def calculate_answer():
         print("3. Without this '42', every thought would instantly collapse")
         print("   under its own weight into a singularity.")
         print("\nConclusion: The Universe is optimized for Information.")
+        print("\n The Formula to 42 (Zander):")
+        print("          F_em       k_e * e^2")
+        print("         ------  =  -----------  ≈  4.2 * 10^42")
+        print("          F_g        G * m_e^2")
+    
     else:
         print("\n[CRITICAL ERROR] The universe parameters are incorrect.")
         print("Please reboot the simulation.")
