@@ -6,7 +6,7 @@ def calculate_answer():
     Calculates the 'Safety Margin' of the Universe:
     The ratio between Electromagnetic Force (Information/Life) and Gravity (Inertia/Geometry).
     
-    The Formula:
+    The Formula to 42 (Zander):
          F_em       k_e * e^2
         ------  =  -----------  ≈  4.2 * 10^42
          F_g        G * m_e^2
