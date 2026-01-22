@@ -40,34 +40,34 @@ System-Ticks are no longer global. The `Tick-Rate` is locally coupled to the ent
 
 ---
 
-### Evolution-Script: Thermal Spacetime Feedback (TSF)
+### Evolution Script: Thermal Spacetime Feedback (TSF)
 
-**Objective:** Implementierung eines dynamischen, thermodynamischen Feedback-Loops in das QSTF-Framework, um die Hubble-Tension und den zyklischen Charakter der Expansion abzubilden.
+**Objective:** Implementation of a dynamic, thermodynamic feedback loop into the QSTF framework to map the Hubble tension and the cyclic character of expansion.
 
-#### 1. Integration der Thermodynamischen Zustandsgleichung
+#### 1. Integration of the Thermodynamic Equation of State
 
-Ersetze die statische Expansion durch einen **Information-Phase-Shift**:
+Replace the static expansion with an **Information Phase Shift**:
 
-* **Input:** Nutze die fundamentale Zelle $\sigma_P$ als „Gitter-Konstante“.
-* **Logik:** Definiere die Expansion nicht als Wachstum des Raums, sondern als **Entropie-Verdünnung** ($dS/dV > 0$).
-* **Feedback:** Wenn die lokale Informationsdichte die Planck-Grenze erreicht (Action Core), schaltet das System von Gravitation auf **Repulsion** um (Planck-Kraft $F_P = c^4/G$).
+* **Input:** Use the fundamental cell $\sigma_P$ as a "grid constant."
+* **Logic:** Define expansion not as growth of space, but as **entropy dilution** ($dS/dV > 0$).
+* **Feedback:** When the local information density reaches the Planck limit (Action Core), the system switches from gravity to **repulsion** (Planck force $F_P = c^4/G$).
 
-#### 2. Visualisierung des „Universums-Atems“
+#### 2. Visualization of the "Universe's Breath"
 
-* **Phase A (Inflation):** Schnelle Ausbreitung der Pixel-Cluster, getrieben durch den hohen Initial-Druck bei $t \approx t_P$.
-* **Phase B (Stabilisierung):** Gravitative Clusterbildung (Galaxien-Kerne), simuliert durch die Kopplung $G$.
-* **Phase C (Entropie-Expansion):** Schwächer werdende Gravitation führt zu einer beschleunigten Ausbreitung (Hubble-Tension als Indikator für den Phasenübergang von „Heiß-Gekoppelt“ zu „Kalt-Verdünnt“).
+* **Phase A (Inflation):** Rapid spread of pixel clusters, driven by the high initial pressure at $t \approx t_P$.
+* **Phase B (Stabilization):** Gravitational cluster formation (galaxy cores), simulated through the coupling $G$.
+* **Phase C (Entropic Expansion):** Weakening gravity leads to an accelerated spread (Hubble tension as an indicator for the phase transition from "hot-coupled" to "cold-diluted").
 
-#### 3. Der „Observer-Relativismus“ (Shannon-Layer)
+#### 3. "Observer Relativism" (Shannon Layer)
 
-* Implementiere eine Funktion, die die **Wahrnehmung der Zeit** an die lokale Entropie koppelt.
-* In Regionen hoher Dichte (nahe $\sigma_P$) verlangsamt sich der System-Tick, um die Informationsintegrität zu wahren (Holographisches Prinzip).
+* Implement a function that couples the **perception of time** to local entropy.
+* In high-density regions (near $\sigma_P$), the system tick slows down to preserve information integrity (Holographic Principle).
 
-#### 4. UI/UX Note (Die Schönheit des Zyklus)
+#### 4. UI/UX Note (The Beauty of the Cycle)
 
-* **Style:** Die Darstellung soll nicht technisch-kalt, sondern organisch-pulsierend sein.
-* **Color-Shift:** Nutze Blue-Shifts für die Kompression (Gravitation übernimmt) und Red-Shifts für die Entspannung (Expansion gewinnt).
-* **Core-Element:** Der Kern von Andromeda (und alle Quasare) müssen als helle Zentren maximaler Planck-Kraft sichtbar sein, die das Gewebe der Sandbox stabilisieren.
+* **Style:** The representation should not be technically cold, but organically pulsating.
+* **Color-Shift:** Use blue shifts for compression (gravity takes over) and red shifts for relaxation (expansion wins).
+* **Core-Element:** The core of Andromeda (and all quasars) must be visible as bright centers of maximum Planck force, stabilizing the sandbox fabric.
 
 #### 5. Final Phase: The One-Quantum Hypothesis (PoV Monism)
 

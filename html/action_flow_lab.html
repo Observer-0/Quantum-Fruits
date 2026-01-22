@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zander Action Flow</title>
+    <link rel="stylesheet" href="../css/theme.css">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #10b981;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .formula-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #10b981;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            color: #fff;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 1rem;
+            border-radius: 8px;
+            border-top: 3px solid #10b981;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+
+        canvas {
+            width: 100%;
+            height: 400px;
+            background: #000;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            text-align: center;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #10b981;
+        }
+
+        .highlight {
+            color: #10b981;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Unitary Action Flow</h1>
+        <h2>The Arrow of Time is Constant</h2>
+
+        <div class="formula-box">
+            $$ K_{\text{inv}} \cdot \Theta_Z = 1.0 $$
+            <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
+                Geometric Coupling $\times$ Zander Potential = Unity
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card" style="border-color: #3b82f6;">
+                <div class="metric-label">Amplitude (Oscillation)</div>
+                <div class="metric-value" id="val-amp" style="color: #3b82f6;">0.00</div>
+                <div style="font-size: 0.7rem; opacity: 0.7;">$|\psi| \in [0, 1]$</div>
+            </div>
+
+            <div class="metric-card" style="border-color: #10b981;">
+                <div class="metric-label">Information Flux</div>
+                <div class="metric-value" id="val-flux" style="color: #10b981;">1.00</div>
+                <div style="font-size: 0.7rem; opacity: 0.7;">Constant (Unitary)</div>
+            </div>
+
+            <div class="metric-card" style="border-color: #f43f5e;">
+                <div class="metric-label">Entropy Counter ($S$)</div>
+                <div class="metric-value" id="val-entropy" style="color: #f43f5e;">0</div>
+                <div style="font-size: 0.7rem; opacity: 0.7;">Strictly Increasing</div>
+            </div>
+        </div>
+
+        <canvas id="flowCanvas"></canvas>
+
+        <p style="text-align: center; color: #64748b; font-size: 0.9rem; margin-top: 1rem;">
+            Even though the wave function oscillates (Particle/Wave dualism), the <strong>Information Flux</strong> is
+            constant.<br>
+            Time does not stop. The flow of action $\hbar$ is continuous.
+        </p>
+
+        <a href="theory.html" class="back-link">&larr; Back to Theory</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('flowCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let time = 0;
+        let entropy = 0;
+        const speed = 0.05;
+
+        // Data history for plotting
+        const historySize = 200;
+        let fluxHistory = new Array(historySize).fill(1.0);
+        let ampHistory = new Array(historySize).fill(0.0);
+
+        function loop() {
+            // Update Physics
+            time += speed;
+            entropy += speed * 10; // Arbitrary scaler
+
+            // Amplitude: Sine wave squared (probability) or just Sine
+            // User said "schwankt zwischen 1 und 0". So sin^2 or 0.5 + 0.5sin
+            const amp = 0.5 + 0.5 * Math.sin(time * 2);
+            const flux = 1.0;
+
+            // Update History
+            ampHistory.push(amp);
+            if (ampHistory.length > historySize) ampHistory.shift();
+
+            fluxHistory.push(flux);
+            if (fluxHistory.length > historySize) fluxHistory.shift();
+
+            // Update DOM
+            document.getElementById('val-amp').innerText = amp.toFixed(3);
+            document.getElementById('val-flux').innerText = flux.toFixed(2);
+            document.getElementById('val-entropy').innerText = Math.floor(entropy).toLocaleString();
+
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        function draw() {
+            const w = canvas.width = canvas.offsetWidth;
+            const h = canvas.height = canvas.offsetHeight;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Grids
+            ctx.strokeStyle = '#334155';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2);
+            ctx.stroke();
+
+            // Draw Amplitude Wave (Blue)
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let i = 0; i < historySize; i++) {
+                const x = (i / (historySize - 1)) * w;
+                // Map 0..1 to h..0 (scaled)
+                // Let's use bottom half for Amp
+                const y = h - 50 - (ampHistory[i] * 100);
+                if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            ctx.fillStyle = '#3b82f6';
+            ctx.fillText("Amplitude |ψ|²", 10, h - 160);
+
+            // Draw Flux Line (Green, Constant)
+            // Let's draw it in the top half
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let i = 0; i < historySize; i++) {
+                const x = (i / (historySize - 1)) * w;
+                const val = fluxHistory[i];
+                const y = 100; // Fixed height
+                if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Draw "River" effect for Flux
+            const flowOffset = (time * 50) % 20;
+            ctx.fillStyle = 'rgba(16, 185, 129, 0.2)';
+            ctx.fillRect(0, 80, w, 40); // The pipe
+
+            // Little particles in the pipe
+            ctx.fillStyle = '#10b981';
+            for (let i = 0; i < 20; i++) {
+                const px = (i * (w / 20) + flowOffset * 5) % w;
+                ctx.beginPath();
+                ctx.arc(px, 100, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.fillStyle = '#10b981';
+            ctx.fillText("Information Flux (Unitary)", 10, 70);
+
+            // Connect them?
+            // Draw vertical lines showing that Amp is just a property, but Flow is the substance
+            if (Math.floor(time * 10) % 5 === 0) {
+                // Blink effect or something?
+            }
+        }
+
+        loop();
+
+    </script>
+</body>
+
+</html>

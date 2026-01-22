@@ -110,12 +110,12 @@ class EntropyToySim {
         // Labels
         ctx.fillStyle = '#fff';
         ctx.font = '12px Inter';
-        ctx.fillText('Zander-Entropie <S_Z>', margin, margin - 10);
-        ctx.fillText('Zeit (Action -> Mass)', w / 2, h - margin / 4);
+        ctx.fillText('Zander-Entropy <S_Z>', margin, margin - 10);
+        ctx.fillText('Time (Action -> Mass)', w / 2, h - margin / 4);
 
         // Draw Legend / Info
-        ctx.fillStyle = '#rgba(59, 130, 246, 0.8)';
-        ctx.fillText(`Aktuelle S_Z: ${this.calculateS().toExponential(2)} J/K`, margin + 10, margin + 20);
+        ctx.fillStyle = 'rgba(59, 130, 246, 0.8)';
+        ctx.fillText(`Current S_Z: ${this.calculateS().toExponential(2)} J/K`, margin + 10, margin + 20);
         ctx.fillStyle = '#fbbf24';
         ctx.fillText(`Action-State P(hf): ${(this.p0 * 100).toFixed(1)}%`, margin + 10, margin + 40);
         ctx.fillStyle = '#ef4444';
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (toggleBtn) {
         toggleBtn.onclick = () => {
             sim.toggle();
-            toggleBtn.textContent = sim.running ? 'Simulation pausieren' : 'Simulation starten';
+            toggleBtn.textContent = sim.running ? 'Pause Simulation' : 'Start Simulation';
         };
     }
 

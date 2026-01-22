@@ -1,216 +1,288 @@
+
 import math
 import numpy as np
-import matplotlib.pyplot as plt
 
 # ============================================================
-# Fundamental constants (precise CODATA 2018/2019)
+# Fundamental constants (SI)
 # ============================================================
-hbar = 1.054571817e-34      # J·s
-c    = 2.99792458e8          # m/s
-G    = 6.67430e-11           # m³ kg⁻¹ s⁻²
-kB   = 1.380649e-23          # J/K
+
+hbar = 1.054_571_817e-34      # J·s
+c    = 2.997_924_58e8         # m/s
+G    = 6.674_30e-11           # m^3 kg^-1 s^-2
+kB   = 1.380_649e-23          # J/K
 pi   = math.pi
 
 # ============================================================
-# Zander σ_P framework – Quanta of Action-Area
+# Zander framework: spacetime grain σ_P and derived scales
 # ============================================================
-sigmaP = hbar * G / c**4                 # fundamental quantum of action-area [m·s]
-lP = math.sqrt(sigmaP * c)                # Planck length [m]
-tP = math.sqrt(sigmaP / c)                # Planck time [s]
-MP = math.sqrt(hbar * c / G)              # Planck mass [kg]
-Z_int = hbar**2 / c                       # interaction quantum [J²·s / m]
-M_sun = 1.989e30                          # solar mass [kg]
 
-# Maximal update rate of spacetime
-planck_frequency = 1.0 / tP               # ~1.86e43 Hz
+# Fundamental spacetime two-measure (your σ_P)
+sigmaP = hbar * G / c**4             # [m·s]
 
-# ============================================================
-# Core Framework Functions (from Formelsammlung)
-# ============================================================
-def alpha_G(M: float) -> float:
-    """Gravitationskopplung (Massenskala): G * M / (hbar * c)"""
-    return (G * M) / (hbar * c)
+# Planck scales derived from σ_P and c
+lP = math.sqrt(sigmaP * c)           # Planck length [m]
+tP = math.sqrt(sigmaP / c)           # Planck time [s]
 
-def chi(M: float) -> float:
-    """Dimensionloser Parameter chi: G * M^2 / (hbar * c^3)"""
-    return (G * M**2) / (hbar * c**3)
+# Planck mass
+MP = math.sqrt(hbar * c / G)         # [kg]
 
-def tick_index(energy: float, time: float) -> float:
-    """Tick-Index i = (E * t) / sigma_P."""
-    return (energy * time) / sigmaP
+# Interaction quantum Z_int = ħ² / c
+Z_int = hbar**2 / c                  # [J²·s / m]
 
-def i_max_constant() -> float:
-    """i_max = hbar / sigma_P = c^4 / G (Planck Force)."""
-    return c**4 / G
+# Solar mass
+M_sun = 1.989e30                     # [kg]
 
-def bh_tick_count(M: float) -> float:
-    """N_ticks for a BH: 4 * pi * chi(M)"""
-    return 4.0 * pi * chi(M)
 
 # ============================================================
-# Basic GR / Hawking quantities
+# Basic GR quantities
 # ============================================================
+
 def schwarzschild_radius(M: float) -> float:
+    """Schwarzschild radius r_s = 2GM / c^2."""
     return 2.0 * G * M / c**2
 
+
+def kretschmann_scalar(M: float, r: float) -> float:
+    """
+    Kretschmann scalar K for Schwarzschild:
+    K = 48 G^2 M^2 / (c^4 r^6)  [1/m^4].
+    """
+    return 48.0 * G**2 * M**2 / (c**4 * r**6)
+
+
+def planck_curvature_radius(M: float) -> float:
+    """
+    Radius r_Pl where curvature becomes Planckian:
+    K * l_P^4 ~ 1  =>  r^6 = 48 G^2 M^2 l_P^4 / c^4
+    """
+    num = 48.0 * G**2 * M**2 * lP**4
+    return (num / c**4) ** (1.0 / 6.0)
+
+
+# ============================================================
+# Hawking quantities (standard formulas with π from geometry)
+# ============================================================
+
 def hawking_temperature(M: float) -> float:
-    M_safe = np.maximum(M, 1e-99)
-    return hbar * c**3 / (8.0 * pi * G * M_safe * kB)
+    """Hawking temperature: T_H = ħ c^3 / (8 π G M k_B)."""
+    return hbar * c**3 / (8.0 * pi * G * M * kB)
+
 
 def bh_entropy(M: float) -> float:
+    """
+    Bekenstein–Hawking entropy:
+    S = k_B c^3 A / (4 ħ G), A = 4π r_s^2.
+    """
     rs = schwarzschild_radius(M)
-    A = 4.0 * pi * rs**2
+    A  = 4.0 * pi * rs**2
     return kB * c**3 * A / (4.0 * hbar * G)
 
+
 def lifetime_semiclassical(M0: float) -> float:
+    """Total evaporation time (Hawking, continuum spacetime):
+       τ = 5120 π G^2 M^3 / (ħ c^4)
+    """
     return 5120.0 * pi * G**2 * M0**3 / (hbar * c**4)
+
 
 # ============================================================
 # Evaporation models
 # ============================================================
+
 def evaporate_semiclassical(M0: float, nsteps: int = 2000):
-    """Standard continuum Hawking evaporation (non-unitary)."""
+    """
+    Continuum spacetime Hawking evaporation:
+    dM/dt = - ħ c^4 / (15360 π G^2 M^2).
+    Uses analytic solution M(t) = M0 (1 - t/τ)^(1/3).
+    """
     tau = lifetime_semiclassical(M0)
-    t = np.linspace(0.0, tau, nsteps)
+    t   = np.linspace(0.0, tau, nsteps)   # [s]
+
+    # Analytic mass curve in this approximation
     M = M0 * np.maximum(1.0 - t / tau, 0.0) ** (1.0 / 3.0)
+
+    # Avoid zero-mass calls
     M_safe = np.maximum(M, 1e-99)
+
     TH = hawking_temperature(M_safe)
-    S = bh_entropy(M_safe)
-    S_rad = S[0] * t / tau                       # simple lost entropy proxy
+    S  = bh_entropy(M_safe)
+
+    # Simple "information-losing" radiation entropy proxy:
+    S_rad = S[0] * t / tau
+
     return t, M, TH, S, S_rad, tau
 
-# ============================================================
-# Zander Alternative: Spin-Mass Interplay (Action vs. Gravity)
-# ============================================================
 
-def simulate_spin_mass_interplay(M0: float, nsteps: int = 2000):
+def evaporate_sigmaP_quantized(
+    M0: float,
+    nsteps: int = 2000,
+    Mrem: float = MP,
+    alpha: float = 4.0
+):
     """
-    Alternative model: Interaction between core action (hbar) 
-    and external mass burden (G).
-    - Initial phase: High spin, low load -> High 'Action Potential'.
-    - Accretion phase: Mass builds up, 'brakes' the core spin.
-    - Result: A peak in 'Pure Attraction' followed by a decline.
-    """
-    t = np.linspace(0.0, 10.0, nsteps) # Arbitrary time scale for demo
-    
-    # Core potential starts at max action i_max
-    potential_action = np.ones_like(t) * i_max_constant()
-    
-    # Mass burden grows (accretion / 'last' from outside)
-    mass_load = M0 * (1.0 - np.exp(-0.5 * t))
-    
-    # Braking effect: Mass reibs against the core rotation
-    braking_force = (G * mass_load) / (schwarzschild_radius(M0)**2 + lP**2)
-    
-    # Net Effective Attraction (Potential)
-    # The 'Spin-up' is represented by the initial gap where mass_load is low
-    potential_net = potential_action - braking_force
-    
-    # Page-like return: Transformation of this stress into 'Radiation' (Ticks)
-    # When braking wins, the system 'cools' or transforms into stars/radiation
-    transformation_rate = np.maximum(braking_force / potential_action, 0.0)
-    
-    return t, potential_net, mass_load, transformation_rate
+    σ_P-regularized evaporation with Planck remnant.
 
-
-def evaporate_full_quantum(M0: float, nsteps: int = 3000):
+    - Uses Hawking-like dM/dt for M >> M_P.
+    - Near M ~ M_P, mass loss is smoothly suppressed by (M^2 + α M_P^2) in the denominator.
+    - Temperature is capped by a grain-scale limit derived from Z_int and σ_P.
+    - Page-like entropy curve: rises, then returns to a finite S_rem (information not lost).
     """
-    Full quantum σ_P-regularized model (Unitary).
-    """
-    tau0 = 5120.0 * pi * G**2 * M0**3 / (hbar * c**4)
-    t = np.linspace(0.0, tau0 * 1.3, nsteps)
+    # Baseline semiclassical timescale
+    tau0 = lifetime_semiclassical(M0)
+    t = np.linspace(0.0, tau0, nsteps)
     dt = t[1] - t[0]
 
-    Mrem = MP
-    T_max = Z_int / (sigmaP * kB)
-    
-    M = np.empty_like(t)
+    M  = np.empty_like(t)
     TH = np.empty_like(t)
-    S = np.empty_like(t)
-    
+    S  = np.empty_like(t)
+
+    # Natural grain temperature from Z_int and σ_P
+    # T_max ~ Z_int / (σ_P k_B) = (ħ^2 / c) / (σ_P k_B)
+    T_max = Z_int / (sigmaP * kB)
+
     M_curr = M0
+
     for i, ti in enumerate(t):
         M[i] = M_curr
         S[i] = bh_entropy(max(M_curr, 1e-99))
-        TH[i] = min(hawking_temperature(max(M_curr, 1e-99)), T_max)
-        
+
+        # Standard Hawking temperature, then grain-cap
+        TH_curr = hawking_temperature(max(M_curr, 1e-99))
+        TH[i]   = min(TH_curr, T_max)
+
         if M_curr > Mrem:
-            alpha = 4.0
+            # σ_P-smoothed Hawking mass loss:
+            # dM/dt ~ - const / (M^2 + α M_P^2)
             denom = M_curr**2 + alpha * MP**2
-            dMdt = -hbar * c**4 / (15360.0 * pi * G**2 * denom)
+            dMdt  = - hbar * c**4 / (15360.0 * pi * G**2 * denom)
             M_curr = max(M_curr + dMdt * dt, Mrem)
         else:
             M_curr = Mrem
-            
-    idx_rem = np.argmax(M <= Mrem * 1.01)
-    idx_rem = len(t)-1 if idx_rem == 0 else idx_rem
-    tau_eff = t[idx_rem]
-    
-    S0 = bh_entropy(M0)
-    Srem = bh_entropy(Mrem)
+
+    # Effective time until remnant is reached
+    idx_rem = np.argmax(M <= (Mrem + 1e-40))
+    if idx_rem == 0 and M[0] > Mrem:
+        idx_rem = len(t) - 1
+    tau_eff = t[idx_rem] if idx_rem > 0 else t[-1]
+
+    # Page-like radiation entropy (unitary scenario)
+    S0   = bh_entropy(M0)
+    S_rem = bh_entropy(Mrem)
     S_rad = np.zeros_like(t)
+
     t_page = 0.5 * tau_eff
-    
     for i, ti in enumerate(t):
         if ti <= t_page:
+            # Rise to ~ S0/2
             S_rad[i] = 0.5 * S0 * (ti / t_page)
         else:
+            # Return from ~S0/2 down to Srem
             span = max(tau_eff - t_page, 1e-99)
-            frac = min((ti - t_page) / span, 1.0)
-            S_rad[i] = Srem + (0.5 * S0 - Srem) * math.exp(-4.0 * frac)
-        if ti > tau_eff:
-            S_rad[i] = Srem
-            
-    return t, M, TH, S, S_rad, tau_eff, Srem
+            frac = (ti - t_page) / span
+            S_rad[i] = (1.0 - frac) * (0.5 * S0 - S_rem) + S_rem
+
+        if ti >= tau_eff:
+            S_rad[i] = S_rem
+
+    return t, M, TH, S, S_rad, tau_eff, S_rem
+
 
 # ============================================================
-# Main demo
+# Singularitätsdiagnostik 
 # ============================================================
+
+def singularity_diagnostics(M: float):
+    """
+    Returns some diagnostic data for the Schwarzschild geometry of mass M:
+    - r_s: Schwarzschild radius
+    - r_Pl: radius where curvature becomes Planckian (K l_P^4 ~ 1)
+    - ratio: r_Pl / r_s
+    """
+    rs   = schwarzschild_radius(M)
+    r_pl = planck_curvature_radius(M)
+    ratio = r_pl / rs if rs > 0 else float("inf")
+    return rs, r_pl, ratio
+
+
+# ============================================================
+# Sample set (10 black holes)
+# ============================================================
+
+SAMPLES = [
+    ("PBH",          1e12),
+    ("PBH",          1e15),
+    ("PBH",          1e18),
+    ("stellar",      5 * M_sun),
+    ("stellar",      10 * M_sun),
+    ("stellar",      30 * M_sun),
+    ("intermediate", 1e3 * M_sun),
+    ("intermediate", 1e4 * M_sun),
+    ("supermassive", 1e6 * M_sun),
+    ("supermassive", 1e9 * M_sun),
+]
+
+
+
 if __name__ == "__main__":
-    print("=== Zander σ_P Framework – Quanta of Action-Area ===")
-    print(f"σ_P (quantum of action-area) = {sigmaP:.3e} m·s")
-    print(f"Planck time t_P = {tP:.3e} s  →  maximal spacetime update rate ≈ {planck_frequency:.3e} Hz")
-    print(f"i_max (Planck Force) = {i_max_constant():.3e}")
-    
-    # Example BH Tick checks
-    m_test = 1e12 # PBH
-    print(f"BH (M={m_test:.1e}kg) Tick Count: {bh_tick_count(m_test):.3e}")
+    import argparse
+    parser = argparse.ArgumentParser(
+        description="BH evaporation: semi-classical vs σ_P-quantized"
+    )
+    parser.add_argument(
+        "--plot", action="store_true",
+        help="Show example Page-like curves for representative black holes"
+    )
+    args = parser.parse_args()
 
-    # Glühbirne analogy
-    power = 60.0
-    char_time = 1.0
-    n_ticks_bulb = tick_index(power, char_time)
-    print(f"60 W Glühbirne (1s): ≈ {n_ticks_bulb:.3e} ticks")
-    print(f"→ extremely quiet compared to i_max {i_max_constant():.3e}\n")
-
-    # 3. Zander Alternative: Spin-Mass Interplay (Action vs Gravity)
-    print("--- Alternative: Spin-Mass Interplay (Action vs Gravity) ---")
-    m_test_spin = 1e30 # ~1 solar mass core
-    t_sm, pot_net, m_load, trans_rate = simulate_spin_mass_interplay(m_test_spin)
-    
-    print(f"Testing Core (M={m_test_spin:.1e}kg):")
-    print(f"  Initial Action Potential: {pot_net[0]:.3e} Newtons (Planck-Force limit)")
-    idx_peak = np.argmin(pot_net) # Technically for this model it's a decline, 
-                                 # but let's check the braking impact
-    print(f"  Max Mass Load reached: {m_load[-1]:.3e} kg")
-    print(f"  Final Net Potential (after braking): {pot_net[-1]:.3e} Newtons")
-    print(f"  Transformation Rate (Braking win): {trans_rate[-1]*100:.1f}%")
-    print("-" * 40)
-    print("Fazit: Der Kern wird durch die Masse 'belastet', was die Krümmung stabilisiert.")
+    print("=== Zander σ_P framework ===")
+    print(f"σ_P   = {sigmaP:.3e}  [m·s]")
+    print(f"l_P   = {lP:.3e}  [m]")
+    print(f"t_P   = {tP:.3e}  [s]")
+    print(f"M_P   = {MP:.3e}  [kg]")
+    print(f"Z_int = {Z_int:.3e}  [J²·s/m]")
     print()
 
-    # 4. Example BHs
-    samples = [
-        ("Primordial BH", 1e12),
-        ("Stellar BH", 10 * M_sun),
-        ("Supermassive BH", 1e9 * M_sun),
-    ]
+    # Representative objects: PBH, stellar, supermassive
+    reps = [SAMPLES[0], SAMPLES[4], SAMPLES[9]]
 
-    for name, M0 in samples:
-        t_sc, _, _, _, _, tau_sc = evaporate_semiclassical(M0)
-        t_q, _, _, _, _, tau_q, Srem = evaporate_full_quantum(M0)
+    for name, M0 in reps:
+        rs, r_pl, ratio = singularity_diagnostics(M0)
 
-        print(f"[{name}] M0 = {M0:.3e} kg")
-        print(f"  Semiclassical lifetime: {tau_sc:.3e} s → evaporates to nothing")
-        print(f"  Full quantum lifetime : {tau_q:.3e} s → stable remnant (S_rem/k_B ≈ {Srem/kB:.3e})")
+        t_sc, M_sc, TH_sc, S_sc, Srad_sc, tau_sc = evaporate_semiclassical(M0)
+        t_q,  M_q,  TH_q,  S_q,  Srad_q,  tau_q, Srem = evaporate_sigmaP_quantized(M0)
+
+        print(f"[{name}]  M0 = {M0:.3e} kg")
+        print(f"  r_s      = {rs:.3e} m")
+        print(f"  r_Pl     = {r_pl:.3e} m  (K l_P^4 ~ 1)")
+        print(f"  r_Pl/r_s = {ratio:.3e}")
+        print(f"  Semi-classical: tau = {tau_sc:.3e} s,  T_H(M0) = {hawking_temperature(M0):.3e} K")
+        print(f"  σ_P-quantized:  tau_eff = {tau_q:.3e} s,  S_rem / k_B ≈ {Srem/kB:.3e}")
         print()
+
+    if args.plot:
+        import matplotlib.pyplot as plt
+
+        fig, axes = plt.subplots(1, 3, figsize=(13, 4), constrained_layout=True)
+
+        for ax, (name, M0) in zip(axes, reps):
+            t_sc, _, _, _, Srad_sc, tau_sc = evaporate_semiclassical(M0)
+            t_q,  _, _, _, Srad_q,  tau_q, Srem = evaporate_sigmaP_quantized(M0)
+
+            # Normalized radiation entropy over time
+            ax.plot(t_sc / tau_sc,
+                    Srad_sc / max(np.max(Srad_sc), 1e-99),
+                    label='Continuum (Hawking)', color='red')
+
+            ax.plot(t_q / max(t_q[-1], 1e-99),
+                    Srad_q / max(np.max(Srad_q), 1e-99),
+                    label='σ_P-quantized', color='blue')
+
+            ax.set_title(f"{name} BH")
+            ax.set_xlabel(r"$t/\tau$")
+            ax.set_ylabel(r"$S_{\mathrm{rad}}/S_{0}$")
+            ax.set_xlim(0, 1)
+            ax.set_ylim(0, 1.05)
+            if ax == axes[-1]:
+                ax.legend(loc='lower left', fontsize='small')
+
+        plt.show()

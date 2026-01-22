@@ -1,87 +1,85 @@
 # Information Paradox 
 
-
 ## 1. Bekenstein–Hawking ↔ Shannon
 
-Bekenstein–Hawking Entropie (S) einer Schwarzen Loch Oberfläche A:
+Bekenstein–Hawking entropy (S) of a black hole surface A:
 
 $$
 S_{BH} = \frac{k_B A}{4 \ell_P^2}
 $$
 
-In Bits (Shannon) entspricht dies:
+In bits (Shannon) this corresponds to:
 
 $$
 N_{bits} = \frac{S_{BH}}{k_B \ln 2} = \frac{A}{4 \ell_P^2 \ln 2}
 $$
 
-Die Quantifizierung in Bits zählt die Anzahl unabhängiger Ja/Nein‑Entscheidungen, die zur Beschreibung des Systems nötig sind.
+Quantification in bits counts the number of independent Yes/No decisions necessary to describe the system.
 
 ## 2. Information
 
+Properties:
+- Value range: {0,1} — 1 means "Information present / signal", 0 means "no signal / null return".
+- Conservation: In idealized unitary evolution, the Zander bit cannot be lost; a null return is a valid, measurable output value.
 
-Eigenschaften:
-- Wertebereich: {0,1} — 1 bedeutet "Information vorhanden / Signal", 0 bedeutet "kein Signal / Null‑Return".
-- Konservierung: Bei idealisierter unitärer Evolution kann das Zander‑Bit nicht verloren gehen; ein Null‑Return ist ein gültiger, messbarer Ausgangswert.
+Conclusion: Information loss (in the sense of lost bits) is impossible if one takes the binary protocol correctly into account (null returns carry information). The paradox shifts from "physical loss" to "encoding/compression/decoding".
 
-Folgerung: Informationsverlust (im Sinne von verlorenen Bits) ist unmöglich, wenn man das Binär‑Protokoll korrekt berücksichtigt (Null‑Returns tragen Information). Das Paradoxon verschiebt sich von "physischem Verlust" zu "Kodierung/Kompression/Decodierung".
+## 3. Binary Modeling of Collapse
 
-## 3. Binäre Modellierung des Kollapses
+Consider a superposition with many states. The collapse (or final decoding) reduces the description to:
 
-Betrachte eine Superposition mit vielen Zuständen. Der Kollaps (oder die finale Dekodierung) reduziert die Beschreibung auf:
+- `z = 1` (core yields measurable information) or
+- `z = 0` (core yields null return, which itself is a valid data point).
 
-- `z = 1` (Kern liefert messbare Information) oder
-- `z = 0` (Kern liefert Null‑Return, das selbst ein valider Datenpunkt ist).
+Thus, every multi-part quantum description of a black box is transformable to exactly 1 meta-bit plus protocol log, which makes the input complexity reproducible.
 
-Damit ist jede vielgliedrige Quantenbeschreibung einer Black‑Box auf genau 1 Meta‑Bit plus Protokoll‑Log transformierbar, das die Eingangs‑Komplexität reproduzierbar macht.
+## 4. Suggestion: Protocol API (conceptual)
 
-## 4. Vorschlag: Protokoll‑API (konzeptionell)
-
-Jeder Kollaps/Ereignis sollte mindestens folgendes protokollieren:
+Every collapse/event should log at least the following:
 
 - `timestamp` (UTC)
 - `event_id` (UUID)
-- `input_complexity` (z. B. Anzahl unterscheidbarer Mikro‑Zustände oder Entropieschätzer)
-- `zander_bit` (0 oder 1)
-- `payload_summary` (falls `bit==1`, kurze Hash/Code der dekomprimierten Information)
+- `input_complexity` (e.g., number of distinguishable micro-states or entropy estimators)
+- `zander_bit` (0 or 1)
+- `payload_summary` (if `bit==1`, short hash/code of the decompressed information)
 
-Dieses Log garantiert Nachvollziehbarkeit ohne Informationsverlust — auch wenn nur `zander_bit==0` zurückgegeben wird.
+This log guarantees traceability without information loss — even if only `zander_bit==0` is returned.
 
-## 5. Nächste Schritte / Implementierung
+## 5. Next Steps / Implementation
 
-- Minimal‑Prototyp: einfache Log‑API (JSONL), Zander‑Bit Entscheidungsfunktion (Threshold auf Amplitude/Wahrscheinlichkeit).
-- Verbindung zur vorhandenen `\sigma_P`‑Struktur: Zander‑Bit kann als Kernel‑Signal pro `\sigma_P`‑Zelle gespeichert werden.
+- Minimal Prototype: simple log API (JSONL), Zander bit decision function (threshold on amplitude/probability).
+- Connection to existing `\sigma_P` structure: Zander bit can be stored as a kernel signal per `\sigma_P` cell.
 
 ---
 
-Kurze Referenzen und Formeln sind in den vorhandenen Dateien (`README.md`, `html/theory.html`) verlinkt und konsistent gehalten.
+Short references and formulas are linked and kept consistent in the existing files (`README.md`, `html/theory.html`).
 
-## Principle of Quantum Relativism (Zander‑Axiom)
+## Principle of Quantum Relativism (Zander Axiom)
 
-Anstatt $\hbar$ als gegebene Konstante zu akzeptieren, zerlegen wir seine Dimensionen und lesen sie als physikalischen Bauplan für die Kopplung von Kausalität und Raum.
+Instead of accepting $\hbar$ as a given constant, we decompose its dimensions and read them as a physical blueprint for the coupling of causality and space.
 
-1) Zerlegung von $[\hbar^2]$:
+1) Decomposition of $[\hbar^2]$:
 
 $$[\hbar^2] = M^2\,L^4\,T^{-2}$$
 
-- $M^2$ (Die Quellen): Zwei Massen, die miteinander in Wechselwirkung treten. Ohne Quellen keine Quantenwirkung.
-- $T^{-2}$ (Die Gleichzeitigkeit): Die Frequenzkomponenten der Wechselwirkung — zwei Takte $T^{-1}\cdot T^{-1}$, die Synchronisation der Teilnehmer.
-- $L^4$ (Das Wirkvolumen): Der kombinierten Beitrag aus Raumvolumen ($L^3$) und relativer Distanz ($L$), die Informationsübertragung erfordert.
+- $M^2$ (The sources): Two masses interacting with each other. No quantum effect without sources.
+- $T^{-2}$ (The simultaneity): The frequency components of the interaction — two clocks $T^{-1}\cdot T^{-1}$, the synchronization of participants.
+- $L^4$ (The action volume): The combined contribution of space volume ($L^3$) and relative distance ($L$) required for information transfer.
 
-2) $\sigma_P$ als relativer Vermittler:
+2) $\sigma_P$ as a relative mediator:
 
-Das fundamentale Raumzeit‑Quantum
+The fundamental spacetime quantum
 $$\sigma_P = L\cdot T$$
-ist die kleinste Raumzeit‑Zelle, die festlegt, welche minimale Kombination aus Raum ($L$) und Zeit ($T$) erforderlich ist, Information zwischen zwei Quellen zu übertragen.
+is the smallest spacetime cell that determines which minimal combination of space ($L$) and time ($T$) is required to transfer information between two sources.
 
-3) Konsequenzen für Geometrie und Information:
+3) Consequences for Geometry and Information:
 
-- Binäre Realität: Information wird als Zustand gezählt — `1` (Signal) oder `0` (Null‑Return als gültige Information). Entropie reduzierbar auf binäre Entscheide; das Paradoxon wird zur Kodierungsfrage.
-- Weg mit überflüssigen $4\pi$‑Faktoren als universelle Flächeninterpreter: Systeme sind Informationsmatrizen ($r_s^2$) mit lokalen, diskreten Protokollen.
+- Binary reality: Information is counted as a state — `1` (signal) or `0` (null return as valid information). Entropy reducible to binary decisions; the paradox becomes a question of encoding.
+- Away with superfluous $4\pi$ factors as universal area interpreters: Systems are information matrices ($r_s^2$) with local, discrete protocols.
 
-4) Harte Grenze statt Singularität:
+4) Hard limit instead of singularity:
 
-- Maximale Krümmung wird durch $\sigma_P$ begrenzt; unendliche Krümmungen sind physikalisch nicht erreichbar.
-- Maximale Kraft ist weiterhin $c^4/G$; das Universum „pixelat“ an dieser Grenze — keine Singularität, nur ein Informations‑Sättigungszustand pro Zelle.
+- Maximum curvature is limited by $\sigma_P$; infinite curvatures are physically unreachable.
+- Maximum force remains $c^4/G$; the universe "pixelates" at this limit — no singularity, only an information saturation state per cell.
 
-Kurzform: Quantenmechanik ist die notwendige Folge einer getakteten Raumzeit, in der Masse nicht nur krümmt, sondern taktet. $\hbar$ wird als zusammengesetztes Maß der Quellen, der Gleichzeitigkeit und des Wirkvolumens lesbar.
+Short form: Quantum mechanics is the necessary consequence of a clocked spacetime in which mass not only curves but clocks. $\hbar$ becomes readable as a composite measure of sources, simultaneity, and action volume.

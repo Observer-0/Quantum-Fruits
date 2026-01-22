@@ -1,147 +1,205 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kinematic Motor Lab — Quantum Fruits</title>
-    <link rel="stylesheet" href="../css/motor.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinematic Motor Black Hole Lab — From Quantum to Cosmos</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/motor.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 </head>
 
 <body>
+  <div class="lab-container" style="max-width: 1400px; padding: 2rem;">
+    <a href="theory.html" class="back-link">&larr; Back to Theory</a>
 
-    <div class="motor-container">
-        <h1 class="lab-title">The Kinematic Motor</h1>
-        <p class="lab-subtitle">Interplay: Pure Action (Spin) vs. Mass Burden (Gravity)</p>
-
-        <div class="interplay-canvas-wrapper">
-            <canvas id="motorCanvas"></canvas>
-            <div id="magneticField"></div>
-        </div>
-
-        <div class="controls-panel">
-            <div class="control-group">
-                <label for="spinRate">Core Action Frequency (Hz)</label>
-                <input type="range" id="spinRate" min="1" max="100" value="80">
-            </div>
-
-            <div class="control-group">
-                <label for="massBurden">Newtonian Mass Burden (G-Load)</label>
-                <input type="range" id="massBurden" min="0" max="100" value="10">
-            </div>
-
-            <div class="stats-display">
-                <div class="stat-item">
-                    <div class="stat-value" id="netPotential">1.21e44</div>
-                    <div class="stat-label">Net Action Potential (N)</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="magneticFlux">High</div>
-                    <div class="stat-label">Magnetische Feldstärke</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="tickDensity">Max</div>
-                    <div class="stat-label">Tick-Dichte (σ_P)</div>
-                </div>
-            </div>
-        </div>
-
-   <div class="info-box">
-  Der <span id="statusText">Pure Action Core</span> nutzt reine Wirkung (ℏ) als Antriebsquelle.
-  Zunehmende <span id="loadText">Massenlast</span> wirkt wie eine Bremse, 
-  die den Spin abbremst und Wirkung schrittweise in klassische Schwerkraft 
-  und Strahlung transformiert.
-</div>
-
-        <a href="theory.html" style="margin-top:2rem; color:#666; text-decoration:none; font-size:0.8rem;">Zurück zur
-            Theorie</a>
+    <div class="header" style="text-align: center; margin-bottom: 3rem;">
+      <h1 class="glow-text" style="font-size: 3.5rem;">Kinematic Black Hole Motor</h1>
+      <p style="font-size: 1.2rem; color: #94a3b8;">The ℏ-Spin Stator vs. The Mass Rotor Burden</p>
     </div>
 
-    <section class="theory-cards">
-  <article class="theory-card">
-    <h2>Pure Action Core</h2>
-    <p>Im Grenzfall ohne Masse trägt der Kern Energie fast ausschließlich als Drehimpuls 
-       \(E_{\text{core}} \sim \hbar \omega_{\max}\). Spin erzeugt Magnetfeld und eine 
-       wirkungsbasierte „Anziehung“ ℏ.</p>
-  </article>
+    <!-- Main Simulator Section -->
+    <div class="grid-2" style="grid-template-columns: 1.5fr 1fr; gap: 2rem; align-items: start;">
 
-  <article class="theory-card">
-    <h2>Mass Loading & Braking</h2>
-    <p>Wachsende Umgebungsmassen wirken wie eine mechanische Last. Sie koppeln an den Spin 
-       und bremsen ihn zugunsten klassischer Gravitation (G, M_ext, r_s).</p>
-  </article>
+      <div class="qg-card"
+        style="padding: 0; min-height: 700px; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, #0a1122, #000); border: 2px solid rgba(56, 189, 248, 0.2); box-shadow: 0 0 50px rgba(0,0,0,0.8);">
+        <canvas id="motorCanvas" style="width: 100%; height: auto; display: block;"></canvas>
+      </div>
 
-  <article class="theory-card">
-    <h2>Kinematic Transformer</h2>
-    <p>Der Black Hole‑Kern funktioniert wie ein Kinematik‑Motor: Anfangs reine Wirkung, 
-       später Massenlast, Wärme und Strahlung – statt statischem „Abgrund“.
-   Analogie: Stator / Feldspule ↔ Pure Action Core Beim E‑Motor erzeugt das Feld (Stator/Erregerwicklung) ein Drehmoment, bevor überhaupt Last dran hängt. 
-   Der „Pure Action Core“ ist genau so eine Quelle: reine Wirkung ∼ℏω, maximaler Spin, starkes Magnetfeld, noch kaum „Belastung“ durch Masse.
-   Rotor mit Last ↔ Mass Burden / Braking.
-   Hängst man beim E‑Motor Last an die Welle, sinkt die Drehzahl, Strom/Verlustleistung steigen, ein Teil der „reinen“ Feldenergie geht in Wärme, Reibung, Arbeit raus. 
-   Diese Rolle übernimmt die akkretierte Masse am Ereingnishorizont: Sie bremst den Spin, koppelt Energie in klassische Gravitation, Hitze, Strahlung und irgendwann Sternbildung.
-   Ohne Masselast läuft der Core wie ein E‑Motor im Leerlauf: reine Wirkung (ħ), hoher Spin. Mit wachsender Massenlast wird er abgebremst, seine Energie landet in Gravitation, Wärme und Strahlung.
-    </p>
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div class="qg-card">
+          <h3 class="glow-text">The Kinematic Transformer</h3>
+          <p style="font-size: 0.9rem; color: #94a3b8; line-height: 1.6;">
+            In the Kinematic Motor, the <b>Quantization of Spacetime ($\sigma_P$)</b> acts like the stator field. It
+            provides the discrete limit for the action potential.
+          </p>
 
-    </p>
-  </article>
-</section>
+          <div class="formula-block" style="margin: 1.5rem 0;">
+            $$ E_{\text{core}} \sim \hbar \omega_{\max} + \eta M_{\text{load}} \text{ (Rotational Burden)} $$
+          </div>
 
-<section class="theory-section">
-  <h2>Die Page-Kurve – warum sie wichtig ist</h2>
+          <div class="control-group" style="margin-bottom: 1.5rem;">
+            <label for="spinRate">Core Action Frequency (ℏ-Spin)</label>
+            <input type="range" id="spinRate" min="1" max="100" value="80">
+          </div>
 
-  <p>
-    Die <strong>Page-Kurve</strong> beschreibt, wie sich die Informationsmenge (Entropie) eines
-    Schwarzen Lochs im Laufe seines Lebens entwickelt. Sie wurde von Don Page vorgeschlagen, um zu
-    testen, ob Schwarze Löcher mit der Quantenmechanik vereinbar sind.
-  </p>
+          <div class="control-group" style="margin-bottom: 1.5rem;">
+            <label for="massBurden">Mass Rotor Burden (G-Braking)</label>
+            <input type="range" id="massBurden" min="0" max="100" value="10">
+          </div>
 
-  <h3>Was sagt die Page-Kurve aus?</h3>
-  <p>
-    Wenn ein Schwarzes Loch Teilchen abstrahlt, scheint die Strahlung am Anfang rein zufällig zu sein:
-    Die gemessene Entropie außerhalb steigt. Später aber, so fordert die Quantenmechanik, muss die
-    Strahlung immer mehr Information über das Innere enthalten, sodass die Entropie nach einem
-    Maximum wieder abfällt – die Kurve hat also eine „Glockenform“ statt einfach immer weiter zu
-    wachsen.
-  </p>
-  <p>
-    Dieses Maximum heißt <em>Page-Zeit</em>. Es markiert den Wendepunkt: Ab hier beginnt das Schwarze
-    Loch, Information netto zurück ins Universum zu geben, statt sie scheinbar zu verschlucken.
-  </p>
+          <button id="mergerBtn" class="action-btn" style="width: 100%; margin-top: 1rem;">Initiate Hierarchical
+            Merger</button>
+        </div>
 
-  <h3>Warum ist das wichtig?</h3>
-  <p>
-    Eine Kurve, die nur steigt und nie fällt, würde bedeuten: Information verschwindet dauerhaft in
-    einem Loch – das widerspricht der Quantenmechanik. Eine Page-Kurve mit Anstieg, Maximum und
-    Rückgang ist das Minimal-Kriterium für eine <strong>unitäre</strong> (informations-erhaltende)
-    Entwicklung.
-  </p>
-  <p>
-    Jede ernsthafte Lösung des Informationsparadoxons muss daher eine Page-artige Entropieentwicklung
-    liefern: Erst mehr Unordnung und Verschränkung, später geordnete Rückgabe der Information in die
-    Umgebung.
-  </p>
+        <div class="monitor-grid" style="grid-template-columns: 1fr; gap: 1rem;">
+          <div class="qg-card" style="padding: 1.5rem; border-left: 4px solid var(--accent-primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="stat-label">Action Potential ($i_{max}$)</span>
+              <span class="stat-value" id="netPotential"
+                style="font-size: 1.4rem; color: var(--accent-primary);">--</span>
+            </div>
+          </div>
+          <div class="qg-card" style="padding: 1.5rem; border-left: 4px solid var(--accent-secondary);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="stat-label">Spacetime State</span>
+              <span class="stat-value" id="tickDensity"
+                style="font-size: 1.1rem; color: var(--accent-secondary);">Initializing...</span>
+            </div>
+          </div>
+          <!-- New: Non-Thermality Monitor -->
+          <div class="qg-card"
+            style="padding: 1rem; border-left: 4px solid #818cf8; background: rgba(129, 140, 248, 0.05);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="stat-label" style="font-size: 0.7rem;">Non-Thermality ($c_0$)</span>
+              <span style="font-size: 0.8rem; color: #818cf8; font-family: monospace;">Departure from Noise</span>
+            </div>
+            <div
+              style="margin-top: 0.5rem; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+              <div id="c0Bar" style="height: 100%; width: 40%; background: #818cf8; transition: width 0.3s ease;">
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <h3>Wie passt das zu unserem Spin-Motor?</h3>
-  <p>
-    In diesem Modell startet der Kern nach der Supernova als fast „lastfreier“ Spin-Motor: reine
-    Wirkung, hoher Drehimpuls, starkes Magnetfeld. Während immer mehr Materie eingesammelt und
-    wieder herausgestreut wird, wächst die Entropie des Gesamtsystems – die Page-Kurve steigt.
-  </p>
-  <p>
-    Sobald die Gravitation der äußeren Massenhülle den inneren Quantenspin bremst, wird ein
-    Wendepunkt erreicht: der Page-Zeitpunkt. Ab hier wandelt der Motor seine Drehimpulsenergie immer
-    stärker in Strahlung und neue Struktur um. Die verborgene Entropie im Kern nimmt ab, während
-    Information in der Umgebung wieder zugänglich wird – die Page-Kurve fällt, ohne dass Information
-    wirklich verloren geht.
-  </p>
-</section>
+        <div class="qg-card" style="border-color: #38bdf8; background: rgba(56, 189, 248, 0.05); text-align: center;">
+          <span id="statusText" class="glow-text" style="font-weight: 800; letter-spacing: 1px;">Ready</span>
+        </div>
+      </div>
+    </div>
 
+    <!-- The Page Curve Visualization -->
+    <section style="margin-top: 4rem;">
+      <h2 class="section-title">Live Information Paradox Resolve</h2>
+      <div class="qg-card" style="border-color: #ef4444; position: relative;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; align-items: center;">
+          <h3 style="color: #ef4444; margin: 0;">Unitarity Tracker (The Page Curve)</h3>
+          <div style="display: flex; gap: 1.5rem; font-size: 0.8rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <div style="width: 12px; height: 12px; background: rgba(239, 68, 68, 0.3); border: 1px solid #ef4444;">
+              </div>
+              <span style="color: #ef4444;">Hawking (Information Loss)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <div style="width: 12px; height: 12px; background: #38bdf8;"></div>
+              <span style="color: #38bdf8;">Zander (Unitary Return)</span>
+            </div>
+          </div>
+        </div>
 
+        <div id="pageCurvePlot"
+          style="height: 300px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 0 20px; gap: 4px; box-shadow: inset 0 0 20px #000;">
+          <!-- Live bars injected here -->
+        </div>
+        <div
+          style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #94a3b8; font-family: 'Outfit', sans-serif; padding: 1rem 10px;">
+          <span>$\sigma_P$ Formation</span>
+          <span style="color: #ef4444; font-weight: 800;">Page Time (Max Entropy)</span>
+          <span>Unitary Restoration</span>
+        </div>
+      </div>
+    </section>
 
+    <!-- Deep Theory Section -->
+    <div class="grid-2" style="margin-top: 4rem; gap: 2rem;">
 
-    <script src="../js/kinematic-motor.js"></script>
+      <div class="qg-card">
+        <h3 class="glow-text">The Kinematic Analogy</h3>
+        <p style="color: #cbd5e1; line-height: 1.8;">
+          <strong>Stator / Field Coil &harr; Pure Action Core:</strong><br>
+          In an electric motor, the field (stator) generates a torque before any load is attached. The
+          <em>Pure Action Core</em> is such a source: pure action $ \sim \hbar \omega $, maximum spin,
+          strong magnetic field, yet hardly any "load" from mass.
+        </p>
+        <p style="color: #cbd5e1; line-height: 1.8; margin-top: 1rem;">
+          <strong>Rotor with Load &harr; Mass Burden / Braking:</strong><br>
+          If you attach a load to the shaft, speed decreases and heat increases. Accreted mass at the event horizon
+          takes on this role: it brakes the spin, coupling energy into <strong>classical gravity</strong>,
+          heat, radiation, and eventually star formation.
+        </p>
+        <p style="color: #cbd5e1; line-height: 1.8; margin-top: 1rem;">
+          <strong>The Spacetime Quantization ($\sigma_P$):</strong><br>
+          The <b>Quantization of Spacetime itself</b> ($\sigma_P$) defines the discrete mesh through which this
+          kinematic energy flows.
+          It is the fundamental unit of action-area that prevents singularities.
+        </p>
+      </div>
+
+      <div class="qg-card">
+        <h3 class="glow-text" style="color: var(--accent-secondary);">Why the Page Curve Matters</h3>
+        <p style="color: #cbd5e1; line-height: 1.8;">
+          The Page curve describes how information develops over a black hole's lifetime.
+          A curve that only rises would mean information vanishes. A Page curve with a rise, maximum, and fall
+          is the criteria for a <em>unitary</em> (information-preserving) evolution.
+        </p>
+        <p style="color: #cbd5e1; line-height: 1.8; margin-top: 1rem;">
+          <strong>Unitary Restoration:</strong><br>
+          In our motor model, the "falling" entropy represents the core giving its ordered spin-energy back to the
+          universe as new structure.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Detailed Logic Cards -->
+    <div class="grid-2" style="margin-top: 2rem; gap: 2rem;">
+      <div class="qg-card">
+        <h4
+          style="color: var(--accent-primary); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+          Pure Action Core</h4>
+        <p style="font-size: 0.9rem; line-height: 1.6; color: #94a3b8;">
+          In the zero-mass limit, the core carries energy almost exclusively as angular momentum. Spin generates a
+          magnetic field and an action-based "attraction" $\hbar$.
+        </p>
+      </div>
+      <div class="qg-card">
+        <h4
+          style="color: var(--accent-secondary); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+          Mass Loading & Braking</h4>
+        <p style="font-size: 0.9rem; line-height: 1.6; color: #94a3b8;">
+          Growing surrounding masses act as a mechanical load. They couple to the spin and brake it in favor of
+          classical gravity ($G, M, r_s$).
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../js/kinematic-motor.js"></script>
+  <script>
+    // KaTeX auto-render for the new dynamic content
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body);
+      }
+    });
+  </script>
 </body>
 
 </html>

@@ -1,12 +1,45 @@
 # Quantum Fruits: The Σₚ Scaffold
 
-## Project Vision
+## Project Vision (Beta)
 
 Quantum Fruits is designed to grow into a **fully HTML-based web simulation** of quantum gravity and cosmology.  
-All core modules – from TSF cycles to lattice universes and galaxy dynamics – will be accessible directly im Browser, ohne Installation, ergänzt durch interaktive Tools, Live-Parameter und exportierbare Daten.
+All core modules – from TSF cycles to lattice universes and galaxy dynamics – will be accessible directly  via Browser.
 
-- Daily updates (mit Ausnahme von Wochenenden) halten Theorie, Visualisierungen und Code synchron mit dem aktuellen Entwicklungsstand.  
-- Übersetzungs-Hilfe, Korrekturlesen und inhaltliches Feedback (Deutsch/Englisch) sind explizit willkommen – Contributions via Pull Requests oder Issues sind erwünscht.
+- Daily updates (with the exception of weekends) keep theory, visualizations, and code synchronized with the current development status.  
+- Translation help, proofreading, and content feedback (German/English) are explicitly welcome – contributions via Pull Requests or Issues are desired.
+
+
+      "Entropy is the natural order of the Universe."
+      Every event is binary: it happens, or it does not.
+      The information lies not in what occurred,
+      but in all the paths that were never taken.
+      Reality defines itself through negation.
+      S = 1.
+  
+      And yes, the ½ R in
+      
+        \( G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2} R g_{\mu\nu} \)
+      
+      is just the trace.
+      They did this with chalk — Minkowski, Schwarzschild, Lorentz, Planck, Einstein, etc.
+      109 years later we have Fugaku, JWST, Hubble and AI. What's our excuse?
+      26 dimensions and 10^500 vacua?
+      
+      The answer was always hidden in plain sight, encoded in the units: $\sigma_P = [L \cdot T] = Space*Time = 
+      The Natural Structure of curved Spacetime, maybe?$. 
+      Space and time are not separate stages; they are the shared currency of causality. 
+      Whether I look East or West, North or South, up or down—space and time flow indistinguishably in the same direction: 
+      That of the Observer.
+      While physics lost itself in twenty-six dimensions, the simplest truth remained uncounted: 
+      We never finished counting the four fundamental vectors of spacetime.
+      We searched for the Theory of Everything in infinity, only to find it was just one line long.
+    
+    — Adrian Zander, Quantum Fruits
+
+σ_P Framework Overview
+A Minimal, Parameter-Free Approach to Quantum Gravity
+
+
 
 
 ## The Planck Spacetime Cell (σₚ → Universe)
@@ -26,11 +59,11 @@ $$
 
 where $R$ and $t$ are the cosmological radius and age (or a scaled fraction thereof).
 
-Holographische Beziehung (kurz): Definiert man
-$$\alpha_\sigma = \frac{\sigma_P}{R\,t},\qquad \Lambda = \frac{\alpha_\sigma}{\ell_P^2},$$
-so folgt algebraisch
-$$\sigma_P = \Lambda\,\ell_P^2\,R\,t\,.$$ 
-Dimensionscheck: $[\Lambda]=L^{-2},\;[\ell_P^2]=L^2,\;[R\,t]=L\cdot T\Rightarrow[\sigma_P]=L\cdot T$, also konsistent mit $\sigma_P=\ell_P t_P$.
+Holographic relationship (brief): If one defines  
+$$\alpha_\sigma = \frac{\sigma_P}{R\,t},\qquad \Lambda = \frac{\alpha_\sigma}{\ell_P^2},$$  
+then it follows algebraically  
+$$\sigma_P = \Lambda\,\ell_P^2\,R\,t\,.$$  
+Dimensional check: $[\Lambda]=L^{-2},\;[\ell_P^2]=L^2,\;[R\,t]=L\cdot T\Rightarrow[\sigma_P]=L\cdot T$, thus consistent with $\sigma_P=\ell_P t_P$.
 
 - Simulations in `js/main.js` and `py/quantum_fruits_sim.py` respect this cell by clamping the simulation step count when the number of available $N_{\sigma}$ ticks would otherwise be smaller than the requested resolution. This avoids sub-cell numerical resolution and makes the Planck cell an effective lower bound for temporal/spatial sampling.
 
@@ -155,8 +188,8 @@ Licensed under the **MIT License**. Feel free to use, modify, and resonate with 
 ## Current Evolution (2026 Update)
 
 The project has evolved beyond static theory into dynamic simulation and philosophical unification.  
-The long-term goal is a **fully HTML-based web simulation platform**, in which all core ideas of the Σₚ-framework als interaktive Browser-Experimente erlebt werden können – inklusive Tools, Dashboards und Exportfunktionen.
+The long-term goal is a **fully HTML-based web simulation platform**, in which all core ideas of the Σₚ-framework can be experienced as interactive browser experiments – including tools, dashboards, and export functions.  
 
 Updates to the codebase and docs are rolled out almost daily (except on weekends), reflecting the living nature of the theory.  
-Community support is welcome: Hilfe bei Übersetzungen (DE/EN), Textverfeinerung und wissenschaftlichem Feedback ist ausdrücklich erwünscht.
+Community support is welcome: help with translations (DE/EN), text refining, and scientific feedback is explicitly desired.
 

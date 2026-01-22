@@ -102,7 +102,7 @@ class GCEMorphologySimulation {
                 resetButtons(); btnDM.classList.add('active');
                 label.innerText = "MODE: DARK MATTER (STOCHASTIC)";
                 label.style.borderColor = "#ef4444"; label.style.color = "#ef4444";
-                stats.innerHTML = `Achsenverhältnis: 1.0<br>Status: Statistisch maskiert<br>Problem: Widerspricht stellarer Verteilung`;
+                stats.innerHTML = `Axis Ratio: 1.0<br>Status: Stochastically Masked<br>Problem: Contradicts Stellar Distribution`;
                 this.updateGamma();
             });
         }
@@ -113,7 +113,7 @@ class GCEMorphologySimulation {
                 resetButtons(); btnSigma.classList.add('active');
                 label.innerText = "MODE: σP GEOMETRY (CHROME TAB)";
                 label.style.borderColor = "#3b82f6"; label.style.color = "#3b82f6";
-                stats.innerHTML = `Achsenverhältnis: 0.7<br>Status: Identisch mit Sternen (Baryonen)<br>Lösung: Geometrische Kopplung`;
+                stats.innerHTML = `Axis Ratio: 0.7<br>Status: Identical to Stars (Baryons)<br>Solution: Geometric Coupling`;
                 this.updateGamma();
             });
         }
@@ -124,7 +124,7 @@ class GCEMorphologySimulation {
                 resetButtons(); btnFlow.classList.add('active');
                 label.innerText = "MODE: ZANDER-FLOW (σP c²)";
                 label.style.borderColor = "#10b981"; label.style.color = "#10b981";
-                stats.innerHTML = `Flussrate: ~10⁻⁶² m³/s<br>Vektor: Radial konvergierend<br>Status: Dynamisches Gleichgewicht`;
+                stats.innerHTML = `Flow Rate: ~10⁻⁶² m³/s<br>Vector: Radially Converging<br>Status: Dynamic Equilibrium`;
                 this.updateGamma();
             });
         }

@@ -1,0 +1,104 @@
+:root {
+    /* Base Colors */
+    --bg-deep: #020617;
+    --bg-surface: #0f172a;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+
+    /* Design Tokens */
+    --accent-primary: #38bdf8;
+    /* Quantum Blue */
+    --accent-secondary: #fbbf24;
+    /* Inversion Gold */
+    --accent-tertiary: #a855f7;
+    /* Action Purple */
+    --accent-rose: #f43f5e;
+    /* Kinetic Rose */
+    --accent-emerald: #10b981;
+    /* Resonance Green */
+
+    /* Effects */
+    --glass-bg: rgba(15, 23, 42, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-hover: rgba(255, 255, 255, 0.12);
+    --radius-sm: 12px;
+    --radius-md: 20px;
+    --radius-lg: 32px;
+
+    /* Fonts */
+    --font-sans: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Glows */
+    --glow-blue: 0 0 20px rgba(56, 189, 248, 0.3);
+    --glow-gold: 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Common Components */
+.qg-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.qg-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.glow-text {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.action-btn {
+    padding: 1rem 2rem;
+    border-radius: 100px;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.action-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade {
+    animation: fadeIn 0.8s ease forwards;
+}

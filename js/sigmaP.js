@@ -1,8 +1,3 @@
-// sigmaP.js
-// The Core Physics Engine for Quantum Fruits
-// Based on the σ_P Universal Language Protocol
-// "Kein Bullshit" - Pure Physics.
-
 export const CONSTS = {
   hbar: 1.054571817e-34,
   G: 6.67430e-11,
@@ -190,9 +185,7 @@ export function cosmicAccelerationScale() {
  * g_obs = g_bar / (1 - exp(-sqrt(g_bar/g_star)))
  */
 export function calculateRAR(g_bar) {
-  const g_star = cosmicAccelerationScale(); // Or 1.2e-10 for empirical match
-  // Use the theoretical value for "Pure Physics" mode, or tune to 1.2e-10?
-  // User's script implies using the calculated one: g_sigmaP
+  const g_star = cosmicAccelerationScale(); 
 
   // Refined formula from user script:
   const sqrt_term = Math.sqrt(g_bar / g_star);
@@ -231,7 +224,7 @@ export function simulateRotationCurve(M_solar, R_kpc_max = 50) {
 
     // 1. Baryonic Newtonian Gravity
     // g_bar = G * M / r^2
-    // Assuming point mass approximation for simplicity in this demo.
+
     // Real RAR uses disk integration, but point mass shows the divergence perfectly.
 
     const g_bar = (G * M_kg) / (r_m ** 2);

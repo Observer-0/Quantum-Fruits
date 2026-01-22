@@ -71,7 +71,6 @@ function calculateKerr(M, chi, tau, L) {
         r_plus, r_minus, kappa_SI, T_H, eps_t, eps_s, c0_t, c0_s, c0_tot: c0_t + c0_s
     };
 }
-
 // Initialize listeners
 document.addEventListener('DOMContentLoaded', () => {
     const mSlider = document.getElementById('kerr-mass');
@@ -82,8 +81,76 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sSlider) sSlider.oninput = updateKerrLab;
     if (tCheck) tCheck.onchange = updateKerrLab;
 
-    // Initial update if kerr tab exists
-    if (document.getElementById('tab-kerr')) {
-        updateKerrLab();
-    }
+    // Initial update
+    updateKerrLab();
 });
+
+/**
+ * Monte Carlo Simulation for Inertia Braking
+ * Simulates core spin decay through stochastic mass-interaction.
+ */
+function runBrakingMC() {
+    const M_ratio = parseFloat(document.getElementById('kerr-mass').value);
+    const M_core = M_ratio * KERR_CONST.M_sun;
+    const n_particles = 1000; // Reduced for performance in browser
+
+    const G = KERR_CONST.G;
+    const c = KERR_CONST.c;
+    const hbar = KERR_CONST.hbar;
+    const i_max = Math.pow(c, 4) / G;
+    const lp = Math.sqrt(hbar * G / Math.pow(c, 3));
+    const rs = 2 * G * M_core / (c * c);
+
+    const results_pot = [];
+    let current_potential = i_max;
+    let total_force = 0;
+
+    // Normal distribution helper (Box-Muller transform)
+    function randomNormal(mean, std) {
+        let u = 0, v = 0;
+        while (u === 0) u = Math.random();
+        while (v === 0) v = Math.random();
+        return mean + std * Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    }
+
+    for (let i = 0; i < n_particles; i++) {
+        // 1. Stochastic mass packet
+        const m_p = randomNormal(M_core / n_particles, M_core / (n_particles * 10));
+
+        // 2. Jitter (Quantenfluktuationen)
+        const jitter = 0.95 + Math.random() * 0.1;
+
+        // 3. Braking Force: G * m / r^2 (with lP-Regularisierung)
+        const force = (G * m_p * jitter) / (rs * rs + lp * lp);
+
+        current_potential -= force;
+        results_pot.push(current_potential);
+        total_force += force;
+
+        // Break if potential is exhausted
+        if (current_potential < 0) {
+            current_potential = 0;
+            break;
+        }
+    }
+
+    // Update UI
+    document.getElementById('braking-mc-results').style.display = 'block';
+    document.getElementById('mc-pot-final').innerText = current_potential.toExponential(3) + " N";
+    document.getElementById('mc-force-avg').innerText = (total_force / n_particles).toExponential(3) + " N";
+
+    // Progress bar
+    const percentage = (current_potential / i_max) * 100;
+    document.getElementById('mc-braking-fill').style.width = Math.max(0, percentage) + "%";
+
+    // User special check: "Logik-Check für das Frontend"
+    const planck_mass = Math.sqrt(hbar * c / G);
+    const statusEl = document.getElementById('mc-braking-status');
+    if (M_core < planck_mass) {
+        statusEl.innerText = "✓ Stable Remnant Reach | Unitary Restoration";
+        statusEl.style.color = "#10b981";
+    } else {
+        statusEl.innerText = "Active Mass Core: Action Potential Dissipating";
+        statusEl.style.color = "#bc00ff";
+    }
+}

@@ -1,4 +1,5 @@
 # Quantum Fruits Infographics
+(Will be added soon)
 
 This directory contains high-quality infographics for the σ_P Framework.
 

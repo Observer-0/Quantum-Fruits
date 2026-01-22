@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btn) {
         btn.addEventListener('click', () => {
             window.bhSim.toggle();
-            btn.textContent = window.bhSim.isRunning ? 'Simulation pausieren' : 'Simulation starten';
+            btn.textContent = window.bhSim.isRunning ? 'Pause Simulation' : 'Resume Simulation';
         });
     }
 });
