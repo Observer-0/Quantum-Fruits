@@ -20,7 +20,7 @@ const SIM_MAP = {
         title: "Evaporation Lab",
         lab: "evaporation_lab.html",
         theory: "theory.html#blackholes",
-        python: "py/sigmaP_bh_sim.py",
+        python: "py/sigmaP_evaporation_refined.py",
         description: "Unitary decay of black holes and the resolution of the Information Paradox.",
         icon: "🕳️"
     },
