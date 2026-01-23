@@ -46,12 +46,6 @@
             gap: 2.5rem;
         }
 
-        @media (max-width: 600px) {
-            .lab-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         .lab-deck {
             position: relative;
             padding-top: 1.5rem;
@@ -117,6 +111,7 @@
             display: inline-block;
         }
     </style>
+    <script src="../js/unity.js"></script>
 </head>
 
 <body>
@@ -391,6 +386,29 @@
                         <a href="hubble_flow_lab.html" class="action-btn"
                             style="background: #fbbf24; color: #000; width: 100%; justify-content: center;">Access
                             Simulation</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORMULA EXPLORER -->
+            <div class="lab-deck" data-id="DOC-001">
+                <div class="qg-card">
+                    <div class="lab-preview">
+                        <svg viewBox="0 0 100 100">
+                            <path d="M20 20 L80 20 L80 80 L20 80 Z" fill="none" stroke="currentColor"
+                                stroke-width="2" />
+                            <path d="M30 40 L70 40 M30 60 L60 60" stroke="currentColor" stroke-width="2" />
+                        </svg>
+                    </div>
+                    <div class="lab-card-content">
+                        <span class="lab-badge"
+                            style="color: #38bdf8; background: rgba(56, 189, 248, 0.1);">Documentation</span>
+                        <h3>Formula Explorer</h3>
+                        <p>Interactive table of all fundamental σ_P equations. Verified consistency across all scales.
+                        </p>
+                        <a href="formula_explorer.html" class="action-btn"
+                            style="background: var(--accent-blue); color: #000; width: 100%; justify-content: center;">Explore
+                            Formulas</a>
                     </div>
                 </div>
             </div>
