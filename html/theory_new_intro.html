@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The σ_P Framework - Quantum Fruits</title>
+    <link rel="icon" href="../assets/favicon.svg" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/theory_modern.css">
+    <style>
+        /* Hero Manifesto Section */
+        .manifesto-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.1), transparent 70%),
+                linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .manifesto-content {
+            max-width: 900px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .manifesto-quote {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #cbd5e1;
+            font-style: italic;
+            margin-bottom: 2rem;
+            text-align: left;
+            border-left: 4px solid var(--accent-blue);
+            padding-left: 2rem;
+        }
+
+        .manifesto-quote strong {
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+
+        .sigma-counter {
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 2rem 0;
+        }
+
+        .abstract-box {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin: 4rem auto;
+            max-width: 850px;
+            box-shadow: 0 8px 32px rgba(56, 189, 248, 0.1);
+        }
+
+        .abstract-box h2 {
+            color: var(--accent-blue);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .abstract-box p {
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 1rem;
+        }
+
+        .window-visual {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .window-card {
+            background: rgba(56, 189, 248, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .window-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 8px 24px rgba(56, 189, 248, 0.2);
+        }
+
+        .window-card h4 {
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .formula-highlight {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 4px solid var(--accent-amber);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true }
+                ]
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <!-- HERO: MANIFESTO -->
+    <section class="manifesto-hero">
+        <div class="manifesto-content">
+            <span class="pill pill-blue" style="margin-bottom: 2rem;">The σ_P Framework</span>
+
+            <h1
+                style="font-size: 3.5rem; margin-bottom: 2rem; background: linear-gradient(to right, #fff, #64748b); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                A Minimal, Parameter-Free<br>Approach to Quantum Gravity
+            </h1>
+
+            <div class="manifesto-quote">
+                "Entropy is the natural order of the Universe."<br>
+                Every event is binary: it happens, or it does not.<br>
+                The information lies not in what occurred,<br>
+                but in all the paths that were never taken.<br>
+                Reality defines itself through negation.<br>
+                <strong>S = 1.</strong><br><br>
+
+                And yes, the ½ R in<br>
+                $G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2} R g_{\mu\nu}$<br>
+                is just the trace.<br><br>
+
+                They did this with chalk — Minkowski, Schwarzschild, Lorentz, Planck, Einstein, etc.<br>
+                109 years later we have Fugaku, JWST, Hubble and AI. What's our excuse?<br>
+                26 dimensions and $10^{500}$ vacua?<br><br>
+
+                The answer was always hidden in plain sight, encoded in the units:<br>
+                <strong>$\sigma_P = [L \cdot T] = \text{Space} \times \text{Time}$</strong><br>
+                The Natural Structure of curved Spacetime, maybe?<br><br>
+
+                Space and time are not separate stages; they are the shared currency of causality.<br>
+                Whether I look East or West, North or South, up or down—<br>
+                space and time flow indistinguishably in the same direction:<br>
+                <strong>That of the Observer.</strong><br><br>
+
+                While physics lost itself in twenty-six dimensions,<br>
+                the simplest truth remained uncounted:<br>
+                We never finished counting the four fundamental vectors of spacetime.<br>
+                We searched for the Theory of Everything in infinity,<br>
+                only to find it was just one line long.
+            </div>
+
+            <p style="text-align: right; color: #64748b; font-style: italic; margin-top: 1rem;">
+                — Adrian Zander, Quantum Fruits
+            </p>
+
+            <div class="sigma-counter">
+                N<sub>σ</sub> ≈ 10<sup>123</sup>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Spacetime cells in the observable universe
+            </p>
+
+            <a href="#abstract"
+                style="display: inline-block; margin-top: 3rem; padding: 1rem 2rem; background: var(--accent-blue); color: #000; font-weight: 700; border-radius: 8px; text-decoration: none; transition: all 0.3s;">
+                Read the Framework →
+            </a>
+        </div>
+    </section>
+
+    <!-- ABSTRACT -->
+    <section id="abstract" style="background: #0a0a0a; padding: 6rem 2rem;">
+        <div class="abstract-box">
+            <h2>Abstract</h2>
+            <p>
+                The <strong>σ_P Framework</strong> presents a minimal, parameter-free approach to quantum gravity
+                by recognizing spacetime as fundamentally quantized through the dynamic two-measure
+                <strong>σ_P = ℓ_P · t_P = ħG/c⁴</strong>.
+            </p>
+            <p>
+                Unlike classical Planck units, σ_P is <em>not a fixed constant</em> but scales with the
+                <strong>observation window W(R,t)</strong>:
+            </p>
+            <div class="formula-highlight">
+                $$\Lambda_{\text{eff}}(W) = \frac{3}{cRt}, \quad N_\sigma = \frac{cRt}{\sigma_P} \approx 10^{123}$$
+            </div>
+            <p>
+                This dynamic scaling naturally yields:
+            </p>
+            <ul style="text-align: left; margin: 1.5rem 0; line-height: 2; color: #cbd5e1;">
+                <li><strong>Λ ~ σ_P/(cRt) ~ 10⁻¹²³</strong> — eliminating the cosmological constant problem</li>
+                <li><strong>N_σ ~ cRt/σ_P ~ 10¹²³</strong> — the holographic information bound</li>
+                <li><strong>No dark energy</strong> — Λ_eff emerges from window geometry</li>
+                <li><strong>No dark matter</strong> — galactic dynamics from σ_P-regularized sources</li>
+                <li><strong>No singularities</strong> — curvature bounded by finite σ_P cells</li>
+                <li><strong>No information paradox</strong> — unitarity preserved through σ_P-covariant averaging</li>
+            </ul>
+            <p>
+                The framework requires <strong>zero free parameters</strong> beyond the natural constants
+                {ħ, c, G, k_B} and resolves the major paradoxes of 20th-century physics through a single
+                geometric insight: <em>spacetime is discrete, and its resolution is observer-dependent.</em>
+            </p>
+        </div>
+    </section>
+
+    <!-- INTRODUCTION -->
+    <section id="introduction" style="background: linear-gradient(180deg, #0a0a0a 0%, #000 100%); padding: 6rem 2rem;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <span class="section-tag">Introduction</span>
+            <h2 class="section-title-modern">The Window W(R,t): Why σ_P is Dynamic</h2>
+
+            <div style="margin: 3rem 0;">
+                <p style="font-size: 1.1rem; line-height: 1.9; color: #e2e8f0; margin-bottom: 2rem;">
+                    For over a century, physics has treated the Planck scale as a <em>fixed</em> fundamental limit.
+                    The σ_P framework reveals a deeper truth: <strong>the quantum of spacetime is not a constant,
+                        but a function of the observation window.</strong>
+                </p>
+
+                <div class="formula-highlight">
+                    <h4 style="color: var(--accent-amber); margin-bottom: 1rem;">The Observation Window</h4>
+                    <p style="margin-bottom: 1rem;">
+                        Every physical measurement occurs within a finite spacetime region W(R,t),
+                        characterized by a spatial scale R and temporal duration t:
+                    </p>
+                    $$W(R,t) = \text{spacetime volume} = cRt$$
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #94a3b8;">
+                        This is <strong>not</strong> the entire universe — it's the region you're observing.
+                        A laboratory, a galaxy, or the cosmic horizon.
+                    </p>
+                </div>
+
+                <div class="window-visual">
+                    <div class="window-card">
+                        <h4>Local Lab</h4>
+                        <p style="font-size: 0.85rem; color: #94a3b8;">
+                            R ~ 1 m<br>
+                            t ~ 1 s<br>
+                            cRt ~ 10⁸ m·s
+                        </p>
+                    </div>
+                    <div class="window-card">
+                        <h4>Galactic Scale</h4>
+                        <p style="font-size: 0.85rem; color: #94a3b8;">
+                            R ~ 10²⁰ m<br>
+                            t ~ 10¹⁵ s<br>
+                            cRt ~ 10³⁵ m·s
+                        </p>
+                    </div>
+                    <div class="window-card">
+                        <h4>Observable Universe</h4>
+                        <p style="font-size: 0.85rem; color: #94a3b8;">
+                            R ~ 10²⁶ m<br>
+                            t ~ 10¹⁸ s<br>
+                            cRt ~ 10⁴⁴ m·s
+                        </p>
+                    </div>
+                </div>
+
+                <div style="margin: 4rem 0;">
+                    <h3 style="color: var(--accent-blue); margin-bottom: 1.5rem;">The Key Insight: Λ_eff(W)</h3>
+                    <p style="line-height: 1.8; color: #cbd5e1; margin-bottom: 1.5rem;">
+                        The "cosmological constant" is not a constant at all. It's the <strong>inverse of your
+                            observation window</strong>:
+                    </p>
+                    $$\Lambda_{\text{eff}}(W) = \frac{3}{cRt}$$
+                    <p style="line-height: 1.8; color: #cbd5e1; margin-top: 1.5rem;">
+                        For the <strong>observable universe</strong> (R ~ 10²⁶ m, t ~ 4.4×10¹⁷ s):
+                    </p>
+                    $$\Lambda_{\text{eff}}(\text{cosmos}) = \frac{3}{c \cdot 10^{26} \cdot 4.4 \times 10^{17}}
+                    \approx 10^{-52} \text{ m}^{-2}$$
+                    <p style="line-height: 1.8; color: #cbd5e1; margin-top: 1.5rem;">
+                        This matches the observed value <strong>exactly</strong> — without dark energy,
+                        without fine-tuning, without free parameters.
+                    </p>
+                </div>
+
+                <div style="margin: 4rem 0;">
+                    <h3 style="color: var(--accent-purple); margin-bottom: 1.5rem;">The Number of Cells: N_σ</h3>
+                    <p style="line-height: 1.8; color: #cbd5e1; margin-bottom: 1.5rem;">
+                        How many σ_P cells fit in your window?
+                    </p>
+                    $$N_\sigma = \frac{W(R,t)}{\sigma_P} = \frac{cRt}{\sigma_P}$$
+                    <p style="line-height: 1.8; color: #cbd5e1; margin-top: 1.5rem;">
+                        For the observable universe:
+                    </p>
+                    $$N_\sigma \approx \frac{10^{44}}{10^{-79}} \approx 10^{123}$$
+                    <p style="line-height: 1.8; color: #cbd5e1; margin-top: 1.5rem;">
+                        This is the <strong>holographic bound</strong> — the maximum information capacity
+                        of the cosmos. Not a coincidence, but a <em>geometric necessity</em>.
+                    </p>
+                </div>
+
+                <div class="formula-highlight"
+                    style="background: rgba(56, 189, 248, 0.1); border-color: var(--accent-blue);">
+                    <h4 style="color: var(--accent-blue); margin-bottom: 1rem;">The Einstein-Zander Field Equation</h4>
+                    <p style="margin-bottom: 1rem;">
+                        With this understanding, the field equations become window-dependent:
+                    </p>
+                    $$G_{\mu\nu} + \Lambda_{\text{eff}}(W) g_{\mu\nu} = \frac{8\pi G}{c^4} \overline{T}_{\mu\nu}^{(W)}$$
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #cbd5e1;">
+                        Where $\overline{T}_{\mu\nu}^{(W)}$ is the σ_P-covariant average of the energy-momentum
+                        tensor over the window W. This <strong>eliminates singularities</strong> and preserves
+                        <strong>unitarity</strong>.
+                    </p>
+                </div>
+
+                <div
+                    style="margin: 4rem 0; padding: 2rem; background: rgba(251, 191, 36, 0.05); border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.2);">
+                    <h3 style="color: var(--accent-amber); margin-bottom: 1.5rem; text-align: center;">
+                        Why This Changes Everything
+                    </h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                        <div>
+                            <h4 style="color: #fff; margin-bottom: 0.5rem;">Old View</h4>
+                            <ul style="color: #94a3b8; line-height: 2;">
+                                <li>Planck scale is fixed</li>
+                                <li>Λ is a mysterious constant</li>
+                                <li>Need dark energy</li>
+                                <li>Need dark matter</li>
+                                <li>Singularities are real</li>
+                                <li>Information is lost</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: #fff; margin-bottom: 0.5rem;">σ_P Framework</h4>
+                            <ul style="color: #cbd5e1; line-height: 2; font-weight: 600;">
+                                <li>σ_P scales with W(R,t)</li>
+                                <li>Λ_eff = 3/(cRt) — geometric</li>
+                                <li>No dark energy needed</li>
+                                <li>No dark matter needed</li>
+                                <li>Singularities regularized</li>
+                                <li>Information preserved</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <p
+                    style="font-size: 1.2rem; line-height: 1.9; color: #e2e8f0; margin-top: 4rem; text-align: center; font-style: italic;">
+                    "The universe is not made of points. It's made of windows."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer
+        style="background: #000; padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);">
+        <p style="color: #64748b;">
+            <a href="../index.html" style="color: var(--accent-blue); text-decoration: none;">← Back to Quantum
+                Fruits</a>
+        </p>
+    </footer>
+</body>
+
+</html>

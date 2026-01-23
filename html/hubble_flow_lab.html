@@ -148,10 +148,124 @@
             CMB measures the Blue Phase (67). Supernovae measure the Red Phase (73).
         </p>
 
+        <!-- WINDOW CALCULATOR SECTION -->
+        <div
+            style="margin-top: 3rem; padding: 2rem; background: rgba(15, 23, 42, 0.8); border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.3);">
+            <h3 style="text-align: center; color: #38bdf8; margin-bottom: 1.5rem;">
+                🧮 Live Window Calculator
+            </h3>
+            <p style="text-align: center; color: #94a3b8; font-size: 0.9rem; margin-bottom: 2rem;">
+                Watch how cosmological parameters change as H₀ oscillates. All values update in real-time.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                <div
+                    style="background: rgba(0, 0, 0, 0.3); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #38bdf8;">
+                    <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.5rem;">WINDOW PARAMETERS</div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.8;">
+                        <div>R = <span id="calc-R" style="color: #38bdf8;">1.372×10²⁶</span> m</div>
+                        <div>t = <span id="calc-t" style="color: #38bdf8;">4.578×10¹⁷</span> s</div>
+                        <div
+                            style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                            Rt = <span id="calc-Rt" style="color: #fbbf24;">6.28×10⁴³</span> m·s
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    style="background: rgba(0, 0, 0, 0.3); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #10b981;">
+                    <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.5rem;">DERIVED QUANTITIES</div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.8;">
+                        <div>N<sub>σ</sub> = <span id="calc-Nsigma" style="color: #10b981;">7.21×10¹²¹</span></div>
+                        <div>α<sub>σ</sub> = <span id="calc-alpha" style="color: #10b981;">1.39×10⁻¹²²</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                <div
+                    style="background: rgba(0, 0, 0, 0.3); padding: 1.5rem; border-radius: 8px; text-align: center; border-top: 3px solid #f43f5e;">
+                    <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.5rem;">Λ<sub>eff</sub></div>
+                    <div id="calc-Lambda"
+                        style="font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; color: #f43f5e; font-weight: 700;">
+                        1.59×10⁻⁵²
+                    </div>
+                    <div style="font-size: 0.7rem; color: #64748b; margin-top: 0.3rem;">m⁻²</div>
+                </div>
+
+                <div
+                    style="background: rgba(0, 0, 0, 0.3); padding: 1.5rem; border-radius: 8px; text-align: center; border-top: 3px solid #a78bfa;">
+                    <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.5rem;">g<sub>*</sub></div>
+                    <div id="calc-gstar"
+                        style="font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; color: #a78bfa; font-weight: 700;">
+                        6.55×10⁻¹⁰
+                    </div>
+                    <div style="font-size: 0.7rem; color: #64748b; margin-top: 0.3rem;">m/s²</div>
+                </div>
+
+                <div
+                    style="background: rgba(0, 0, 0, 0.3); padding: 1.5rem; border-radius: 8px; text-align: center; border-top: 3px solid #fbbf24;">
+                    <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.5rem;">δ (invariant)</div>
+                    <div id="calc-delta"
+                        style="font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; color: #fbbf24; font-weight: 700;">
+                        -81.49
+                    </div>
+                    <div style="font-size: 0.7rem; color: #64748b; margin-top: 0.3rem;">G-independent</div>
+                </div>
+            </div>
+
+            <div
+                style="margin-top: 1.5rem; padding: 1rem; background: rgba(56, 189, 248, 0.05); border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.2);">
+                <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;">
+                    <strong style="color: #38bdf8;">Key Insight:</strong> As H₀ oscillates between 67-73 km/s/Mpc,
+                    Λ<sub>eff</sub> and g<sub>*</sub> change by ~17% and ~8% respectively, while δ remains
+                    stable at <strong>-81.5 ± 0.3</strong>. This is the signature of the same σ<sub>P</sub>
+                    geometry viewed through different windows.
+                </div>
+            </div>
+        </div>
+
         <a href="theory.html" class="back-link">&larr; Back to Theory</a>
     </div>
 
     <script>
+        // Physical constants
+        const c = 2.99792458e8;  // m/s
+        const hbar = 1.054571817e-34;  // J·s
+        const G = 6.67430e-11;  // m³/(kg·s²)
+        const alpha = 1 / 137.035999084;
+        const m_p = 1.67262192369e-27;  // kg
+        const sigma_P = (hbar * G) / (c ** 4);  // m·s
+        const l_P = Math.sqrt((hbar * G) / (c ** 3));  // m
+        const lambdabar_p = hbar / (m_p * c);  // m
+
+        function updateWindowCalculator(H0) {
+            // Calculate R and t from H0
+            // H0 in km/s/Mpc, convert to SI: 1 Mpc = 3.086e22 m
+            const H0_SI = H0 * 1000 / 3.086e22;  // s⁻¹
+            const t = 1 / H0_SI;  // s
+            const R = c / H0_SI;  // m
+            const Rt = R * t;  // m·s
+
+            // Derived quantities
+            const N_sigma = Rt / sigma_P;
+            const alpha_sigma = sigma_P / Rt;
+            const Lambda_eff = 3 / (c * R * t);  // m⁻²
+            const g_star = c ** 2 * Math.sqrt(Lambda_eff / 3);  // m/s²
+            const delta = Math.log10((lambdabar_p ** 2) / (alpha * c * R * t));
+
+            // Update display
+            document.getElementById('calc-R').textContent = R.toExponential(3);
+            document.getElementById('calc-t').textContent = t.toExponential(3);
+            document.getElementById('calc-Rt').textContent = Rt.toExponential(2);
+            document.getElementById('calc-Nsigma').textContent = N_sigma.toExponential(2);
+            document.getElementById('calc-alpha').textContent = alpha_sigma.toExponential(2);
+            document.getElementById('calc-Lambda').textContent = Lambda_eff.toExponential(2);
+            document.getElementById('calc-gstar').textContent = g_star.toExponential(2);
+            document.getElementById('calc-delta').textContent = delta.toFixed(2);
+        }
+
+
         const canvas = document.getElementById('flowCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -224,6 +338,9 @@
             // Update Graph Arrays
             hLineHistory.push(H);
             if (hLineHistory.length > historySize) hLineHistory.shift();
+
+            // Update window calculator with current H0
+            updateWindowCalculator(H);
 
             draw(H, phaseColor);
             requestAnimationFrame(loop);
