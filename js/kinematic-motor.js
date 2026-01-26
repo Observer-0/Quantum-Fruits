@@ -28,13 +28,13 @@ let mergerPulse = 0;
 let entropyPoints = [];
 let naiveEntropyPoints = []; // Hawking data
 const maxEntropyPoints = 120;
+let creationsSparks = [];
 
 // Initialize Page Curve data
 for (let i = 0; i < maxEntropyPoints; i++) {
     entropyPoints.push(0);
     naiveEntropyPoints.push(0);
 }
-
 function drawGrid(x, y, burden) {
     const spacing = 30;
     ctx.strokeStyle = '#1e293b';
@@ -51,9 +51,12 @@ function drawGrid(x, y, burden) {
             const dy = gy - y;
             const dist = Math.sqrt(dx * dx + dy * dy);
 
-            // Lensing / Warping factor (Regularized by sigma_P)
-            const sigmaP = 50;
-            const warp = (burden * 2) / (1 + dist / sigmaP);
+            // Bug fix: stop center singularity
+            if (dist < 0.001) continue;
+
+            // Lensing / Warping factor (Regularized by visual sigma_P)
+            const sigmaP_vis = 50;
+            const warp = (burden * 2) / (1 + dist / sigmaP_vis);
 
             const wx = gx - (dx / dist) * warp;
             const wy = gy - (dy / dist) * warp;
@@ -73,8 +76,10 @@ function drawGrid(x, y, burden) {
             const dy = gy - y;
             const dist = Math.sqrt(dx * dx + dy * dy);
 
-            const sigmaP = 50;
-            const warp = (burden * 2) / (1 + dist / sigmaP);
+            if (dist < 0.001) continue;
+
+            const sigmaP_vis = 50;
+            const warp = (burden * 2) / (1 + dist / sigmaP_vis);
 
             const wx = gx - (dx / dist) * warp;
             const wy = gy - (dy / dist) * warp;
@@ -146,6 +151,37 @@ function drawAccretionDisk(x, y, radius, spin, burden) {
     }
 }
 
+function drawSparks(x, y, radius, intensity) {
+    if (intensity < 0.1) return;
+
+    // Add new sparks based on luminosity intensity
+    if (Math.random() < intensity) {
+        creationsSparks.push({
+            x: x,
+            y: y,
+            vx: (Math.random() - 0.5) * 15,
+            vy: (Math.random() - 0.5) * 15,
+            life: 1.0,
+            color: intensity > 0.6 ? '#f59e0b' : '#fff'
+        });
+    }
+
+    // Draw and update sparks
+    creationsSparks.forEach((s, i) => {
+        ctx.fillStyle = s.color;
+        ctx.globalAlpha = s.life;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.x += s.vx;
+        s.y += s.vy;
+        s.life -= 0.02;
+    });
+    creationsSparks = creationsSparks.filter(s => s.life > 0);
+    ctx.globalAlpha = 1.0;
+}
+
 function updateStats() {
     const spin = parseFloat(spinSlider.value);
     const burden = parseFloat(massSlider.value);
@@ -160,17 +196,24 @@ function updateStats() {
     const r_pl = 50; // Reference Planckian curvature scale for visual demo
     const diagRatio = r_pl / r_s;
 
-    // 3. Non-Thermality Coefficient (c0) from Hawking_Full_Quantum.py
-    // Represented as 'Information Content' of the radiation
-    const epsilon = (101 - spin) / 1000; // departure from ideal spin
+    // 3. Non-Thermality Coefficient (c0)
+    const epsilon = (101 - spin) / 1000;
     const s_slope = burden / 100;
     const c0 = (Math.PI ** 2 / 6) * (epsilon ** 2) + 0.5 * (s_slope ** 2) * (epsilon ** 2);
-    const nonThermality = Math.min(100, c0 * 2e7); // Re-scaled for visibility
+    const nonThermality = Math.min(100, c0 * 2e7);
     const c0Bar = document.getElementById('c0Bar');
     if (c0Bar) c0Bar.style.width = nonThermality + "%";
 
+    // 4. Spin Luminosity L_spin ∝ ħ * |dω/dt|
+    const m_total = burden / 100;
+    const omega = spin / 100;
+    const lSpinValue = (m_total * m_total) * omega * 2.0;
+    document.getElementById('val-lspin').innerText = lSpinValue.toFixed(4);
+
     tickDensityVal.innerText = burden > 70 ? "σ_P Saturated" : (diagRatio > 1.5 ? "Pure Action Core" : "Mass Loaded");
     tickDensityVal.style.color = diagRatio > 1.5 ? "#38bdf8" : "#f43f5e";
+
+
 
     if (burden < 20) {
         statusText.innerText = 'Phase: Pure Action (ℏ-Stator)';
@@ -183,11 +226,11 @@ function updateStats() {
         statusText.style.color = '#a855f7';
     }
 
-    // Update Page Curve logic (Unitary vs Naive)
-    // S_naive grows with burden (Hawking's original problem)
+    // Update Return Profile logic (Unitary vs Naive)
+    // S_naive grows with burden (Impedance blockage)
     const sNaive = (burden / 100) * (1 + time * 0.001);
 
-    // S_unitary (EZ-Framework): Follows (1-exp(-7x))*exp(-4x) shape
+    // S_unitary (Zander Return): Follows (1-exp(-7x))*exp(-4x) shape
     const progress = (burden / 100);
     const sUnitary = (1 - Math.exp(-7 * progress)) * Math.exp(-4 * progress) * 2.8;
 
@@ -200,6 +243,8 @@ function updateStats() {
     }
 
     renderPageCurve();
+
+    return lSpinValue;
 }
 
 function renderPageCurve() {
@@ -262,7 +307,8 @@ function animate() {
 
     if (mergerPulse > 0) mergerPulse *= 0.95;
 
-    updateStats(spin, burden);
+    const lIntensity = updateStats(spin, burden);
+    drawSparks(centerX, centerY, 50, lIntensity);
 
     time++;
     requestAnimationFrame(animate);

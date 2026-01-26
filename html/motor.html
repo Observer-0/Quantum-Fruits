@@ -62,10 +62,13 @@
         <div class="monitor-grid" style="grid-template-columns: 1fr; gap: 1rem;">
           <div class="qg-card" style="padding: 1.5rem; border-left: 4px solid var(--accent-primary);">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span class="stat-label">Action Potential ($i_{max}$)</span>
+              <span class="stat-label">Information-Index ($i$)</span>
               <span class="stat-value" id="netPotential"
                 style="font-size: 1.4rem; color: var(--accent-primary);">--</span>
             </div>
+            <p
+              style="font-size: 0.65rem; color: #94a3b8; margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">
+              Coupling Density Limit</p>
           </div>
           <div class="qg-card" style="padding: 1.5rem; border-left: 4px solid var(--accent-secondary);">
             <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -74,6 +77,17 @@
                 style="font-size: 1.1rem; color: var(--accent-secondary);">Initializing...</span>
             </div>
           </div>
+          <!-- New: Spin Luminosity (L_spin) -->
+          <div class="qg-card"
+            style="padding: 1rem; border-left: 4px solid #f59e0b; background: rgba(245, 158, 11, 0.05);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="stat-label" style="font-size: 0.7rem;">Spin Luminosity ($L_{\text{spin}}$)</span>
+              <span id="val-lspin"
+                style="font-size: 1.1rem; color: #f59e0b; font-family: 'JetBrains Mono'; font-weight: 700;">0.00</span>
+            </div>
+            <div style="font-size: 0.6rem; color: #94a3b8; margin-top: 0.3rem;">Information Return Flux</div>
+          </div>
+
           <!-- New: Non-Thermality Monitor -->
           <div class="qg-card"
             style="padding: 1rem; border-left: 4px solid #818cf8; background: rgba(129, 140, 248, 0.05);">
@@ -95,12 +109,12 @@
       </div>
     </div>
 
-    <!-- The Page Curve Visualization -->
+    <!-- The Information Return Profile -->
     <section style="margin-top: 4rem;">
-      <h2 class="section-title">Live Information Paradox Resolve</h2>
+      <h2 class="section-title">Information Return Profile (Unitary)</h2>
       <div class="qg-card" style="border-color: #ef4444; position: relative;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; align-items: center;">
-          <h3 style="color: #ef4444; margin: 0;">Unitarity Tracker (The Page Curve)</h3>
+          <h3 style="color: #ef4444; margin: 0;">Unitarity Tracker</h3>
           <div style="display: flex; gap: 1.5rem; font-size: 0.8rem;">
             <div style="display: flex; align-items: center; gap: 0.5rem;">
               <div style="width: 12px; height: 12px; background: rgba(239, 68, 68, 0.3); border: 1px solid #ef4444;">
@@ -184,9 +198,10 @@
       <div class="qg-card">
         <h3 class="glow-text" style="color: var(--accent-secondary);">Unitarity Restoration</h3>
         <p style="color: #cbd5e1; line-height: 1.8;">
-          The Page curve describes how information develops over a black hole's lifetime.
-          A curve that only rises would mean information vanishes. A Page curve with a rise, maximum, and fall
-          is the criteria for a <em>unitary</em> (information-preserving) evolution.
+          The return profile describes how information develops over a black hole's transformation phase.
+          A curve that only rises would mean information stays trapped (blockage). A profile with a early rise and
+          controlled decay
+          represents the <em>unitary</em> (information-preserving) return.
         </p>
         <p style="color: #cbd5e1; line-height: 1.8; margin-top: 1rem;">
           <strong>The Result:</strong><br>
