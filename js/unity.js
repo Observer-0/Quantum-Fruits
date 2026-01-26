@@ -56,7 +56,7 @@ const SIM_MAP = {
         title: "Kinematic Motor",
         lab: "motor.html",
         theory: "theory.html#quantum",
-        python: "py/ticks.py",
+        python: "py/kinematic_motor_sim.py",
         description: "The mechanical coupling between quantum action and classical gravity.",
         icon: "⚙️"
     },
