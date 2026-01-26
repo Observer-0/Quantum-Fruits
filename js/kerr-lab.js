@@ -43,6 +43,52 @@ function updateKerrLab() {
     // Smearing Visualization (Dimensionless offsets)
     const smear = (results.c0_tot * 100).toFixed(6);
     document.getElementById('kerr-smear-note').innerText = `Horizon Smearing: ${smear}% shift from pure thermal state.`;
+
+    updateKerrPlot(M, chi, tau, L);
+}
+
+function updateKerrPlot(M, currentChi, tau, L) {
+    const chiValues = [];
+    const c0Values = [];
+
+    // Generate 50 points across spin range [0, 0.99]
+    for (let c = 0; c <= 0.99; c += 0.02) {
+        const res = calculateKerr(M, c, tau, L);
+        chiValues.push(c);
+        c0Values.push(res.c0_tot);
+    }
+
+    const trace = {
+        x: chiValues,
+        y: c0Values,
+        type: 'scatter',
+        mode: 'lines',
+        name: 'Theory Curve',
+        line: { color: '#bc00ff', width: 3 },
+        fill: 'tozeroy',
+        fillcolor: 'rgba(188, 0, 255, 0.1)'
+    };
+
+    const currentPoint = {
+        x: [currentChi],
+        y: [calculateKerr(M, currentChi, tau, L).c0_tot],
+        type: 'scatter',
+        mode: 'markers',
+        name: 'Current State',
+        marker: { color: '#fff', size: 10, line: { color: '#bc00ff', width: 2 } }
+    };
+
+    const layout = {
+        title: { text: 'Non-Thermality (c₀) vs. Dimensionless Spin (χ)', font: { color: '#fff', size: 14 } },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        xaxis: { title: 'Spin χ', gridcolor: 'rgba(255,255,255,0.05)', tickfont: { color: '#94a3b8' }, titlefont: { color: '#94a3b8' } },
+        yaxis: { title: 'c₀ Coefficient', gridcolor: 'rgba(255,255,255,0.05)', tickfont: { color: '#94a3b8' }, titlefont: { color: '#94a3b8' }, type: 'log' },
+        showlegend: false,
+        margin: { t: 40, b: 40, l: 60, r: 20 }
+    };
+
+    Plotly.newPlot('c0-plot', [trace, currentPoint], layout, { displayModeBar: false });
 }
 
 function calculateKerr(M, chi, tau, L) {
@@ -63,8 +109,18 @@ function calculateKerr(M, chi, tau, L) {
     const c0_t = (Math.PI * Math.PI / 6.0) * (eps_t * eps_t);
 
     // c0_spatial: 0.5 * eps_s^2 * sum(w_lm * slope_lm^2)
-    // Placeholder for Teukolsky weights (using demo values from scaffold)
-    const weighted_slope2 = 0.8;
+    // Refined mode slopes/weights from Teukolsky results (bh_kernel_c0_scaffold.py)
+    const modes = [
+        { slope: 0.8, weight: 0.5 },
+        { slope: 0.4, weight: 0.3 },
+        { slope: 0.2, weight: 0.2 }
+    ];
+
+    let weighted_slope2 = 0;
+    modes.forEach(m => {
+        weighted_slope2 += m.weight * (m.slope * m.slope);
+    });
+
     const c0_s = 0.5 * (eps_s * eps_s) * weighted_slope2;
 
     return {

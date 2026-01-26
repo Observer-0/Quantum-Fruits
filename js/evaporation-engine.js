@@ -90,11 +90,23 @@ const Physics = {
             TH.push(Math.min(this.hawkingTemperature(Ms), T_max));
 
             if (currM > M_remnant) {
-                // Use RK4 on dM/dt = -const / (M^2 + alpha MP^2)
-                const C = - (this.hbar * (this.c ** 4)) / (15360.0 * this.pi * (this.G ** 2));
+                // Incorporate Non-Thermality c0 into the decay rate
+                // c0 creates a "back-reaction" or "smearing" that modulates the flux
+                // We use simplified c0 logic here consistent with bh_kernel_c0_scaffold.py
+                const rs = this.schwarzschildRadius(currM);
+                const kappa_SI = (this.c ** 4) / (4.0 * this.G * currM); // Schwarzschild kappa
+                const eps_t = (this.tP * kappa_SI) / this.c;
+                const eps_s = this.lP / rs;
+                const c0 = (Math.PI * Math.PI / 6.0) * (eps_t * eps_t) + 0.5 * (eps_s * eps_s) * 0.8;
+
+                // Effective flux constant: standard C multiplied by (1 + c0)
+                // c0 > 0 means better information escape, slightly altering the decay profile
+                const C_base = - (this.hbar * (this.c ** 4)) / (15360.0 * this.pi * (this.G ** 2));
+                const C_eff = C_base * (1.0 + c0 * 1e8); // Scaled for observable sim influence
+
                 const denomConst = alpha * (this.MP ** 2);
                 const f = (m) => {
-                    return C / ( (m ** 2) + denomConst );
+                    return C_eff / ((m ** 2) + denomConst);
                 };
                 const M_new = rk4_step(f, currM, dt);
                 currM = Math.max(M_new, M_remnant);

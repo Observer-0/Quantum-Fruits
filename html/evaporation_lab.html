@@ -276,8 +276,8 @@
                         <span class="stat-label">Lifespan (s)</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-val" id="stat-entropy">-</span>
-                        <span class="stat-label">Residual Entropy</span>
+                        <span class="stat-val" id="stat-c0">-</span>
+                        <span class="stat-label">Non-Thermality (c0)</span>
                     </div>
                 </div>
 
@@ -290,8 +290,36 @@
             </main>
         </div>
 
-        <!-- NEW: THE CHALLENGE SECTION -->
-        <section class="qg-card" style="margin-top: 4rem; padding: 3rem; border-color: var(--primary);">
+        <!-- NEW: EDUCATIONAL DEEP DIVE SECTION -->
+        <section class="grid" style="margin-top: 4rem; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div class="qg-card" style="border-color: #fbbf24; background: rgba(251, 191, 36, 0.05);">
+                <h3 style="color: #fbbf24; margin-bottom: 1rem;">What is the Page Curve?</h3>
+                <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+                    Named after physicist <strong>Don Page</strong>, this curve tracks the entanglement entropy of
+                    Hawking radiation.
+                    <br><br>
+                    In a classical scenario (Hawking 1974), the entropy rises until the black hole vanishes—meaning
+                    information stays trapped forever.
+                    Page proposed that if quantum mechanics is correct (Unitarity), the entropy must reach a maximum (at
+                    <strong>Page Time</strong>) and then <strong>fall back to zero</strong>.
+                </p>
+            </div>
+
+            <div class="qg-card" style="border-color: #10b981; background: rgba(16, 185, 129, 0.05);">
+                <h3 style="color: #10b981; margin-bottom: 1rem;">Why does the Curve fall?</h3>
+                <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+                    The "falling" is the signal of <strong>Information Recovery</strong>. In the Zander Framework, this
+                    is triggered by the <strong>c₀ non-thermality</strong>.
+                    <br><br>
+                    As the black hole evaporates, the relative importance of the $\sigma_P$ graining increases. The
+                    radiation stops being "noise" and becomes a coherent carrier of the interior state. The internal
+                    degrees of freedom are "squeezed" into the radiation, reducing the black hole's own entropy.
+                </p>
+            </div>
+        </section>
+
+        <!-- THE CHALLENGE SECTION (Moved after Deep Dive) -->
+        <section class="qg-card" style="margin-top: 2rem; padding: 3rem; border-color: var(--primary);">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
                 <div>
                     <h2 style="color: #fff; font-size: 2rem; margin-bottom: 1.5rem;">The Challenge: Information Loss
@@ -371,7 +399,14 @@
         function updateStats(res) {
             document.getElementById('stat-temp').textContent = Math.max(...res.TH).toExponential(2);
             document.getElementById('stat-tau').textContent = res.tau_eff.toExponential(2);
-            document.getElementById('stat-entropy').textContent = (res.Srem / EvaporationEngine.kB).toFixed(2) + " kB";
+            // Calculate final c0 for display
+            const M_final = res.M[res.M.length - 1];
+            const rs = EvaporationEngine.schwarzschildRadius(M_final);
+            const kappa = (EvaporationEngine.c ** 4) / (4 * EvaporationEngine.G * M_final);
+            const eps_t = (EvaporationEngine.tP * kappa) / EvaporationEngine.c;
+            const eps_s = EvaporationEngine.lP / rs;
+            const c0 = (Math.PI ** 2 / 6) * (eps_t ** 2) + 0.5 * (eps_s ** 2) * 0.8;
+            document.getElementById('stat-c0').textContent = c0.toExponential(2);
         }
 
         function renderCharts(sc, q, M0) {

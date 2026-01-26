@@ -7,6 +7,8 @@
     <title>Quantum Fruits | Kerr Black Hole Lab</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/components.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../js/unity.js"></script>
     <style>
         body {
             background: #020617;
@@ -173,6 +175,11 @@
             </div>
         </div>
 
+        <!-- NEW: C0 PLOT CONTAINER -->
+        <div class="qg-card" style="margin-bottom: 2rem; padding: 1.5rem; background: #000;">
+            <div id="c0-plot" style="width: 100%; height: 350px;"></div>
+        </div>
+
         <div id="kerr-smear-note">Initializing Horizon Metrics...</div>
 
         <div class="qg-box" style="margin-top: 2rem; border-color: rgba(188, 0, 255, 0.2);">
@@ -209,16 +216,65 @@
             </div>
         </div>
 
-        <div class="theory-box qg-box" style="margin-top: 3rem; border-color: rgba(255,255,255,0.1);">
-            <h3>Why Kerr Black Holes are never "Perfect"</h3>
-            <p style="font-size: 0.95rem; color: #94a3b8; line-height: 1.6;">
-                In General Relativity, a Kerr black hole is a mathematical ideal.
-                However, once we introduce the $\sigma_P$ limit, the horizon becomes slightly "smeared".
-                This results in a small but calculated departure from a perfect thermal black-body spectrum.
-                This coefficient $c_0$ represents the intrinsic non-thermality required by the quantization of
-                spacetime.
-            </p>
-        </div>
+        <!-- NEW: HISTORICAL CONTEXT SECTION -->
+        <section class="grid-2" style="margin-top: 4rem; gap: 2rem;">
+            <div class="qg-card" style="border-color: #a78bfa; background: rgba(167, 139, 250, 0.05);">
+                <h3 style="color: #a78bfa; margin-bottom: 1rem;">Who is Roy Kerr?</h3>
+                <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+                    In 1963, <strong>Roy Kerr</strong> discovered the mathematical 4-vector for a
+                    <strong>rotating</strong> mass. Before Kerr, we only understood stationary (Schwarzschild) black
+                    holes. Since every object in the universe rotates, Kerr's solution is the "real" description of
+                    cosmic singularities.
+                </p>
+            </div>
+
+            <div class="qg-card" style="border-color: #3b82f6; background: rgba(59, 130, 246, 0.05);">
+                <h3 style="color: #3b82f6; margin-bottom: 1rem;">Who is Saul Teukolsky?</h3>
+                <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+                    In the 1970s, <strong>Saul Teukolsky</strong> derived the equations that describe how a rotating
+                    black hole vibrates. His "Teukolsky Master Equation" allows us to calculate how gravitational and
+                    electromagnetic waves (information) interact with the horizon.
+                </p>
+            </div>
+        </section>
+
+        <!-- THE CHALLENGE SECTION (Moved after History) -->
+        <section class="qg-card"
+            style="margin-top: 2rem; padding: 3rem; border-color: #bc00ff; background: rgba(188, 0, 255, 0.05);">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
+                <div>
+                    <h2
+                        style="color: #fff; font-size: 2rem; margin-bottom: 1.5rem; background: linear-gradient(to right, #bc00ff, #3b82f6); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        The Challenge: Mathematical Ideals</h2>
+                    <p style="color: #94a3b8; line-height: 1.8; font-size: 1.1rem;">
+                        In General Relativity, a Kerr black hole is a "perfect" mathematical construct. Its horizon is
+                        infinitely sharp, and it absorbs everything without leaving a trace—leading directly to the
+                        <strong>Information Paradox</strong>.
+                    </p>
+                    <p style="color: #94a3b8; line-height: 1.8; font-size: 1.1rem; margin-top: 1rem;">
+                        However, an infinitely sharp horizon requires infinite energy to probe. In nature, no boundary
+                        is truly infinite; there is always a scale where the "smearing" of quantum effects becomes
+                        relevant.
+                    </p>
+                </div>
+                <div
+                    style="background: rgba(59, 130, 246, 0.05); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                    <h3 style="color: #3b82f6; margin-bottom: 1rem;">The Σₚ Resolution</h3>
+                    <p style="color: #e2e8f0; line-height: 1.7;">
+                        The Zander model replaces the ideal horizon with the <strong>Teukolsky Smearing Limit</strong>.
+                    </p>
+                    <ul style="color: #94a3b8; margin-top: 1.5rem; padding-left: 1.5rem; line-height: 1.8;">
+                        <li><strong>Horizon Smearing ($c_0$):</strong> Quantization ($ \sigma_P $) creates a fundamental
+                            "blur" at the horizon.</li>
+                        <li><strong>Non-Thermal Signature:</strong> This blur ensures the Hawking radiation is not
+                            purely random (thermal) but carries the "echoes" of the interior action.</li>
+                        <li><strong>Physical Realism:</strong> By removing the "infinite sharpness", the $c_0$
+                            coefficient provides the mechanism for information to escape, making the black hole a
+                            physical, unitary object.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </div>
 
     <!-- Script to ensure ID exists during init -->
