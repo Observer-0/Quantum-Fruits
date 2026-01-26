@@ -68,6 +68,24 @@ const SIM_MAP = {
         python: "py/answer_42.py",
         description: "The numerical signature of the cosmic scale ratio.",
         icon: "🌌"
+    },
+    spectrum: {
+        id: "LAB-012",
+        title: "Particle Spectrum",
+        lab: "particle_spectrum_lab.html",
+        theory: "theory.html#quantum",
+        python: "py/particle_spectrum.py",
+        description: "The geometric origin of particle masses via the q-ratio.",
+        icon: "⚛️"
+    },
+    dipole: {
+        id: "LAB-013",
+        title: "Cosmic Dipole",
+        lab: "dipole_lab.html",
+        theory: "theory.html#cosmology",
+        python: "py/cosmo-lab.js",
+        description: "The 3.7x velocity excess as a sign of spacetime grid friction.",
+        icon: "🧭"
     }
 };
 

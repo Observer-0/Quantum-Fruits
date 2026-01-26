@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Dipole Lab — Grid Friction</title>
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <script src="../js/unity.js"></script>
+    <style>
+        body {
+            background-color: #020617;
+            color: #d1d5db;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(to right, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+        }
+
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+        }
+
+        .canvas-card {
+            background: #000;
+            border-radius: 24px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+        }
+
+        #dipoleCanvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .overlay-stats {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-link {
+            color: #818cf8;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .friction-meter {
+            height: 10px;
+            background: #1e1b4b;
+            border-radius: 5px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .friction-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #f43f5e);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="labs.html" class="back-link">&larr; Back to Labs</a>
+
+        <header class="header">
+            <span style="text-transform: uppercase; letter-spacing: 4px; color: #818cf8; font-size: 0.8rem;">Pillar
+                12</span>
+            <h1>Cosmic Dipole Lab</h1>
+            <p style="color: #94a3b8; font-size: 1.2rem; margin-top: 1rem;">The "Space-Time Friction": Why we move too
+                fast.</p>
+        </header>
+
+        <div class="sim-grid">
+            <div class="canvas-card">
+                <canvas id="dipoleCanvas"></canvas>
+                <div class="overlay-stats">
+                    <div style="font-size: 0.7rem; color: #94a3b8; text-transform: uppercase;">Grid Interaction Rate
+                    </div>
+                    <div id="tick-rate" style="font-size: 1.4rem; color: #fff; font-family: 'JetBrains Mono';">0 ticks/s
+                    </div>
+                    <div class="friction-meter">
+                        <div id="friction-fill" class="friction-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="qg-card">
+                    <h3>Motion Control</h3>
+                    <label style="display: block; margin-bottom: 0.8rem; font-size: 0.8rem; color: #94a3b8;">Velocity
+                        relative to Grid (v/c)</label>
+                    <input type="range" id="v-slider" min="0" max="0.1" step="0.001" value="0.003"
+                        style="width: 100%; accent-color: #6366f1;">
+
+                    <div style="margin-top: 2rem;">
+                        <h4 style="color: #818cf8;">Theoretical Gap</h4>
+                        <p style="font-size: 0.85rem; color: #cbd5e1;">
+                            Standard Cosmology (LCDM) expects a movement of ~300 km/s.
+                            Observations (Dipole) shows <strong>3.7x higher speed</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="qg-card" style="border-color: #f43f5e; background: rgba(244, 63, 94, 0.05);">
+                    <h4 style="color: #f43f5e;">The Excess Signature</h4>
+                    <p style="font-size: 0.85rem;">The red glow simulates the "Friction" as the local system interacts
+                        with the discrete $\sigma_P$ grid cells.</p>
+                </div>
+
+                <div class="qg-card" style="text-align: center;">
+                    <button class="action-btn" id="toggle-grid" style="width: 100%; justify-content: center;">Hide
+                        Spacetime Grid</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- THE CHALLENGE -->
+        <section class="qg-card"
+            style="margin-top: 4rem; padding: 3rem; border-color: #6366f1; background: rgba(99, 102, 241, 0.05);">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
+                <div>
+                    <h2
+                        style="color: #fff; font-size: 2rem; margin-bottom: 1.5rem; background: linear-gradient(to right, #6366f1, #8b5cf6); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        The Crisis: The Cosmic Dipole</h2>
+                    <p style="color: #94a3b8; line-height: 1.8; font-size: 1.1rem;">
+                        When we look at the Cosmic Microwave Background (CMB), we see a "Dipole"—one side is hotter, one
+                        side is colder. This measures our motion through the universe.
+                    </p>
+                    <p style="color: #94a3b8; line-height: 1.8; font-size: 1.1rem; margin-top: 1rem;">
+                        The problem: Our predicted speed (based on galaxy distribution) is much lower than the measured
+                        speed. The universe is "drifting" 3.7 times faster than it should.
+                    </p>
+                </div>
+                <div
+                    style="background: rgba(99, 102, 241, 0.05); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                    <h3 style="color: #818cf8; margin-bottom: 1rem;">The Σₚ Resolution</h3>
+                    <p style="color: #e2e8f0; line-height: 1.7;">
+                        In the Zander Frame, space is not a smooth void. It is a <strong>Discrete Lattice</strong>
+                        ($\sigma_P$).
+                    </p>
+                    <ul style="color: #94a3b8; margin-top: 1.5rem; padding-left: 1.5rem; line-height: 1.8;">
+                        <li><strong>Grid Friction:</strong> Motion through the discrete grid is not free. It creates a
+                            "tick-tax" on the wave-function.</li>
+                        <li><strong>Apparent Velocity:</strong> The 3.7x excess is not a real mechanical velocity, but a
+                            measurement artifact of the grid's finite resolution.</li>
+                        <li><strong>Unitary Bound:</strong> The dipole signature is the macroscopic shadow of the
+                            micro-scale $\sigma_P$ ticking rate.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="../js/dipole-sim.js"></script>
+</body>
+
+</html>
