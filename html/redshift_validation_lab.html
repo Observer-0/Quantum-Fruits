@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redshift Validation Lab — UTC Model</title>
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../js/unity.js"></script>
+    <style>
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+        }
+
+        .validation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .chart-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            height: 480px;
+        }
+
+        .stats-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(15, 23, 42, 0.8);
+            border-top: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: block;
+            margin: 0.5rem 0;
+        }
+
+        .stat-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            letter-spacing: 1px;
+        }
+
+        .back-link {
+            color: #10b981;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .theory-overlay {
+            margin-top: 4rem;
+            border-color: #10b981;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="hubble_flow_lab.html" class="back-link">&larr; Back to Hubble Flow</a>
+
+        <header class="header">
+            <span style="text-transform: uppercase; letter-spacing: 4px; color: #10b981; font-size: 0.8rem;">Deep
+                Validation Cockpit</span>
+            <h1>UTC Redshift Relation</h1>
+            <p style="color: #94a3b8; margin-top: 0.5rem;">Validating Thermodynamic Cosmology against Observational
+                Constraints</p>
+        </header>
+
+        <div class="stats-strip">
+            <div class="stat-box" style="border-color: #f43f5e;">
+                <span class="stat-title">Zander Index (H=73)</span>
+                <span class="stat-val" id="val-chi-73">--</span>
+            </div>
+            <div class="stat-box" style="border-color: #3b82f6;">
+                <span class="stat-title">Zander Index (H=67)</span>
+                <span class="stat-val" id="val-chi-67">--</span>
+            </div>
+            <div class="stat-box" style="border-color: #fbbf24;">
+                <span class="stat-title">Curvature Ratio</span>
+                <span class="stat-val" id="val-ratio">--</span>
+            </div>
+            <div class="stat-box" style="border-color: #10b981;">
+                <span class="stat-title">Stability Check</span>
+                <span class="stat-val" id="val-stability">PASS</span>
+            </div>
+        </div>
+
+        <div class="validation-grid">
+            <div class="chart-card">
+                <div id="hz-plot" style="width:100%; height:100%;"></div>
+            </div>
+            <div class="chart-card">
+                <div id="jerk-plot" style="width:100%; height:100%;"></div>
+            </div>
+        </div>
+
+        <section class="qg-card theory-overlay" style="background: rgba(16, 185, 129, 0.05);">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
+                <div>
+                    <h2
+                        style="color: #fff; font-size: 2rem; margin-bottom: 1.5rem; background: linear-gradient(to right, #10b981, #d1d5db); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        The Validation: Cross-Scale Matching</h2>
+                    <p style="color: #94a3b8; line-height: 1.8; font-size: 1.1rem;">
+                        This cockit visualizes the transition from numerical simulation to observable cosmology.
+                        By defining 'Today' at $H \approx 73$ km/s/Mpc, we derive the redshift $z$ and compare the UTC
+                        trajectory against real SNe Ia and CMB data points.
+                    </p>
+                    <p style="color: #94a3b8; line-height: 1.8; font-size: 1.1rem; margin-top: 1rem;">
+                        The <strong>Jerk Analysis</strong> ensures that the thermodynamics don't lead to physical
+                        instabilities, showing a smooth transition between expansion phases.
+                    </p>
+                </div>
+                <div
+                    style="background: rgba(0, 0, 0, 0.2); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.2);">
+                    <h3 style="color: #10b981; margin-bottom: 1rem;">SI-Metric Verification</h3>
+                    <p style="color: #e2e8f0; line-height: 1.7; font-family: 'JetBrains Mono'; font-size: 0.85rem;">
+                        H(z) = [a_now / a(t)] - 1<br>
+                        $\chi_Z = (H^2/c^2)^2 \cdot \ell_P^4$
+                    </p>
+                    <ul style="color: #94a3b8; margin-top: 1.5rem; padding-left: 1.5rem; line-height: 1.8;">
+                        <li><strong>Redshift Inversion:</strong> Maps simulation time to cosmic distance.</li>
+                        <li><strong>Zander Index:</strong> Measures the coupling strength of gravity to the Planck
+                            vacuum.</li>
+                        <li><strong>CMB Projection:</strong> Predicts the low-H state as the cold phase of the global
+                            cycle.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="../js/redshift-lab.js"></script>
+</body>
+
+</html>
