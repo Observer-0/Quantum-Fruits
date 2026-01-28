@@ -47,6 +47,50 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
+        /* Tooltip styles */
+        .qg-tooltip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dashed var(--accent-blue);
+            color: var(--accent-blue);
+            transition: color 0.3s ease;
+        }
+
+        .qg-tooltip:hover {
+            color: #fff;
+        }
+
+        .qg-tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.98);
+            color: #fff;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 400;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            width: max-content;
+            max-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--accent-blue);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .qg-tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+            bottom: 140%;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -121,7 +165,9 @@
                         $$\sigma_P = \ell_P \cdot t_P \quad [\text{L}\cdot\text{T}]$$
                     </div>
                     <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.95rem;">
-                        The fundamental unit $\sigma_P$ defines the "pixelation" of this observable horizon. Space and
+                        The fundamental unit <span class="qg-tooltip"
+                            data-tooltip="The Planck Spacetime Cell: The smallest indivisible unit of information flow [L·T].">$\sigma_P$</span>
+                        defines the "pixelation" of this observable horizon. Space and
                         time are not fundamental separately; they emerge from the way information is coupled across the
                         discrete Planckian pulse. We do not see the universe "in its entirety," but only as much as the
                         light-travel time and information-density allow.
@@ -145,7 +191,8 @@
                 limit ensures that information density remains finite.</p>
             <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
                 Singularities are not real locations, but the symptom of over-extended mathematics.
-                Spacetime is not a continuum, but woven from finite quanta $\sigma_P$.
+                Spacetime is not a continuum, but woven from finite quanta <span class="qg-tooltip"
+                    data-tooltip="Spacetime Quanta: Finite cells of action that prevent infinite density.">$\sigma_P$</span>.
                 <br><br>
                 <em>"Infinity is not the goal of physics, but a misunderstanding of its framework."</em>
             </p>
@@ -706,7 +753,9 @@
                                 <br><br>
                                 If you define a spatial unit ($\ell_P=1$), time is revealed ($t_P = 1/c$). If you define
                                 time ($t_P=1$), space unfolds ($1 \cdot c$).
-                                Physical reality resides only in the product $\sigma_P$. Space and Time are merely the
+                                Physical reality resides only in the product <span class="qg-tooltip"
+                                    data-tooltip="The Planck Spacetime Cell: The smallest indivisible unit of information flow [L·T].">$\sigma_P$</span>.
+                                Space and Time are merely the
                                 <strong>observer's choice of projection</strong>.
                             </p>
                         </div>
@@ -766,7 +815,8 @@
             <div class="grid-2">
                 <div class="qg-card"
                     style="grid-column: span 2; background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(0,0,0,0.2));">
-                    <h3 style="color: var(--accent-blue);">The Planck Spacetime Cell ($\sigma_P$)</h3>
+                    <h3 style="color: var(--accent-blue);">The Planck Spacetime Cell (<span class="qg-tooltip"
+                            data-tooltip="The fundamental quantum of spacetime [L·T].">$\sigma_P$</span>)</h3>
                     <p>
                         The central object of this framework is the **Planck two-measure**—the fundamental unit of
                         observable reality.
@@ -783,7 +833,9 @@
                 </div>
 
                 <div class="qg-card">
-                    <h3 style="color: var(--accent-purple);">The Spacetime Fine-Structure ($\alpha_\sigma$)</h3>
+                    <h3 style="color: var(--accent-purple);">The Spacetime Fine-Structure (<span class="qg-tooltip"
+                            data-tooltip="Defines the occupancy/resolution ratio of the vacuum lattice.">$\alpha_\sigma$</span>)
+                    </h3>
                     <p>
                         We define a dimensionless measure of the universe's occupancy by $\sigma_P$ units:
                     </p>
@@ -797,7 +849,8 @@
                 </div>
 
                 <div class="qg-card">
-                    <h3 style="color: var(--accent-amber);">The Effective Cosmological Term ($\Lambda_{\text{eff}}$)
+                    <h3 style="color: var(--accent-amber);">The Effective Cosmological Term (<span class="qg-tooltip"
+                            data-tooltip="Emergent vacuum pressure from holographic horizon residue.">$\Lambda_{\text{eff}}$</span>)
                     </h3>
                     <p>
                         From the fine-structure $\alpha_\sigma$ follows a **dynamic cosmological term**:
@@ -1370,12 +1423,24 @@
                                     across the infinite hierarchy of $\sigma_P$ pulses ($n \ln n$).
                                 </p>
                             </div>
+                            <div
+                                style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; grid-column: span 2;">
+                                <h4 style="color: var(--accent-rose); font-size: 0.85rem;">3. Heuristic Evidence for RH
+                                </h4>
+                                <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
+                                    Our GUE-simulation suggests that the "stiffness" of the vacuum (the Polya-Hilbert
+                                    operator)
+                                    requires all non-trivial resonances to lie on the critical line for stability and
+                                    minimal entropy production. In this framework, the Riemann Hypothesis is the
+                                    <strong>Geometric Stability Condition</strong> of the observable universe.
+                                </p>
+                            </div>
                         </div>
                     </div>
 
                     <div class="qg-box" style="margin-bottom: 2rem; border-left: 4px solid var(--accent-blue);">
                         <h3 style="color: var(--accent-blue);">Unified Field Equation</h3>
-                        <div class="math-content" style="font-size: 1.3rem; padding: 1.5rem 0;">
+                        <div class="math-content" style="font-size: 1.1rem; padding: 1.5rem 0;">
                             $$ \Big\langle \hat G_{\mu\nu} + \Lambda_{\text{eff}} g_{\mu\nu} \Big\rangle_{\sigma_P} =
                             \frac{8\pi G}{c^4} \Big\langle \hat T_{\mu\nu} \Big\rangle_{\sigma_P} $$
                         </div>
@@ -1386,24 +1451,27 @@
 
                     <div class="qg-box"
                         style="margin-bottom: 2rem; border-left: 4px solid var(--accent-purple); background: rgba(120, 50, 255, 0.05);">
-                        <h4 style="color: var(--accent-purple);">Dimensional Invariants</h4>
-                        <div class="grid-2" style="gap: 1.5rem; margin-top: 1rem;">
+                        <h3 style="color: var(--accent-purple);">Dimensional Invariants</h3>
+                        <div class="grid-2" style="gap: 2rem; margin-top: 1rem;">
                             <div>
-                                <div class="math-content" style="font-size: 0.9rem;">$$ \frac{1}{\sigma_P} =
+                                <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">$$
+                                    \frac{1}{\sigma_P} =
                                     \frac{c^4}{\hbar G} $$
                                 </div>
                                 <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">
                                     Max Action Density $[M^{-1}L^{-1}S^{-1}]$</p>
                             </div>
                             <div>
-                                <div class="math-content" style="font-size: 0.9rem;">$$ \alpha_{G}(M) = \frac{G M}{\hbar
+                                <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">$$ \alpha_{G}(M) =
+                                    \frac{G M}{\hbar
                                     c} $$
                                 </div>
                                 <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">Grav.
                                     Fine-Structure</p>
                             </div>
                             <div>
-                                <div class="math-content" style="font-size: 0.9rem;">$$ \chi(M) = \frac{G M^{2}}{\hbar
+                                <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">$$ \chi(M) =
+                                    \frac{G M^{2}}{\hbar
                                     c^{3}} $$
                                 </div>
                                 <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">
@@ -1411,11 +1479,14 @@
                                     Invariant $\sim 1/v^2$</p>
                             </div>
                             <div>
-                                <div class="math-content" style="font-size: 0.9rem;">$$ \kappa_{\mathrm{QG}} =
+                                <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">$$
+                                    \kappa_{\mathrm{QG}} =
                                     \frac{G}{\hbar
                                     c^{2}} $$</div>
-                                <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">QG
-                                    Coupling</p>
+                                <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);"><span
+                                        class="qg-tooltip"
+                                        data-tooltip="Quantum Gravity Coupling: The fundamental constant of information-mass interaction.">QG
+                                        Coupling</span></p>
                             </div>
                         </div>
                         <div
@@ -1426,26 +1497,33 @@
                         </div>
                     </div>
 
-                    <div class="grid-2">
+                    <div class="grid-2" style="gap: 2rem;">
                         <div class="qg-card">
                             <h4 style="color: var(--accent-secondary);">The Vacuum Function</h4>
-                            <div class="math-content">$$\Lambda_{\rm eff} = \frac{1}{c R t}$$</div>
-                            <p style="font-size: 0.85rem;">Parameter-free solution to the Vacuum Catastrophe.</p>
+                            <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">$$\Lambda_{\rm eff} =
+                                \frac{1}{c R t}$$</div>
+                            <p style="font-size: 0.85rem;">Parameter-free solution to the <span class="qg-tooltip"
+                                    data-tooltip="The 10^120 discrepancy between QM and GR vacuum energy predictions.">Vacuum
+                                    Catastrophe</span>.</p>
                         </div>
                         <div class="qg-card">
                             <h4 style="color: var(--accent-emerald);">The Metric Coupling</h4>
-                            <div class="math-content">$$G_{\beta\nu} + \beta \langle \phi^2 \rangle g_{\beta\nu} =
-                                8\pi G \sum T$$</div>
+                            <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">$$G_{\mu\nu} + \beta
+                                \langle \phi^2 \rangle_{\sigma_P} g_{\mu\nu} =
+                                \frac{8\pi G}{c^4} \sum_i T_{\mu\nu}^{(i)}$$</div>
                             <p style="font-size: 0.85rem;">Information becomes geometry.</p>
                         </div>
                     </div>
 
                     <div class="qg-box" style="margin-top: 2rem; border: 1px dashed var(--accent-amber);">
                         <h4 style="color: var(--accent-amber); text-align: center;">Master Wave Command</h4>
-                        <div class="math-content" style="font-size: 0.9rem; padding: 1rem 0;">
+                        <div class="math-content" style="font-size: 1.1rem; padding: 1.5rem 0;">
                             $$ \Box \phi + \gamma \partial^\mu \phi + \alpha \phi^3 + \beta \phi^5 = qE_{\text{Res}}
                             + \lambda \langle \hat{Q} \rangle $$
                         </div>
+                        <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary); opacity: 0.8;">
+                            Where $\Box = g^{\mu\nu} \partial_\mu \partial_\nu$ is the discrete D'Alembertian operator.
+                        </p>
                     </div>
                 </section>
 
