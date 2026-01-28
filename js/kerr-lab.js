@@ -39,10 +39,12 @@ function updateKerrLab() {
     document.getElementById('val-kerr-c0t').innerText = results.c0_t.toExponential(4);
     document.getElementById('val-kerr-c0s').innerText = results.c0_s.toExponential(4);
     document.getElementById('val-kerr-c0').innerText = results.c0_tot.toExponential(4);
+    document.getElementById('val-kerr-nsig').innerText = results.N_sigma.toExponential(3);
+    document.getElementById('val-kerr-sz').innerText = results.S_Z.toExponential(3) + " J/K";
 
-    // Smearing Visualization (Dimensionless offsets)
+    // Relativity Visualization (Dimensionless offsets)
     const smear = (results.c0_tot * 100).toFixed(6);
-    document.getElementById('kerr-smear-note').innerText = `Horizon Smearing: ${smear}% shift from pure thermal state.`;
+    document.getElementById('kerr-smear-note').innerText = `Relativity Offset: ${smear}% shift from pure thermal state.`;
 
     updateKerrPlot(M, chi, tau, L);
 }
@@ -92,24 +94,37 @@ function updateKerrPlot(M, currentChi, tau, L) {
 }
 
 function calculateKerr(M, chi, tau, L) {
-    const M_geo = KERR_CONST.G * M / (KERR_CONST.c * KERR_CONST.c);
+    const G = KERR_CONST.G;
+    const c = KERR_CONST.c;
+    const kB = KERR_CONST.kB;
+    const sigmaP = KERR_CONST.sigmaP;
+
+    const M_geo = G * M / (c * c);
     const a_geo = chi * M_geo;
     const s = Math.sqrt(Math.max(0, 1.0 - chi * chi));
     const r_plus = M_geo * (1.0 + s);
     const r_minus = M_geo * (1.0 - s);
+
+    // N_sigma = Area / (sigmaP * c)
+    // Area of Kerr horizon: 4*pi*(r_plus^2 + a^2)
+    const area = 4.0 * Math.PI * (r_plus * r_plus + a_geo * a_geo);
+    const N_sigma = area / (sigmaP * c);
+
+    // S_Z = kB * N_sigma / 4
+    const S_Z = kB * N_sigma / 4.0;
+
+    // T_H (Zander Derivation): sigmaP * c^7 / (8*pi * G^2 * M * kB)
+    const T_H = (sigmaP * Math.pow(c, 7)) / (8.0 * Math.PI * G * G * M * kB);
+
     const denom = 2.0 * (r_plus * r_plus + a_geo * a_geo);
     const kappa_geo = (r_plus - r_minus) / denom;
-    const kappa_SI = KERR_CONST.c * KERR_CONST.c * kappa_geo;
-    const T_H = (KERR_CONST.hbar * KERR_CONST.c * kappa_geo) / (2.0 * Math.PI * KERR_CONST.kB);
+    const kappa_SI = c * c * kappa_geo;
 
-    const eps_t = (tau * kappa_SI) / KERR_CONST.c;
+    const eps_t = (tau * kappa_SI) / c;
     const eps_s = L / r_plus;
 
-    // c0_temporal: (pi^2 / 6) * eps_t^2
     const c0_t = (Math.PI * Math.PI / 6.0) * (eps_t * eps_t);
 
-    // c0_spatial: 0.5 * eps_s^2 * sum(w_lm * slope_lm^2)
-    // Refined mode slopes/weights from Teukolsky results (bh_kernel_c0_scaffold.py)
     const modes = [
         { slope: 0.8, weight: 0.5 },
         { slope: 0.4, weight: 0.3 },
@@ -124,7 +139,7 @@ function calculateKerr(M, chi, tau, L) {
     const c0_s = 0.5 * (eps_s * eps_s) * weighted_slope2;
 
     return {
-        r_plus, r_minus, kappa_SI, T_H, eps_t, eps_s, c0_t, c0_s, c0_tot: c0_t + c0_s
+        r_plus, r_minus, kappa_SI, T_H, eps_t, eps_s, c0_t, c0_s, c0_tot: c0_t + c0_s, N_sigma, S_Z
     };
 }
 
