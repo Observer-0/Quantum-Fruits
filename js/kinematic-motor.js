@@ -8,6 +8,7 @@ const netPotentialVal = document.getElementById('netPotential');
 const tickDensityVal = document.getElementById('tickDensity');
 const statusText = document.getElementById('statusText');
 const pageCurvePlot = document.getElementById('pageCurvePlot');
+const autoCycleBtn = document.getElementById('autoCycleBtn');
 
 canvas.width = 700;
 canvas.height = 700;
@@ -29,6 +30,8 @@ let entropyPoints = [];
 let naiveEntropyPoints = []; // Hawking data
 const maxEntropyPoints = 120;
 let creationsSparks = [];
+let isAutoCycle = false;
+let cycleProgress = 0; // 0 to 1
 
 // Initialize Page Curve data
 for (let i = 0; i < maxEntropyPoints; i++) {
@@ -247,6 +250,37 @@ function updateStats() {
     return lSpinValue;
 }
 
+function handleAutoCycle() {
+    if (!isAutoCycle) return;
+
+    cycleProgress += 0.002; // Control speed of cycle
+    if (cycleProgress >= 1.0) cycleProgress = 0;
+
+    // Phase 1: Spin-up (Low burden, high internal action)
+    // Phase 2: Peak (Burden ~ 50, maximum interaction)
+    // Phase 3: Decline (High burden, braking dominates)
+
+    // Model M_ext growth
+    const burden = cycleProgress * 100;
+    massSlider.value = burden;
+
+    // Model Spin(t) ~ f(M_ext)
+    // Initially high, maybe peaks slightly as it compacts, then falls due to braking force
+    const spin = 100 * Math.exp(-cycleProgress * 2) * (1 + Math.sin(cycleProgress * Math.PI) * 0.5);
+    spinSlider.value = Math.max(5, spin);
+
+    if (cycleProgress < 0.3) {
+        statusText.innerText = "LIFE CYCLE: Phase 1 - Pure Action Spin-up";
+        statusText.style.color = "var(--accent-blue)";
+    } else if (cycleProgress < 0.6) {
+        statusText.innerText = "LIFE CYCLE: Phase 2 - Peak Coupling (Burden Balance)";
+        statusText.style.color = "var(--accent-amber)";
+    } else {
+        statusText.innerText = "LIFE CYCLE: Phase 3 - Gravitational Braking (Decline)";
+        statusText.style.color = "var(--accent-rose)";
+    }
+}
+
 function renderPageCurve() {
     pageCurvePlot.innerHTML = '';
     entropyPoints.forEach((val, i) => {
@@ -290,9 +324,17 @@ mergerBtn.onclick = () => {
     }, 2000);
 };
 
+autoCycleBtn.onclick = () => {
+    isAutoCycle = !isAutoCycle;
+    autoCycleBtn.innerText = isAutoCycle ? "Stop Life Cycle" : "Start Life Cycle";
+    if (isAutoCycle) cycleProgress = 0;
+};
+
 function animate() {
     ctx.fillStyle = '#010105';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (isAutoCycle) handleAutoCycle();
 
     const spin = parseFloat(spinSlider.value);
     const burden = parseFloat(massSlider.value);
