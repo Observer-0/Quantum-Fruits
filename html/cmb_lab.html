@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMB Horizon Lab | Quantum Fruits</title>
+    <link rel="stylesheet" href="../css/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="../js/unity.js"></script>
+    <style>
+        :root {
+            --accent-cmb: #818cf8;
+        }
+
+        body {
+            background-color: #020617;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .lab-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            height: 100vh;
+        }
+
+        .sidebar {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        .viewport-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            background: linear-gradient(to right, var(--accent-cmb), #f43f5e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent-cmb);
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .status-badge {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            background: rgba(129, 140, 248, 0.1);
+            color: var(--accent-cmb);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+        }
+
+        .overlay-ui {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            pointer-events: none;
+        }
+
+        .compass {
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #64748b;
+            font-size: 0.8rem;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+        }
+
+        .didactic-text {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #94a3b8;
+        }
+
+        .didactic-text strong {
+            color: #e2e8f0;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lab-layout">
+        <aside class="sidebar">
+            <header>
+                <a href="labs.html" class="nav-link">&larr; Back to Labs</a>
+                <h1 style="margin-top: 0.5rem;">CMB Horizon Lab</h1>
+                <p style="font-size: 0.8rem; color: #64748b; margin-top: 0.25rem;">Relational Perspective in expanding
+                    Space</p>
+            </header>
+
+            <div class="glass-panel">
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Scale Factor <i>a(t)</i></span>
+                        <span id="label-a">1.00</span>
+                    </div>
+                    <input type="range" id="slider-a" min="0.1" max="5.0" step="0.01" value="1.0">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Peculiar Velocity <i>β</i></span>
+                        <span id="label-beta">0.0012</span>
+                    </div>
+                    <input type="range" id="slider-beta" min="0" max="0.01" step="0.0001" value="0.0012">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Information Entropy (Σₚ)</span>
+                        <span id="label-entropy" style="color: #10b981; font-weight: bold;">1.0000</span>
+                    </div>
+                </div>
+
+                <div class="toggle-row">
+                    <span style="font-size: 0.9rem;">Expansion Sync</span>
+                    <input type="checkbox" id="toggle-expansion" checked>
+                </div>
+
+                <div class="toggle-row">
+                    <span style="font-size: 0.9rem;">Dipole Anisotropy</span>
+                    <input type="checkbox" id="toggle-dipole" checked>
+                </div>
+            </div>
+
+            <div class="glass-panel">
+                <h3 style="font-size: 0.9rem; margin-top: 0; color: #fff;">Insight: The Observer's Shell</h3>
+                <p class="didactic-text">
+                    In this simulation, notice that the <strong>CMB is always centered on you</strong>.
+                    As the scale factor <i>a(t)</i> increases, the physical distance between galaxies grows,
+                    but your observed horizon remains a perfect sphere around the origin.
+                </p>
+                <p class="didactic-text">
+                    The <strong>Dipole</strong> is not a property of the universe, but of your motion
+                    through the $\sigma_P$ grid. You are looking back at the same 2-sphere from a frame
+                    of reference that is locally moving.
+                </p>
+            </div>
+
+            <div style="margin-top: auto; padding-top: 2rem;">
+                <div class="status-badge">σₚ_GRID: ACTIVE</div>
+                <p style="font-size: 0.7rem; color: #475569; margin-top: 1rem;">
+                    "Every observer sits at the center of their own last scattering surface."
+                </p>
+            </div>
+        </aside>
+
+        <main class="viewport-container">
+            <div id="canvas-container"></div>
+
+            <div class="overlay-ui">
+                <div
+                    style="text-align: right; color: rgba(255,255,255,0.2); font-family: var(--font-mono); font-size: 0.7rem;">
+                    POSITION: [0, 0, 0]<br>
+                    FRAME: COMOVING_OBSERVER<br>
+                    HORIZON: 13.8 Gly (Scaled)
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/cmb-sim.js"></script>
+</body>
+
+</html>

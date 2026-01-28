@@ -127,18 +127,111 @@ function calculateKerr(M, chi, tau, L) {
         r_plus, r_minus, kappa_SI, T_H, eps_t, eps_s, c0_t, c0_s, c0_tot: c0_t + c0_s
     };
 }
+
+/**
+ * BH Life Cycle Simulation
+ * Hawking → Sternproduktion → Endzustand
+ */
+function initBHLifeCycle() {
+    // ==== Setup Parameters ====
+    const M0 = 10 * KERR_CONST.M_sun;  // initial stellar BH
+    const tau_life = 1e12;             // normalized life time (s)
+    const nSteps = 200;
+
+    const chi = 0.8;                    // dimensionless spin
+    const useSigmaP = document.getElementById('kerr-sigmap-toggle')?.checked ?? true;
+
+    // ==== Arrays ====
+    const tArr = Array.from({ length: nSteps }, (_, i) => i * tau_life / nSteps);
+    const MArr = [];
+    const SArr = [];
+    const c0Arr = [];
+
+    // ==== Simulation Loop ====
+    tArr.forEach((t, i) => {
+        // Mass evolution: simple evaporation + Sternbildung
+        let M;
+        if (t < 0.5 * tau_life) {
+            // Early: Hawking
+            M = M0 * Math.pow(1 - t / (0.5 * tau_life), 1 / 3);
+        } else {
+            // Mid/Late: Sternproduktion
+            M = M0 * 0.5 + 0.5 * M0 * Math.sin(Math.PI * (t - 0.5 * tau_life) / (0.5 * tau_life)) ** 2;
+        }
+        MArr.push(M);
+
+        // Entropy: Page-Kurve analog
+        let S;
+        if (t < 0.5 * tau_life) {
+            S = 0.5 * M0 * t / (0.5 * tau_life);  // linear Hawking
+        } else {
+            // rise due to Sternproduktion + eventual remnant
+            S = 0.5 * M0 + 0.5 * M0 * Math.sin(Math.PI * (t - 0.5 * tau_life) / (0.5 * tau_life)) ** 2;
+        }
+        SArr.push(S);
+
+        // c0: from Kerr / Teukolsky
+        // We use the user-provided scaling for tau and L here
+        const res = calculateKerr(M, chi, useSigmaP ? 1e-44 : 1e-4, useSigmaP ? 1e-35 : 1);
+        c0Arr.push(res.c0_tot);
+    });
+
+    // ==== Plot ====
+    const traceM = {
+        x: tArr, y: MArr,
+        name: "Mass M(t)",
+        yaxis: 'y1',
+        mode: 'lines', line: { color: '#38bdf8', width: 3 }
+    };
+    const traceS = {
+        x: tArr, y: SArr,
+        name: "Entropy S(t)",
+        yaxis: 'y2',
+        mode: 'lines', line: { color: '#ef4444', width: 3 }
+    };
+    const traceC0 = {
+        x: tArr, y: c0Arr,
+        name: "Non-Thermality c0(t)",
+        yaxis: 'y3',
+        mode: 'lines', line: { color: '#bc00ff', width: 3 }
+    };
+
+    const layout = {
+        title: { text: "BH Life Cycle: Hawking → Sternproduktion → Endzustand", font: { color: '#fff', size: 14 } },
+        xaxis: { title: "t [s]", gridcolor: 'rgba(255,255,255,0.05)', tickfont: { color: '#94a3b8' }, titlefont: { color: '#94a3b8' } },
+        yaxis: { title: "Mass [kg]", side: 'left', color: '#38bdf8', gridcolor: 'rgba(255,255,255,0.05)', tickfont: { color: '#38bdf8' } },
+        yaxis2: { title: "Entropy S(t)", overlaying: 'y', side: 'right', color: '#ef4444', tickfont: { color: '#ef4444' } },
+        yaxis3: {
+            title: "c0 (Non-Thermality)",
+            overlaying: 'y',
+            side: 'right',
+            anchor: 'free',
+            position: 1.0,
+            color: '#bc00ff',
+            tickfont: { color: '#bc00ff' }
+        },
+        legend: { x: 0.05, y: 1.1, orientation: 'h', font: { color: '#fff', size: 10 } },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0.2)',
+        margin: { t: 80, b: 50, l: 60, r: 120 }
+    };
+
+    Plotly.newPlot('bh-life-cycle', [traceM, traceS, traceC0], layout, { displayModeBar: false });
+}
+
 // Initialize listeners
 document.addEventListener('DOMContentLoaded', () => {
     const mSlider = document.getElementById('kerr-mass');
     const sSlider = document.getElementById('kerr-spin');
     const tCheck = document.getElementById('kerr-sigmap-toggle');
 
-    if (mSlider) mSlider.oninput = updateKerrLab;
-    if (sSlider) sSlider.oninput = updateKerrLab;
-    if (tCheck) tCheck.onchange = updateKerrLab;
+    if (mSlider) mSlider.oninput = () => { updateKerrLab(); initBHLifeCycle(); };
+    if (sSlider) sSlider.oninput = () => { updateKerrLab(); initBHLifeCycle(); };
+    if (tCheck) tCheck.onchange = () => { updateKerrLab(); initBHLifeCycle(); };
 
-    // Initial update
+    // Initial updates
     updateKerrLab();
+    initBHLifeCycle();
 });
 
 /**
