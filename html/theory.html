@@ -47,6 +47,50 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
+        /* Tooltip styles */
+        .qg-tooltip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dashed var(--accent-blue);
+            color: var(--accent-blue);
+            transition: color 0.3s ease;
+        }
+
+        .qg-tooltip:hover {
+            color: #fff;
+        }
+
+        .qg-tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.98);
+            color: #fff;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 400;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            width: max-content;
+            max-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--accent-blue);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .qg-tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+            bottom: 140%;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -81,21 +125,10 @@
             });
         });
     </script>
-    <script src="../js/sigma-bg.js"></script>
+    <script src="../js/unity.js"></script>
 </head>
 
 <body>
-    <nav class="top-nav-fixed">
-        <a href="#intro" class="active">Foundations</a>
-        <a href="#quantum">Quantum</a>
-        <a href="#blackholes">Black Holes</a>
-        <a href="#galaxies">Galaxies</a>
-        <a href="#cosmology">Cosmology</a>
-        <a href="#entropy">Entropy & Time</a>
-        <a href="#library">Research</a>
-        <a href="#formulas">Formulas</a>
-        <a href="tsf_sim.html" style="color: var(--accent-amber);">TSF Sim &rarr;</a>
-    </nav>
 
     <header class="section-hero" id="top">
         <div class="theory-container" style="text-align: center;">
@@ -122,41 +155,31 @@
             <div class="grid-2">
                 <div class="qg-card"
                     style="grid-column: span 2; background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(0,0,0,0.4));">
-                    <h3 style="color: var(--accent-blue);">The Spacetime Quantum ($\sigma_P$)</h3>
+                    <h3 style="color: var(--accent-blue);">Spacetime as the Observable Universe</h3>
                     <p>
-                        Conventional physics treats space and time as a smooth, infinitely divisible continuum. The
-                        <strong>Quantized Spacetime Framework</strong> posits that spacetime is a discrete mosaic of
-                        action.
-                        The fundamental unit of reality is not a point, but a geometric area-time quantum—the
-                        Planckian Dual-Measure:
+                        In this framework, <strong>spacetime is the observable universe</strong>—the dynamic sum of
+                        everything we can interact with through light and information. It is not an abstract container
+                        for matter, but the <strong>total information stream</strong> available to an observer.
                     </p>
                     <div class="formula-block">
-                        $$\sigma_P = \frac{\hbar G}{c^4} \approx 10^{-104} \text{ m}\cdot\text{s}$$
+                        $$\sigma_P = \ell_P \cdot t_P \quad [\text{L}\cdot\text{T}]$$
                     </div>
-                    <p style="margin-top: 1rem; opacity: 0.8;">
-                        This invariant cell regulates vacuum fluctuations at their source, naturally resolving the
-                        divergences of QFT and removing singularities through covariant source-averaging.
+                    <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.95rem;">
+                        The fundamental unit <span class="qg-tooltip"
+                            data-tooltip="The Planck Spacetime Cell: The smallest indivisible unit of information flow [L·T].">$\sigma_P$</span>
+                        defines the "pixelation" of this observable horizon. Space and
+                        time are not fundamental separately; they emerge from the way information is coupled across the
+                        discrete Planckian pulse. We do not see the universe "in its entirety," but only as much as the
+                        light-travel time and information-density allow.
                     </p>
-                </div>
-
-                <div class="qg-card">
-                    <h3 style="color: var(--accent-secondary);">The Unification Invariant</h3>
-                    <p>
-                        By setting the ratio of QFT vacuum energy to observed vacuum energy to exactly 1,
-                        the cosmological constant $\Lambda$ is no longer a "fine-tuned" mystery, but a
-                        macroscopic manifestation of $\hbar$.
-                    </p>
-                    <div class="formula-block" style="font-size: 1.2rem;">
-                        $$\Lambda = \frac{3}{c R t}$$
-                    </div>
                 </div>
 
                 <div class="qg-card">
                     <h3 style="color: var(--accent-secondary);">Holographic Balance</h3>
                     <p>
-                        The fine-structure constant $\alpha$ emerges not as an arbitrary input, but from
-                        the equilibrium between boundary information and zeta-regularized Dirac spectra.
-                        Reality is a self-consistent feedback loop between the micro and macro.
+                        Fundamental constants like the fine-structure constant $\alpha$ emerge from the equilibrium
+                        between boundary information and spectral density. Reality is a self-consistent feedback loop
+                        between the observer's horizon and the local quantum grain.
                     </p>
                 </div>
             </div>
@@ -164,23 +187,26 @@
 
         <div class="qg-card">
             <h3 style="color: var(--accent-emerald);">The Axiom of Finite Divisibility</h3>
-            <p><em>"Nature enforces a cutoff."</em> No physical system can be divided without bound. This
-                geometric limit ensures that information density is always finite.</p>
+            <p><em>"Nature enforces a cutoff."</em> No physical system can be divided without bound. This geometric
+                limit ensures that information density remains finite.</p>
             <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
                 Singularities are not real locations, but the symptom of over-extended mathematics.
-                Spacetime is not a continuum, but woven from finite quanta $\sigma_P$.
+                Spacetime is not a continuum, but woven from finite quanta <span class="qg-tooltip"
+                    data-tooltip="Spacetime Quanta: Finite cells of action that prevent infinite density.">$\sigma_P$</span>.
                 <br><br>
-                <em>"Infinity is not the goal of physics, but its misunderstanding."</em>
+                <em>"Infinity is not the goal of physics, but a misunderstanding of its framework."</em>
             </p>
         </div>
 
         <div class="qg-card">
             <h3 style="color: var(--accent-amber);">The Law of Statistical Inversion</h3>
-            <p>Quantum Mechanics (the small) and General Relativity (the large) are two sides of the same coin.
-                Every local action requires its global inverse to balance the cosmic mean. This balance ensures
-                the universe is perfectly focused across all scales.</p> A.-Zander
+            <p>
+                Quantum Mechanics (the small) and General Relativity (the large) are two sides of the same coin.
+                Every local action requires a global inverse to balance the cosmic mean.
+                This ensures the universe maintains coherence across all scales.
+            </p>
         </div>
-        </div>
+
 
         <div style="margin-top: 6rem;">
             <h3 style="text-align: center; margin-bottom: 3rem; font-size: 2rem;">The Postulates of Quantized
@@ -275,10 +301,10 @@
 
                     <!-- P10 -->
                     <div class="qg-card" style="padding: 1.5rem; border: 1px solid var(--accent-emerald);">
-                        <h4 style="color: var(--accent-emerald);">P10 — Einstein-Zander Field Eq.</h4>
-                        <p style="font-size: 0.85rem;">Through $\sigma_P$-covariant "distribution":</p>
-                        <div class="formula-block-small">\[ (G_{\mu\nu} - \frac{8 \pi G}{c^{4}}
-                            T_{\mu\nu})(\sigma_{P}) \Psi = 0 \]</div>
+                        <h4 style="color: var(--accent-emerald);">P10 — Covariant Field Eq.</h4>
+                        <p style="font-size: 0.85rem;">Through $\sigma_P$-covariant distribution:</p>
+                        <div class="formula-block-small">\[ (G_{\mu\nu} - \frac{8 \pi G}{c^{4}} T_{\mu\nu})(\sigma_{P})
+                            \Psi = 0 \]</div>
                     </div>
 
                 </div>
@@ -372,13 +398,13 @@
                     <div class="qg-card compact-card">
                         <h4 style="color: var(--accent-amber);">14. Fundamental Grain?</h4>
                         <p>Not length, not time. An action cell $[L \cdot T]$. The minimal update the universe
-                            allows. $\sigma_P = \hbar G / c^4$.</p>
+                            allows. $\sigma_P = \ell_P t_P$.</p>
                     </div>
 
                     <div class="qg-card compact-card">
                         <h4 style="color: var(--accent-amber);">15. Entropy?</h4>
-                        <p>Entropy counts ticks. Black holes don't lose info; they just finish counting. $S = k_B
-                            \cdot N_{\text{ticks}}$.</p>
+                        <p>Entropy counts pings. Black holes don't lose info; they just finish counting. $S = k_B
+                            \cdot N_{\text{updates}}$.</p>
                     </div>
 
                     <div class="qg-card compact-card">
@@ -401,7 +427,7 @@
 
                     <div class="qg-card compact-card">
                         <h4 style="color: var(--accent-amber);">19. Cosmic Horizon?</h4>
-                        <p>Bounded by the total number of ticks since start. Beyond is not hidden, just uncounted.
+                        <p>Bounded by the total number of updates since start. Beyond is not hidden, just uncounted.
                         </p>
                     </div>
 
@@ -542,137 +568,198 @@
             </div>
         </section>
 
-        <!-- SECTION 3: BLACK HOLES -->
         <section id="blackholes" class="theory-container"
             style="background: radial-gradient(circle at bottom right, rgba(225, 29, 72, 0.05), transparent);">
             <span class="section-tag">Extreme Geometry</span>
-            <h2 class="section-title-modern">Black Holes & The Arrow of Time</h2>
+            <h2 class="section-title-modern">Black Holes: The Kinematic Motor</h2>
 
             <div class="grid-2">
-                <div class="qg-card">
-                    <h3 style="color: var(--accent-rose);">The End of Singularities</h3>
-                    <p>In standard GR, a black hole is a point of infinite density. In the <strong>Zander
-                            Thesis</strong>, the density is capped by the spacetime quantum. Once the matter reaches the
-                        $\sigma_P$ resolution limit, it cannot collapse further. The core is not a point, but a stable
-                        <strong>Action Shell</strong>.
+                <div class="qg-card" style="grid-column: span 2; border-left: 4px solid var(--accent-rose);">
+                    <h3 style="color: var(--accent-rose);">The Challenge: Infinite Density</h3>
+                    <p>
+                        Classical General Relativity (GR) predicts that matter collapses into a
+                        <strong>singularity</strong>—a point of infinite density. Infinites do not exist in nature; they
+                        are a signal that our mathematical models have reached their limit. The $\sigma_P$ framework
+                        resolves this by enforcing the <strong>Planck Force Limit</strong> ($c^4/G$).
                     </p>
                 </div>
 
                 <div class="qg-card">
-                    <h3 style="color: var(--accent-rose);">The Peißker Breakthrough (S62)</h3>
-                    <p>Recent observations of the star <strong>S62</strong> provide the first empirical evidence for the
-                        <em>Scalar-Inertial
-                            Field</em>. Precession matches the Zander-Scaffold prediction better than Schwarzschild
-                        metrics.
+                    <h3 style="color: var(--accent-blue);">The $\Sigma_P$ Resolution</h3>
+                    <p>
+                        Spacetime is quantized. You cannot pack more action into a region than the $\sigma_P$ lattice
+                        allows. The classical singularity is replaced by a high-frequency <strong>Action Core</strong>:
                     </p>
+                    <div class="formula-block" style="border-color: var(--accent-blue);">
+                        $$\text{Max Action Density} = \frac{1}{\sigma_P} = \frac{c^4}{\hbar G} \approx 10^{78} \,
+                        \text{(SI units)}$$
+                    </div>
                 </div>
 
                 <div class="qg-card">
-                    <h3 style="color: var(--accent-rose);">Hierarchical Mergers</h3>
-                    <p>The $\sigma_P$ framework predicts that black holes "can never merge just once." Finite curvature
-                        cores and discretised reorganisation lead to multi-phase, hierarchical growth without
-                        singularities.</p>
-                    <a href="../assets/papers/QSTF_Hierarchical_Mergers.tex"
-                        style="color: var(--accent-rose); font-size: 0.8rem; text-decoration: underline;">Read Technical
-                        Paper &rarr;</a>
+                    <h3 style="color: var(--accent-emerald);">The Unitary Transformer</h3>
+                    <p>
+                        A black hole functions like a motor, transforming quantum action into structured gravitational
+                        fields. This preserves <strong>Unitarity</strong>: information is not lost; it is
+                        <strong>transformed</strong> from discrete high-frequency spin into classical geometry.
+                    </p>
                 </div>
             </div>
 
-            <!-- Anatomy of the Black Hole -->
+            <!-- The Kinematic Analogy Table -->
+            <div class="qg-card"
+                style="margin-top: 3rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);">
+                <h4 style="color: var(--accent-rose); margin-bottom: 2rem; text-align: center;">The Kinematic Motor
+                    Analogy</h4>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid rgba(255,255,255,0.1); text-align: left;">
+                                <th style="padding: 1rem; color: var(--accent-blue);">Motor Component</th>
+                                <th style="padding: 1rem; color: var(--accent-rose);">Black Hole Analogy</th>
+                                <th style="padding: 1rem; color: var(--text-secondary);">Function</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 1rem; font-weight: bold;">Stator / Field Coil</td>
+                                <td style="padding: 1rem;">Pure Action Core</td>
+                                <td style="padding: 1rem; color: var(--text-secondary);">Generates "torque"
+                                    (spin/action) without mass load. High-frequency spin stores energy as ordered
+                                    angular momentum.</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1rem; font-weight: bold;">Rotor with Load</td>
+                                <td style="padding: 1rem;">Accreted Mass</td>
+                                <td style="padding: 1rem; color: var(--text-secondary);">Coupling to mass "loads" the
+                                    core, braking the spin and converting quantum action into classical gravity, heat,
+                                    and radiation.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Anatomy of the Black Hole / Simulation -->
             <div class="qg-card" style="margin-top: 3rem; border-color: rgba(56, 189, 248, 0.2);">
-                <h4 style="color: var(--accent-blue);">The Anatomy of the Black Hole</h4>
-                <p style="font-size: 0.95rem; margin-bottom: 2rem;">
-                    When a massive star collapses and sheds its remaining matter in a supernova, a core of
-                    <strong>pure action ($\hbar$)</strong> remains at the center. Because this core is massless,
-                    it is not subject to classical laws of inertia—it rotates with maximum frequency (spin)
-                    and thus rebuilds the geometric structure of spacetime.
-                </p>
+                <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                    <h4 style="color: var(--accent-blue);">Visualization: Action Core vs. Mass Load</h4>
+                    <a href="evaporation_lab.html" class="action-btn"
+                        style="background: var(--accent-rose); font-size: 0.7rem; padding: 0.4rem 0.8rem;">Open
+                        Evaporation Lab &rarr;</a>
+                </div>
                 <div class="bh-container">
                     <canvas id="bhCanvas"
                         style="width: 100%; min-height: 400px; border-radius: 12px; background: #000;"></canvas>
                     <div class="simulation-controls" style="margin-top: 1rem;">
-                        <button id="toggleBH" class="btn-sim">Pause Simulation</button>
+                        <button id="toggleBH" class="btn-sim">Pause Motor</button>
                     </div>
                 </div>
 
-                <div class="qg-box"
-                    style="background: rgba(0, 242, 255, 0.05); border-left: 4px solid var(--accent-blue); margin-top: 2rem;">
-                    <h3 style="color: var(--accent-blue);">Action vs. Mass</h3>
-                    <p style="font-size: 0.9rem;">
-                        A black hole is a gigantic battle between two physical quantities:
-                        <strong>Quantum Action ($\hbar$)</strong> and <strong>Mass (Gravity)</strong>.
-                    </p>
-                    <div class="theory-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
-                        <div>
-                            <h4>The Action Core</h4>
-                            <p style="font-size: 0.85rem; color: var(--text-secondary);">
-                                The center does not consist of particles, but of <strong>pure action</strong> ($\hbar$).
-                                Dimensionally, this is <em>Newton-meter-second ($N \cdot m \cdot s$)</em>.
-                                It is the pure rotation of spacetime itself. In the simulation above, you see the
-                                Zander entropy value ($S_Z$): It is the measure of the <strong>Frozen
-                                    Frequency</strong>.
-                            </p>
-                        </div>
-                        <div>
-                            <h4>The Brake (Accretion)</h4>
-                            <p style="font-size: 0.85rem; color: var(--text-secondary);">
-                                Normal matter (mass) accumulates in the accretion disk. Mass generates classical
-                                gravity. The more mass accumulates there and at the event horizon over time, the
-                                stronger the
-                                gravity of the outer masses becomes against the "attraction" of the pure action in the
-                                core.
+                <div class="grid-2" style="margin-top: 2rem; gap: 2rem;">
+                    <div>
+                        <h4 style="color: var(--accent-amber);">1. Pure Action Core</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                            In the zero-mass limit, the core carries energy as <strong>pure rotation</strong> of
+                            spacetime ($\hbar$). This generates an action-based attraction and magnetic fields long
+                            before classical "mass" dominates.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-rose);">2. Mass Loading & Braking</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                            Surrounding matter acts as a mechanical load. It couples to the spin, <strong>slowing the
+                                frequency</strong> and converting it into classical gravitational parameters ($G, M,
+                            r_s$).
+                        <div class="qg-card"
+                            style="grid-column: span 2; text-align: center; font-style: italic; background: rgba(255,255,255,0.02);">
+                            <p style="font-size: 1.1rem; color: var(--text-secondary);">
+                                Imagine the universe as a **giant carpet of $\sigma_P$ tiles**. Press on it → curvature;
+                                vibrate
+                                it → quantum ticking at $f = mc^2 / h$.
+                                Signals travel at constant $c$. Far away, the fine weave defines $\Lambda_{\text{eff}}$.
+                                Dark energy? Just the geometry of the carpet itself.
                             </p>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Simulation -->
-            <div class="qg-card" style="margin-top: 2rem; border-color: rgba(225, 29, 72, 0.2);">
-                <h4 style="color: var(--accent-rose);">Simulation: The Reversible Arrow</h4>
-                <div id="arrow-sim-container"
-                    style="padding: 2rem; background: rgba(0,0,0,0.3); border-radius: 12px; margin-top: 1rem;">
-                    <div id="particle-field"
-                        style="height: 150px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
-                        <!-- Particles injected by JS -->
+                    <div style="margin-top: 4rem; text-align: center;">
+                        <blockquote
+                            style="font-size: 1.8rem; font-family: 'Outfit', sans-serif; color: var(--accent-blue); max-width: 900px; margin: 0 auto; line-height: 1.4;">
+                            "Quantum gravity is not about <strong>quantizing geometry</strong>, but about
+                            <strong>bounding how action flows</strong> through spacetime."
+                        </blockquote>
                     </div>
-                    <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
-                        <button onclick="reverseTimeModern()" class="btn-sim"
-                            style="background: var(--accent-rose); color: #fff;">Reverse Time (Entropy Penalty)</button>
-                        <a href="motor.html" class="btn-sim"
-                            style="background: rgba(225, 29, 72, 0.2); border-color: var(--accent-rose); color: #fff; text-decoration: none;">Launch
-                            Kinematic Motor Lab &rarr;</a>
+
+                    <div class="qg-card"
+                        style="margin-top: 4rem; background: linear-gradient(to right, rgba(0,0,0,0.6), rgba(56, 189, 248, 0.05)); border: 1px solid rgba(56, 189, 248, 0.2);">
+                        <h3 style="color: var(--accent-blue); text-align: center; margin-bottom: 2rem;">The Hierarchy of
+                            Action ($A_n$)</h3>
+                        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                            Every power of $c$ represents a different "slice" through the same discrete spacetime
+                            fabric.
+                            The universal formula $A_n = c^n / (\hbar G)$ reveals the structure of the cosmic limit:
+                        </p>
+
+                        <div class="grid-2" style="gap: 2rem;">
+                            <div
+                                style="padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-rose);">
+                                <h4 style="color: var(--accent-rose);">$n=4$: The Spacetime Pulse ($1/\sigma_P$)</h4>
+                                <div class="formula-block-small">$$ \frac{c^4}{\hbar G} \approx 10^{78} \,
+                                    [M^{-1}L^{-1}S^{-1}] $$</div>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">Defines
+                                    the maximum <strong>Action Flow</strong>. This is the absolute "resolution limit" of
+                                    the observable universe.</p>
+                            </div>
+
+                            <div
+                                style="padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-purple);">
+                                <h4 style="color: var(--accent-purple);">$n=3$: Holographic Limit ($1/\ell_P^2$)</h4>
+                                <div class="formula-block-small">$$ \frac{c^3}{\hbar G} \approx 10^{70} \, [L^{-2}] $$
+                                </div>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">Defines
+                                    the maximum <strong>Information Density</strong> per surface area (The
+                                    Bekenstein-Bound).</p>
+                            </div>
+
+                            <div
+                                style="padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-blue);">
+                                <h4 style="color: var(--accent-blue);">$n=2$: Linear Coupling</h4>
+                                <div class="formula-block-small">$$ \frac{c^2}{\hbar G} \approx 10^{61} \, [L^{-3}S] $$
+                                </div>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">Defines
+                                    how much <strong>action is bound</strong> per meter of the spatial grid. The bridge
+                                    between particles and strings.</p>
+                            </div>
+
+                            <div
+                                style="padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-amber);">
+                                <h4 style="color: var(--accent-amber);">$n=1$: Holographic Flow</h4>
+                                <div class="formula-block-small">$$ \frac{c^1}{\hbar G} $$</div>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">The
+                                    limit of the <strong>temporal update rate</strong>. Every second, the universe
+                                    "re-couples" its boundary information.</p>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                            <h4 style="color: var(--accent-emerald); text-align: center;">Relational Dimensionality: The
+                                Role of $c$</h4>
+                            <p
+                                style="font-size: 0.95rem; color: var(--text-secondary); text-align: center; margin-top: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                                Planck length ($\ell_P$) and Planck time ($t_P$) are not independent dimensions; they
+                                are two sides of the same coin connected by the pulse $c$.
+                                <br><br>
+                                If you define a spatial unit ($\ell_P=1$), time is revealed ($t_P = 1/c$). If you define
+                                time ($t_P=1$), space unfolds ($1 \cdot c$).
+                                Physical reality resides only in the product <span class="qg-tooltip"
+                                    data-tooltip="The Planck Spacetime Cell: The smallest indivisible unit of information flow [L·T].">$\sigma_P$</span>.
+                                Space and Time are merely the
+                                <strong>observer's choice of projection</strong>.
+                            </p>
+                        </div>
                     </div>
-                    <p id="entropy-log-modern"
-                        style="text-align: center; margin-top: 1rem; color: #94a3b8; font-family: monospace; font-size: 0.8rem;">
-                        Local Entropy: 1.0000</p>
-                </div>
-                <script>
-                    let particles = [];
-                    const field = document.getElementById('particle-field');
-                    function initParticles() {
-                        field.innerHTML = '';
-                        particles = [];
-                        for (let i = 0; i < 20; i++) {
-                            const p = document.createElement('div');
-                            p.style.cssText = `position: absolute; width: 4px; height: 4px; background: #fb7185; border-radius: 50%; left: ${Math.random() * 95}%; top: ${Math.random() * 90}%; transition: all 1s ease;`;
-                            field.appendChild(p);
-                            particles.push({ el: p, x: Math.random() * 95, y: Math.random() * 90 });
-                        }
-                    }
-                    function reverseTimeModern() {
-                        const log = document.getElementById('entropy-log-modern');
-                        particles.forEach(p => {
-                            p.x = Math.random() * 95;
-                            p.y = Math.random() * 90;
-                            p.el.style.left = p.x + '%';
-                            p.el.style.top = p.y + '%';
-                        });
-                        log.innerText = `Local Entropy: ${(Math.random() * 0.5 + 1.5).toFixed(4)} (Information Tax Applied)`;
-                    }
-                    initParticles();
-                </script>
-            </div>
         </section>
 
         <!-- SECTION 4: GALACTIC DYNAMICS -->
@@ -705,54 +792,334 @@
             </div>
 
             <div class="qg-card" style="margin-top: 3rem; background: rgba(16, 185, 129, 0.05);">
-                <h4 style="color: var(--accent-emerald);">The Result: No Dark Matter Needed</h4>
+                <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                    <h4 style="color: var(--accent-emerald);">The Result: No Dark Matter Needed</h4>
+                    <a href="galaxy_lab.html" class="action-btn"
+                        style="background: var(--accent-emerald); color: #000; font-size: 0.7rem; padding: 0.4rem 0.8rem;">Open
+                        Galaxy Lab &rarr;</a>
+                </div>
                 <p>Einstein's equations remain untouched. By simply recognizing that matter cannot be
                     compressed into an infinitely small point, the need for invisible particles vanishes.
                     The galaxy rotates exactly as its visible geometry dictates.</p>
             </div>
         </section>
 
+        </section>
+
         <!-- SECTION 5: COSMOLOGY -->
-        <section id="cosmology" class="theory-container">
-            <span class="section-tag">Global Evolution</span>
-            <h2 class="section-title-modern">Eternal Cosmology</h2>
+        <section id="cosmology" class="theory-container" style="padding-top: 2rem;">
+            <span class="section-tag">Cosmic Structure</span>
+            <h2 class="section-title-modern">Spacetime, $\Lambda_{\text{eff}}$, and the Vacuum</h2>
 
             <div class="grid-2">
                 <div class="qg-card"
-                    style="grid-column: span 2; border-top: 4px solid var(--accent-primary); background: linear-gradient(to bottom, rgba(56, 189, 248, 0.05), rgba(0,0,0,0.5));">
-                    <h3 class="glow-text">The Eternal Breath</h3>
-                    <p>The universe is a self-stabilizing thermodynamic engine. There is no <em>Big
-                            Bang</em> singularity and no <em>Heat Death</em>. These are mathematical errors
-                        caused by ignoring the &sigma;<sub>P</sub> floor.</p>
-                    <div class="grid-2" style="margin-top: 2rem; gap: 2rem;">
-                        <div>
-                            <h4 style="color: var(--accent-primary);">Phase Transitions</h4>
-                            <p style="font-size: 0.85rem; color: #94a3b8;">The universe self-regulates via
-                                Expansion &harr; Deflation. Hawking radiation acts as a thermal buffer,
-                                ensuring the cosmic cycle is infinite.</p>
-                        </div>
-                        <div>
-                            <h4 style="color: var(--accent-secondary);">Entropy Flow</h4>
-                            <p style="font-size: 0.85rem; color: #94a3b8;">Expansion is the natural flow of
-                                information. The product $cRt$ acts as a self-regulating clock that keeps
-                                the vacuum energy in check.</p>
-                        </div>
+                    style="grid-column: span 2; background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(0,0,0,0.2));">
+                    <h3 style="color: var(--accent-blue);">The Planck Spacetime Cell (<span class="qg-tooltip"
+                            data-tooltip="The fundamental quantum of spacetime [L·T].">$\sigma_P$</span>)</h3>
+                    <p>
+                        The central object of this framework is the **Planck two-measure**—the fundamental unit of
+                        observable reality.
+                    </p>
+                    <div class="formula-block">
+                        $$\sigma_P = \ell_P \cdot t_P \quad [\text{L}\cdot\text{T}]$$
+                    </div>
+                    <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.95rem;">
+                        This is the **elementary quantum of spacetime**. All observable distances, durations, and
+                        volumes emerge from the packing and flow of these $\sigma_P$ units.
+                        Unlike in string theory or loop quantum gravity, $\sigma_P$ defines the fabric of the observable
+                        universe itself, rather than being just one of many Planck units.
+                    </p>
+                </div>
+
+                <div class="qg-card">
+                    <h3 style="color: var(--accent-purple);">The Spacetime Fine-Structure (<span class="qg-tooltip"
+                            data-tooltip="Defines the occupancy/resolution ratio of the vacuum lattice.">$\alpha_\sigma$</span>)
+                    </h3>
+                    <p>
+                        We define a dimensionless measure of the universe's occupancy by $\sigma_P$ units:
+                    </p>
+                    <div class="formula-block">
+                        $$\alpha_\sigma = \frac{\sigma_P}{R \cdot t}$$
+                    </div>
+                    <p style="margin-top: 0.5rem; opacity: 0.8;">
+                        Here, $R$ and $t$ are the scale and age of the universe. This ratio captures the **granular
+                        filling** of spacetime, from the Planck scale to the cosmic horizon.
+                    </p>
+                </div>
+
+                <div class="qg-card">
+                    <h3 style="color: var(--accent-amber);">The Effective Cosmological Term (<span class="qg-tooltip"
+                            data-tooltip="Emergent vacuum pressure from holographic horizon residue.">$\Lambda_{\text{eff}}$</span>)
+                    </h3>
+                    <p>
+                        From the fine-structure $\alpha_\sigma$ follows a **dynamic cosmological term**:
+                    </p>
+                    <div class="formula-block">
+                        $$\Lambda_{\text{eff}} \sim \frac{\alpha_\sigma}{\ell_P^2} \sim \frac{1}{c \, R \, t}$$
+                    </div>
+                    <p style="margin-top: 0.5rem; opacity: 0.8;">
+                        This reproduces observed cosmic acceleration without dark energy.
+                        The “vacuum catastrophe” vanishes: the mismatch between QFT and observed $\Lambda$ is resolved
+                        once spacetime is treated as discrete and finite.
+                    </p>
+                </div>
+
+                <div class="qg-card">
+                    <h3 style="color: var(--accent-blue);">Covariant Windowing</h3>
+                    <p>
+                        A covariant averaging over $\sigma_P$ cells replaces point singularities with a **finite causal
+                        domain**. Spacetime fluctuations are always bounded:
+                    </p>
+                    <div class="formula-block">
+                        $$\rho_{\text{vac}}^{(\sigma)} \sim \alpha_\sigma \frac{\hbar c}{\ell_P^4}$$
+                    </div>
+                    <p style="margin-top: 0.5rem; opacity: 0.8;">
+                        The classical Einstein equations emerge as expectation values over $\sigma_P$:
+                    </p>
+                    <div class="formula-block" style="font-size: 0.9rem;">
+                        $$\langle \hat{G}_{\mu\nu} + \Lambda_{\text{eff}} g_{\mu\nu} \rangle_{\sigma_P} = \frac{8 \pi
+                        G}{c^4} \langle \hat{T}_{\mu\nu} \rangle_{\sigma_P}$$
                     </div>
                 </div>
 
-                <div class="qg-card">
-                    <h3 style="color: var(--accent-purple);">Holographic Storage</h3>
-                    <p>The total information capacity of the universe is bounded by the surface area of the
-                        cosmic horizon.</p>
+                <div class="qg-card"
+                    style="grid-column: span 2; background: rgba(56,189,248,0.05); border-left: 4px solid var(--accent-blue);">
+                    <h4 style="color: var(--accent-blue);">Implications for Cosmology</h4>
+                    <ul style="margin-top: 1rem; font-size: 0.9rem; list-style-type: none; padding-left: 0;">
+                        <li style="margin-bottom: 0.5rem;">• <strong>Natural Acceleration:</strong> Arises from
+                            spacetime structure, no exotic fields needed.</li>
+                        <li style="margin-bottom: 0.5rem;">• <strong>No Singularities:</strong> Eliminated via
+                            Planck-covariant source smearing.</li>
+                        <li style="margin-bottom: 0.5rem;">• <strong>MOND Effect:</strong> Galaxy rotation is the
+                            elastic
+                            response of the $\sigma_P$ carpet to weak fields.</li>
+                        <li>• <strong>Universal Unity:</strong> $E=mc^2$ and $\hbar$ emerge from the geometry of
+                            discrete
+                            spacetime.</li>
+                    </ul>
                 </div>
 
-                <div class="qg-card">
-                    <h3 style="color: var(--accent-blue);">The Universal USB</h3>
-                    <p>Every proton and every star is a "file" stored on the cosmic boundary. Gravity is the
-                        protocol that ensures these files stay synced across the expanding manifold.</p>
+                <div class="qg-card"
+                    style="grid-column: span 2; text-align: center; font-style: italic; background: rgba(255,255,255,0.02);">
+                    <p style="font-size: 1.1rem; color: var(--text-secondary);">
+                        Imagine the universe as a **giant carpet of $\sigma_P$ tiles**. Press on it → curvature; vibrate
+                        it → quantum ticking at $f = mc^2 / h$.
+                        Signals travel at constant $c$. Far away, the fine weave defines $\Lambda_{\text{eff}}$.
+                        Dark energy? Just the geometry of the carpet itself.
+                    </p>
                 </div>
             </div>
         </section>
+
+        <!-- SECTION 7: THE JWST CHALLENGE -->
+        <section id="jwst" class="theory-container"
+            style="background: linear-gradient(to bottom, rgba(56, 189, 248, 0.02), rgba(244, 63, 94, 0.02));">
+            <span class="section-tag">Observation vs. Dogma</span>
+            <h2 class="section-title-modern">The JWST "Universe Breaker" Crisis</h2>
+
+            <div class="grid-2">
+                <div class="qg-card" style="grid-column: span 2; border-left: 4px solid var(--accent-rose);">
+                    <h3 style="color: var(--accent-rose);">Nature Does Not Ask for Permission</h3>
+                    <p>
+                        When the James Webb Space Telescope (JWST) discovered massive, well-structured galaxies at
+                        redshifts where LCDM predicts only diffuse primordial gas, the typical response was to introduce
+                        new parameters rather than question the model itself.
+                        These "Universe Breakers" are not a problem—they are evidence that our understanding needs
+                        refinement.
+                    </p>
+                </div>
+
+                <div class="qg-card">
+                    <h3 style="color: var(--accent-blue);">1. Relativity of Information</h3>
+                    <p>
+                        In standard cosmology, distance is often equated with look-back time ($d = t$), so early light
+                        is assumed
+                        to come from young structures. This perspective misses a key point:
+                    </p>
+                    <ul
+                        style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 1rem; list-style-type: none;">
+                        <li>• The mass of a galaxy reflects its <strong>local information flow</strong> per fundamental
+                            spacetime unit.</li>
+                        <li>• Galaxies with large mass have already completed their internal information-coupling.</li>
+                        <li>• These galaxies are not necessarily <em>young</em>; they are <strong>mature and
+                                saturated</strong> in their structure.</li>
+                    </ul>
+                </div>
+
+
+                <div class="qg-card">
+                    <h3 style="color: var(--accent-amber);">2. The Model Patchwork</h3>
+                    <p>Modern astrophysics often introduces emergency parameters to preserve LCDM:</p>
+                    <div style="font-size: 0.85rem; margin-top: 1rem;">
+                        <div
+                            style="margin-bottom: 0.8rem; border-left: 2px solid var(--accent-amber); padding-left: 0.8rem;">
+                            <strong>"Pop III" Ghosts:</strong> Hypothetical early stars that supposedly explode
+                            instantly to explain missing growth.
+                        </div>
+                        <div
+                            style="margin-bottom: 0.8rem; border-left: 2px solid var(--accent-amber); padding-left: 0.8rem;">
+                            <strong>"Burstiness":</strong> Claiming galaxies form enormous structures in unrealistically
+                            short times.
+                        </div>
+                        <div
+                            style="margin-bottom: 0.8rem; border-left: 2px solid var(--accent-amber); padding-left: 0.8rem;">
+                            <strong>"Dusty Gaslighting":</strong> Dismissing massive galaxies as "dust-obscured," even
+                            when JWST can see through it.
+                        </div>
+                        <div style="border-left: 2px solid var(--accent-amber); padding-left: 0.8rem;">
+                            <strong>"DM-Halo Tuning":</strong> Suggesting invisible halos somehow accelerated early
+                            galaxy growth.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <!-- The Inverse Age Scale Interaction -->
+            <div class="qg-card" style="margin-top: 3rem; text-align: center; border-color: var(--accent-primary);">
+                <h4 style="color: var(--accent-primary);">Interactive: The Inverse Age Scale</h4>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 2rem;">Adjust the Redshift
+                    ($z$) to see the tension between LCDM predictions and observed information saturation.</p>
+
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <input type="range" id="redshiftRange" min="0" max="20" step="0.1" value="10"
+                        style="width: 100%; margin-bottom: 2rem;">
+                    <div class="grid-2">
+                        <div style="background: rgba(244, 63, 94, 0.1); padding: 1.5rem; border-radius: 8px;">
+                            <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--accent-rose);">LCDM
+                                Status</span>
+                            <div id="lcdmStatus"
+                                style="font-size: 1.2rem; font-weight: bold; margin-top: 0.5rem; color: var(--accent-rose);">
+                                "Impossible"</div>
+                        </div>
+                        <div style="background: rgba(56, 189, 248, 0.1); padding: 1.5rem; border-radius: 8px;">
+                            <span
+                                style="font-size: 0.7rem; text-transform: uppercase; color: var(--accent-blue);">Information
+                                Flow</span>
+                            <div id="infoFlowStatus"
+                                style="font-size: 1.2rem; font-weight: bold; margin-top: 0.5rem; color: var(--accent-blue);">
+                                Saturated</div>
+                        </div>
+                    </div>
+                    <p id="scaleExplanation"
+                        style="margin-top: 1.5rem; font-size: 0.9rem; font-style: italic; color: var(--text-secondary);">
+                        At $z=10$, LCDM predicts nearly 100% star formation efficiency. Observed information flow
+                        remains stable.
+                    </p>
+                </div>
+            </div>
+
+            <script>
+                const range = document.getElementById('redshiftRange');
+                const lcdm = document.getElementById('lcdmStatus');
+                const infoFlow = document.getElementById('infoFlowStatus');
+                const expl = document.getElementById('scaleExplanation');
+
+                range.addEventListener('input', (e) => {
+                    const z = parseFloat(e.target.value);
+                    if (z < 1) {
+                        lcdm.innerText = "Normal";
+                        infoFlow.innerText = "Mature";
+                        expl.innerText = "Local universe structures match expectations.";
+                    } else if (z < 5) {
+                        lcdm.innerText = "Expected";
+                        infoFlow.innerText = "Saturated";
+                        expl.innerText = "LCDM expects young stars; galaxies are already coupled.";
+                    } else if (z < 10) {
+                        lcdm.innerText = "Tension";
+                        infoFlow.innerText = "Stable";
+                        expl.innerText = "LCDM struggles with galaxy sizes at $z=" + z + "$.";
+                    } else if (z < 15) {
+                        lcdm.innerText = "Impossible!";
+                        infoFlow.innerText = "Coupled";
+                        expl.innerText = "LCDM requires extreme parameter tuning; the geometry suggests older structures.";
+                    } else {
+                        lcdm.innerText = "Model Break";
+                        infoFlow.innerText = "Unity";
+                        expl.innerText = "At $z=" + z + "$, LCDM predictions collapse. Observations remain consistent.";
+                    }
+                });
+            </script>
+            </div>
+
+            <div style="margin-top: 4rem; text-align: center;">
+                <blockquote style="font-size: 1.5rem; font-family: 'Outfit', sans-serif; color: #fff;">
+                    "A model with 20 parameters is not a law of nature; <strong>it is a confession.</strong>"
+                </blockquote>
+            </div>
+        </section>
+
+        <!-- SECTION 8: THE INFORMATION STREAM -->
+        <section id="light" class="theory-container"
+            style="background: radial-gradient(circle at bottom center, rgba(56, 189, 248, 0.05), transparent);">
+            <span class="section-tag">Causal Geometry</span>
+            <h2 class="section-title-modern">The Causal Information Stream</h2>
+
+            <div class="grid-2">
+                <div class="qg-card"
+                    style="grid-column: span 2; background: rgba(0,0,0,0.3); border: 1px solid var(--accent-blue);">
+                    <h3 style="color: var(--accent-blue);">300,000 Kilometers of New Reality</h3>
+                    <p>
+                        Every second, our horizon grows by 300,000 kilometers. This is not merely "light traveling"; it
+                        is
+                        the expansion of the spacetime product. With every moment, the observer gains access to more
+                        space-time information.
+                        <br><br>
+                        Spacetime is a <strong>live-streaming process</strong>. It is not a stage built 13.8 billion
+                        years ago;
+                        it is dynamically coupling space and time in every single "Now".
+                    </p>
+                </div>
+
+                <div class="qg-card">
+                    <h3 style="color: var(--accent-purple);">The Meaning of $c$</h3>
+                    <p>
+                        In a discrete manifold, $c$ is not a speed, but the <strong>saturation limit</strong>:
+                    </p>
+                    <div class="formula-block" style="font-size: 1.2rem; border-color: var(--accent-purple);">
+                        $$c = \frac{\text{Quanta of Space}}{\text{Quanta of Time}} = \frac{\ell_P}{t_P}$$
+                    </div>
+                    <p style="font-size: 0.85rem; margin-top: 1rem; opacity: 0.8;">
+                        It represents the maximum slope at which vacuum can couple geometry and action. Nothing can move
+                        faster
+                        than the pulse of the universe allows.
+                    </p>
+                </div>
+
+                <div class="qg-card">
+                    <h3 style="color: var(--accent-amber);">The Blind Spot of Physics</h3>
+                    <p>
+                        While over 21 Planck units exist—from Planck current to Planck impedance—spacetime itself
+                        remains
+                        unquantified in most literature.
+                        <br><br>
+                        Major theories, from <strong>String Theory</strong> to <strong>Loop Quantum Gravity</strong>,
+                        treat spacetime
+                        as a backdrop. But understanding the fabric requires defining the product $\ell_P \cdot t_P$;
+                        without it,
+                        the dimensions remain ghostly abstractions.
+                    </p>
+                    <blockquote
+                        style="font-size: 0.9rem; font-style: italic; border-left: 2px solid var(--accent-amber); padding-left: 1rem; margin-top: 1rem;">
+                        "Talking about spacetime without defining the fundamental unit is like talking about the weather
+                        without knowing what a water drop is."
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="qg-card"
+                style="margin-top: 3rem; background: rgba(56, 189, 248, 0.05); border-left: 4px solid var(--accent-blue);">
+                <h4 style="color: var(--accent-blue);">The Kinetic Reality</h4>
+                <p style="font-size: 0.95rem;">
+                    Mass does not require a Higgs field, and light does not need variable constants. Both require a
+                    <strong>coupling</strong> that dictates how much information fits into one fundamental unit. The
+                    speed of light
+                    is the proof that reality is a self-consistent, discrete event stream.
+                </p>
+            </div>
+        </section>
+
 
         <!-- SECTION 6: ENTROPY & TIME -->
         <section id="entropy" class="theory-container"
@@ -926,9 +1293,7 @@
                         style="text-align: center; margin-top: 3rem; font-style: italic; color: var(--accent-primary); opacity: 0.9;">
                         <p style="font-size: 1.2rem; line-height: 1.6;">
                             "The universe is not racing apart indefinitely — it breathes.<br>
-                            The return is already written in the thermodynamics of spacetime."<br>
-                            <span style="font-size: 0.9rem; opacity: 0.7; display: block; margin-top: 0.5rem;">— A.
-                                Zander</span>
+                            The return is already written in the thermodynamics of spacetime."
                         </p>
                     </div>
 
@@ -965,7 +1330,7 @@
                             <p>Revisiting the structural link between Quantum Mechanics and General Relativity via
                                 $\sigma_P$.
                             </p>
-                            <a href="../assets/papers/Zander_2025_Dimensional_Foundations.tex" class="btn-sim"
+                            <a href="../assets/papers/Dimensional_Foundations_URM.tex" class="btn-sim"
                                 style="text-decoration: none; display: inline-block; margin-top: 1rem;">View LaTeX</a>
                         </div>
                         <div class="qg-card">
@@ -1004,42 +1369,109 @@
                     </div>
                 </section>
 
+                <div class="qg-box"
+                    style="margin-bottom: 2rem; border-left: 4px solid var(--accent-rose); background: rgba(244, 63, 94, 0.05);">
+                    <h3 style="color: var(--accent-rose);">The Master Action ($S$)</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">The universe emerges from the <strong>optimal
+                            projection</strong> of the $\sigma_P$ network. The total action balances the maximum flow
+                        against the holographic residue:</p>
+                    <div class="math-content"
+                        style="font-size: 1.2rem; padding: 2rem 0; background: rgba(0,0,0,0.3); border-radius: 8px;">
+                        $$ S = \underbrace{A_{\text{max}} \cdot \sigma_P \cdot N_\sigma}_{\text{Information Flow}} -
+                        \underbrace{\Lambda_{\text{eff}}(t) \cdot V_{\text{obs}}}_{\text{Horizon Pressure}} $$
+                    </div>
+                    <div class="grid-2" style="margin-top: 1.5rem;">
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                            <strong>1. Time Modulation $f(t)$:</strong> The term $\Lambda_{\text{eff}} \sim
+                            \frac{f(t)}{cRt}$ allows for the "Cosmic Breathing" (Exhalation/Inhalation) by modulating
+                            the holographic residue.
+                        </p>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                            <strong>2. Discrete Summation:</strong> $N_\sigma$ is the total count of spacetime cells.
+                            The universe is a finite-state machine where Every "Now" is a re-computation of this sum.
+                        </p>
+                    </div>
+                </div>
+
                 <!-- SECTION 8: CALCULATED REALITY -->
                 <section id="formulas" class="theory-container" style="margin-bottom: 5rem;">
                     <span class="section-tag">Mathematics</span>
                     <h2 class="section-title-modern">Formula Collection</h2>
 
-                    <div class="qg-box" style="margin-bottom: 2rem; border-left: 4px solid var(--accent-primary);">
-                        <h3>Einstein-Zander Field Equation</h3>
-                        <div class="math-content" style="font-size: 1.25rem; padding: 1.5rem 0;">
-                            $$ G_{\mu\nu} + \Lambda_{\text{eff}}(t) g_{\mu\nu} = \frac{8\pi G}{c^4} \langle
-                            T_{\mu\nu}^{(\sigma)} \rangle $$
+                    <div class="qg-box"
+                        style="margin-bottom: 2rem; border-left: 4px solid var(--accent-purple); background: rgba(122, 46, 204, 0.05);">
+                        <h3 style="color: var(--accent-purple);">Outlook: The Riemann Resonance</h3>
+                        <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">
+                            The deep structure of the vacuum is not random; it follows the distribution of the
+                            <strong>Riemann Zeta zeros</strong>. The spectral statistics of the $\sigma_P$ cells match
+                            the Gaussian Unitary Ensemble (GUE):
+                        </p>
+                        <div class="grid-2" style="gap: 2rem;">
+                            <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: var(--accent-purple); font-size: 0.85rem;">1. Convergence to the
+                                    Critical Line</h4>
+                                <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
+                                    Measurements within the spacetime grid naturally converge toward the $Re(s) = 1/2$
+                                    state—the point of minimal entropy production and perfect holographic balance.
+                                </p>
+                            </div>
+                            <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: var(--accent-blue); font-size: 0.85rem;">2. Prime Number Information
+                                    Flow</h4>
+                                <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
+                                    The distribution of prime numbers is a direct mapping of how information couples
+                                    across the infinite hierarchy of $\sigma_P$ pulses ($n \ln n$).
+                                </p>
+                            </div>
+                            <div
+                                style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; grid-column: span 2;">
+                                <h4 style="color: var(--accent-rose); font-size: 0.85rem;">3. Heuristic Evidence for RH
+                                </h4>
+                                <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
+                                    Our GUE-simulation suggests that the "stiffness" of the vacuum (the Polya-Hilbert
+                                    operator)
+                                    requires all non-trivial resonances to lie on the critical line for stability and
+                                    minimal entropy production. In this framework, the Riemann Hypothesis is the
+                                    <strong>Geometric Stability Condition</strong> of the observable universe.
+                                </p>
+                            </div>
                         </div>
-                        <p style="text-align: center; color: #94a3b8; font-style: italic;">The classic universe is
-                            the expectation value of the $\sigma_P$ (Spacetime)-Operator.</p>
+                    </div>
+
+                    <div class="qg-box" style="margin-bottom: 2rem; border-left: 4px solid var(--accent-blue);">
+                        <h3 style="color: var(--accent-blue);">Unified Field Equation</h3>
+                        <div class="math-content" style="font-size: 1.1rem; padding: 1.5rem 0;">
+                            $$ \Big\langle \hat G_{\mu\nu} + \Lambda_{\text{eff}} g_{\mu\nu} \Big\rangle_{\sigma_P} =
+                            \frac{8\pi G}{c^4} \Big\langle \hat T_{\mu\nu} \Big\rangle_{\sigma_P} $$
+                        </div>
+                        <p style="text-align: center; color: #94a3b8; font-style: italic; margin-top: 1rem;">
+                            "Spacetime does not exist prior to the equation; it emerges as its unique solution."
+                        </p>
                     </div>
 
                     <div class="qg-box"
                         style="margin-bottom: 2rem; border-left: 4px solid var(--accent-purple); background: rgba(120, 50, 255, 0.05);">
-                        <h4 style="color: var(--accent-purple);">Dimensional Invariants</h4>
-                        <div class="grid-2" style="gap: 1.5rem; margin-top: 1rem;">
+                        <h3 style="color: var(--accent-purple);">Dimensional Invariants</h3>
+                        <div class="grid-2" style="gap: 2rem; margin-top: 1rem;">
                             <div>
-                                <div class="math-content" style="font-size: 0.9rem;">$$ \sigma_{P} = \frac{\hbar
-                                    G}{c^{4}} $$
+                                <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">$$
+                                    \frac{1}{\sigma_P} =
+                                    \frac{c^4}{\hbar G} $$
                                 </div>
                                 <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">
-                                    Spacetime
-                                    Measure $[LT]$</p>
+                                    Max Action Density $[M^{-1}L^{-1}S^{-1}]$</p>
                             </div>
                             <div>
-                                <div class="math-content" style="font-size: 0.9rem;">$$ \alpha_{G}(M) = \frac{G M}{\hbar
+                                <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">$$ \alpha_{G}(M) =
+                                    \frac{G M}{\hbar
                                     c} $$
                                 </div>
                                 <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">Grav.
                                     Fine-Structure</p>
                             </div>
                             <div>
-                                <div class="math-content" style="font-size: 0.9rem;">$$ \chi(M) = \frac{G M^{2}}{\hbar
+                                <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">$$ \chi(M) =
+                                    \frac{G M^{2}}{\hbar
                                     c^{3}} $$
                                 </div>
                                 <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">
@@ -1047,41 +1479,51 @@
                                     Invariant $\sim 1/v^2$</p>
                             </div>
                             <div>
-                                <div class="math-content" style="font-size: 0.9rem;">$$ \kappa_{\mathrm{QG}} =
+                                <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">$$
+                                    \kappa_{\mathrm{QG}} =
                                     \frac{G}{\hbar
                                     c^{2}} $$</div>
-                                <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">QG
-                                    Coupling</p>
+                                <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);"><span
+                                        class="qg-tooltip"
+                                        data-tooltip="Quantum Gravity Coupling: The fundamental constant of information-mass interaction.">QG
+                                        Coupling</span></p>
                             </div>
                         </div>
                         <div
                             style="text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(120, 50, 255, 0.1);">
-                            <a href="zander_scaling_lab.html" class="btn-sim"
+                            <a href="scaling_lab.html" class="btn-sim"
                                 style="font-size: 0.85rem; background: rgba(120, 50, 255, 0.1); border-color: var(--accent-purple); color: var(--accent-purple);">Launch
                                 Scaling Lab &rarr;</a>
                         </div>
                     </div>
 
-                    <div class="grid-2">
+                    <div class="grid-2" style="gap: 2rem;">
                         <div class="qg-card">
                             <h4 style="color: var(--accent-secondary);">The Vacuum Function</h4>
-                            <div class="math-content">$$\Lambda_{\rm eff} = \frac{1}{c R t}$$</div>
-                            <p style="font-size: 0.85rem;">Parameter-free solution to the Vacuum Catastrophe.</p>
+                            <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">$$\Lambda_{\rm eff} =
+                                \frac{1}{c R t}$$</div>
+                            <p style="font-size: 0.85rem;">Parameter-free solution to the <span class="qg-tooltip"
+                                    data-tooltip="The 10^120 discrepancy between QM and GR vacuum energy predictions.">Vacuum
+                                    Catastrophe</span>.</p>
                         </div>
                         <div class="qg-card">
                             <h4 style="color: var(--accent-emerald);">The Metric Coupling</h4>
-                            <div class="math-content">$$G_{\beta\nu} + \beta \langle \phi^2 \rangle g_{\beta\nu} =
-                                8\pi G \sum T$$</div>
+                            <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">$$G_{\mu\nu} + \beta
+                                \langle \phi^2 \rangle_{\sigma_P} g_{\mu\nu} =
+                                \frac{8\pi G}{c^4} \sum_i T_{\mu\nu}^{(i)}$$</div>
                             <p style="font-size: 0.85rem;">Information becomes geometry.</p>
                         </div>
                     </div>
 
                     <div class="qg-box" style="margin-top: 2rem; border: 1px dashed var(--accent-amber);">
                         <h4 style="color: var(--accent-amber); text-align: center;">Master Wave Command</h4>
-                        <div class="math-content" style="font-size: 0.9rem; padding: 1rem 0;">
+                        <div class="math-content" style="font-size: 1.1rem; padding: 1.5rem 0;">
                             $$ \Box \phi + \gamma \partial^\mu \phi + \alpha \phi^3 + \beta \phi^5 = qE_{\text{Res}}
                             + \lambda \langle \hat{Q} \rangle $$
                         </div>
+                        <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary); opacity: 0.8;">
+                            Where $\Box = g^{\mu\nu} \partial_\mu \partial_\nu$ is the discrete D'Alembertian operator.
+                        </p>
                     </div>
                 </section>
 

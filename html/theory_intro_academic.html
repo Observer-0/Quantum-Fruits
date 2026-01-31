@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The σ_P Framework - Quantum Fruits</title>
+    <link rel="icon" href="../assets/favicon.svg" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/theory_modern.css">
+    <style>
+        .manifesto-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.1), transparent 70%),
+                linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .manifesto-content {
+            max-width: 900px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .manifesto-quote {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: #cbd5e1;
+            font-style: italic;
+            margin-bottom: 2rem;
+            text-align: left;
+            border-left: 4px solid var(--accent-blue);
+            padding-left: 2rem;
+        }
+
+        .manifesto-quote strong {
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+
+        .sigma-counter {
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 2rem 0;
+        }
+
+        .abstract-box {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin: 4rem auto;
+            max-width: 950px;
+            box-shadow: 0 8px 32px rgba(56, 189, 248, 0.1);
+        }
+
+        .abstract-box h2 {
+            color: var(--accent-blue);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .abstract-box p {
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 1rem;
+        }
+
+        .formula-highlight {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 4px solid var(--accent-amber);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            margin: 2rem 0;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table th {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .comparison-table td {
+            color: #cbd5e1;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true }
+                ]
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <!-- HERO: MANIFESTO -->
+    <section class="manifesto-hero">
+        <div class="manifesto-content">
+            <span class="pill pill-blue" style="margin-bottom: 2rem;">The σ_P Framework</span>
+
+            <h1
+                style="font-size: 3.5rem; margin-bottom: 2rem; background: linear-gradient(to right, #fff, #64748b); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                A Minimal, Parameter-Free<br>Approach to Quantum Gravity
+            </h1>
+
+            <div class="manifesto-quote">
+                "Entropy is the natural order of the Universe."<br>
+                Every event is binary: it happens, or it does not.<br>
+                The information lies not in what occurred,<br>
+                but in all the paths that were never taken.<br>
+                Reality defines itself through negation.<br>
+                <strong>S = 1.</strong><br><br>
+
+                And yes, the ½ R in<br>
+                $G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2} R g_{\mu\nu}$<br>
+                is just the trace.<br><br>
+
+                They did this with chalk — Minkowski, Schwarzschild, Lorentz, Planck, Einstein, etc.<br>
+                109 years later we have Fugaku, JWST, Hubble and AI. What's our excuse?<br>
+                26 dimensions and $10^{500}$ vacua?<br><br>
+
+                The answer was always hidden in plain sight, encoded in the units:<br>
+                <strong>$\sigma_P = [L \cdot T] = \text{Space} \times \text{Time}$</strong><br>
+                The Natural Structure of curved Spacetime, maybe?<br><br>
+
+                Space and time are not separate stages; they are the shared currency of causality.<br>
+                Whether I look East or West, North or South, up or down—<br>
+                space and time flow indistinguishably in the same direction:<br>
+                <strong>That of the Observer.</strong><br><br>
+
+                While physics lost itself in twenty-six dimensions,<br>
+                the simplest truth remained uncounted:<br>
+                We never finished counting the four fundamental vectors of spacetime.<br>
+                We searched for the Theory of Everything in infinity,<br>
+                only to find it was just one line long.
+            </div>
+
+            <p style="text-align: right; color: #64748b; font-style: italic; margin-top: 1rem;">
+                — Adrian Zander, Quantum Fruits
+            </p>
+
+            <div class="sigma-counter">
+                N<sub>σ</sub> ≈ 10<sup>122</sup>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Spacetime cells in the observable universe
+            </p>
+
+            <a href="#abstract"
+                style="display: inline-block; margin-top: 3rem; padding: 1rem 2rem; background: var(--accent-blue); color: #000; font-weight: 700; border-radius: 8px; text-decoration: none; transition: all 0.3s;">
+                Read the Framework →
+            </a>
+        </div>
+    </section>
+
+    <!-- ABSTRACT -->
+    <section id="abstract" style="background: #0a0a0a; padding: 6rem 2rem;">
+        <div class="abstract-box">
+            <h2>Abstract</h2>
+            <p>
+                The quest for a unified framework connecting <strong>Quantum Mechanics (QM)</strong> and
+                <strong>General Relativity (GR)</strong> has been a central endeavor of theoretical physics
+                for over a century. While QM successfully describes microscopic phenomena through superposition,
+                uncertainty, and quantized action, GR provides an elegant geometric theory of spacetime that
+                explains macroscopic dynamics from planetary orbits to cosmology.
+            </p>
+            <p>
+                Despite their empirical success, both theories remain fundamentally separated on extreme scales.
+                General Relativity predicts spacetime singularities—inside black holes or at the beginning of
+                the universe—where curvature and energy density diverge and the classical description breaks down.
+                Quantum Field Theory encounters ultraviolet divergences in vacuum energy, leading to the so-called
+                <em>vacuum catastrophe</em>—a discrepancy of about $10^{122}$ between theoretical estimates and
+                the observed cosmological constant.
+            </p>
+            <p>
+                This work demonstrates that this gap closes naturally when introducing the <strong>Planck
+                    two-measure</strong>
+            </p>
+            <div class="formula-highlight">
+                $$\sigma_P = \ell_P t_P = \frac{\hbar G}{c^4}$$
+            </div>
+            <p>
+                a minimal, invariant spacetime cell completely defined by fundamental constants. This quantity
+                regulates vacuum fluctuations, eliminates classical singularities through Planck-covariant source
+                averaging, and determines the cosmological constant without free parameters.
+            </p>
+
+            <div
+                style="background: rgba(56, 189, 248, 0.1); border-left: 4px solid var(--accent-blue); padding: 1.5rem; margin: 2rem 0; border-radius: 8px;">
+                <h4 style="color: var(--accent-blue); margin-bottom: 1rem;">Core Statement</h4>
+                <p style="line-height: 1.8;">
+                    <strong>The only valid fundamental theories of nature are Quantum Field Theory and General
+                        Relativity.</strong>
+                    No new "theory of everything" is needed to connect them. What is required is merely to resolve
+                    the known inconsistencies within these two pillars—ultraviolet divergence and classical
+                    singularity—through the natural structure already contained in the constants $\hbar$, $G$, and $c$.
+                </p>
+                <p style="line-height: 1.8; margin-top: 1rem; font-weight: 600; color: #fff;">
+                    The Planck two-measure $\sigma_P$ provides exactly this missing link.
+                </p>
+            </div>
+
+            <p>
+                First, the minimal, singularity-free form of Einstein's field equations in a finite Minkowski
+                spacetime with the naturally determined cosmological constant
+            </p>
+            <div class="formula-highlight">
+                $$\Lambda = \frac{3}{cRt}$$
+            </div>
+            <p>
+                is presented—in the spirit of Occam's razor. This minimal form contains no additional structures
+                beyond what Quantum Mechanics, General Relativity, and the Planck scale themselves require.
+            </p>
+            <p>
+                The energy-momentum sector of the equation can be modularly extended when physically necessary—but
+                never through <em>ad hoc</em> additions. Different kernels or averaging procedures may be used,
+                but the geometric foundation remains universal.
+            </p>
+            <p style="margin-top: 2rem; font-style: italic; color: #94a3b8;">
+                This work does not propose a new cosmological model or a replacement for ΛCDM. It provides the
+                missing geometric invariant that allows the existing foundations of physics to act consistently
+                across all scales.
+            </p>
+        </div>
+    </section>
+
+    <!-- CONCEPTUAL FOUNDATION -->
+    <section id="foundation" style="background: linear-gradient(180deg, #0a0a0a 0%, #000 100%); padding: 6rem 2rem;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <span class="section-tag"
+                style="font-size: 0.75rem; font-weight: 800; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 1rem; display: block;">Conceptual
+                Foundation</span>
+            <h2 class="section-title-modern"
+                style="font-size: 3rem; margin-bottom: 2rem; background: linear-gradient(to right, #fff, #64748b); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                The Completion of the Three</h2>
+
+            <div style="margin: 3rem 0;">
+                <div
+                    style="background: rgba(251, 191, 36, 0.05); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 12px; padding: 2.5rem; margin-bottom: 3rem;">
+                    <h3 style="color: var(--accent-amber); margin-bottom: 1.5rem;">Foreword — The Completion of the
+                        Three</h3>
+                    <p style="line-height: 1.9; color: #e2e8f0;">
+                        Physics rests on three pillars that have never fully touched:
+                    </p>
+                    <ul style="line-height: 2; color: #cbd5e1; margin: 1.5rem 0;">
+                        <li><strong>Minkowski</strong> united space and time into a geometric unity,</li>
+                        <li><strong>Einstein</strong> showed that energy shapes this geometry,</li>
+                        <li><strong>Heisenberg and Planck</strong> discovered that energy itself is quantized.</li>
+                    </ul>
+                    <p style="line-height: 1.9; color: #e2e8f0; margin-top: 1.5rem;">
+                        Each of these pillars describes the same reality from a different direction:
+                        <strong>Geometry</strong>, <strong>Curvature</strong>, <strong>Action</strong>.
+                    </p>
+                    <p style="line-height: 1.9; color: #e2e8f0; margin-top: 1.5rem;">
+                        Their common point—that place where quantization and curvature merge into a single law—remained
+                        open. The invariant
+                    </p>
+                    <div class="formula-highlight" style="margin: 2rem 0;">
+                        $$\sigma_P = \ell_P t_P = \frac{\hbar G}{c^4}$$
+                    </div>
+                    <p style="line-height: 1.9; color: #e2e8f0;">
+                        closes this triangle.
+                    </p>
+                    <ul style="line-height: 2; color: #cbd5e1; margin: 1.5rem 0;">
+                        <li>It connects the quantum of action ($\hbar$),</li>
+                        <li>spacetime curvature ($G$),</li>
+                        <li>and the universal metric ($c$)</li>
+                    </ul>
+                    <p style="line-height: 1.9; color: #e2e8f0; margin-top: 1.5rem;">
+                        into a single, dimensionally consistent measure of spacetime itself. <strong>No new constant, no
+                            new
+                            symmetry, no new field</strong>—only the insight that quantization and geometry are one and
+                        the same
+                        process, viewed from different perspectives.
+                    </p>
+                </div>
+
+                <p style="font-size: 1.05rem; line-height: 1.9; color: #e2e8f0; margin-bottom: 2rem;">
+                    This analysis establishes a <strong>parameter-free and theory-free unification</strong> of:
+                </p>
+                <ul style="line-height: 2; color: #cbd5e1; margin: 1.5rem 0; font-size: 1.05rem;">
+                    <li>Quantum Mechanics,</li>
+                    <li>General Relativity,</li>
+                    <li>and Quantum Gravity,</li>
+                </ul>
+                <p style="font-size: 1.05rem; line-height: 1.9; color: #e2e8f0;">
+                    directly derived from the natural constants $\hbar, c, G$.
+                </p>
+
+                <div class="formula-highlight"
+                    style="background: rgba(56, 189, 248, 0.1); border-color: var(--accent-blue); margin: 3rem 0;">
+                    <h4 style="color: var(--accent-blue); margin-bottom: 1rem;">The Vacuum Catastrophe Resolved</h4>
+                    <p style="line-height: 1.8; margin-bottom: 1rem;">
+                        <strong>The so-called "vacuum catastrophe" of Quantum Field Theory is not an error in magnitude,
+                            but a misinterpretation of meaning:</strong>
+                    </p>
+                    $$N_\sigma = \frac{Rt}{\sigma_P} \approx 10^{122}$$
+                    <p style="line-height: 1.8; margin-top: 1rem;">
+                        is the <strong>finite number of spacetime quanta</strong> from which the observable universe
+                        consists, and
+                    </p>
+                    $$\Lambda = \frac{3}{cRt} = \frac{\alpha_\sigma}{\ell_P^2}, \qquad \alpha_\sigma =
+                    \frac{1}{N_\sigma}$$
+                    <p style="line-height: 1.8; margin-top: 1rem;">
+                        is its natural large-scale boundary curvature.
+                    </p>
+                    <p style="line-height: 1.8; margin-top: 1.5rem; font-weight: 600; color: #fff;">
+                        Both Quantum Field Theory and Einsteinian curvature thereby confirm $\sigma_P$ as a
+                        fundamental invariant of nature.
+                    </p>
+                </div>
+
+                <!-- LAMBDA COMPARISON TABLE -->
+                <div style="margin: 4rem 0;">
+                    <h3 style="color: var(--accent-purple); margin-bottom: 2rem;">Window-Dependent Λ: Numerical Examples
+                    </h3>
+                    <p style="line-height: 1.8; color: #cbd5e1; margin-bottom: 1.5rem;">
+                        The resulting Λ-scale varies only by factors of order $\mathcal{O}(1)$ across standard
+                        parameters.
+                        <strong>No free parameters are introduced.</strong>
+                    </p>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Choice of (R,t)</th>
+                                <th>Rt [m·s]</th>
+                                <th>α<sub>σ</sub></th>
+                                <th>Λ [m<sup>-2</sup>]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>R<sub>obs</sub> = 46 Gly, t<sub>0</sub> = 13.8 Gyr</td>
+                                <td>1.90×10<sup>44</sup></td>
+                                <td>4.6×10<sup>-123</sup></td>
+                                <td>1.8×10<sup>-53</sup></td>
+                            </tr>
+                            <tr>
+                                <td>R = c/H<sub>0</sub>, t = 1/H<sub>0</sub> (Planck H<sub>0</sub>=67.4)</td>
+                                <td>6.28×10<sup>43</sup></td>
+                                <td>1.4×10<sup>-122</sup></td>
+                                <td>5.3×10<sup>-53</sup></td>
+                            </tr>
+                            <tr>
+                                <td>R = c/H<sub>0</sub>, t = 1/H<sub>0</sub> (SH0ES H<sub>0</sub>=73.0)</td>
+                                <td>5.36×10<sup>43</sup></td>
+                                <td>1.6×10<sup>-122</sup></td>
+                                <td>6.2×10<sup>-53</sup></td>
+                            </tr>
+                            <tr>
+                                <td>R = ct<sub>0</sub>, t = t<sub>0</sub> (Light travel time)</td>
+                                <td>5.69×10<sup>43</sup></td>
+                                <td>1.5×10<sup>-122</sup></td>
+                                <td>5.9×10<sup>-53</sup></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- UNIQUENESS OF PLANCK SCALE -->
+                <div
+                    style="background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; padding: 2.5rem; margin: 4rem 0;">
+                    <h3 style="color: var(--accent-purple); margin-bottom: 1.5rem;">The Uniqueness of the Planck Scale
+                    </h3>
+
+                    <h4 style="color: #cbd5e1; margin-top: 2rem; margin-bottom: 1rem;">Mathematical Construction</h4>
+                    <p style="line-height: 1.8; color: #e2e8f0;">
+                        The Planck scale arises uniquely from the dimensional-analytic combination of the three
+                        universal
+                        constants $\{c, G, \hbar\}$. This triplet allows exactly one dimensionless configuration in
+                        which
+                        quantum and gravitational effects become simultaneously unavoidable:
+                    </p>
+                    <div class="formula-highlight" style="margin: 1.5rem 0;">
+                        $$[\ell_P] = [t_P] c, \qquad \ell_P = \sqrt{\frac{\hbar G}{c^3}}, \quad t_P = \frac{\ell_P}{c}$$
+                    </div>
+                    <p style="line-height: 1.8; color: #e2e8f0;">
+                        No other scaling of fundamental constants achieves this dual convergence.
+                    </p>
+
+                    <h4 style="color: #cbd5e1; margin-top: 2rem; margin-bottom: 1rem;">Physical Meaning</h4>
+                    <p style="line-height: 1.8; color: #e2e8f0;">
+                        At this scale, the Compton wavelength and gravitational radius (for the Planck mass)
+                        coincide—the
+                        threshold point where the concepts of particle and geometry become inseparable. Quantum
+                        processes
+                        and spacetime curvature form a unity.
+                    </p>
+
+                    <h4 style="color: #cbd5e1; margin-top: 2rem; margin-bottom: 1rem;">Non-Universal Alternatives</h4>
+                    <p style="line-height: 1.8; color: #e2e8f0;">
+                        All other characteristic scales (electroweak, strong, etc.) require additional fields or
+                        coupling
+                        constants and therefore possess no universal validity across all interactions. Only the Planck
+                        scale
+                        is purely defined by $\{c, G, \hbar\}$—without auxiliary parameters.
+                    </p>
+
+                    <h4 style="color: #cbd5e1; margin-top: 2rem; margin-bottom: 1rem;">Conclusion</h4>
+                    <p style="line-height: 1.8; color: #e2e8f0; font-weight: 600;">
+                        The Planck scale is not a convention, but the unique intersection where Quantum Mechanics and
+                        General Relativity become inseparable. It forms the natural bridge between action and curvature
+                        and is thus the only invariant foundation of a consistent quantum gravity.
+                    </p>
+                </div>
+
+                <p
+                    style="font-size: 1.2rem; line-height: 1.9; color: #e2e8f0; margin-top: 4rem; text-align: center; font-style: italic;">
+                    "The universe is not made of points. It's made of windows."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer
+        style="background: #000; padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);">
+        <p style="color: #64748b;">
+            <a href="theory.html" style="color: var(--accent-blue); text-decoration: none;">Continue to Full Theory
+                →</a>
+            <span style="margin: 0 1rem;">|</span>
+            <a href="../index.html" style="color: var(--accent-blue); text-decoration: none;">← Back to Quantum
+                Fruits</a>
+        </p>
+    </footer>
+</body>
+
+</html>

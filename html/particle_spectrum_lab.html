@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particle Spectrum Lab — The Geometric Staircase</title>
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../js/unity.js"></script>
+    <style>
+        body {
+            background-color: #020617;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(to right, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+        }
+
+        .staircase-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .grid-vis {
+            height: 600px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .particle-marker {
+            position: absolute;
+            height: 2px;
+            background: rgba(251, 191, 36, 0.3);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #fbbf24;
+            pointer-events: none;
+        }
+
+        .active-mass-line {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: #fff;
+            box-shadow: 0 0 20px #fbbf24;
+            z-index: 10;
+            transition: top 0.1s ease-out;
+        }
+
+        .q-value-box {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid #fbbf24;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .n-step-label {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin: 0.5rem 0;
+        }
+
+        .back-link {
+            color: #fbbf24;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="labs.html" class="back-link">&larr; Back to Labs</a>
+
+        <header class="header">
+            <span style="text-transform: uppercase; letter-spacing: 4px; color: #fbbf24; font-size: 0.8rem;">Pillar 3 &
+                4</span>
+            <h1>Particle Spectrum Lab</h1>
+            <p style="color: #94a3b8; font-size: 1.2rem; margin-top: 1rem;">The Geometric Staircase: Why Particles have
+                the masses they do.</p>
+        </header>
+
+        <div class="staircase-container">
+            <!-- Left: Geometric Staircase Visualizer -->
+            <div class="grid-vis" id="staircase-vis">
+                <div id="active-line" class="active-mass-line" style="top: 0;"></div>
+                <!-- Marks will be injected here -->
+            </div>
+
+            <!-- Right: Logic & Controls -->
+            <div class="controls">
+                <div class="qg-card q-value-box">
+                    <span style="font-size: 0.8rem; text-transform: uppercase; color: #94a3b8;">Current Exponent
+                        (n)</span>
+                    <div class="n-step-label" id="current-n">0.00</div>
+                    <p style="color: #fbbf24; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
+                        m(n) = M<sub>P</sub> &middot; q<sup>n</sup>
+                    </p>
+                </div>
+
+                <div class="qg-card">
+                    <h3>Constants</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.9rem;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #94a3b8;">Geometric Ratio (q)</span>
+                            <span style="color: #fbbf24; font-weight: bold;">0.222</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #94a3b8;">Planck Mass</span>
+                            <span style="color: #fff;">2.176 &times; 10<sup>-8</sup> kg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qg-card">
+                    <label
+                        style="display: block; margin-bottom: 1rem; color: #94a3b8; text-transform: uppercase; font-size: 0.7rem;">Adjust
+                        Mass Scale</label>
+                    <input type="range" id="mass-slider" min="0" max="60" step="0.01" value="0"
+                        style="width: 100%; accent-color: #fbbf24;">
+                    <p style="font-size: 0.8rem; color: #64748b; margin-top: 1rem;">
+                        Slide from the <strong>Planck Mass (n=0)</strong> down to the <strong>Neutrino Scale
+                            (n=60)</strong>.
+                    </p>
+                </div>
+
+                <div id="snap-info" class="qg-card" style="border-color: #10b981; display: none;">
+                    <h4 style="color: #10b981; margin: 0;">Resonance Detected!</h4>
+                    <p id="particle-name" style="font-size: 1.2rem; font-weight: 800; margin: 0.5rem 0;">Proton</p>
+                    <p style="font-size: 0.8rem; color: #94a3b8;">The mass matches the geometric prediction within 0.2%.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- THE CHALLENGE -->
+        <section class="qg-card"
+            style="margin-top: 4rem; padding: 3rem; border-color: #fbbf24; background: rgba(251, 191, 36, 0.05);">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
+                <div>
+                    <h2
+                        style="color: #fff; font-size: 2rem; margin-bottom: 1.5rem; background: linear-gradient(to right, #fbbf24, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        The Mystery: Random Masses</h2>
+                    <p style="color: #94a3b8; line-height: 1.8; font-size: 1.1rem;">
+                        In the Standard Model, the masses of particles (like the Electron or the Top Quark) are
+                        <strong>free parameters</strong>. They are values we have to measure and "plug in" manually.
+                    </p>
+                    <p style="color: #94a3b8; line-height: 1.8; font-size: 1.1rem; margin-top: 1rem;">
+                        There is no known reason why an Electron is ~1836 times lighter than a Proton. To current
+                        science, these numbers appear completely random.
+                    </p>
+                </div>
+                <div
+                    style="background: rgba(251, 191, 36, 0.05); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(251, 191, 36, 0.2);">
+                    <h3 style="color: #fbbf24; margin-bottom: 1rem;">The Σₚ Resolution</h3>
+                    <p style="color: #e2e8f0; line-height: 1.7;">
+                        In the Zander Framework, mass is not an inherent "seed" but a <strong>Geometric
+                            Resonance</strong> of the background action.
+                    </p>
+                    <ul style="color: #94a3b8; margin-top: 1.5rem; padding-left: 1.5rem; line-height: 1.8;">
+                        <li><strong>Geometric Steps:</strong> Spacetime structure follows a scaling laws based on the
+                            ratio $q \approx 0.22$.</li>
+                        <li><strong>The Staircase:</strong> Every particle is simply a "standing wave" at a specific
+                            step ($n$) of the Planck-scale staircase.</li>
+                        <li><strong>Zero Free Parameters:</strong> By knowing $M_P$ and $q$, the mass of every
+                            fundamental particle can be derived through pure geometry.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="../js/particle-spectrum.js"></script>
+</body>
+
+</html>

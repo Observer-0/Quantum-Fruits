@@ -69,14 +69,16 @@ class PhysicalConstants:
     l_P: float = 1.616e-35      # Planck length (m)
     t_P: float = 5.391e-44      # Planck time (s)
     
+    # Scale Factors
+    H_scale: float = 70.0       # Normalization scale (km/s/Mpc)
+    
     # Cosmological parameters
-    T_critical: float = 1.0     # Critical temperature (normalized)
+    T_critical: float = 1.0     # Critical entropy temperature (normalized)
     rho_0: float = 1.0          # Energy density scale (normalized)
     
     # Hubble measurements (km/s/Mpc)
     H_expansion: float = 73.0   # Late universe (Cepheids, SNe Ia)
     H_deflation: float = 67.0   # Early universe (CMB, Planck)
-    H_mean: float = 70.0        # Ensemble average
     
     # Coupling parameters
     alpha: float = 3.5          # Phase transition sharpness
@@ -86,7 +88,7 @@ class PhysicalConstants:
     
     # Regularization
     epsilon: float = 1e-6       # Numerical regulator
-    f_Planck_scale: float = 0.01  # Planck-scale repulsion strength
+    f_Planck_scale: float = 0.01  # Strength of QG-repulsion (1/a^4)
 
 # ═══════════════════════════════════════════════════════════════════════════
 # CORE PHYSICS: EQUATION OF STATE
@@ -132,37 +134,37 @@ class UnifiedCosmology:
         
     def dynamics(self, t: float, y: np.ndarray) -> np.ndarray:
         """
-        Coupled differential equations for universe evolution.
+        Coupled effective field equations for universe evolution.
         
-        State vector: y = [a, H, T]
+        State vector: y = [a, H_norm, T_eff]
         - a: Scale factor (universe size)
-        - H: Hubble parameter (expansion rate)
-        - T: Temperature (thermodynamic state)
+        - H_norm: Dimensionless Hubble parameter (H_phys = H_norm * H_scale)
+        - T_eff: Entropy Temperature (state of information density)
         
         Returns:
-            dy/dt: Time derivatives [da/dt, dH/dt, dT/dt]
         """
         a, H, T = y
         
         # ─────────────────────────────────────────────────────────────────
         # 1. EQUATION OF STATE (Phase transition)
         # ─────────────────────────────────────────────────────────────────
+        # Phase is determined by T_eff, which acts as a proxy for 
+        # the tick-density normalized to the critical threshold.
         w = equation_of_state(T, self.const.T_critical, self.const.alpha)
         
         # ─────────────────────────────────────────────────────────────────
-        # 2. PLANCK-SCALE REGULARIZATION
+        # 2. QUANTUM GRAVITY REGULARIZATION
         # ─────────────────────────────────────────────────────────────────
-        # Prevents singularities at a → 0 (Big Bang/Crunch)
-        # Physical interpretation: Quantum gravity repulsion
+        # Repulsive term ∝ 1/a^4 representing the exclusion limit of 
+        # sigma_P cells. Prevents SINGULARITY at a -> 0.
         f_Planck = self.const.f_Planck_scale / (a**4 + self.const.epsilon)
         
         # ─────────────────────────────────────────────────────────────────
-        # 3. FRIEDMANN-LIKE ACCELERATION EQUATION
+        # 3. EFFECTIVE COSMOLOGICAL FIELD EQUATION
         # ─────────────────────────────────────────────────────────────────
-        # Modified Friedmann equation with:
-        # - Gravitational deceleration: -(1+w)ρ₀/a²
-        # - Planck repulsion: f_Planck
-        # - Hubble damping: -μH
+        # Modified evolution of the expansion rate. Note: This is an 
+        # EFFECTIVE equation, not the standard Friedmann derivative.
+        # It includes inertial damping (-mu*H) and phase-pressure influence.
         dH_dt = (
             -(1.0 + w) * self.const.rho_0 / (a**2 + self.const.epsilon)
             + f_Planck
@@ -198,36 +200,41 @@ class UnifiedCosmology:
     def compute_entropy(self, a: np.ndarray) -> np.ndarray:
         """
         Entropy as σ_P tick count.
-        
-        S = V/σ_P³ = (4π/3)a³/ℓ_P³
-        
-        Physical interpretation:
-        - Each Planck volume σ_P³ = ℓ_P³ is one "tick" of spacetime
-        - Entropy counts the total number of ticks in the universe
-        
-        Args:
-            a: Scale factor array
-        
-        Returns:
-            S: Entropy in units of Planck volumes
+        S = a³/ℓ_P³
+        Tick Density rho_ticks = S / V = 1/ℓ_P³
         """
-        # Normalized: S ∝ a³
         return (a**3) / (self.const.l_P**3)
     
+    def get_physical_h(self, H_norm: np.ndarray) -> np.ndarray:
+        """Scales dimensionless H back to km/s/Mpc"""
+        return H_norm * self.const.H_scale
+
     def identify_phase(self, T: float) -> str:
-        """
-        Identify current phase based on temperature.
-        
-        Args:
-            T: Temperature
-        
-        Returns:
-            Phase name: "EXPANSION" or "DEFLATION"
-        """
+        """Identify current phase based on Entropy Temperature"""
         if T > self.const.T_critical:
-            return "EXPANSION"
+            return "EXPANSION (Hot)"
         else:
-            return "DEFLATION"
+            return "DEFLATION (Cold)"
+    
+    def measured_h_operator(self, method: str) -> float:
+        """
+        Simulates measurement operators for different cosmic phases.
+        - CMB/Planck: Samples the Cold phase (Deflation)
+        - SNe/SH0ES: Samples the Hot phase (Expansion)
+        """
+        if self.solution is None: return 0.0
+        
+        H_phys = self.get_physical_h(self.solution.y[1])
+        T = self.solution.y[2]
+        
+        if method == "CMB":
+            mask = T < self.const.T_critical
+            return np.mean(H_phys[mask]) if np.any(mask) else self.const.H_deflation
+        elif method == "SNe":
+            mask = T > self.const.T_critical
+            return np.mean(H_phys[mask]) if np.any(mask) else self.const.H_expansion
+        
+        return np.mean(H_phys)
     
     def simulate(
         self,
@@ -320,7 +327,7 @@ class UnifiedCosmology:
         # Extract solution
         t = self.time
         a = self.solution.y[0]
-        H = self.solution.y[1]
+        H_phys = self.get_physical_h(self.solution.y[1])
         T = self.solution.y[2]
         S = self.compute_entropy(a)
         
@@ -357,9 +364,9 @@ class UnifiedCosmology:
         expansion_mask = T > self.const.T_critical
         deflation_mask = ~expansion_mask
         
-        ax2.plot(t[expansion_mask], H[expansion_mask], 'r.', markersize=2, 
+        ax2.plot(t[expansion_mask], H_phys[expansion_mask], 'r.', markersize=2, 
                  alpha=0.6, label='Expansion phase')
-        ax2.plot(t[deflation_mask], H[deflation_mask], 'b.', markersize=2,
+        ax2.plot(t[deflation_mask], H_phys[deflation_mask], 'b.', markersize=2,
                  alpha=0.6, label='Deflation phase')
         
         # Reference lines for Hubble measurements
@@ -367,11 +374,11 @@ class UnifiedCosmology:
                     linewidth=2, alpha=0.7, label=f'SNe Ia: {self.const.H_expansion} km/s/Mpc')
         ax2.axhline(self.const.H_deflation, color='blue', linestyle='--',
                     linewidth=2, alpha=0.7, label=f'CMB: {self.const.H_deflation} km/s/Mpc')
-        ax2.axhline(self.const.H_mean, color='purple', linestyle='-',
-                    linewidth=2.5, alpha=0.8, label=f'⟨H⟩: {self.const.H_mean} km/s/Mpc')
+        ax2.axhline(self.const.H_scale, color='purple', linestyle='-',
+                    linewidth=2.5, alpha=0.8, label=f'Scale H_0: {self.const.H_scale}')
         ax2.axhline(0.0, color='black', linestyle='-', linewidth=0.5, alpha=0.5)
         
-        ax2.set_ylabel('Hubble Parameter H(t)', fontsize=11, fontweight='bold')
+        ax2.set_ylabel('Physical Hubble H(t)', fontsize=11, fontweight='bold')
         ax2.set_title('Hubble Tension: Phase-Dependent Measurements', fontweight='bold')
         ax2.legend(loc='best', fontsize=9)
         ax2.grid(True, alpha=0.3)
@@ -422,12 +429,12 @@ class UnifiedCosmology:
         # Panel 6: Phase Space (H vs T)
         # ─────────────────────────────────────────────────────────────────
         ax6 = plt.subplot(3, 2, 6)
-        scatter = ax6.scatter(T, H, c=t, cmap='viridis', s=10, alpha=0.6)
+        scatter = ax6.scatter(T, H_phys, c=t, cmap='viridis', s=10, alpha=0.6)
         ax6.axvline(self.const.T_critical, color='red', linestyle='--',
                     linewidth=2, label=f'T_c = {self.const.T_critical}')
         ax6.axhline(0.0, color='black', linestyle='-', linewidth=0.5)
-        ax6.set_xlabel('Temperature T', fontsize=11, fontweight='bold')
-        ax6.set_ylabel('Hubble Parameter H', fontsize=11, fontweight='bold')
+        ax6.set_xlabel('Entropy Temperature T', fontsize=11, fontweight='bold')
+        ax6.set_ylabel('Physical Hubble H', fontsize=11, fontweight='bold')
         ax6.set_title('Phase Space Trajectory', fontweight='bold')
         ax6.legend(loc='best')
         ax6.grid(True, alpha=0.3)
@@ -483,26 +490,22 @@ if __name__ == "__main__":
     print("HUBBLE TENSION ANALYSIS")
     print("═" * 80)
     
-    stats = model.analyze_hubble_tension()
-    
-    print(f"\nPhase-averaged Hubble parameters:")
-    print(f"  • Expansion phase:  ⟨H⟩_exp = {stats['H_expansion']:>6.2f} (cf. SNe Ia: {constants.H_expansion} km/s/Mpc)")
-    print(f"  • Deflation phase:  ⟨H⟩_def = {stats['H_deflation']:>6.2f} (cf. CMB: {constants.H_deflation} km/s/Mpc)")
-    print(f"  • Ensemble average: ⟨H⟩     = {stats['H_mean']:>6.2f} km/s/Mpc")
-    print(f"\nTension: ΔH = {stats['tension']:.2f} km/s/Mpc")
-    print(f"Expansion time fraction: {stats['expansion_fraction']:.1%}")
+    print(f"\nMeasurement Operators (UTC Model):")
+    print(f"  • CMB Operator (samples Deflation): H_obs = {model.measured_h_operator('CMB'):.2f} km/s/Mpc")
+    print(f"  • SNe Operator (samples Expansion): H_obs = {model.measured_h_operator('SNe'):.2f} km/s/Mpc")
+    print(f"  • Cosmic Average:                  H_avg = {model.measured_h_operator('AVG'):.2f} km/s/Mpc")
     print()
     
     # Final state
     a_final = model.solution.y[0][-1]
-    H_final = model.solution.y[1][-1]
+    H_final = model.get_physical_h(model.solution.y[1][-1])
     T_final = model.solution.y[2][-1]
     phase_final = model.identify_phase(T_final)
     
     print("Final state:")
     print(f"  • Scale factor: a = {a_final:.4f}")
-    print(f"  • Hubble parameter: H = {H_final:.4f}")
-    print(f"  • Temperature: T = {T_final:.4f}")
+    print(f"  • Physical Hubble: H = {H_final:.4f}")
+    print(f"  • Entropy Temp: T = {T_final:.4f}")
     print(f"  • Phase: {phase_final}")
     print()
     

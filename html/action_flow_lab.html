@@ -171,8 +171,7 @@
             time += speed;
             entropy += speed * 10; // Arbitrary scaler
 
-            // Amplitude: Sine wave squared (probability) or just Sine
-            // User said "schwankt zwischen 1 und 0". So sin^2 or 0.5 + 0.5sin
+            // Amplitude: Analogy
             const amp = 0.5 + 0.5 * Math.sin(time * 2);
             const flux = 1.0;
 
@@ -249,11 +248,8 @@
             ctx.fillStyle = '#10b981';
             ctx.fillText("Information Flux (Unitary)", 10, 70);
 
-            // Connect them?
             // Draw vertical lines showing that Amp is just a property, but Flow is the substance
-            if (Math.floor(time * 10) % 5 === 0) {
-                // Blink effect or something?
-            }
+            if (Math.floor(time * 10) % 5 === 0) { }
         }
 
         loop();

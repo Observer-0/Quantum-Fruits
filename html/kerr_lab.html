@@ -7,6 +7,8 @@
     <title>Quantum Fruits | Kerr Black Hole Lab</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/components.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../js/unity.js"></script>
     <style>
         body {
             background: #020617;
@@ -124,7 +126,7 @@
         <a href="../index.html" class="back-link">&larr; Back to Cosmos</a>
         <div class="header">
             <h1>Kerr Black Hole Lab</h1>
-            <p>Spinning Horizons & The Teukolsky Smearing Limit</p>
+            <p>Spinning Horizons & The Teukolsky Relativity Limit</p>
         </div>
 
         <div class="slider-box">
@@ -146,7 +148,7 @@
 
             <div class="toggle-box">
                 <input type="checkbox" id="kerr-sigmap-toggle" checked>
-                <label for="kerr-sigmap-toggle">Enable $\sigma_P$ Smearing Resolution</label>
+                <label for="kerr-sigmap-toggle">Enable $\sigma_P$ Relativity Resolution</label>
             </div>
         </div>
 
@@ -160,17 +162,36 @@
                 <span class="stat-value" id="val-kerr-th">--</span>
             </div>
             <div class="stat-card">
-                <span class="stat-label">Spatial Smearing ($c_0^s$)</span>
+                <span class="stat-label">Spatial Update ($c_0^s$)</span>
                 <span class="stat-value" id="val-kerr-c0s">--</span>
             </div>
             <div class="stat-card">
-                <span class="stat-label">Temporal Smearing ($c_0^t$)</span>
+                <span class="stat-label">Temporal Update ($c_0^t$)</span>
                 <span class="stat-value" id="val-kerr-c0t">--</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Horizon Updates ($N_\sigma$)</span>
+                <span class="stat-value" id="val-kerr-nsig" style="color: #38bdf8;">--</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Zander Entropy ($S_Z$)</span>
+                <span class="stat-value" id="val-kerr-sz" style="color: #fbbf24;">--</span>
             </div>
             <div class="stat-card" style="grid-column: span 2;">
                 <span class="stat-label">Total Non-Thermality ($c_0$)</span>
                 <span class="stat-value" id="val-kerr-c0" style="color: #fff;">--</span>
             </div>
+        </div>
+
+        <!-- NEW: C0 PLOT CONTAINER -->
+        <div class="qg-card" style="margin-bottom: 2rem; padding: 1.5rem; background: #000;">
+            <div id="c0-plot" style="width: 100%; height: 350px;"></div>
+        </div>
+
+        <!-- NEW: BH LIFE CYCLE CONTAINER -->
+        <div class="qg-card"
+            style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0,0,0,0.5); border-color: #38bdf8;">
+            <div id="bh-life-cycle" style="width: 100%; height: 450px;"></div>
         </div>
 
         <div id="kerr-smear-note">Initializing Horizon Metrics...</div>
@@ -209,16 +230,116 @@
             </div>
         </div>
 
-        <div class="theory-box qg-box" style="margin-top: 3rem; border-color: rgba(255,255,255,0.1);">
-            <h3>Why Kerr Black Holes are never "Perfect"</h3>
-            <p style="font-size: 0.95rem; color: #94a3b8; line-height: 1.6;">
-                In General Relativity, a Kerr black hole is a mathematical ideal.
-                However, once we introduce the $\sigma_P$ limit, the horizon becomes slightly "smeared".
-                This results in a small but calculated departure from a perfect thermal black-body spectrum.
-                This coefficient $c_0$ represents the intrinsic non-thermality required by the quantization of
-                spacetime.
-            </p>
-        </div>
+        <!-- NEW: HISTORICAL CONTEXT SECTION -->
+        <section class="grid-2" style="margin-top: 4rem; gap: 2rem;">
+            <div class="qg-card" style="border-color: #a78bfa; background: rgba(167, 139, 250, 0.05);">
+                <h3 style="color: #a78bfa; margin-bottom: 1rem;">Who is Roy Kerr?</h3>
+                <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+                    In 1963, <strong>Roy Kerr</strong> discovered the mathematical 4-vector for a
+                    <strong>rotating</strong> mass. Before Kerr, we only understood stationary (Schwarzschild) black
+                    holes. Since every object in the universe rotates, Kerr's solution is the "real" description of
+                    cosmic singularities.
+                </p>
+            </div>
+
+            <div class="qg-card" style="border-color: #3b82f6; background: rgba(59, 130, 246, 0.05);">
+                <h3 style="color: #3b82f6; margin-bottom: 1rem;">Who is Saul Teukolsky?</h3>
+                <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+                    In the 1970s, <strong>Saul Teukolsky</strong> derived the equations that describe how a rotating
+                    black hole vibrates. His "Teukolsky Master Equation" allows us to calculate how gravitational and
+                    electromagnetic waves (information) interact with the horizon.
+                </p>
+            </div>
+        </section>
+
+        <!-- NEW: RICCI-TRACE MEETS EUROJACKPOT SECTION -->
+        <section class="qg-card"
+            style="margin-top: 2rem; padding: 2.5rem; border-color: #38bdf8; background: rgba(56, 189, 248, 0.05);">
+            <h2 style="color: #38bdf8; font-size: 1.8rem; margin-bottom: 1.5rem;">Observer’s Dilemma: Ricci-Trace meets
+                Eurojackpot</h2>
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center;">
+                <div>
+                    <p style="color: #cbd5e1; line-height: 1.7; margin-bottom: 1.5rem;">
+                        How can we describe the "anatomy" of a black hole if the interior is inherently unobservable?
+                        In the Zander Framework, we use the <strong>Ricci-Trace Analogy</strong>.
+                    </p>
+                    <div
+                        style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.2);">
+                        $|\psi_i\rangle = \alpha |1\rangle + \beta |0\rangle$ (Local Quantum) <br>
+                        $R = g^{\mu\nu} R_{\mu\nu} = \sum \text{local curvatures}$ <br>
+                        $P_{\rm config} = \mathrm{Tr}(\rho_{\rm drum})$ (Global Ricci)
+                    </div>
+                    <p style="color: #94a3b8; line-height: 1.6; margin-top: 1.5rem; font-size: 0.95rem;">
+                        Just as in a lottery drum (Eurojackpot), where every ball is in a superposition of "drawn" or
+                        "not drawn",
+                        the black hole interior is a sum over all local <strong>Action-Pings</strong>.
+                        The Event Horizon is the <strong>Measurement Boundary</strong>: the point where the trace
+                        collapses into a single observable reality.
+                    </p>
+                </div>
+                <div
+                    style="background: rgba(0,0,0,0.5); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                    <div id="ricci-matrix"
+                        style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem;">
+                        <!-- JS will inject "superposition" balls here -->
+                    </div>
+                    <button onclick="collapseRicciTrace()" class="action-btn"
+                        style="background: #38bdf8; color: #000; font-weight: bold; width: 100%;">Relativity Collapse
+                        (Ping!)</button>
+                    <p id="ricci-status" style="margin-top: 1rem; font-size: 0.8rem; color: #64748b;">Current State:
+                        Global Superposition</p>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            function initRicciMatrix() {
+                const container = document.getElementById('ricci-matrix');
+                if (!container) return;
+                container.innerHTML = '';
+                for (let i = 0; i < 16; i++) {
+                    const ball = document.createElement('div');
+                    ball.className = 'ricci-ball';
+                    ball.style.cssText = `
+                        height: 40px; 
+                        border-radius: 50%; 
+                        background: radial-gradient(circle, #38bdf833, transparent); 
+                        border: 1px solid #38bdf866;
+                        display: flex; align-items: center; justify-content: center;
+                        font-family: monospace; font-size: 0.7rem; color: #38bdf8;
+                        transition: all 0.5s ease;
+                        animation: pulse-ricci ${1 + Math.random()}s infinite alternate;
+                    `;
+                    ball.innerText = '?';
+                    container.appendChild(ball);
+                }
+            }
+
+            function collapseRicciTrace() {
+                const balls = document.querySelectorAll('.ricci-ball');
+                let winCount = 0;
+                balls.forEach(b => {
+                    const win = Math.random() > 0.5;
+                    if (win) winCount++;
+                    b.innerText = win ? '1' : '0';
+                    b.style.background = win ? '#38bdf8' : '#1e293b';
+                    b.style.color = win ? '#000' : '#475569';
+                    b.style.animation = 'none';
+                    b.style.boxShadow = win ? '0 0 15px #38bdf8' : 'none';
+                });
+                document.getElementById('ricci-status').innerText = `Tracing complete. Locally summed probability: ${winCount}/16. Information Stabilized.`;
+            }
+
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes pulse-ricci {
+                    from { opacity: 0.4; transform: scale(0.9); }
+                    to { opacity: 0.8; transform: scale(1.1); }
+                }
+            `;
+            document.head.appendChild(style);
+            initRicciMatrix();
+        </script>
     </div>
 
     <!-- Script to ensure ID exists during init -->
