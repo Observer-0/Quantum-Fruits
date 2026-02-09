@@ -158,9 +158,9 @@ The project has evolved beyond static theory into dynamic simulation and philoso
 *The blueprint for the "Breath of the Universe" module.*
 
 ### New Modules:
-1.  **[TSF Simulation (Click to Run)](tsf_sim.html)**: An interactive HTML5 visualization of the Thermal Spacetime Feedback cycle. Experience gravity, entropy, and the "bounce" in real-time.
-2.  **[Theory for Everyone](theory.html)**: Now expanded with the "James Webb" analogy and the "Cosmic Equation".
-3.  **[Quantum Fruits Lab](assets/Formulas%20and%20code/quantum_fruits_lab.py)**: The unified Python simulation suite for professional verification.
+1.  **[TSF Simulation (Click to Run)](html/tsf_sim.html)**: An interactive HTML5 visualization of the Thermal Spacetime Feedback cycle. Experience gravity, entropy, and the "bounce" in real-time.
+2.  **[Theory for Everyone](html/theory.html)**: Now expanded with the "James Webb" analogy and the "Cosmic Equation".
+3.  **[Quantum Fruits Lab](assets/Formulas and code/quantum_fruits_lab.py)**: The unified Python simulation suite for professional verification.
 
 ## Future Roadmap (Next Steps)
 
@@ -180,7 +180,7 @@ The ZIP archive includes the full rigorous papers (published with separate DOIs)
 
 ---
 
-**[Code of Conduct](CONDUCT.md)**: This project is governed by the laws of probability and mutual respect.
+**[Code of Conduct](CODE_OF_CONDUCT.md)**: This project is governed by the laws of probability and mutual respect.
 
 **Copyright © 2026 Adrian Zander**  
 Licensed under the **MIT License**. Feel free to use, modify, and resonate with this theory.

@@ -39,7 +39,7 @@ This directory contains high-quality infographics for the σ_P Framework.
 
 ### In Markdown
 ```markdown
-![σ_P Framework](assets/infographics/sigma_p_framework_overview.png)
+![σ_P Framework](sigma_p_framework_overview.png)
 ```
 
 ### In LaTeX

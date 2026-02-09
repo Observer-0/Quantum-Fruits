@@ -150,7 +150,7 @@ Quantum-Fruits/
 ├── docs/
 │   ├── Hubble_Tension_Explanation.md  # Full technical explanation
 │   ├── Code_Comparison.md             # Side-by-side code comparison
-│   ├── Executive_Summary_DE.md        # German executive summary
+│   ├── Executive_Summary.md           # Executive summary
 │   └── README.md                      # This file
 └── assets/
     └── hubble_tension_concept.png     # Visual infographic
@@ -266,8 +266,8 @@ See [`Code_Comparison.md`](Code_Comparison.md) for:
 - Conceptual mapping
 - Validation strategy
 
-### Executive Summary (German)
-See [`Executive_Summary_DE.md`](Executive_Summary_DE.md) for:
+### Executive Summary
+See [`Executive_Summary.md`](Executive_Summary.md) for:
 - Kernidee in 3 Sätzen
 - Visuelle Zusammenfassung
 - Numerische Ergebnisse
