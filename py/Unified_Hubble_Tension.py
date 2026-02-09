@@ -221,10 +221,13 @@ class UnifiedCosmology:
         Simulates measurement operators for different cosmic phases.
         - CMB/Planck: Samples the Cold phase (Deflation)
         - SNe/SH0ES: Samples the Hot phase (Expansion)
+        
+        Sign convention:
+        Returns measured expansion-rate magnitudes |H| in km/s/Mpc.
         """
         if self.solution is None: return 0.0
         
-        H_phys = self.get_physical_h(self.solution.y[1])
+        H_phys = np.abs(self.get_physical_h(self.solution.y[1]))
         T = self.solution.y[2]
         
         if method == "CMB":
@@ -280,7 +283,12 @@ class UnifiedCosmology:
         
     def analyze_hubble_tension(self) -> Dict[str, float]:
         """
-        Analyze Hubble parameter statistics to explain the tension.
+        Analyze physical Hubble parameter statistics (km/s/Mpc)
+        to explain the tension.
+        
+        Sign convention:
+        Uses |H| for reported phase means to match observational
+        H0 magnitudes (positive by construction).
         
         Returns:
             Dictionary with Hubble statistics
@@ -288,7 +296,8 @@ class UnifiedCosmology:
         if self.solution is None:
             raise RuntimeError("Must run simulate() first")
         
-        H = self.solution.y[1]
+        H_phys_signed = self.get_physical_h(self.solution.y[1])
+        H_phys = np.abs(H_phys_signed)
         T = self.solution.y[2]
         
         # Identify expansion and deflation phases
@@ -296,16 +305,20 @@ class UnifiedCosmology:
         deflation_mask = ~expansion_mask
         
         # Compute phase-averaged Hubble parameters
-        H_exp_mean = np.mean(H[expansion_mask]) if np.any(expansion_mask) else 0.0
-        H_def_mean = np.mean(H[deflation_mask]) if np.any(deflation_mask) else 0.0
-        H_total_mean = np.mean(np.abs(H))
+        H_exp_mean = np.mean(H_phys[expansion_mask]) if np.any(expansion_mask) else 0.0
+        H_def_mean = np.mean(H_phys[deflation_mask]) if np.any(deflation_mask) else 0.0
+        H_total_mean = np.mean(np.abs(H_phys))
+        H_exp_signed = np.mean(H_phys_signed[expansion_mask]) if np.any(expansion_mask) else 0.0
+        H_def_signed = np.mean(H_phys_signed[deflation_mask]) if np.any(deflation_mask) else 0.0
         
         return {
             'H_expansion': H_exp_mean,
             'H_deflation': H_def_mean,
             'H_mean': H_total_mean,
             'tension': np.abs(H_exp_mean - H_def_mean),
-            'expansion_fraction': np.sum(expansion_mask) / len(T)
+            'expansion_fraction': np.sum(expansion_mask) / len(T),
+            'H_expansion_signed': H_exp_signed,
+            'H_deflation_signed': H_def_signed
         }
     
     def plot_results(self, save_path: str = None) -> None:

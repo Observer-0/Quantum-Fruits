@@ -139,11 +139,11 @@ function simulatePageCurve(M0, steps = 200) {
 
   // Time estimate: tau ~ M^3
   const tau = (5120 * pi * (G ** 2) * (M0 ** 3)) / (hbar * (c ** 4));
-  // Compute available fundamental ticks N_sigma = c * R * tau / SIGMA_P
+  // Compute available fundamental ticks N_sigma = R * tau / SIGMA_P
   const SIG = (typeof window !== 'undefined' && window.COSMO_GLOBAL && window.COSMO_GLOBAL.SIGMA_P) ? window.COSMO_GLOBAL.SIGMA_P : SIGMA_P;
   let ticks = 0;
   try {
-    ticks = (c * R_univ * tau) / SIG;
+    ticks = (R_univ * tau) / SIG;
   } catch (e) {
     ticks = Infinity;
   }
@@ -469,7 +469,7 @@ function updateNSigmaDisplay() {
     const t_now = cosmo.age_now;
     const R_now = cosmo.radius_now;
     const sigma = cosmo.SIGMA_P || SIGMA_P;
-    const N_sigma = (c * R_now * t_now) / sigma;
+    const N_sigma = (R_now * t_now) / sigma;
     panel.innerText = formatSci(N_sigma);
   } catch (e) {
     panel.innerText = '—';
@@ -588,7 +588,7 @@ function drawRotationCurveChart(massSolar, label) {
   const cosmo = (typeof window !== 'undefined' && window.COSMO_GLOBAL) ? window.COSMO_GLOBAL : { age_now: COSMO_AGE_NOW, radius_now: COSMO_RADIUS_NOW, SIGMA_P: SIGMA_P };
   const t_now = cosmo.age_now;
   const R_now = cosmo.radius_now;
-  const N_sigma = (c * R_now * t_now) / (cosmo.SIGMA_P || SIGMA_P);
+  const N_sigma = (R_now * t_now) / (cosmo.SIGMA_P || SIGMA_P);
 
   const dsNewton = data.radius.map((r, i) => ({ x: r, y: data.v_newton[i] }));
   const dsSigma = data.radius.map((r, i) => ({ x: r, y: data.v_sigma[i] }));
@@ -659,7 +659,7 @@ function drawPageCurveChart(massKg, label) {
   const cosmo = (typeof window !== 'undefined' && window.COSMO_GLOBAL) ? window.COSMO_GLOBAL : { age_now: COSMO_AGE_NOW, radius_now: COSMO_RADIUS_NOW, SIGMA_P: SIGMA_P };
   const t_now = cosmo.age_now;
   const R_now = cosmo.radius_now;
-  const N_sigma = (c * R_now * t_now) / (cosmo.SIGMA_P || SIGMA_P);
+  const N_sigma = (R_now * t_now) / (cosmo.SIGMA_P || SIGMA_P);
 
   const datasetBH = data.s_bh.map((s, i) => ({ x: data.time[i], y: s }));
   const datasetRad = data.s_rad_accum.map((s, i) => ({ x: data.time[i], y: s }));
@@ -815,22 +815,19 @@ const toolHandlers = {
     return data.map(obj => {
       const sigma_eff = obj.length * obj.time;
       const action = obj.energyJ * obj.time;
-      const ticks = action / sigma_eff; // structurally: E*t / (L*t) = E/L  
-      // Actually N = Action / sigma_eff
-      const temp_j = obj.energyJ / (action / sigma_eff);
-      // Simplified: T = E / ( (E*t)/(L*t) ) = L. 
-      // T_eff = E_total / N.
-      // E_total / ( (E_total * t) / (L * t) ) = L.
-      // Wait, the structural beauty is: T_eff = E / N.
 
-      const n_ticks = obj.energyJ * obj.time / (obj.length * obj.time); // = E/L
-      const t_eff = obj.energyJ / n_ticks; // = L!
+      // Dimensionless action ticks
+      const n_ticks = action / hbar;
+      const safe_ticks = Math.max(n_ticks, 1e-30);
+      const e_per_tick = obj.energyJ / safe_ticks;
+      const t_eff = obj.energyJ / (kB * safe_ticks);
 
       const result = `
 --- ${obj.name} ---
-Effective Cell (σ_eff): ${sigma_eff.toFixed(2)} m·s
-Number of Ticks (N): ${n_ticks.toFixed(2)}
-Energy per Tick (T_eff): ${t_eff.toFixed(2)} Joule
+Effective Cell (sigma_eff): ${sigma_eff.toFixed(2)} m*s
+Number of Action Ticks (N=E*t/hbar): ${n_ticks.toExponential(3)}
+Energy per Tick: ${e_per_tick.toExponential(3)} J
+Effective Temperature (E/(k_B*N)): ${t_eff.toExponential(3)} K
 Entropy Export: ${(obj.energyJ * 0.92).toFixed(1)} J (Dissipation)
       `;
       return result;

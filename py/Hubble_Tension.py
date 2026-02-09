@@ -23,8 +23,9 @@ class Phase(Enum):
 
 @dataclass
 class CosmologicalConstants:
-    """Physical constants in natural units (ℏ=c=k_B=1)"""
-    sigma_P: float = 1.616e-35  # Planck length (m)
+    """Model constants with SI-labelled reference scales"""
+    l_P: float = 1.616e-35       # Planck length (m)
+    sigma_P: float = 8.713e-79   # Planck spacetime cell ħG/c^4 (m·s)
     T_boiling: float = 61.0      # Boiling point of universe (K) - TUNABLE
     H_0_mean: float = 70.0       # Mean Hubble constant (km/s/Mpc)
     H_expansion: float = 73.0    # Expansion phase measurement
