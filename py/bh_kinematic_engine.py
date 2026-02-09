@@ -20,25 +20,32 @@ class KinematicEngine:
         self.M_core = M0
         self.M_ext = M_ext_initial # Reservoir of surrounding mass
         self.omega = w_max * (MP / M0) # Initial frequency (scaled by mass)
+        self.current_time = 0.0  # Cumulative simulation time
         self.history = {'t': [], 'M': [], 'omega': [], 'L': []}
 
     def step(self, dt, accretion_rate=1e-5):
         """
         Calculates one time step of the engine cycle.
         """
+        # Update cumulative time
+        self.current_time += dt
+        
         # 1. Accretion: Mass flows from reservoir to system
         infall = accretion_rate * dt
-        self.M_ext += infall
+        self.M_core += infall  # Mass accretes onto the core
+        self.M_ext -= infall   # Reservoir is depleted
         
         # 2. Re-energization: Accreted mass transfers energy to core spin
         # Efficiency factor lambda
         lam = 0.1
         d_omega_acc = (lam * infall * c**2) / hbar
         
-        # 3. Braking: Total mass creates inertial drag on the spin
-        # Braking force scales with M^2 (Pillar 13)
-        braking_const = G / (c**3 * hbar)
-        d_omega_brake = braking_const * (self.M_core + self.M_ext)**2 * self.omega * dt
+        # 3. Braking: Gravitational inertial drag suppresses spin
+        # Phenom. model: dω/dt ~ -(G M² / c⁵) * ω (corrected dimensions)
+        # d_omega_brake is frequency change per timestep [rad/s]
+        M_total = self.M_core + self.M_ext
+        braking_coeff = G * M_total**2 / c**5  # Dimensionally consistent
+        d_omega_brake = braking_coeff * self.omega * dt / hbar
         
         # Update Omega
         self.omega = max(0, self.omega + d_omega_acc - d_omega_brake)
@@ -48,7 +55,7 @@ class KinematicEngine:
         L = hbar * d_omega_brake / dt
         
         # Log stats
-        self.history['t'].append(dt)
+        self.history['t'].append(self.current_time)  # Store cumulative time, not dt
         self.history['M'].append(self.M_core + self.M_ext)
         self.history['omega'].append(self.omega)
         self.history['L'].append(L)
