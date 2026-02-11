@@ -15,14 +15,14 @@ const LAB_ORDER = [
 ];
 
 const VISUAL_DEFAULTS = {
-    motor: { badge: "Extreme Geometry", accent: "#38bdf8", textColor: "#000" },
-    galaxy: { badge: "Large Scale", accent: "#10b981", textColor: "#000" },
-    hubble: { badge: "Cosmology", accent: "#fbbf24", textColor: "#000" },
-    lattice: { badge: "Foundation", accent: "#a855f7", textColor: "#fff" },
-    evaporation: { badge: "Decay Logic", accent: "#fbbf24", textColor: "#000" },
-    entropy: { badge: "Holography", accent: "#f43f5e", textColor: "#fff" },
-    spectrum: { badge: "Quantum Scaling", accent: "#fbbf24", textColor: "#000" },
-    dipole: { badge: "Pillar 12", accent: "#818cf8", textColor: "#fff" }
+    motor: { badge: "Kinematic Model", accent: "#38bdf8", textColor: "#000" },
+    galaxy: { badge: "Rotation Fit", accent: "#10b981", textColor: "#000" },
+    hubble: { badge: "Cosmology Diagnostic", accent: "#fbbf24", textColor: "#000" },
+    lattice: { badge: "Lattice Model", accent: "#a855f7", textColor: "#fff" },
+    evaporation: { badge: "Evaporation Model", accent: "#fbbf24", textColor: "#000" },
+    entropy: { badge: "Entropy Diagnostic", accent: "#f43f5e", textColor: "#fff" },
+    spectrum: { badge: "Exploratory Fit", accent: "#fbbf24", textColor: "#000" },
+    dipole: { badge: "Dipole Hypothesis", accent: "#818cf8", textColor: "#fff" }
 };
 
 const MINIMAL_FALLBACK = {
@@ -36,7 +36,7 @@ const MINIMAL_FALLBACK = {
         id: "LAB-002",
         title: "Galaxy Rotation",
         lab: "galaxy_lab.html",
-        description: "Dark-matter-free rotation curves via Sigma-P coupling."
+        description: "Galaxy-rotation fits in a sigma_P coupling model."
     },
     hubble: {
         id: "LAB-011",

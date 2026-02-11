@@ -10,7 +10,7 @@ const DEFAULT_SIM_MAP = {
         lab: "hubble_flow_lab.html",
         theory: "theory.html#cosmology",
         python: "py/Unified_Hubble_Tension.py",
-        description: "Resolving Hubble tension with phase sampling and positive observed |H0| magnitudes.",
+        description: "Explores Hubble-tension diagnostics with phase sampling and observed |H0| magnitudes.",
         icon: "🪐"
     },
     evaporation: {
@@ -19,7 +19,7 @@ const DEFAULT_SIM_MAP = {
         lab: "evaporation_lab.html",
         theory: "theory.html#blackholes",
         python: "py/sigmaP_evaporation_refined.py",
-        description: "Unitary decay of black holes and the resolution of the Information Paradox.",
+        description: "Models unitary black-hole decay and its implications for information retention.",
         icon: "🕳️"
     },
     lattice: {
@@ -28,7 +28,7 @@ const DEFAULT_SIM_MAP = {
         lab: "lattice_lab.html",
         theory: "theory.html#quantum",
         python: "py/quantum_fruits_sim.py",
-        description: "The fundamental fabric of discrete spacetime action.",
+        description: "Discrete spacetime-action lattice model used as a numerical framework.",
         icon: "🕸️"
     },
     galaxy: {
@@ -37,7 +37,7 @@ const DEFAULT_SIM_MAP = {
         lab: "galaxy_lab.html",
         theory: "theory.html#galaxies",
         python: "py/physics_engine.py",
-        description: "Dark Matter-free rotation curves via Sigma-P coupling.",
+        description: "Galaxy-rotation fits in a sigma_P coupling model (without a dark-matter term in this setup).",
         icon: "🌀"
     },
     entropy: {
@@ -46,7 +46,7 @@ const DEFAULT_SIM_MAP = {
         lab: "entropy_lab.html",
         theory: "theory.html#blackholes",
         python: "py/Info_Paradox2.py",
-        description: "Visualizing holographic entropy and information density.",
+        description: "Visualizes holographic entropy proxies and information-density scaling.",
         icon: "📊"
     },
     motor: {
@@ -55,7 +55,7 @@ const DEFAULT_SIM_MAP = {
         lab: "motor.html",
         theory: "theory.html#quantum",
         python: "py/kinematic_motor_sim.py",
-        description: "Action-tick dynamics (N=E*t/hbar) linking quantum action flow and macroscopic braking.",
+        description: "Action-tick dynamics (N=E*t/hbar) linking quantum action flow to macroscopic braking in the model.",
         icon: "⚙️"
     },
     answer42: {
@@ -64,7 +64,7 @@ const DEFAULT_SIM_MAP = {
         lab: "theory.html#library",
         theory: "theory.html#library",
         python: "py/answer_42.py",
-        description: "The numerical signature of the cosmic scale ratio.",
+        description: "Numerical scaling example around the project's cosmic-ratio heuristic.",
         icon: "🌌"
     },
     spectrum: {
@@ -82,7 +82,7 @@ const DEFAULT_SIM_MAP = {
         lab: "dipole_lab.html",
         theory: "theory.html#cosmology",
         python: "py/UTC_Redshift_Validation.py",
-        description: "The 3.7x velocity excess as a sign of spacetime grid friction.",
+        description: "Examines a reported 3.7x velocity excess under a spacetime-grid friction hypothesis.",
         icon: "🧭"
     }
 };
