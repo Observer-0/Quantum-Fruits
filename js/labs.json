@@ -1,0 +1,110 @@
+{
+  "hubble": {
+    "id": "LAB-011",
+    "title": "Cosmic Breathing",
+    "lab": "hubble_flow_lab.html",
+    "theory": "theory.html#cosmology",
+    "python": "py/Unified_Hubble_Tension.py",
+    "description": "Resolving Hubble tension with phase sampling and positive observed |H0| magnitudes.",
+    "icon": "🪐",
+    "badge": "Cosmology",
+    "accent": "#fbbf24",
+    "textColor": "#000"
+  },
+  "evaporation": {
+    "id": "LAB-006",
+    "title": "Evaporation Lab",
+    "lab": "evaporation_lab.html",
+    "theory": "theory.html#blackholes",
+    "python": "py/sigmaP_evaporation_refined.py",
+    "description": "Unitary decay of black holes and the resolution of the Information Paradox.",
+    "icon": "🕳️",
+    "badge": "Decay Logic",
+    "accent": "#fbbf24",
+    "textColor": "#000"
+  },
+  "lattice": {
+    "id": "LAB-004",
+    "title": "URM Lattice",
+    "lab": "lattice_lab.html",
+    "theory": "theory.html#quantum",
+    "python": "py/quantum_fruits_sim.py",
+    "description": "The fundamental fabric of discrete spacetime action.",
+    "icon": "🕸️",
+    "badge": "Foundation",
+    "accent": "#a855f7",
+    "textColor": "#fff"
+  },
+  "galaxy": {
+    "id": "LAB-002",
+    "title": "Galaxy Rotation",
+    "lab": "galaxy_lab.html",
+    "theory": "theory.html#galaxies",
+    "python": "py/physics_engine.py",
+    "description": "Dark Matter-free rotation curves via Sigma-P coupling.",
+    "icon": "🌀",
+    "badge": "Large Scale",
+    "accent": "#10b981",
+    "textColor": "#000"
+  },
+  "entropy": {
+    "id": "LAB-008",
+    "title": "Entropy Holo-Lab",
+    "lab": "entropy_lab.html",
+    "theory": "theory.html#blackholes",
+    "python": "py/Info_Paradox2.py",
+    "description": "Visualizing holographic entropy and information density.",
+    "icon": "📊",
+    "badge": "Holography",
+    "accent": "#f43f5e",
+    "textColor": "#fff"
+  },
+  "motor": {
+    "id": "LAB-001",
+    "title": "Kinematic Motor",
+    "lab": "motor.html",
+    "theory": "theory.html#quantum",
+    "python": "py/kinematic_motor_sim.py",
+    "description": "Action-tick dynamics (N=E*t/hbar) linking quantum action flow and macroscopic braking.",
+    "icon": "⚙️",
+    "badge": "Extreme Geometry",
+    "accent": "#38bdf8",
+    "textColor": "#000"
+  },
+  "answer42": {
+    "id": "INF-042",
+    "title": "The Answer is 42",
+    "lab": "theory.html#library",
+    "theory": "theory.html#library",
+    "python": "py/answer_42.py",
+    "description": "The numerical signature of the cosmic scale ratio.",
+    "icon": "🌌",
+    "badge": "Reference",
+    "accent": "#38bdf8",
+    "textColor": "#000"
+  },
+  "spectrum": {
+    "id": "LAB-012",
+    "title": "Particle Spectrum",
+    "lab": "particle_spectrum_lab.html",
+    "theory": "theory.html#quantum",
+    "python": "py/particle_spectrum.py",
+    "description": "Empirical geometric q-ratio fit for mass levels; exploratory model, not first-principles.",
+    "icon": "⚛️",
+    "badge": "Quantum Scaling",
+    "accent": "#fbbf24",
+    "textColor": "#000"
+  },
+  "dipole": {
+    "id": "LAB-013",
+    "title": "Cosmic Dipole",
+    "lab": "dipole_lab.html",
+    "theory": "theory.html#cosmology",
+    "python": "py/UTC_Redshift_Validation.py",
+    "description": "The 3.7x velocity excess as a sign of spacetime grid friction.",
+    "icon": "🧭",
+    "badge": "Pillar 12",
+    "accent": "#818cf8",
+    "textColor": "#fff"
+  }
+}

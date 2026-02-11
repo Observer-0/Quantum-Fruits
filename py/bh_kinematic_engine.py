@@ -41,11 +41,12 @@ class KinematicEngine:
         d_omega_acc = (lam * infall * c**2) / hbar
         
         # 3. Braking: Gravitational inertial drag suppresses spin
-        # Phenom. model: dω/dt ~ -(G M² / c⁵) * ω (corrected dimensions)
+        # Phenom. model: domega/dt ~ -gamma0 * alpha_G(M) * omega
         # d_omega_brake is frequency change per timestep [rad/s]
         M_total = self.M_core + self.M_ext
-        braking_coeff = G * M_total**2 / c**5  # Dimensionally consistent
-        d_omega_brake = braking_coeff * self.omega * dt / hbar
+        alpha_g = G * M_total**2 / (hbar * c)   # dimensionless
+        gamma0 = 1e-8                             # [1/s], phenomenological damping scale
+        d_omega_brake = gamma0 * alpha_g * self.omega * dt
         
         # Update Omega
         self.omega = max(0, self.omega + d_omega_acc - d_omega_brake)
