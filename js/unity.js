@@ -3,6 +3,8 @@
  * Connects Theory, Labs, and Python source code.
  */
 
+// Minimal fallback for offline/file:// usage.
+// Rich metadata is maintained in js/labs.json.
 const DEFAULT_SIM_MAP = {
     hubble: {
         id: "LAB-011",
@@ -10,7 +12,6 @@ const DEFAULT_SIM_MAP = {
         lab: "hubble_flow_lab.html",
         theory: "theory.html#cosmology",
         python: "py/Unified_Hubble_Tension.py",
-        description: "Explores Hubble-tension diagnostics with phase sampling and observed |H0| magnitudes.",
         icon: "🪐"
     },
     evaporation: {
@@ -19,7 +20,6 @@ const DEFAULT_SIM_MAP = {
         lab: "evaporation_lab.html",
         theory: "theory.html#blackholes",
         python: "py/sigmaP_evaporation_refined.py",
-        description: "Models unitary black-hole decay and its implications for information retention.",
         icon: "🕳️"
     },
     lattice: {
@@ -28,7 +28,6 @@ const DEFAULT_SIM_MAP = {
         lab: "lattice_lab.html",
         theory: "theory.html#quantum",
         python: "py/quantum_fruits_sim.py",
-        description: "Discrete spacetime-action lattice model used as a numerical framework.",
         icon: "🕸️"
     },
     galaxy: {
@@ -37,7 +36,6 @@ const DEFAULT_SIM_MAP = {
         lab: "galaxy_lab.html",
         theory: "theory.html#galaxies",
         python: "py/physics_engine.py",
-        description: "Galaxy-rotation fits in a sigma_P coupling model (without a dark-matter term in this setup).",
         icon: "🌀"
     },
     entropy: {
@@ -46,7 +44,6 @@ const DEFAULT_SIM_MAP = {
         lab: "entropy_lab.html",
         theory: "theory.html#blackholes",
         python: "py/Info_Paradox2.py",
-        description: "Visualizes holographic entropy proxies and information-density scaling.",
         icon: "📊"
     },
     motor: {
@@ -55,7 +52,6 @@ const DEFAULT_SIM_MAP = {
         lab: "motor.html",
         theory: "theory.html#quantum",
         python: "py/kinematic_motor_sim.py",
-        description: "Action-tick dynamics (N=E*t/hbar) linking quantum action flow to macroscopic braking in the model.",
         icon: "⚙️"
     },
     answer42: {
@@ -64,7 +60,6 @@ const DEFAULT_SIM_MAP = {
         lab: "theory.html#library",
         theory: "theory.html#library",
         python: "py/answer_42.py",
-        description: "Numerical scaling example around the project's cosmic-ratio heuristic.",
         icon: "🌌"
     },
     spectrum: {
@@ -73,7 +68,6 @@ const DEFAULT_SIM_MAP = {
         lab: "particle_spectrum_lab.html",
         theory: "theory.html#quantum",
         python: "py/particle_spectrum.py",
-        description: "Empirical geometric q-ratio fit for mass levels; exploratory model, not first-principles.",
         icon: "⚛️"
     },
     dipole: {
@@ -82,7 +76,6 @@ const DEFAULT_SIM_MAP = {
         lab: "dipole_lab.html",
         theory: "theory.html#cosmology",
         python: "py/UTC_Redshift_Validation.py",
-        description: "Examines a reported 3.7x velocity excess under a spacetime-grid friction hypothesis.",
         icon: "🧭"
     }
 };
@@ -227,13 +220,14 @@ function injectLabUnity() {
     if (simEntry) {
         const unityPanel = document.createElement('div');
         unityPanel.className = 'unity-panel';
+        const icon = simEntry.icon || "*";
 
         // Find relative path for python
         const prefix = '../';
 
         unityPanel.innerHTML = `
             <div class="unity-badge">
-                <span class="unity-icon">${simEntry.icon}</span>
+                <span class="unity-icon">${icon}</span>
                 <div class="unity-info">
                     <strong>INTEGRATED VIEW</strong>
                     <div class="unity-links">
@@ -309,3 +303,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         injectLabUnity();
     }
 });
+

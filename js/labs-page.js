@@ -10,6 +10,7 @@ const LAB_ORDER = [
     "lattice",
     "evaporation",
     "entropy",
+    "answer42",
     "spectrum",
     "dipole"
 ];
@@ -21,6 +22,7 @@ const VISUAL_DEFAULTS = {
     lattice: { badge: "Lattice Model", accent: "#a855f7", textColor: "#fff" },
     evaporation: { badge: "Evaporation Model", accent: "#fbbf24", textColor: "#000" },
     entropy: { badge: "Entropy Diagnostic", accent: "#f43f5e", textColor: "#fff" },
+    answer42: { badge: "Numerical Heuristic", accent: "#38bdf8", textColor: "#000" },
     spectrum: { badge: "Exploratory Fit", accent: "#fbbf24", textColor: "#000" },
     dipole: { badge: "Dipole Hypothesis", accent: "#818cf8", textColor: "#fff" }
 };
@@ -57,28 +59,50 @@ function getUnityFallback() {
     return null;
 }
 
+function classifyEntry(entry) {
+    const id = String((entry && entry.id) || "");
+    if (id.startsWith("LAB-")) return "lab";
+    if (id.startsWith("INF-")) return "reference";
+    return "unknown";
+}
+
+function safeHref(raw) {
+    const href = String(raw || "").trim();
+    if (!href) return null;
+    const lower = href.toLowerCase();
+    if (lower.startsWith("javascript:") || lower.startsWith("data:")) return null;
+    return href;
+}
+
 function withVisuals(key, entry) {
     const visual = VISUAL_DEFAULTS[key] || {};
+    const kind = classifyEntry(entry);
     return {
         ...entry,
-        badge: entry.badge || visual.badge || "Simulation",
+        kind,
+        badge: entry.badge || visual.badge || (kind === "reference" ? "Reference" : "Simulation"),
+        description: entry.description || "Interactive module from fallback configuration.",
         accent: entry.accent || visual.accent || "#38bdf8",
         textColor: entry.textColor || visual.textColor || "#000",
-        icon: entry.icon || "•"
+        icon: entry.icon || "*"
     };
 }
 
-function isLabEntry(entry) {
+function isRenderableEntry(entry) {
     if (!entry || typeof entry !== "object") return false;
-    if (!entry.id || !String(entry.id).startsWith("LAB-")) return false;
-    if (!entry.lab || String(entry.lab).includes("#")) return false;
-    return true;
+    if (!entry.id || !entry.lab) return false;
+    if (!safeHref(entry.lab)) return false;
+
+    const kind = classifyEntry(entry);
+    if (kind === "lab") return !String(entry.lab).includes("#");
+    if (kind === "reference") return true;
+    return false;
 }
 
 function normalizeLabs(raw) {
     const out = {};
     Object.keys(raw || {}).forEach((key) => {
-        if (isLabEntry(raw[key])) {
+        if (isRenderableEntry(raw[key])) {
             out[key] = withVisuals(key, raw[key]);
         }
     });
@@ -107,33 +131,66 @@ async function loadLabs() {
     return normalizeLabs(MINIMAL_FALLBACK);
 }
 
-function cardMarkup(entry) {
+function createLabCard(entry) {
     const accent = entry.accent;
     const textColor = entry.textColor;
     const badge = entry.badge;
     const id = entry.id;
     const title = entry.title || "Lab";
     const desc = entry.description || "";
-    const href = entry.lab;
+    const href = safeHref(entry.lab) || "#";
     const icon = entry.icon;
     const badgeBg = hexToRgba(accent, 0.18);
+    const actionText = entry.kind === "reference" ? "Open Reference" : "Access Simulation";
 
-    return `
-    <div class="lab-deck" data-id="${id}">
-      <div class="qg-card">
-        <div class="lab-preview">
-          <div style="font-size: 3.2rem; opacity: 0.85;">${icon}</div>
-        </div>
-        <div class="lab-card-content">
-          <span class="lab-badge" style="color: ${accent}; background: ${badgeBg};">${badge}</span>
-          <h3>${title}</h3>
-          <p>${desc}</p>
-          <a href="${href}" class="action-btn" style="background: ${accent}; color: ${textColor}; width: 100%; justify-content: center;">
-            Access Simulation
-          </a>
-        </div>
-      </div>
-    </div>`;
+    const deck = document.createElement("div");
+    deck.className = "lab-deck";
+    deck.dataset.id = id;
+
+    const card = document.createElement("div");
+    card.className = "qg-card";
+
+    const preview = document.createElement("div");
+    preview.className = "lab-preview";
+    const iconBox = document.createElement("div");
+    iconBox.style.fontSize = "3.2rem";
+    iconBox.style.opacity = "0.85";
+    iconBox.textContent = icon;
+    preview.appendChild(iconBox);
+
+    const content = document.createElement("div");
+    content.className = "lab-card-content";
+
+    const badgeEl = document.createElement("span");
+    badgeEl.className = "lab-badge";
+    badgeEl.style.color = accent;
+    badgeEl.style.background = badgeBg;
+    badgeEl.textContent = badge;
+
+    const titleEl = document.createElement("h3");
+    titleEl.textContent = title;
+
+    const descEl = document.createElement("p");
+    descEl.textContent = desc;
+
+    const action = document.createElement("a");
+    action.href = href;
+    action.className = "action-btn";
+    action.style.background = accent;
+    action.style.color = textColor;
+    action.style.width = "100%";
+    action.style.justifyContent = "center";
+    action.textContent = actionText;
+
+    content.appendChild(badgeEl);
+    content.appendChild(titleEl);
+    content.appendChild(descEl);
+    content.appendChild(action);
+
+    card.appendChild(preview);
+    card.appendChild(content);
+    deck.appendChild(card);
+    return deck;
 }
 
 function hexToRgba(hex, alpha) {
@@ -159,11 +216,21 @@ async function renderLabsPage() {
     );
 
     if (orderedKeys.length === 0) {
-        grid.innerHTML = `<div class="qg-card" style="padding:2rem; text-align:center; grid-column:1 / -1;">No lab configuration available.</div>`;
+        const empty = document.createElement("div");
+        empty.className = "qg-card";
+        empty.style.padding = "2rem";
+        empty.style.textAlign = "center";
+        empty.style.gridColumn = "1 / -1";
+        empty.textContent = "No lab configuration available.";
+        grid.replaceChildren(empty);
         return;
     }
 
-    grid.innerHTML = orderedKeys.map((k) => cardMarkup(cfg[k])).join("");
+    const frag = document.createDocumentFragment();
+    orderedKeys.forEach((k) => {
+        frag.appendChild(createLabCard(cfg[k]));
+    });
+    grid.replaceChildren(frag);
 }
 
 document.addEventListener("DOMContentLoaded", () => {

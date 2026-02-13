@@ -31,9 +31,11 @@ class KinematicEngine:
         self.current_time += dt
         
         # 1. Accretion: Mass flows from reservoir to system
-        infall = accretion_rate * dt
+        available_ext = max(self.M_ext, 0.0)
+        infall = max(accretion_rate, 0.0) * dt
+        infall = min(infall, available_ext)
         self.M_core += infall  # Mass accretes onto the core
-        self.M_ext -= infall   # Reservoir is depleted
+        self.M_ext = max(0.0, self.M_ext - infall)   # Reservoir is depleted
         
         # 2. Re-energization: Accreted mass transfers energy to core spin
         # Efficiency factor lambda
@@ -81,16 +83,17 @@ if __name__ == "__main__":
     # Plotting
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
     
-    ax1.plot(range(len(engine.history['omega'])), engine.history['omega'], color='cyan', label='Core Spin (ω)')
+    ax1.plot(engine.history['t'], engine.history['omega'], color='cyan', label='Core Spin (ω)')
     ax1.set_ylabel("Rotational Frequency [rad/s]")
     ax1.set_title("Kinematic Engine Cycle: Re-energization vs. Braking")
     ax1.legend()
     
-    ax2.plot(range(len(engine.history['L'])), engine.history['L'], color='magenta', label='Spin Luminosity (Feedback)')
+    ax2.plot(engine.history['t'], engine.history['L'], color='magenta', label='Spin Luminosity (Feedback)')
     ax2.set_ylabel("Radiated Power [W]")
-    ax2.set_xlabel("Cycle Steps")
+    ax2.set_xlabel("Time [s]")
     ax2.legend()
     
     plt.tight_layout()
     plt.show()
     print("Simulation of the Kinematic Engine complete. Feedback detected.")
+
