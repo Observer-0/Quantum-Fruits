@@ -21,7 +21,7 @@ const VISUAL_DEFAULTS = {
     lattice: { badge: "Lattice Model", accent: "#a855f7", textColor: "#fff" },
     evaporation: { badge: "Evaporation Model", accent: "#fbbf24", textColor: "#000" },
     entropy: { badge: "Entropy Diagnostic", accent: "#f43f5e", textColor: "#fff" },
-    answer42: { badge: "Numerical Heuristic", accent: "#38bdf8", textColor: "#000" },
+    answer42: { badge: "Douglas Adams Meme", accent: "#38bdf8", textColor: "#000" },
     dipole: { badge: "Dipole Hypothesis", accent: "#818cf8", textColor: "#fff" }
 };
 

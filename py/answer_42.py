@@ -1,79 +1,70 @@
-
 import math
 
-def calculate_answer():
+
+def force_ratio_em_to_gravity():
     """
-    Calculates the "Deep Thoughts" answer to the Universe:
-    The ratio between Electromagnetic Force (Information/Life) and Gravity (Inertia/Geometry).
-    
-    The Formula to 42 (Zander):
-         F_em       k_e * e^2
-        ------  =  -----------  ≈  4.2 * 10^42
-         F_g        G * m_e^2
+    Compute the ratio between electric and gravitational interaction strengths
+    for two electrons:
+
+        F_em / F_g = (k_e * e^2) / (G * m_e^2)
+
+    This script presents the result as a Douglas Adams themed easter egg.
     """
+    # SI constants
+    k_e = 8.9875517923e9
+    e = 1.602176634e-19
+    G = 6.67430e-11
+    m_e = 9.10938356e-31
 
-    print("\n" + "="*60)
-    print("      THE ANSWER TO LIFE, THE UNIVERSE AND EVERYTHING")
-    print("="*60)
-    print("\n[QUESTION]: Why doesn't a thought collapse into a black hole?")
-    print("[HYPOTHESIS]: Because Information is lighter than Geometry.\n")
-
-    print("[1] Loading Fundamental Constants (SI Units)...")
-    # Fundamental Constants
-    k_e  = 8.9875517923e9      # Coulomb Constant (N·m²/C²) -> Strength of Electric Fields
-    e    = 1.602176634e-19     # Elementary Charge (C)        -> The carrier of information
-    G    = 6.67430e-11         # Gravitational Constant       -> Strength of Geometry/Curvature
-    m_e  = 9.10938356e-31      # Electron Mass (kg)           -> The carrier of reality
-
-    print(f"    - Coulomb Constant (k_e): {k_e:.2e}")
-    print(f"    - Gravitational Const (G): {G:.2e}")
-    print(f"    - Electron Mass (m_e):     {m_e:.2e}")
-    
-    print("\n[2] Calculating Forces between two fundamental particles...")
-    # The math:
-    # Ratio = (Electric Force) / (Gravitational Force)
-    # Distance cancels out because both forces scale with 1/r^2
-    
-    numerator   = k_e * (e**2)      # Strength of Information (EM)
-    denominator = G * (m_e**2)      # Strength of Geometry (Gravity)
-    
+    numerator = k_e * (e ** 2)
+    denominator = G * (m_e ** 2)
     ratio = numerator / denominator
-    log_val = math.log10(ratio)
+    return ratio, numerator, denominator, k_e, e, G, m_e
 
-    print(f"\n    F_em (Information Force) ~ {numerator:.4e}")
-    print(f"    F_g  (Geometric Force)   ~ {denominator:.4e}")
-    
-    print("-" * 60)
-    print(f"RATIO (Strength Difference): {ratio:.3e}")
-    print(f"LOG10 (Orders of Magnitude): {log_val:.4f}")
-    print("-" * 60)
-    
-    # We use int() to get the base order of magnitude (10^42 range)
-    answer = int(log_val)
-    
-    print(f"\n>>> THE ANSWER IS 10^{answer} <<<")
-    
+
+def calculate_answer():
+    print("\n" + "=" * 66)
+    print("      THE ANSWER TO LIFE, THE UNIVERSE, AND EVERYTHING")
+    print("=" * 66)
+    print("\n[MODE] Douglas Adams meme mode (with real constants).")
+    print("[NOTE] Do not panic.\n")
+
+    print("[1] Loading fundamental constants (SI)...")
+    ratio, numerator, denominator, k_e, e, G, m_e = force_ratio_em_to_gravity()
+    log_val = math.log10(ratio)
+    answer = math.floor(log_val)
+
+    print(f"    - Coulomb constant (k_e):  {k_e:.6e}")
+    print(f"    - Elementary charge (e):   {e:.6e}")
+    print(f"    - Gravitational const (G): {G:.6e}")
+    print(f"    - Electron mass (m_e):     {m_e:.6e}")
+
+    print("\n[2] Comparing force scales...")
+    print(f"    F_em ~ {numerator:.4e}")
+    print(f"    F_g  ~ {denominator:.4e}")
+    print("-" * 66)
+    print(f"RATIO F_em/F_g:                {ratio:.3e}")
+    print(f"log10(F_em/F_g):               {log_val:.6f}")
+    print("-" * 66)
+    print(f"\n>>> Deep Thought reports: 10^{answer} <<<")
+
     if answer == 42:
-        print("\n" + "="*60)
-        print("                 VERIFICATION SUCCESSFUL")
-        print("="*60)
-        print(f"\nWe confirmed that 10^{answer} is the 'Safety Margin' of reality.")
-        print("\nPHILOSOPHICAL INTERPRETATION:")
-        print("1. Electromagnetic forces (Chemistry, Biology, Neurons) are")
-        print("   42 orders of magnitude stronger than Gravity.")
-        print("2. This allows complex structures (Life) to exist against the")
-        print("   crushing pull of spacetime curvature.")
-        print("3. Without this '42', every thought would instantly collapse")
-        print("   under its own weight into a singularity.")
-        print("\nConclusion: The Universe is optimized for Information.")
-        print("\n The Formula to 42 (Zander):")
+        print("\n" + "=" * 66)
+        print("                      RESULT: 42 CONFIRMED")
+        print("=" * 66)
+        print("\nDeep Thought: 'The answer is 42.'")
+        print("Zaphod: 'Finally, a result with style.'")
+        print("Marvin: 'I suppose this was inevitable.'")
+        print("\nReminder: bring your towel.")
+        print("And yes: thanks for all the fish.")
+        print("\nFormula:")
         print("          F_em       k_e * e^2")
-        print("         ------  =  -----------  ≈  4.2 * 10^42")
+        print("         ------  =  -----------  ~  4.2 x 10^42")
         print("          F_g        G * m_e^2")
-    
     else:
-        print("\n[CRITICAL ERROR] The universe parameters are incorrect.")
-        print("Please reboot the simulation.")
+        print("\nResult differs from the expected meme exponent.")
+        print("Still: do not panic, and check constants/precision.")
+
 
 if __name__ == "__main__":
     calculate_answer()
