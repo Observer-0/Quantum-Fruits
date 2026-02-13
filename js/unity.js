@@ -62,14 +62,6 @@ const DEFAULT_SIM_MAP = {
         python: "py/answer_42.py",
         icon: "🌌"
     },
-    spectrum: {
-        id: "LAB-012",
-        title: "Particle Spectrum",
-        lab: "particle_spectrum_lab.html",
-        theory: "theory.html#quantum",
-        python: "py/particle_spectrum.py",
-        icon: "⚛️"
-    },
     dipole: {
         id: "LAB-013",
         title: "Cosmic Dipole",

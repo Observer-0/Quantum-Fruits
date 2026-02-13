@@ -83,18 +83,6 @@
     "accent": "#38bdf8",
     "textColor": "#000"
   },
-  "spectrum": {
-    "id": "LAB-012",
-    "title": "Particle Spectrum",
-    "lab": "particle_spectrum_lab.html",
-    "theory": "theory.html#quantum",
-    "python": "py/particle_spectrum.py",
-    "description": "Empirical geometric q-ratio fit for mass levels; exploratory model, not first-principles.",
-    "icon": "⚛️",
-    "badge": "Exploratory Fit",
-    "accent": "#fbbf24",
-    "textColor": "#000"
-  },
   "dipole": {
     "id": "LAB-013",
     "title": "Cosmic Dipole",

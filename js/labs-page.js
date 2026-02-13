@@ -11,7 +11,6 @@ const LAB_ORDER = [
     "evaporation",
     "entropy",
     "answer42",
-    "spectrum",
     "dipole"
 ];
 
@@ -23,7 +22,6 @@ const VISUAL_DEFAULTS = {
     evaporation: { badge: "Evaporation Model", accent: "#fbbf24", textColor: "#000" },
     entropy: { badge: "Entropy Diagnostic", accent: "#f43f5e", textColor: "#fff" },
     answer42: { badge: "Numerical Heuristic", accent: "#38bdf8", textColor: "#000" },
-    spectrum: { badge: "Exploratory Fit", accent: "#fbbf24", textColor: "#000" },
     dipole: { badge: "Dipole Hypothesis", accent: "#818cf8", textColor: "#fff" }
 };
 
