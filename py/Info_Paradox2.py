@@ -57,7 +57,8 @@ def kretschmann_scalar(M: float, r: float) -> float:
     Kretschmann scalar K for Schwarzschild:
     K = 48 G^2 M^2 / (c^4 r^6)  [1/m^4].
     """
-    return 48.0 * G**2 * M**2 / (c**4 * r**6)
+    r_safe = max(abs(r), 1e-99)
+    return 48.0 * G**2 * M**2 / (c**4 * r_safe**6)
 
 
 
@@ -66,7 +67,8 @@ def planck_curvature_radius(M: float) -> float:
     Radius r_Pl where curvature becomes Planckian:
     K * l_P^4 ~ 1  =>  r^6 = 48 G^2 M^2 l_P^4 / c^4
     """
-    num = 48.0 * G**2 * M**2 * lP**4
+    M_safe = max(abs(M), 1e-99)
+    num = 48.0 * G**2 * M_safe**2 * lP**4
     return (num / c**4) ** (1.0 / 6.0)
 
 
@@ -140,7 +142,8 @@ def evaporate_sigmaP_quantized(
     M0: float,
     nsteps: int = 2000,
     Mrem: float = MP,
-    alpha: float = 4.0
+    alpha: float = 4.0,
+    gamma: float = 1.0
 ):
     """
     σ_P-regularized evaporation with Planck remnant.
@@ -149,6 +152,7 @@ def evaporate_sigmaP_quantized(
     - Uses Hawking-like dM/dt for M >> M_P.
     - Near M ~ M_P, mass loss is smoothly suppressed by (M^2 + α M_P^2) in the denominator.
     - Temperature is capped by a grain-scale limit derived from Z_int and σ_P.
+    - gamma rescales the Hawking prefactor (hook for greybody/dof effects).
     - Page-like entropy curve: rises, then returns to a finite S_rem (information not lost).
     """
     # Baseline semiclassical timescale
@@ -165,9 +169,10 @@ def evaporate_sigmaP_quantized(
     S  = np.empty_like(t)
 
 
-    # Natural grain temperature from Z_int and σ_P
-    # T_max ~ Z_int / (σ_P k_B) = (ħ^2 / c) / (σ_P k_B)
-    T_max = Z_int / (sigmaP * kB)
+    # Planck-scale temperature cap from t_P
+    T_max = hbar / (kB * tP)
+    gamma_eff = max(gamma, 0.0)
+    K0 = gamma_eff * hbar * c**4 / (15360.0 * pi * G**2)
 
 
     M_curr = M0
@@ -187,17 +192,17 @@ def evaporate_sigmaP_quantized(
             # σ_P-smoothed Hawking mass loss:
             # dM/dt ~ - const / (M^2 + α M_P^2)
             denom = M_curr**2 + alpha * MP**2
-            dMdt  = - hbar * c**4 / (15360.0 * pi * G**2 * denom)
+            dMdt  = -K0 / denom
             M_curr = max(M_curr + dMdt * dt, Mrem)
         else:
             M_curr = Mrem
 
 
     # Effective time until remnant is reached
-    idx_rem = np.argmax(M <= (Mrem + 1e-40))
-    if idx_rem == 0 and M[0] > Mrem:
-        idx_rem = len(t) - 1
-    tau_eff = t[idx_rem] if idx_rem > 0 else t[-1]
+    mask = (M <= (Mrem + 1e-40))
+    idxs = np.where(mask)[0]
+    idx_rem = int(idxs[0]) if len(idxs) else (len(t) - 1)
+    tau_eff = t[idx_rem]
 
 
     # Heuristic Page-like radiation entropy closure (unitary scenario)
@@ -206,7 +211,7 @@ def evaporate_sigmaP_quantized(
     S_rad = np.zeros_like(t)
 
 
-    t_page = 0.5 * tau_eff  # Heuristic page-time placement
+    t_page = max(0.5 * tau_eff, 1e-99)  # Heuristic page-time placement
     for i, ti in enumerate(t):
         if ti <= t_page:
             # Rise to ~ S0/2
@@ -220,6 +225,13 @@ def evaporate_sigmaP_quantized(
 
         if ti >= tau_eff:
             S_rad[i] = Srem
+
+    cut = idx_rem + 1
+    t = t[:cut]
+    M = M[:cut]
+    TH = TH[:cut]
+    S = S[:cut]
+    S_rad = S_rad[:cut]
 
 
     return t, M, TH, S, S_rad, tau_eff, Srem
@@ -268,6 +280,13 @@ SAMPLES = [
 
 if __name__ == "__main__":
     import argparse
+    import sys
+    if hasattr(sys.stdout, "reconfigure"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8")
+            sys.stderr.reconfigure(encoding="utf-8")
+        except Exception:
+            pass
     parser = argparse.ArgumentParser(
         description="BH evaporation: semi-classical vs σ_P-quantized"
     )
@@ -275,7 +294,12 @@ if __name__ == "__main__":
         "--plot", action="store_true",
         help="Show example Page-like curves for representative black holes"
     )
+    parser.add_argument(
+        "--gamma", type=float, default=1.0,
+        help="Rescaling factor for the Hawking prefactor (greybody/dof hook)"
+    )
     args = parser.parse_args()
+    gamma_cli = max(args.gamma, 0.0)
 
 
     print("=== Zander σ_P framework ===")
@@ -284,11 +308,13 @@ if __name__ == "__main__":
     print(f"t_P   = {tP:.3e}  [s]")
     print(f"M_P   = {MP:.3e}  [kg]")
     print(f"Z_int = {Z_int:.3e}  [J²·s/m]")
+    print(f"gamma = {gamma_cli:.3g}  [Hawking prefactor rescale]")
     print()
 
 
     # Representative objects: PBH, stellar, supermassive
     reps = [SAMPLES[0], SAMPLES[4], SAMPLES[9]]
+    year = 365.25 * 24 * 3600
 
 
     for name, M0 in reps:
@@ -296,15 +322,23 @@ if __name__ == "__main__":
 
 
         t_sc, M_sc, TH_sc, S_sc, Srad_sc, tau_sc = evaporate_semiclassical(M0)
-        t_q,  M_q,  TH_q,  S_q,  Srad_q,  tau_q, Srem = evaporate_sigmaP_quantized(M0)
+        t_q,  M_q,  TH_q,  S_q,  Srad_q,  tau_q, Srem = evaporate_sigmaP_quantized(
+            M0, gamma=gamma_cli
+        )
 
 
         print(f"[{name}]  M0 = {M0:.3e} kg")
         print(f"  r_s      = {rs:.3e} m")
         print(f"  r_Pl     = {r_pl:.3e} m  (K l_P^4 ~ 1)")
         print(f"  r_Pl/r_s = {ratio:.3e}")
-        print(f"  Semi-classical: tau = {tau_sc:.3e} s,  T_H(M0) = {hawking_temperature(M0):.3e} K")
-        print(f"  σ_P-quantized:  tau_eff = {tau_q:.3e} s,  S_rem / k_B ≈ {Srem/kB:.3e}")
+        print(
+            f"  Semi-classical: tau = {tau_sc:.3e} s ({tau_sc/year:.3e} years),"
+            f"  T_H(M0) = {hawking_temperature(M0):.3e} K"
+        )
+        print(
+            f"  σ_P-quantized:  tau_eff = {tau_q:.3e} s ({tau_q/year:.3e} years),"
+            f"  S_rem / k_B ≈ {Srem/kB:.3e}"
+        )
         print()
 
 
@@ -317,7 +351,9 @@ if __name__ == "__main__":
 
         for ax, (name, M0) in zip(axes, reps):
             t_sc, _, _, _, Srad_sc, tau_sc = evaporate_semiclassical(M0)
-            t_q,  _, _, _, Srad_q,  tau_q, Srem = evaporate_sigmaP_quantized(M0)
+            t_q,  _, _, _, Srad_q,  tau_q, Srem = evaporate_sigmaP_quantized(
+                M0, gamma=gamma_cli
+            )
 
 
             # Normalized radiation entropy over time
@@ -328,7 +364,7 @@ if __name__ == "__main__":
 
             ax.plot(t_q / max(t_q[-1], 1e-99),
                     Srad_q / max(np.max(Srad_q), 1e-99),
-                    label='σ_P-quantized')
+                    label=f'σ_P-quantized (γ={gamma_cli:g})')
 
 
             ax.set_title(f"{name} BH")
