@@ -13,6 +13,14 @@ const autoCycleBtn = document.getElementById('autoCycleBtn');
 canvas.width = 700;
 canvas.height = 700;
 
+/*
+Assumption labels (see docs/Assumption_Register.md):
+- Axiom: fundamental constants and sigmaP definition.
+- Derived: iMax-based scaling and algebraic monitor channels.
+- Heuristic: cycle profile, return-profile shaping, and visual closures.
+- Prediction: relative trend differences between naive and unitary channels.
+*/
+
 // Fundamental Constants for Physics Engine
 const PHYSICS = {
     hbar: 1.054571817e-34,
@@ -189,7 +197,7 @@ function updateStats() {
     const spin = parseFloat(spinSlider.value);
     const burden = parseFloat(massSlider.value);
 
-    // 1. Action Potential (Planck Force based)
+    // 1. Action Potential (Derived monitor: Planck-force scaling)
     const net = PHYSICS.iMax * (spin / 100) * (1 - (burden / 150));
     netPotentialVal.innerText = net.toExponential(2);
 
@@ -199,7 +207,7 @@ function updateStats() {
     const r_pl = 50; // Reference Planckian curvature scale for visual demo
     const diagRatio = r_pl / r_s;
 
-    // 3. Non-Thermality Coefficient (c0)
+    // 3. Non-Thermality Coefficient (Heuristic closure in this lab layer)
     const epsilon = (101 - spin) / 1000;
     const s_slope = burden / 100;
     const c0 = (Math.PI ** 2 / 6) * (epsilon ** 2) + 0.5 * (s_slope ** 2) * (epsilon ** 2);
@@ -229,11 +237,11 @@ function updateStats() {
         statusText.style.color = '#a855f7';
     }
 
-    // Update Return Profile logic (Unitary vs Naive)
-    // S_naive grows with burden (Impedance blockage)
+    // Update return-profile logic (Heuristic visualization closure)
+    // S_naive grows with burden (Impedance blockage proxy)
     const sNaive = (burden / 100) * (1 + time * 0.001);
 
-    // S_unitary (Zander Return): Follows (1-exp(-7x))*exp(-4x) shape
+    // S_unitary (Zander return proxy): shaped as (1-exp(-7x))*exp(-4x)
     const progress = (burden / 100);
     const sUnitary = (1 - Math.exp(-7 * progress)) * Math.exp(-4 * progress) * 2.8;
 
@@ -256,15 +264,16 @@ function handleAutoCycle() {
     cycleProgress += 0.002; // Control speed of cycle
     if (cycleProgress >= 1.0) cycleProgress = 0;
 
+    // Heuristic cycle segmentation:
     // Phase 1: Spin-up (Low burden, high internal action)
     // Phase 2: Peak (Burden ~ 50, maximum interaction)
     // Phase 3: Decline (High burden, braking dominates)
 
-    // Model M_ext growth
+    // Heuristic M_ext growth proxy
     const burden = cycleProgress * 100;
     massSlider.value = burden;
 
-    // Model Spin(t) ~ f(M_ext)
+    // Heuristic Spin(t) profile linked to burden
     // Initially high, maybe peaks slightly as it compacts, then falls due to braking force
     const spin = 100 * Math.exp(-cycleProgress * 2) * (1 + Math.sin(cycleProgress * Math.PI) * 0.5);
     spinSlider.value = Math.max(5, spin);

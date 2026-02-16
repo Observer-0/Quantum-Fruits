@@ -22,6 +22,8 @@ Use these labels consistently in docs, code comments, and papers.
 | `AS-006` | `Heuristic` | Fixed remnant closure (`Mrem≈M_P`, fixed `alpha`, prescribed Page-profile) | Current sigma_P BH evaporation prototypes | `py/sigmaP_bh_sim.py`, `py/Info_Paradox2.py`, `py/physics_engine.py` |
 | `AS-007` | `Prediction` | Phase-sampled Hubble split near `67/73 km/s/Mpc` | Compare against CMB vs late-distance ladders | `docs/Hubble_Tension_README.md`, `py/Unified_Hubble_Tension.py` |
 | `AS-008` | `Prediction` | Lambda-scale consistency `Λ~1/(cRt)` around `~10^-53 1/m²` at present window | Numeric self-check for internal coherence | `py/sigma_p_consistency.py` |
+| `AS-009` | `Heuristic` | Motor return profile `s_unitary=(1-exp(-7x))*exp(-4x)*2.8` and companion `s_naive` channel | Exploratory closure in web lab and toy simulation | `js/kinematic-motor.js`, `py/kinematic_motor_sim.py` |
+| `AS-010` | `Prediction` | For increasing burden, unitary channel exhibits rise-then-fall while naive channel remains monotonic | Qualitative trend test in motor dashboard/profile plots | `html/motor.html`, `js/kinematic-motor.js`, `py/kinematic_motor_sim.py` |
 
 ## Update Rule
 

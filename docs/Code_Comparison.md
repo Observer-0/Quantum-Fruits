@@ -7,6 +7,17 @@ This document compares the two implementations of the two-phase cosmology model:
 1. **`Hubble_Tension.py`** (Git) — The **Gedankenexperiment** (Thought Experiment)
 2. **`Unified_Hubble_Tension.py`** (New) — The **Mathematical Foundation**
 
+### Assumption Labels
+
+This comparison uses the shared labels from `Assumption_Register.md`:
+
+| Label | Meaning |
+|-------|---------|
+| `Axiom` | Baseline postulate/definition |
+| `Heuristic` | Exploratory closure/ansatz |
+| `Derived` | Algebraic/dimensional consequence |
+| `Prediction` | Falsifiable model output |
+
 ---
 
 ## Side-by-Side Comparison
@@ -177,7 +188,7 @@ def compute_entropy(self, a):
 
 **Key Features:**
 - Derived from σ_P framework
-- S = V/σ_P³ (tick count)
+- Effective proxy in toy-model layer: S_eff = a³/ℓ_P³
 - Automatically consistent with expansion
 - Connects to Bekenstein-Hawking entropy
 
@@ -189,7 +200,7 @@ def compute_entropy(self, a):
 ```python
 # Not explicitly included
 # Regularization via:
-self.const.sigma_P = 1.616e-35  # Planck length (stored but not used)
+self.const.sigma_P = 8.713e-79  # Planck spacetime cell ħG/c^4 (stored but not used)
 ```
 
 **Key Features:**
@@ -269,7 +280,7 @@ self.solution = solve_ivp(
 | **Temperature ratio** | Thermal coupling: dT/dt = -ηHT + γ(T_c-T) |
 | **Expansion/Deflation** | Sign of H determined by w(T) |
 | **Hawking rethermalization** | Relaxation term: γ(T_c - T) |
-| **Entropy oscillation** | S = a³/ℓ_P³, dS/dt = 3a²H/ℓ_P³ |
+| **Entropy oscillation** | S_eff = a³/ℓ_P³, dS/dt = 3a²H/ℓ_P³ |
 | **PC cooling analogy** | Thermodynamic phase transition |
 
 ---

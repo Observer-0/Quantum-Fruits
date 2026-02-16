@@ -9,6 +9,12 @@ import matplotlib.pyplot as plt
 # - The Stator: Pure Action Core (hbar spin)
 # - The Rotor: Mass Burden (Gravitational Braking)
 # - The Goal: Unitary Information Return (The Page Curve)
+#
+# Assumption labels (see docs/Assumption_Register.md):
+# - Axiom: fundamental constants and sigma_P definition
+# - Derived: iMax scaling channel
+# - Heuristic: return-profile shaping and non-thermality closure terms
+# - Prediction: relative trend split between naive and unitary channels
 # =============================================================================
 
 # Fundamental Constants
@@ -36,18 +42,18 @@ def simulate_kinematic_motor(spin_rate=80, burden_range=(0, 1.5), steps=200):
     """
     burdens = np.linspace(burden_range[0], burden_range[1], steps)
     
-    # 1. Action Potential (Net Potential)
+    # 1. Action Potential (Derived monitor: Planck-force scaling)
     # The pure stator potential is reduced as 'mechanical' mass load increases
     # Net = iMax * (SpinFactor) * (1 - BrakingFactor)
     net_potentials = iMax * (spin_rate / 100.0) * (1.0 - (burdens / 2.0))
     
-    # 2. Entropy Evolution (The Page Curve)
+    # 2. Entropy Evolution (Heuristic closure for exploratory plotting)
     # Naive: Hawking's monotonically rising entropy (Information Paradox)
-    # Unitary: The Zander-Page curve showing information return
+    # Unitary: Zander-Page proxy showing return-like behavior
     s_naive = burdens * 1.5
     s_unitary = (1 - np.exp(-7 * burdens)) * np.exp(-4 * burdens) * 2.8
     
-    # 3. Non-Thermality (c0)
+    # 3. Non-Thermality (Heuristic closure term c0)
     # Measures the departure from purely random 'heat' (thermal noise)
     # Higher c0 means more ordered information in the radiation
     epsilon = (101 - spin_rate) / 1000.0
@@ -105,7 +111,7 @@ if __name__ == "__main__":
     print("-" * 50)
     print("PHYSICS SUMMARY:")
     print(f"Planck Force Capability (iMax): {iMax:.4e} N")
-    print(f"Spacetime Quantization (sigma_P): {sigmaP:.4e} s/kg")
+    print(f"Spacetime Quantization (sigma_P): {sigmaP:.4e} m*s")
     print("-" * 50)
     print("ANALYSIS:")
     print("The 'Motor' operates in the Unitary regime.")

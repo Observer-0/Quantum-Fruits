@@ -152,6 +152,9 @@ def evaporate_sigmaP_quantized(
     - Page-like entropy curve: rises, then returns to a finite S_rem (information not lost).
     """
     # Baseline semiclassical timescale
+    # Assumption labels (see docs/Assumption_Register.md):
+    # - Axiom: sigmaP, lP, tP from ħ, G, c.
+    # - Heuristic closure: default Mrem=MP, smoothing alpha, and Page-profile below.
     tau0 = lifetime_semiclassical(M0)
     t = np.linspace(0.0, tau0, nsteps)
     dt = t[1] - t[0]
@@ -197,13 +200,13 @@ def evaporate_sigmaP_quantized(
     tau_eff = t[idx_rem] if idx_rem > 0 else t[-1]
 
 
-    # Page-like radiation entropy (unitary scenario)
+    # Heuristic Page-like radiation entropy closure (unitary scenario)
     S0   = bh_entropy(M0)
     Srem = bh_entropy(Mrem)
     S_rad = np.zeros_like(t)
 
 
-    t_page = 0.5 * tau_eff
+    t_page = 0.5 * tau_eff  # Heuristic page-time placement
     for i, ti in enumerate(t):
         if ti <= t_page:
             # Rise to ~ S0/2
