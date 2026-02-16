@@ -11,9 +11,10 @@ from py import sigma_p_consistency as core
 
 
 class SigmaPConsistencyTests(unittest.TestCase):
-    def assert_relative_close(self, a, b, rel_tol=1e-12):
-        scale = max(abs(a), abs(b), 1.0)
-        self.assertLessEqual(abs(a - b), rel_tol * scale)
+    def assert_relative_close(self, a, b, rel_tol=1e-12, abs_tol=0.0):
+        scale = max(abs(a), abs(b))
+        threshold = max(abs_tol, rel_tol * scale)
+        self.assertLessEqual(abs(a - b), threshold)
 
     def test_sigma_p_magnitude(self):
         sigma_p = core.sigma_p()
@@ -43,6 +44,12 @@ class SigmaPConsistencyTests(unittest.TestCase):
         checks = core.run_consistency_checks(radius, age)
         self.assertTrue(all(checks.values()), msg=f"Failed checks: {checks}")
 
+    def test_relative_check_preserves_tiny_scale_sensitivity(self):
+        a = 1.0e-53
+        b = a * (1.0 + 1.0e-9)
+        with self.assertRaises(AssertionError):
+            self.assert_relative_close(a, b, rel_tol=1e-12)
+
     def test_invalid_window_raises(self):
         with self.assertRaises(ValueError):
             core.n_sigma(0.0, 1.0)
@@ -52,4 +59,3 @@ class SigmaPConsistencyTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

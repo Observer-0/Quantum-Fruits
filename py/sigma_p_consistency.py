@@ -92,13 +92,18 @@ def consistency_snapshot(
 
 
 def run_consistency_checks(
-    radius_m: float, time_s: float, rel_tol: float = 1e-12, constants: FundamentalConstants = DEFAULT_CONSTANTS
+    radius_m: float,
+    time_s: float,
+    rel_tol: float = 1e-12,
+    abs_tol: float = 0.0,
+    constants: FundamentalConstants = DEFAULT_CONSTANTS,
 ) -> dict[str, bool]:
     snap = consistency_snapshot(radius_m, time_s, constants)
 
     def rel_close(a: float, b: float) -> bool:
-        scale = max(abs(a), abs(b), 1.0)
-        return abs(a - b) <= rel_tol * scale
+        scale = max(abs(a), abs(b))
+        threshold = max(abs_tol, rel_tol * scale)
+        return abs(a - b) <= threshold
 
     checks = {
         "sigma_p_equals_lP2_over_c": rel_close(
@@ -140,4 +145,3 @@ if __name__ == "__main__":
     for name, ok in checks.items():
         status = "OK" if ok else "FAIL"
         print(f"[{status}] {name}")
-

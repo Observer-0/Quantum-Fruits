@@ -12,6 +12,8 @@ The **Hubble Tension** — the discrepancy between early-universe (CMB: ~67 km/s
 
 **Key Insight:** The tension is not a measurement error, but a fundamental feature of a self-regulating, cyclic universe.
 
+**Assumption hygiene:** See `Assumption_Register.md` for `Axiom` vs `Heuristic` vs `Derived` vs `Prediction`.
+
 ---
 
 ## 💡 The Gedankenexperiment (Thought Experiment)
@@ -133,6 +135,9 @@ dH/dt = -(1 + w(T)) ρ₀/a² + f_Planck - μH
 
 Temperature evolves through three competing effects:
 
+> **Model status:** The re-heating term is currently a **heuristic working assumption**
+> for exploratory dynamics, not a finalized first-principles derivation.
+
 ```
 dT/dt = -ηHT + γ(T_c - T) + 0.05·exp(-a)
         └─┬─┘   └────┬────┘   └─────┬─────┘
@@ -146,7 +151,7 @@ dT/dt = -ηHT + γ(T_c - T) + 0.05·exp(-a)
 - **Hawking re-heating:** 0.05·exp(-a) — Black hole evaporation provides heat source
   - **Early universe (small a):** Strong rethermalization (exp(-a) ≈ 1)
   - **Late universe (large a):** Weak Hawking radiation (exp(-a) → 0)
-  - **Physical motivation:** T_Hawking ∝ ℏc³/(8πGMk_B) ∝ 1/M ∝ 1/a³
+  - **Physical motivation (qualitative):** T_Hawking ∝ ℏc³/(8πGMk_B) ∝ 1/M ∝ 1/a³
 
 This term prevents the universe from cooling to absolute zero and maintains cyclic behavior.
 
@@ -163,11 +168,13 @@ da/dt = aH
 In the σ_P framework, entropy counts spacetime "ticks":
 
 ```
-S = V/σ_P³ = a³/ℓ_P³
+S_eff = a³/ℓ_P³
 ```
 
+`S_eff` is used here as an effective counting proxy in the current toy-model layer.
+
 **Physical meaning:**
-- Each Planck volume σ_P³ = ℓ_P³ is one fundamental "tick" of spacetime
+- Each Planck volume ℓ_P³ is treated as one fundamental "tick" of spacetime
 - Entropy S is the total number of ticks in the observable universe
 - Phase transitions occur at critical entropy density
 
@@ -272,7 +279,7 @@ The 6 km/s/Mpc "tension" is the **natural amplitude of phase-dependent oscillati
 The universe is a **single σ_P quantum** — a fundamental unit of spacetime with:
 
 ```
-σ_P = ℓ_P² = (ℏG/c³)^(2/3)
+σ_P = ℓ_P t_P = ℏG/c^4
 ```
 
 ### Entropy as Tick Count

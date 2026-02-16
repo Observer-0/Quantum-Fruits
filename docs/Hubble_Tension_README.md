@@ -12,6 +12,8 @@ This project resolves the **Hubble Tension** — the ~6 km/s/Mpc discrepancy bet
 
 **Key Insight:** Different measurement methods sample the universe at different thermodynamic phases, yielding systematically different values. The "tension" is not an error, but a fundamental feature.
 
+**Assumption hygiene:** See `Assumption_Register.md` for `Axiom` vs `Heuristic` vs `Derived` vs `Prediction`.
+
 ### ⚠️ Important: Understanding the Analogy
 
 The **PC cooling analogy** is a **pedagogical tool** to build intuition about phase transitions in cosmology. It works because:
@@ -59,7 +61,7 @@ Similarly, the PC cooling analogy captures the **essence of phase transitions** 
 **Approach:**
 - Continuous phase transition: `w(T) = tanh[α(T - Tc)]`
 - Modified Friedmann equation with Planck-scale repulsion
-- Thermal coupling with Hawking re-heating
+- Thermal coupling with a Hawking-like re-heating term (heuristic)
 
 **Best for:**
 - Publications
@@ -93,6 +95,8 @@ dT/dt = -ηHT + γ(Tc - T) + 0.05·exp(-a)
 - Adiabatic cooling (expansion)
 - Relaxation to critical temperature
 - **Hawking re-heating** (decreases with scale factor)
+
+> **Model status:** The re-heating term is currently a heuristic closure for exploration.
 
 ### Entropy as σ_P Tick Count
 ```
@@ -321,12 +325,12 @@ The thermal dynamics includes a **scale-factor-dependent re-heating term**:
 heating = 0.05 * np.exp(-a)
 ```
 
-**Physical motivation:**
+**Physical motivation (qualitative):**
 - Hawking temperature: T_H ∝ ℏc³/(8πGMk_B) ∝ 1/M ∝ 1/a³
 - Early universe (small a): Strong rethermalization
 - Late universe (large a): Weak Hawking radiation
 
-This prevents the universe from cooling to absolute zero and maintains cyclic behavior.
+This prevents the universe from cooling to absolute zero and maintains cyclic behavior in the current exploratory model.
 
 ---
 

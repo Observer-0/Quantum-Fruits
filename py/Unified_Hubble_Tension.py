@@ -40,8 +40,8 @@ MATHEMATICAL FOUNDATION:
     3. THERMAL COUPLING:
        dT/dt = -ηHT + γ(T_c - T)
        
-    4. ENTROPY AS σ_P TICK COUNT:
-       S = V/σ_P³ = a³/ℓ_P³
+    4. ENTROPY AS σ_P TICK COUNT (effective proxy):
+       S_eff = a³/ℓ_P³
        dS/dt = 3a²H/ℓ_P³
 
 Author: Adrian Zander (Quantum Fruits)
@@ -183,8 +183,9 @@ class UnifiedCosmology:
         # Three competing effects:
         # - Adiabatic cooling: -ηHT (expansion cools the universe)
         # - Relaxation to T_c: γ(T_c - T) (thermal equilibration)
-        # - Hawking re-heating: gentle term that decreases with expansion
-        #   Physical motivation: T_Hawking ∝ 1/M ∝ 1/a³
+        # - Hawking-like re-heating: gentle term that decreases with expansion
+        #   Physical motivation (qualitative): T_Hawking ∝ 1/M ∝ 1/a³
+        #   Current status: heuristic closure term for exploratory dynamics.
         #   Early universe (small a): Strong rethermalization
         #   Late universe (large a): Weak Hawking radiation
         heating = 0.05 * np.exp(-a)  # Sanft abnehmender Heizterm
@@ -199,8 +200,8 @@ class UnifiedCosmology:
     
     def compute_entropy(self, a: np.ndarray) -> np.ndarray:
         """
-        Entropy as σ_P tick count.
-        S = a³/ℓ_P³
+        Entropy as σ_P tick-count proxy.
+        S_eff = a³/ℓ_P³
         Tick Density rho_ticks = S / V = 1/ℓ_P³
         """
         return (a**3) / (self.const.l_P**3)
