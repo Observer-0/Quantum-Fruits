@@ -186,6 +186,54 @@
                     </article>
                 </div>
 
+                <article class="panel scan-panel">
+                    <div class="scan-head">
+                        <h3>Alpha/Gamma Scan Heatmap</h3>
+                        <div class="scan-controls">
+                            <label for="scanMetric">Metric
+                                <select id="scanMetric">
+                                    <option value="tau_years">tau_eff [years]</option>
+                                    <option value="srem_kb">S_rem / kB</option>
+                                </select>
+                            </label>
+                            <label for="scanGrid">Grid
+                                <select id="scanGrid">
+                                    <option value="12">12x12</option>
+                                    <option value="16" selected>16x16</option>
+                                    <option value="20">20x20</option>
+                                    <option value="24">24x24</option>
+                                </select>
+                            </label>
+                            <button class="btn btn-secondary scan-run" id="scanRunButton" type="button">Run Scan</button>
+                        </div>
+                    </div>
+
+                    <div class="scan-range-grid">
+                        <label for="scanAlphaMin">alpha min
+                            <input id="scanAlphaMin" type="number" value="0.1" min="0" max="20" step="0.1">
+                        </label>
+                        <label for="scanAlphaMax">alpha max
+                            <input id="scanAlphaMax" type="number" value="10.0" min="0" max="20" step="0.1">
+                        </label>
+                        <label for="scanGammaMin">gamma min
+                            <input id="scanGammaMin" type="number" value="0.0" min="0" max="10" step="0.05">
+                        </label>
+                        <label for="scanGammaMax">gamma max
+                            <input id="scanGammaMax" type="number" value="5.0" min="0" max="10" step="0.05">
+                        </label>
+                    </div>
+
+                    <div class="scan-legend">
+                        <span id="scanLegendMin">min: -</span>
+                        <span id="scanLegendMax">max: -</span>
+                    </div>
+
+                    <div class="scan-canvas-wrap">
+                        <canvas id="scanCanvas"></canvas>
+                    </div>
+                    <p class="scan-readout" id="scanReadout">Heatmap not computed yet.</p>
+                </article>
+
                 <div class="notes-grid">
                     <article class="note note-cyan">
                         <h4>Interpretation</h4>
