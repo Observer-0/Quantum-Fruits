@@ -12,7 +12,7 @@ const { hbar, G, c, kB, pi } = CONSTS;
 export const SIGMA_P = (hbar * G) / (c ** 4); // The Grain [m s]
 export const lP = Math.sqrt(SIGMA_P * c);     // Planck Length [m]
 export const tP = Math.sqrt(SIGMA_P / c);     // Planck Time [s]
-export const MP = Math.sqrt((hbar * c) / G);  // Planck Mass [kg]
+export const mP = Math.sqrt((hbar * c) / G);  // Planck Mass [kg]
 
 // --- Core Helper Functions ---
 
@@ -31,8 +31,8 @@ export function schwarzschildRadius(M) {
 export function bekensteinHawkingEntropy(M) {
   const rs = schwarzschildRadius(M);
   const A = 4 * pi * (rs ** 2);
-  // Note: lP^2 = sigmaP * c
-  return (kB * A) / (4 * SIGMA_P * c);
+  const lP2 = SIGMA_P * c;
+  return (kB * A) / (4 * lP2);
 }
 
 /**
@@ -44,12 +44,12 @@ export function hawkingTemperature(M) {
 }
 
 /**
- * Zander Functional Θ_Z(M)
+ * Zander Functional Theta_Z(M)
  * The inverse temperature / geometric beat of the horizon.
- * Θ_Z = 1 / T_H
+ * Theta_Z = 1 / T_H
  */
 export function zanderFunctional(M) {
-  // Returns inverse Temperature [1/K]
+  // Theta_Z has units 1/K.
   return (8 * pi * G * M * kB) / (hbar * (c ** 3));
 }
 
@@ -76,18 +76,18 @@ export function planckRemnantEntropy() {
 
 /**
  * Zander-Regularized Evaporation Rate
- * Prevents singularity at M -> 0.
- * Smoothly transitions to zero emission as M approaches M_remnant.
+ * Heuristic UV cutoff for a remnant closure:
+ * smoothly transitions emission to zero as M approaches mP.
  */
 export function regularizedEvaporationRate(M) {
-  if (M <= MP) return 0;
+  if (M <= mP) return 0;
 
   // Semiclassical rate
   const rate = evaporationRate(M);
 
-  // Regulation factor: 1 - (MP/M)^4
-  // This ensures dM/dt -> 0 as M -> MP
-  const suppression = 1 - Math.pow(MP / M, 4);
+  // Regulation factor: 1 - (mP/M)^4
+  // This ensures dM/dt -> 0 as M -> mP
+  const suppression = 1 - Math.pow(mP / M, 4);
 
   return rate * Math.max(0, suppression);
 }
@@ -95,6 +95,11 @@ export function regularizedEvaporationRate(M) {
 // --- Simulation Engine ---
 
 export function simulatePageCurve(M0, steps = 200) {
+  if (!Number.isFinite(M0) || M0 <= 0) {
+    throw new Error("M0 must be a positive finite number (kg).");
+  }
+  steps = Math.max(10, Math.floor(steps));
+
   const timePoints = [];
   const massPoints = [];
   const sbhPoints = [];
@@ -102,7 +107,7 @@ export function simulatePageCurve(M0, steps = 200) {
 
   // Time estimate: tau ~ M^3
   const tau = (5120 * pi * (G ** 2) * (M0 ** 3)) / (hbar * (c ** 4));
-  const dt = tau / steps;
+  const dt0 = Math.max(tau / steps, 1e-30);
 
   // RK4 helper for scalar ODEs
   function rk4_step(f, y, dt) {
@@ -117,9 +122,6 @@ export function simulatePageCurve(M0, steps = 200) {
   let M = M0;
   let S_rad_accum = 0;
 
-  // Initial Entropy
-  const S0 = bekensteinHawkingEntropy(M0);
-
   for (let i = 0; i <= steps * 1.5; i++) {
     timePoints.push(t);
     massPoints.push(M);
@@ -129,21 +131,24 @@ export function simulatePageCurve(M0, steps = 200) {
     sbhPoints.push(S_BH);
 
     // Remnant check
-    if (M <= MP * 1.01) {
-      M = MP; // Stabilize in Remnant state
+    if (M <= mP * 1.01) {
+      M = mP; // Stabilize in Remnant state
 
       // Radiation entropy stops growing (energy emission stops)
       sradPoints.push(S_rad_accum);
     } else {
+      // Adaptive-dt light: smaller dt as mass shrinks.
+      const dt = Math.max(1e-30, dt0 * Math.pow(M / M0, 2));
+
       // Evolve using RK4 for better stability
       const M_prev = M;
       M = rk4_step(regularizedEvaporationRate, M, dt);
       // ensure monotonic non-negative mass and remnant
-      if (M <= MP) M = MP;
+      if (M <= mP) M = mP;
       const dM_actual = M - M_prev;
       const dE = -dM_actual * (c ** 2);
-      const T = hawkingTemperature(M_prev);
-      const dS = (T > 0) ? (dE / T) : 0;
+      const T = Math.max(1e-300, hawkingTemperature(M_prev));
+      const dS = dE / T;
       S_rad_accum += dS;
       sradPoints.push(S_rad_accum);
       t += dt;
@@ -162,7 +167,7 @@ export function simulatePageCurve(M0, steps = 200) {
   };
 }
 
-// --- Galactic Dynamics (The Dark Matter Illusion) ---
+// --- Galactic Dynamics (Toy Cosmology / Exploratory, not validated) ---
 
 /**
  * Cosmic Acceleration Scale (g_dagger / a_0)

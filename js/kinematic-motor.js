@@ -10,13 +10,25 @@ const statusText = document.getElementById('statusText');
 const pageCurvePlot = document.getElementById('pageCurvePlot');
 const autoCycleBtn = document.getElementById('autoCycleBtn');
 
-canvas.width = 700;
-canvas.height = 700;
+let canvasCssWidth = 700;
+let canvasCssHeight = 700;
+
+function resizeCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvasCssWidth = Math.max(1, rect.width || 700);
+    canvasCssHeight = Math.max(1, rect.height || canvasCssWidth);
+    canvas.width = Math.max(1, Math.floor(canvasCssWidth * dpr));
+    canvas.height = Math.max(1, Math.floor(canvasCssHeight * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
 /*
 Assumption labels (see docs/Assumption_Register.md):
 - Axiom: fundamental constants and sigmaP definition.
-- Derived: iMax-based scaling and algebraic monitor channels.
+- Derived: planck-force scaling and algebraic monitor channels.
 - Heuristic: cycle profile, return-profile shaping, and visual closures.
 - Prediction: relative trend differences between naive and unitary channels.
 */
@@ -29,18 +41,19 @@ const PHYSICS = {
     kB: 1.380649e-23,
     sigmaP: (1.054571817e-34 * 6.67430e-11) / Math.pow(2.99792458e8, 4),
     MP: Math.sqrt((1.054571817e-34 * 2.99792458e8) / 6.67430e-11),
-    iMax: Math.pow(2.99792458e8, 4) / 6.67430e-11
+    planckForce: Math.pow(2.99792458e8, 4) / 6.67430e-11
 };
 PHYSICS.lP = Math.sqrt(PHYSICS.sigmaP * PHYSICS.c);
 PHYSICS.tP = Math.sqrt(PHYSICS.sigmaP / PHYSICS.c);
 PHYSICS.Ksigma = 1.0 / PHYSICS.sigmaP;
-PHYSICS.planckForce = PHYSICS.iMax;
 
 let time = 0;
 let mergerPulse = 0;
 let entropyPoints = [];
 let naiveEntropyPoints = []; // Hawking data
 const maxEntropyPoints = 120;
+const barsUnitary = [];
+const barsNaive = [];
 let creationsSparks = [];
 let isAutoCycle = false;
 let cycleProgress = 0; // 0 to 1
@@ -50,6 +63,46 @@ for (let i = 0; i < maxEntropyPoints; i++) {
     entropyPoints.push(0);
     naiveEntropyPoints.push(0);
 }
+
+function initPageCurve() {
+    pageCurvePlot.innerHTML = '';
+    barsUnitary.length = 0;
+    barsNaive.length = 0;
+
+    for (let i = 0; i < maxEntropyPoints; i++) {
+        const barContainer = document.createElement('div');
+        barContainer.style.flex = '1';
+        barContainer.style.height = '100%';
+        barContainer.style.display = 'flex';
+        barContainer.style.flexDirection = 'column';
+        barContainer.style.justifyContent = 'flex-end';
+        barContainer.style.position = 'relative';
+
+        const barN = document.createElement('div');
+        barN.style.width = '100%';
+        barN.style.height = '0%';
+        barN.style.background = 'rgba(239, 68, 68, 0.3)';
+        barN.style.position = 'absolute';
+        barN.style.bottom = '0';
+        barN.style.zIndex = '1';
+
+        const barU = document.createElement('div');
+        barU.style.width = '100%';
+        barU.style.height = '0%';
+        barU.style.background = 'linear-gradient(to top, #38bdf8, #818cf8)';
+        barU.style.opacity = i / maxEntropyPoints;
+        barU.style.zIndex = '2';
+
+        barContainer.appendChild(barN);
+        barContainer.appendChild(barU);
+        pageCurvePlot.appendChild(barContainer);
+
+        barsNaive.push(barN);
+        barsUnitary.push(barU);
+    }
+}
+
+initPageCurve();
 function drawGrid(x, y, burden) {
     const spacing = 30;
     ctx.strokeStyle = '#1e293b';
@@ -120,7 +173,7 @@ function drawCore(x, y, radius, spin, burden) {
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    // The Action Glow (ℏ Window)
+    // The Action Glow (hbar window)
     const grade = ctx.createRadialGradient(x, y, radius * 0.8, x, y, radius * pulse * 1.2);
     grade.addColorStop(0, 'rgba(0,0,0,0)');
     grade.addColorStop(0.5, coreColor);
@@ -131,7 +184,7 @@ function drawCore(x, y, radius, spin, burden) {
     ctx.arc(x, y, radius * 1.5, 0, Math.PI * 2);
     ctx.fill();
 
-    // Magnetic Ticks (σ_P resolution lines)
+    // Magnetic ticks (sigma_P resolution lines)
     if (spin > 20) {
         ctx.strokeStyle = coreColor;
         ctx.lineWidth = 2;
@@ -197,12 +250,9 @@ function drawSparks(x, y, radius, intensity) {
     ctx.globalAlpha = 1.0;
 }
 
-function updateStats() {
-    const spin = parseFloat(spinSlider.value);
-    const burden = parseFloat(massSlider.value);
-
+function updateStats(spin, burden) {
     // 1. Coupling-utilization index (Derived):
-    // i = F_eff / F_P, with F_eff = E_core / r_eff and E_core ≈ hbar * omega
+    // i = F_eff / F_P, with F_eff = E_core / r_eff and E_core ~= hbar * omega
     // => i = (hbar * omega / r_eff) / (c^4/G) = (sigmaP * omega) / r_eff
     const spinFrac = spin / 100;
     const burdenFrac = burden / 100;
@@ -227,19 +277,19 @@ function updateStats() {
     const c0Bar = document.getElementById('c0Bar');
     if (c0Bar) c0Bar.style.width = nonThermality + "%";
 
-    // 4. Spin Luminosity L_spin ∝ ħ * |dω/dt|
+    // 4. Spin Luminosity L_spin (heuristic monitor proxy)
     const m_total = burden / 100;
     const omegaSpin = spin / 100;
     const lSpinValue = (m_total * m_total) * omegaSpin * 2.0;
     document.getElementById('val-lspin').innerText = lSpinValue.toFixed(4);
 
-    tickDensityVal.innerText = burden > 70 ? "σ_P Saturated" : (diagRatio > 1.5 ? "Pure Action Core" : "Mass Loaded");
+    tickDensityVal.innerText = burden > 70 ? "sigma_P Saturated" : (diagRatio > 1.5 ? "Pure Action Core" : "Mass Loaded");
     tickDensityVal.style.color = diagRatio > 1.5 ? "#38bdf8" : "#f43f5e";
 
 
 
     if (burden < 20) {
-        statusText.innerText = 'Phase: Pure Action (ℏ-Stator)';
+        statusText.innerText = 'Phase: Pure Action (hbar-Stator)';
         statusText.style.color = '#38bdf8';
     } else if (burden > 80) {
         statusText.innerText = 'Phase: Gravitational Braking (Mass Rotor)';
@@ -250,8 +300,8 @@ function updateStats() {
     }
 
     // Update return-profile logic (Heuristic visualization closure)
-    // S_naive grows with burden (Impedance blockage proxy)
-    const sNaive = (burden / 100) * (1 + time * 0.001);
+    // S_naive saturates with time (Impedance blockage proxy)
+    const sNaive = (burden / 100) * (1 - Math.exp(-time * 0.002));
 
     // S_unitary (Zander return proxy): shaped as (1-exp(-7x))*exp(-4x)
     const progress = (burden / 100);
@@ -303,37 +353,14 @@ function handleAutoCycle() {
 }
 
 function renderPageCurve() {
-    pageCurvePlot.innerHTML = '';
-    entropyPoints.forEach((val, i) => {
-        const barContainer = document.createElement('div');
-        barContainer.style.flex = "1";
-        barContainer.style.height = "100%";
-        barContainer.style.display = "flex";
-        barContainer.style.flexDirection = "column";
-        barContainer.style.justifyContent = "flex-end";
-        barContainer.style.position = "relative";
-
-        // Unitary Bar (Zander)
-        const barU = document.createElement('div');
-        barU.style.width = "100%";
-        barU.style.height = (val * 80) + "%";
-        barU.style.background = `linear-gradient(to top, #38bdf8, #818cf8)`;
-        barU.style.opacity = i / maxEntropyPoints;
-        barU.style.zIndex = "2";
-
-        // Naive Bar (Hawking - Phantom)
-        const barN = document.createElement('div');
-        barN.style.width = "100%";
-        barN.style.height = (naiveEntropyPoints[i] * 80) + "%";
-        barN.style.background = `rgba(239, 68, 68, 0.3)`;
-        barN.style.position = "absolute";
-        barN.style.bottom = "0";
-        barN.style.zIndex = "1";
-
-        barContainer.appendChild(barN);
-        barContainer.appendChild(barU);
-        pageCurvePlot.appendChild(barContainer);
-    });
+    for (let i = 0; i < maxEntropyPoints; i++) {
+        if (barsUnitary[i]) {
+            barsUnitary[i].style.height = (entropyPoints[i] * 80) + '%';
+        }
+        if (barsNaive[i]) {
+            barsNaive[i].style.height = (naiveEntropyPoints[i] * 80) + '%';
+        }
+    }
 }
 
 mergerBtn.onclick = () => {
@@ -353,7 +380,7 @@ autoCycleBtn.onclick = () => {
 
 function animate() {
     ctx.fillStyle = '#010105';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, canvasCssWidth, canvasCssHeight);
 
     if (isAutoCycle) handleAutoCycle();
 
@@ -361,17 +388,19 @@ function animate() {
     const burden = parseFloat(massSlider.value);
     const effectiveSpin = spin * (1 - burden / 200);
 
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
+    const centerX = canvasCssWidth / 2;
+    const centerY = canvasCssHeight / 2;
+    const coreRadius = Math.max(28, Math.min(canvasCssWidth, canvasCssHeight) * 0.07);
+    const diskRadius = coreRadius * 1.6;
 
     drawGrid(centerX, centerY, burden);
-    drawAccretionDisk(centerX, centerY, 80, effectiveSpin, burden);
-    drawCore(centerX, centerY, 50, effectiveSpin, burden);
+    drawAccretionDisk(centerX, centerY, diskRadius, effectiveSpin, burden);
+    drawCore(centerX, centerY, coreRadius, effectiveSpin, burden);
 
     if (mergerPulse > 0) mergerPulse *= 0.95;
 
     const lIntensity = updateStats(spin, burden);
-    drawSparks(centerX, centerY, 50, lIntensity);
+    drawSparks(centerX, centerY, coreRadius, lIntensity);
 
     time++;
     requestAnimationFrame(animate);

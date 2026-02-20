@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kinematic Motor Black Hole Lab â€” From Quantum to Cosmos</title>
+  <title>Kinematic Motor Black Hole Lab - From Quantum to Cosmos</title>
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/motor.css">
   <link rel="stylesheet" href="../css/components.css">
@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
-  <script src="../js/unity.js"></script>
+  <script defer src="../js/unity.js"></script>
 </head>
 
 <body>
@@ -22,7 +22,7 @@
 
     <div class="header" style="text-align: center; margin-bottom: 3rem;">
       <h1 class="glow-text" style="font-size: 3.5rem;">Kinematic Black Hole Motor</h1>
-      <p style="font-size: 1.2rem; color: #94a3b8;">The â„-Spin Stator vs. The Mass Rotor Burden</p>
+      <p style="font-size: 1.2rem; color: #94a3b8;">The &hbar;-Spin Stator vs. The Mass Rotor Burden</p>
     </div>
 
     <div class="qg-card" style="margin-bottom: 2rem; border-color: rgba(56, 189, 248, 0.35);">
@@ -43,7 +43,7 @@
 
       <div class="qg-card"
         style="padding: 0; min-height: 700px; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, #0a1122, #000); border: 2px solid rgba(56, 189, 248, 0.2); box-shadow: 0 0 50px rgba(0,0,0,0.8);">
-        <canvas id="motorCanvas" style="width: 100%; height: auto; display: block;"></canvas>
+        <canvas id="motorCanvas" style="width: 100%; aspect-ratio: 1 / 1; display: block;"></canvas>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 1.5rem;">
@@ -71,7 +71,7 @@
           </div>
 
           <div class="control-group" style="margin-bottom: 1.5rem;">
-            <label for="spinRate">Core Action Frequency (â„-Spin)</label>
+            <label for="spinRate">Core Action Frequency (&hbar;-Spin)</label>
             <input type="range" id="spinRate" min="1" max="100" value="80">
           </div>
 
@@ -304,10 +304,18 @@
 
   <script src="../js/kinematic-motor.js"></script>
   <script>
-    // KaTeX auto-render for the new dynamic content
+    // KaTeX auto-render for the static and dynamic math content
     document.addEventListener("DOMContentLoaded", function () {
       if (typeof renderMathInElement === 'function') {
-        renderMathInElement(document.body);
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "\\[", right: "\\]", display: true }
+          ],
+          throwOnError: false
+        });
       }
     });
   </script>

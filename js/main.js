@@ -19,7 +19,7 @@ const { hbar, G, c, kB, pi } = CONSTS;
 const SIGMA_P = (hbar * G) / (c ** 4); // The Grain [m s]
 const lP = Math.sqrt(SIGMA_P * c);     // Planck Length [m]
 const tP = Math.sqrt(SIGMA_P / c);     // Planck Time [s]
-const MP = Math.sqrt((hbar * c) / G);  // Planck Mass [kg]
+const mP = Math.sqrt((hbar * c) / G);  // Planck Mass [kg]
 
 // Cosmological global constants (shared window)
 const LY = 9.4607e15; // meters
@@ -51,8 +51,8 @@ function schwarzschildRadius(M) {
 function bekensteinHawkingEntropy(M) {
   const rs = schwarzschildRadius(M);
   const A = 4 * pi * (rs ** 2);
-  // Note: lP^2 = sigmaP * c
-  return (kB * A) / (4 * SIGMA_P * c);
+  const lP2 = SIGMA_P * c;
+  return (kB * A) / (4 * lP2);
 }
 
 /**
@@ -66,10 +66,10 @@ function hawkingTemperature(M) {
 /**
  * Zander Functional Θ_Z(M)
  * The inverse temperature / geometric beat of the horizon.
- * Θ_Z = 1 / T_H
+ * Theta_Z = 1 / T_H
  */
 function zanderFunctional(M) {
-  // Returns inverse Temperature [1/K]
+  // Theta_Z has units 1/K.
   return (8 * pi * G * M * kB) / (hbar * (c ** 3));
 }
 
@@ -96,18 +96,18 @@ function planckRemnantEntropy() {
 
 /**
  * Zander-Regularized Evaporation Rate
- * Prevents singularity at M -> 0.
- * Smoothly transitions to zero emission as M approaches M_remnant.
+ * Heuristic UV cutoff for a remnant closure:
+ * smoothly transitions emission to zero as M approaches mP.
  */
 function regularizedEvaporationRate(M) {
-  if (M <= MP) return 0;
+  if (M <= mP) return 0;
 
   // Semiclassical rate
   const rate = evaporationRate(M);
 
-  // Regulation factor: 1 - (MP/M)^4
-  // This ensures dM/dt -> 0 as M -> MP
-  const suppression = 1 - Math.pow(MP / M, 4);
+  // Regulation factor: 1 - (mP/M)^4
+  // This ensures dM/dt -> 0 as M -> mP
+  const suppression = 1 - Math.pow(mP / M, 4);
 
   return rate * Math.max(0, suppression);
 }
@@ -124,6 +124,11 @@ function rk4_step(f, y, dt) {
 // --- Simulation Engine ---
 
 function simulatePageCurve(M0, steps = 200) {
+  if (!Number.isFinite(M0) || M0 <= 0) {
+    throw new Error("M0 must be a positive finite number (kg).");
+  }
+  steps = Math.max(10, Math.floor(steps));
+
   // Respect the fundamental spacetime cell: compute available ticks
   const cosmo = (typeof window !== 'undefined' && window.COSMO_GLOBAL) ? window.COSMO_GLOBAL : { age_now: COSMO_AGE_NOW, radius_now: COSMO_RADIUS_NOW, SIGMA_P: SIGMA_P };
   const R_univ = cosmo.radius_now;
@@ -165,9 +170,6 @@ function simulatePageCurve(M0, steps = 200) {
   let maxSubSteps = 0;
   const integrator = (typeof window !== 'undefined' && window._SIM_OPTIONS && window._SIM_OPTIONS.integrator) ? window._SIM_OPTIONS.integrator : 'rk4';
 
-  // Initial Entropy
-  const S0 = bekensteinHawkingEntropy(M0);
-
   for (let i = 0; i <= steps * 1.5; i++) {
     timePoints.push(t);
     massPoints.push(M);
@@ -177,8 +179,8 @@ function simulatePageCurve(M0, steps = 200) {
     sbhPoints.push(S_BH);
 
     // Remnant check
-    if (M <= MP * 1.01) {
-      M = MP; // Stabilize in Remnant state
+    if (M <= mP * 1.01) {
+      M = mP; // Stabilize in Remnant state
 
       // Radiation entropy stops growing (energy emission stops)
       sradPoints.push(S_rad_accum);
@@ -212,8 +214,8 @@ function simulatePageCurve(M0, steps = 200) {
 
           const dM_actual = M - M_prev;
           const dE = -dM_actual * (c ** 2);
-          const T = hawkingTemperature(M_prev);
-          const dS = (T > 0) ? (dE / T) : 0;
+          const T = Math.max(1e-300, hawkingTemperature(M_prev));
+          const dS = dE / T;
           S_rad_accum += dS;
           sradPoints.push(S_rad_accum);
           t += subDt;
@@ -228,15 +230,15 @@ function simulatePageCurve(M0, steps = 200) {
           }
           const dM_actual = M - M_prev;
           const dE = -dM_actual * (c ** 2);
-          const T = hawkingTemperature(M_prev);
-          const dS = (T > 0) ? (dE / T) : 0;
+          const T = Math.max(1e-300, hawkingTemperature(M_prev));
+          const dS = dE / T;
           S_rad_accum += dS;
           sradPoints.push(S_rad_accum);
           t += remaining;
           remaining = 0;
         }
         // remnant check
-        if (M <= MP * 1.01) { M = MP; break; }
+        if (M <= mP * 1.01) { M = mP; break; }
       }
       if (safetyCounter >= 1000) {
         // bailout: numerical trouble
@@ -258,7 +260,7 @@ function simulatePageCurve(M0, steps = 200) {
   };
 }
 
-// --- Galactic Dynamics (The Dark Matter Illusion) ---
+// --- Galactic Dynamics (Toy Cosmology / Exploratory, not validated) ---
 
 /**
  * Cosmic Acceleration Scale (g_dagger / a_0)
