@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kinematic Motor Black Hole Lab — From Quantum to Cosmos</title>
+  <title>Kinematic Motor Black Hole Lab â€” From Quantum to Cosmos</title>
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/motor.css">
   <link rel="stylesheet" href="../css/components.css">
@@ -22,7 +22,7 @@
 
     <div class="header" style="text-align: center; margin-bottom: 3rem;">
       <h1 class="glow-text" style="font-size: 3.5rem;">Kinematic Black Hole Motor</h1>
-      <p style="font-size: 1.2rem; color: #94a3b8;">The ℏ-Spin Stator vs. The Mass Rotor Burden</p>
+      <p style="font-size: 1.2rem; color: #94a3b8;">The â„-Spin Stator vs. The Mass Rotor Burden</p>
     </div>
 
     <div class="qg-card" style="margin-bottom: 2rem; border-color: rgba(56, 189, 248, 0.35);">
@@ -58,8 +58,20 @@
             $$ E_{\text{core}} \sim \hbar \omega_{\max} + \eta M_{\text{load}} \text{ (Rotational Burden)} $$
           </div>
 
+          <div class="formula-block" style="margin: 1rem 0;">
+            $$ i=\frac{F_{\text{eff}}}{F_P},\qquad
+            F_{\text{eff}}=\frac{E}{r_{\text{eff}}},\qquad
+            E\approx\hbar\omega,\qquad
+            F_P=\frac{c^4}{G} $$
+          </div>
+
+          <div class="formula-block" style="margin: 1rem 0;">
+            $$ \Rightarrow\quad i=\frac{\hbar\omega/r_{\text{eff}}}{c^4/G}=
+            \frac{\sigma_P\omega}{r_{\text{eff}}} $$
+          </div>
+
           <div class="control-group" style="margin-bottom: 1.5rem;">
-            <label for="spinRate">Core Action Frequency (ℏ-Spin)</label>
+            <label for="spinRate">Core Action Frequency (â„-Spin)</label>
             <input type="range" id="spinRate" min="1" max="100" value="80">
           </div>
 
@@ -84,7 +96,14 @@
             </div>
             <p
               style="font-size: 0.65rem; color: #94a3b8; margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">
-              Coupling Density Limit</p>
+              <span class="tip"
+                data-tip="K_sigma has units (m*s)^-1, so it is not a force. Multiplying by hbar yields F_P = c^4/G.">
+                Coupling Density Limit
+              </span>
+              $K_{\sigma} = c^4/(\hbar G)$ $[(m\cdot s)^{-1}]$</p>
+            <p
+              style="font-size: 0.65rem; color: #94a3b8; margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 1px;">
+              Linked Force Scale $F_P = \hbar K_{\sigma} = c^4/G$ $[N]$</p>
           </div>
           <div class="qg-card" style="padding: 1.5rem; border-left: 4px solid var(--accent-secondary);">
             <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -176,11 +195,43 @@
         </div>
         <div
           style="background: rgba(56, 189, 248, 0.05); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.2);">
-          <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">The Σₚ Resolution</h3>
+          <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">The &Sigma;<sub>p</sub> Resolution</h3>
           <p style="color: #e2e8f0; line-height: 1.7;">
-            The Kinematic Motor model resolves this by applying the <strong>Planck Force Limit</strong> ($i_{max} =
-            c^4/G$).
+            This model separates a <strong class="tip"
+              data-tip="Force scale: F_P = c^4/G [N]. This is a reference limit scale.">force scale</strong>
+            from a <strong class="tip"
+              data-tip="Coupling density: K_sigma = c^4/(hbar G) [ (m*s)^-1 ]. It is not measured in Newton.">coupling density</strong>,
+            then links them consistently.
           </p>
+
+          <div class="qg-card"
+            style="margin-top: 1.5rem; border-color: rgba(56,189,248,0.35); background: rgba(56,189,248,0.04);">
+            <h4 class="glow-text" style="margin-bottom: 0.6rem;">Force vs. Coupling Density (Units Matter)</h4>
+
+            <p style="color:#cbd5e1; line-height:1.7; font-size:0.95rem; margin:0 0 0.8rem 0;">
+              In this lab we distinguish a <b>force scale</b> from an <b>action-coupling density</b>.
+              They are linked, but not the same object.
+            </p>
+
+            <div class="formula-block" style="margin: 1rem 0;">
+              $$ \sigma_P = \frac{\hbar G}{c^4} \qquad\Rightarrow\qquad
+              K_{\sigma} = \frac{1}{\sigma_P} = \frac{c^4}{\hbar G}\;[\mathrm{(m\cdot s)^{-1}}] $$
+            </div>
+
+            <div class="formula-block" style="margin: 1rem 0;">
+              $$ F_P = \hbar K_{\sigma} = \frac{c^4}{G}\;[\mathrm{N}] $$
+            </div>
+
+            <p style="color:#94a3b8; font-size:0.85rem; line-height:1.6; margin:0;">
+              <b>Note:</b> Some GR maximum-tension conventions use $F_{\max}=c^4/(4G)$.
+              Here we display the scale $c^4/G$ as a reference limit.
+            </p>
+            <p style="color:#94a3b8; font-size:0.85rem; line-height:1.6; margin:0.6rem 0 0 0;">
+              In this simulator, $r_{\text{eff}}$ is a transparent process scale:
+              $r_{\text{eff}}=\ell_P\,(1+9\,\mathrm{burden})$.
+            </p>
+          </div>
+
           <ul style="color: #94a3b8; margin-top: 1.5rem; padding-left: 1.5rem; line-height: 1.8;">
             <li><strong>No Dimensionality Loss:</strong> Spacetime is quantized. You cannot squeeze more "action" into a
               region than the $\sigma_P$ lattice allows.</li>
@@ -263,3 +314,4 @@
 </body>
 
 </html>
+

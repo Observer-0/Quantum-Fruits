@@ -31,6 +31,10 @@ const PHYSICS = {
     MP: Math.sqrt((1.054571817e-34 * 2.99792458e8) / 6.67430e-11),
     iMax: Math.pow(2.99792458e8, 4) / 6.67430e-11
 };
+PHYSICS.lP = Math.sqrt(PHYSICS.sigmaP * PHYSICS.c);
+PHYSICS.tP = Math.sqrt(PHYSICS.sigmaP / PHYSICS.c);
+PHYSICS.Ksigma = 1.0 / PHYSICS.sigmaP;
+PHYSICS.planckForce = PHYSICS.iMax;
 
 let time = 0;
 let mergerPulse = 0;
@@ -197,9 +201,17 @@ function updateStats() {
     const spin = parseFloat(spinSlider.value);
     const burden = parseFloat(massSlider.value);
 
-    // 1. Action Potential (Derived monitor: Planck-force scaling)
-    const net = PHYSICS.iMax * (spin / 100) * (1 - (burden / 150));
-    netPotentialVal.innerText = net.toExponential(2);
+    // 1. Coupling-utilization index (Derived):
+    // i = F_eff / F_P, with F_eff = E_core / r_eff and E_core ≈ hbar * omega
+    // => i = (hbar * omega / r_eff) / (c^4/G) = (sigmaP * omega) / r_eff
+    const spinFrac = spin / 100;
+    const burdenFrac = burden / 100;
+    const omega = spinFrac / Math.max(PHYSICS.tP, 1e-99); // slider as fraction of Planck frequency
+    const rEff = PHYSICS.lP * (1 + 9 * burdenFrac); // heuristic horizon-scale loading radius
+    const eCore = PHYSICS.hbar * omega;
+    const fEff = eCore / Math.max(rEff, 1e-99);
+    const iUtil = Math.max(0, Math.min(1, fEff / PHYSICS.planckForce));
+    netPotentialVal.innerText = iUtil.toFixed(4);
 
     // 2. Singularity Diagnostic: r_Pl / r_s ratio
     // Near 1.0 means quantum curvature dominates (The "Quantum Core")
@@ -217,8 +229,8 @@ function updateStats() {
 
     // 4. Spin Luminosity L_spin ∝ ħ * |dω/dt|
     const m_total = burden / 100;
-    const omega = spin / 100;
-    const lSpinValue = (m_total * m_total) * omega * 2.0;
+    const omegaSpin = spin / 100;
+    const lSpinValue = (m_total * m_total) * omegaSpin * 2.0;
     document.getElementById('val-lspin').innerText = lSpinValue.toFixed(4);
 
     tickDensityVal.innerText = burden > 70 ? "σ_P Saturated" : (diagRatio > 1.5 ? "Pure Action Core" : "Mass Loaded");

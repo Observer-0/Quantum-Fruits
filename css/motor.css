@@ -135,3 +135,34 @@ input[type=range]::-webkit-slider-thumb {
     color: var(--core-cyan);
     font-weight: bold;
 }
+
+.tip {
+    position: relative;
+    cursor: help;
+    border-bottom: 1px dotted rgba(148, 163, 184, 0.6);
+}
+
+.tip::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 0;
+    top: 120%;
+    width: min(360px, 70vw);
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #e2e8f0;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 9999;
+}
+
+.tip:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+}
