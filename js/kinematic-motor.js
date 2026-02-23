@@ -5,6 +5,7 @@ const massSlider = document.getElementById('massBurden');
 const mergerBtn = document.getElementById('mergerBtn');
 
 const netPotentialVal = document.getElementById('netPotential');
+const balanceVal = document.getElementById('balanceVal');
 const tickDensityVal = document.getElementById('tickDensity');
 const statusText = document.getElementById('statusText');
 const pageCurvePlot = document.getElementById('pageCurvePlot');
@@ -46,6 +47,9 @@ const PHYSICS = {
 PHYSICS.lP = Math.sqrt(PHYSICS.sigmaP * PHYSICS.c);
 PHYSICS.tP = Math.sqrt(PHYSICS.sigmaP / PHYSICS.c);
 PHYSICS.Ksigma = 1.0 / PHYSICS.sigmaP;
+PHYSICS.omegaMax = 1.0 / Math.max(PHYSICS.tP, 1e-99);
+PHYSICS.EcoreMax = PHYSICS.hbar * PHYSICS.omegaMax;
+PHYSICS.Msun = 1.989e30;
 
 let time = 0;
 let mergerPulse = 0;
@@ -250,6 +254,15 @@ function drawSparks(x, y, radius, intensity) {
     ctx.globalAlpha = 1.0;
 }
 
+function actionBurdenBalance(spin, burden) {
+    const spinFrac = Math.max(0, Math.min(1, spin / 100));
+    const burdenFrac = Math.max(0, Math.min(1, burden / 100));
+    const actionPotential = spinFrac * PHYSICS.EcoreMax / Math.max(PHYSICS.hbar, 1e-99);
+    const rsSun = Math.max((2 * PHYSICS.G * PHYSICS.Msun) / (PHYSICS.c ** 2), 1e-99);
+    const brakeForce = burdenFrac * (PHYSICS.G * PHYSICS.Msun / (rsSun ** 2));
+    return actionPotential / Math.max(brakeForce, 1e-99);
+}
+
 function updateStats(spin, burden) {
     // 1. Coupling-utilization index (Derived):
     // i = F_eff / F_P, with F_eff = E_core / r_eff and E_core ~= hbar * omega
@@ -262,6 +275,10 @@ function updateStats(spin, burden) {
     const fEff = eCore / Math.max(rEff, 1e-99);
     const iUtil = Math.max(0, Math.min(1, fEff / PHYSICS.planckForce));
     netPotentialVal.innerText = iUtil.toFixed(4);
+
+    // Action vs. Burden balance (Derived monitor)
+    const balance = actionBurdenBalance(spin, burden);
+    if (balanceVal) balanceVal.innerText = balance.toFixed(3);
 
     // 2. Singularity Diagnostic: r_Pl / r_s ratio
     // Near 1.0 means quantum curvature dominates (The "Quantum Core")
@@ -288,15 +305,15 @@ function updateStats(spin, burden) {
 
 
 
-    if (burden < 20) {
-        statusText.innerText = 'Phase: Pure Action (hbar-Stator)';
+    if (balance > 1.2) {
+        statusText.innerText = 'Phase: Pure Action Core (Spin-up)';
         statusText.style.color = '#38bdf8';
-    } else if (burden > 80) {
-        statusText.innerText = 'Phase: Gravitational Braking (Mass Rotor)';
-        statusText.style.color = '#f43f5e';
-    } else {
-        statusText.innerText = 'Phase: Unitary Transformer Equilibrium';
+    } else if (balance > 0.8) {
+        statusText.innerText = 'Phase: Peak Coupling';
         statusText.style.color = '#a855f7';
+    } else {
+        statusText.innerText = 'Phase: Gravitational Braking (Decline)';
+        statusText.style.color = '#f43f5e';
     }
 
     // Update return-profile logic (Heuristic visualization closure)

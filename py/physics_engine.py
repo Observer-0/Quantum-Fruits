@@ -25,6 +25,10 @@ tP = math.sqrt(sigmaP / c)            # [s]
 # Planck mass (standard)
 MP = math.sqrt(hbar * c / G)          # [kg]
 
+# Spin/action limits (framework-scale helpers)
+omega_max = 1.0 / tP                  # [1/s]
+E_core_max = hbar * omega_max         # [J]
+
 # Interaction quantum (kept for cross-module compatibility; unused here by default)
 Z_int = hbar**2 / c                   # [framework quantity]
 
@@ -48,6 +52,22 @@ def lambda_eff(R: float, t: float) -> float:
     R_safe = max(abs(R), 1e-99)
     t_safe = max(abs(t), 1e-99)
     return 3.0 / (c * R_safe * t_safe)
+
+
+def action_burden_balance(spin: float, burden: float) -> float:
+    """
+    Relative action potential vs. braking force.
+    spin: 0..100 (slider-like)
+    burden: 0..100 (mass load)
+    """
+    spin_frac = max(min(spin / 100.0, 1.0), 0.0)
+    burden_frac = max(min(burden / 100.0, 1.0), 0.0)
+
+    action_potential = spin_frac * E_core_max / hbar  # normalized to omega_max
+    rs_sun = max(schwarzschild_radius(M_sun), 1e-99)
+    brake_force = burden_frac * (G * M_sun / rs_sun**2)
+
+    return action_potential / max(brake_force, 1e-99)
 
 
 # ============================================================
@@ -146,6 +166,10 @@ def evaporate_sigmaP_quantized(
     Mrem: float = MP,
     alpha: float = 4.0,
     gamma: float = 1.0,
+    recycle: bool = False,
+    recycle_start_frac: float = 0.0,
+    recycle_duration_frac: float = 0.25,
+    recycle_rate: float = 0.0,
 ):
     """
     sigma_P-regularized evaporation with a Planck remnant (heuristic closure).
@@ -157,10 +181,15 @@ def evaporate_sigmaP_quantized(
     - gamma rescales the Hawking prefactor (hook for greybody/dof effects).
     - Radiation entropy S_rad is a heuristic Page-like closure (unitary scenario),
       not derived from microstate counting in this module.
+    - Optional recycling: if recycle=True and recycle_rate>0, mass can grow
+      after the remnant at a fixed rate over a configured time window.
     """
     # Baseline semiclassical timescale for the time grid
     tau0 = lifetime_semiclassical(M0)
-    t = np.linspace(0.0, tau0, nsteps)
+    t_end = tau0
+    if recycle:
+        t_end = tau0 * (1.0 + max(recycle_duration_frac, 0.0))
+    t = np.linspace(0.0, t_end, nsteps)
     dt = t[1] - t[0]
 
     M = np.empty_like(t)
@@ -205,6 +234,13 @@ def evaporate_sigmaP_quantized(
             M_curr = Mrem_safe
             if idx_rem is None:
                 idx_rem = i
+
+            if recycle and recycle_rate > 0.0:
+                # Optional recycling phase: accrete/restore after remnant.
+                t0 = tau0 + max(recycle_start_frac, 0.0) * tau0
+                t1 = t0 + max(recycle_duration_frac, 0.0) * tau0
+                if t0 <= _ti <= t1:
+                    M_curr = max(Mrem_safe, M_curr + recycle_rate * dt)
 
     if idx_rem is None:
         idx_rem = len(t) - 1
@@ -328,8 +364,44 @@ def main(argv=None):
         action="store_true",
         help="Print a small robustness sweep over alpha for sigma_P-quantized evaporation",
     )
+    parser.add_argument(
+        "--recycle",
+        action="store_true",
+        help="Enable post-remnant recycling (mass regrowth) in sigma_P-quantized mode",
+    )
+    parser.add_argument(
+        "--recycle_rate",
+        type=float,
+        default=0.0,
+        help="Recycle mass rate [kg/s] applied after remnant",
+    )
+    parser.add_argument(
+        "--recycle_start_frac",
+        type=float,
+        default=0.0,
+        help="Fraction of tau0 to delay before recycling starts",
+    )
+    parser.add_argument(
+        "--recycle_duration_frac",
+        type=float,
+        default=0.25,
+        help="Fraction of tau0 to keep recycling active",
+    )
+    parser.add_argument(
+        "--spin",
+        type=float,
+        default=80.0,
+        help="Spin slider value for action/burden balance (0..100)",
+    )
+    parser.add_argument(
+        "--burden",
+        type=float,
+        default=10.0,
+        help="Burden slider value for action/burden balance (0..100)",
+    )
     args = parser.parse_args(argv)
     gamma_cli = max(args.gamma, 0.0)
+    balance = action_burden_balance(args.spin, args.burden)
 
     print("=== Zander sigma_P framework ===")
     print(f"sigma_P = {sigmaP:.3e}  [m·s]")
@@ -338,6 +410,9 @@ def main(argv=None):
     print(f"M_P     = {MP:.3e}  [kg]")
     print(f"Z_int   = {Z_int:.3e}  [framework quantity]  (unused in this module)")
     print(f"gamma   = {gamma_cli:.3g}  [Hawking prefactor rescale]")
+    print(
+        f"balance = {balance:.3e}  [action/burden]  (spin={args.spin:g}, burden={args.burden:g})"
+    )
     print()
 
     reps = [SAMPLES[0], SAMPLES[4], SAMPLES[9]]
@@ -348,7 +423,12 @@ def main(argv=None):
 
         _t_sc, _M_sc, _TH_sc, _S_sc, _Srad_sc, tau_sc = evaporate_semiclassical(M0)
         _t_q, _M_q, _TH_q, _S_q, _Srad_q, tau_q, Srem = evaporate_sigmaP_quantized(
-            M0, gamma=gamma_cli
+            M0,
+            gamma=gamma_cli,
+            recycle=args.recycle,
+            recycle_rate=args.recycle_rate,
+            recycle_start_frac=args.recycle_start_frac,
+            recycle_duration_frac=args.recycle_duration_frac,
         )
 
         print(f"[{name}]  M0 = {M0:.3e} kg")
@@ -384,7 +464,12 @@ def main(argv=None):
         for ax, (name, M0) in zip(axes, reps):
             t_sc, _, _, _, Srad_sc, tau_sc = evaporate_semiclassical(M0)
             t_q, _, _, _, Srad_q, tau_q, _Srem = evaporate_sigmaP_quantized(
-                M0, gamma=gamma_cli
+                M0,
+                gamma=gamma_cli,
+                recycle=args.recycle,
+                recycle_rate=args.recycle_rate,
+                recycle_start_frac=args.recycle_start_frac,
+                recycle_duration_frac=args.recycle_duration_frac,
             )
 
             ax.plot(

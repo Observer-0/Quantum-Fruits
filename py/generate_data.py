@@ -6,7 +6,7 @@ import physics_engine as yps
 # Datenextraktion und JSON-Export
 # ============================================================
 
-def export_data_for_web():
+def export_data_for_web(spin=80.0, burden=10.0):
     data = []
     
     # Repräsentative Objekte: PBH, stellar, supermassive
@@ -17,6 +17,7 @@ def export_data_for_web():
         t_q, M_q, TH_q, S_q, Srad_q, tau_q, Srem = yps.evaporate_sigmaP_quantized(M0)
         
         # Daten für die Webseite vorbereiten
+        balance = yps.action_burden_balance(spin, burden)
         entry = {
             "name": name,
             "M0": M0,
@@ -24,6 +25,11 @@ def export_data_for_web():
             "tau_q": tau_q,
             "Srem_kB": Srem / yps.kB, # Srem normalisiert mit kB
             "hawking_temp_M0": yps.hawking_temperature(M0),
+            "action_burden": {
+                "spin": float(spin),
+                "burden": float(burden),
+                "balance": float(balance),
+            },
             "data_sc": {
                 "t_norm": (t_sc / tau_sc).tolist(),
                 "Srad_norm": (Srad_sc / max(np.max(Srad_sc), 1e-99)).tolist(),
