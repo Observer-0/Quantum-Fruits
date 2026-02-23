@@ -298,7 +298,7 @@ SAMPLES = [
 ]
 
 
-if __name__ == "__main__":
+def main(argv=None):
     import argparse
     import sys
 
@@ -315,7 +315,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--plot",
         action="store_true",
-        help="(unused in this module) Show example Page-like curves for representative black holes",
+        help="Show example Page-like curves for representative black holes",
     )
     parser.add_argument(
         "--gamma",
@@ -328,7 +328,7 @@ if __name__ == "__main__":
         action="store_true",
         help="Print a small robustness sweep over alpha for sigma_P-quantized evaporation",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     gamma_cli = max(args.gamma, 0.0)
 
     print("=== Zander sigma_P framework ===")
@@ -376,9 +376,48 @@ if __name__ == "__main__":
                 )
             print()
 
+    if args.plot:
+        import matplotlib.pyplot as plt
+
+        fig, axes = plt.subplots(1, 3, figsize=(13, 4), constrained_layout=True)
+
+        for ax, (name, M0) in zip(axes, reps):
+            t_sc, _, _, _, Srad_sc, tau_sc = evaporate_semiclassical(M0)
+            t_q, _, _, _, Srad_q, tau_q, _Srem = evaporate_sigmaP_quantized(
+                M0, gamma=gamma_cli
+            )
+
+            ax.plot(
+                t_sc / max(tau_sc, 1e-99),
+                Srad_sc / max(np.max(Srad_sc), 1e-99),
+                label="Continuum (Hawking)",
+                color="red",
+            )
+
+            ax.plot(
+                t_q / max(t_q[-1], 1e-99),
+                Srad_q / max(np.max(Srad_q), 1e-99),
+                label=f"sigma_P-quantized (gamma={gamma_cli:g})",
+                color="blue",
+            )
+
+            ax.set_title(f"{name} BH")
+            ax.set_xlabel(r"$t/\tau$")
+            ax.set_ylabel(r"$S_{\mathrm{rad}}/S_{0}$")
+            ax.set_xlim(0, 1)
+            ax.set_ylim(0, 1.05)
+            if ax == axes[-1]:
+                ax.legend(loc="lower left", fontsize="small")
+
+        plt.show()
+
     # Tiny cosmology demo link (optional sanity cross-ref)
     R_demo = 1.0e26  # m, placeholder cosmic scale
     t_demo = 4.3e17  # s, placeholder age scale
     print("=== Window-mapping demo (placeholders) ===")
     print(f"alpha_sigma(R,t) = {alpha_sigma(R_demo, t_demo):.3e}  [-]")
     print(f"Lambda_eff(R,t)  = {lambda_eff(R_demo, t_demo):.3e}  [1/m^2]")
+
+
+if __name__ == "__main__":
+    main()
