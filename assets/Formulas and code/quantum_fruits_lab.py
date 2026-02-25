@@ -16,8 +16,8 @@ M_sun = 1.989e30
 def print_header():
     print("========================================================")
     print("   QUANTUM FRUITS LAB - ADVANCED SIMULATION SUITE")
-    print("   Framework: Zander (S = Relativität)")
-    print(f"   Sigma_P: {sigma_P:.4e} m·s")
+    print("   Framework: Zander (S = Relativity)")
+    print(f"   Sigma_P: {sigma_P:.4e} m*s")
     print("========================================================\n")
 
 # ============================================================
@@ -62,11 +62,11 @@ def sim_particle_trajectory():
     y = r * np.sin(phi)
 
     plt.figure(figsize=(8,8))
-    plt.plot(x, y, label='Particle Trajectory ($\sigma_P$-corrected)', color='cyan')
+    plt.plot(x, y, label=r'Particle Trajectory ($\sigma_P$-corrected)', color='cyan')
     circle = plt.Circle((0, 0), rs, color='black', label='Event Horizon ($r_S$)')
     plt.gca().add_patch(circle)
 
-    plt.title("S = Relativity: Geodesic in $\sigma_P$-Field")
+    plt.title(r"S = Relativity: Geodesic in $\sigma_P$-Field")
     plt.xlabel("Distance [m]")
     plt.ylabel("Distance [m]")
     plt.legend()
@@ -116,7 +116,7 @@ def sim_photon_deflection():
     
     # Plotting
     plt.figure(figsize=(10, 5))
-    plt.plot(sol.y[0]/rs, sol.y[1]/rs, label='Photon Path ($\sigma_P$-corrected)', color='gold', lw=2)
+    plt.plot(sol.y[0]/rs, sol.y[1]/rs, label=r'Photon Path ($\sigma_P$-corrected)', color='gold', lw=2)
     plt.gca().add_patch(plt.Circle((0, 0), 1.0, color='black', label='Black Hole ($r_S$)'))
 
     plt.title("Photon Lensing: Gravity as Tick-Interaction")
@@ -227,7 +227,7 @@ def sim_page_curve_model():
     plt.axvline(50, color='gray', linestyle=':', label='Page Time (Information Return)')
     plt.fill_between(t, 0, S_rad, color='red', alpha=0.1)
 
-    plt.title("The Zander-Page-Curve: Information Conservation via $\sigma_P$")
+    plt.title(r"The Zander-Page-Curve: Information Conservation via $\sigma_P$")
     plt.xlabel("Time (Evaporation %)")
     plt.ylabel("Entropy $S / k_B$ (Normalized)")
     plt.legend()

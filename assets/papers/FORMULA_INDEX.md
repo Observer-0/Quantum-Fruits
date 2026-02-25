@@ -1,0 +1,553 @@
+# Formula Index (First Pass)
+
+Cross-paper index of recurring core symbols/patterns in `assets/papers/*.tex`.
+
+This is a literal-text index (not a semantic proof checker). Use it to jump to definitions and compare notation across papers.
+
+## `sigma_p` (819 hits)
+
+- `A Requiem for LCDM.tex` (24 hits)
+  - `assets/papers/A Requiem for LCDM.tex:193` \sigma_{\mathrm P}
+  - `assets/papers/A Requiem for LCDM.tex:218` \Delta x\,\Delta t \ge \sigma_{\mathrm P}.
+  - `assets/papers/A Requiem for LCDM.tex:224` &= \frac{g_{\mu\nu}(x)}{1+\sigma_{\mathrm P}^{-1}f(\mathcal{R}(x))},\\
+  - `assets/papers/A Requiem for LCDM.tex:233` \right\rangle_{\sigma_{\mathrm P}}
+  - `assets/papers/A Requiem for LCDM.tex:238` \right\rangle_{\sigma_{\mathrm P}}^{(W)},\\
+  - `assets/papers/A Requiem for LCDM.tex:293` title={\bfseries Cosmological Scaling from $\sigma_{\mathrm P}$}]
+  - `assets/papers/A Requiem for LCDM.tex:302` N_\sigma = \frac{R\,t}{\sigma_{\mathrm P}} = \frac{R\,t\,c^4}{\hbar G}.
+  - `assets/papers/A Requiem for LCDM.tex:348` \sigma_{\mathrm P} = \ell_{\mathrm P}t_{\mathrm P} = \frac{\hbar G}{c^4}.
+  - ... 16 more hits in `A Requiem for LCDM.tex`
+- `Formelsammlung.tex` (10 hits)
+  - `assets/papers/Formelsammlung.tex:45` K_{\sigma_P}(x,y) = \frac{1}{(2\pi)^2 \ell_\ast^3 \tau_\ast}
+  - `assets/papers/Formelsammlung.tex:53` \ell_\ast = c \, \sigma_P, \qquad \tau_\ast = \frac{\sigma_P}{c}, \qquad
+  - `assets/papers/Formelsammlung.tex:54` \sigma_P = \frac{\hbar G}{c^4}.
+  - `assets/papers/Formelsammlung.tex:67` \sigma_{\mathrm P} = \frac{\hbar\, G}{c^{4}}
+  - `assets/papers/Formelsammlung.tex:79` i = \frac{E\cdot t}{\sigma_P},\qquad i_{\max} = \frac{\hbar}{\sigma_P} = \frac{c^4}{G}
+  - `assets/papers/Formelsammlung.tex:87` S = k_B \cdot N_{\rm ticks} = k_B \sum_i \frac{\Delta A}{\sigma_P}
+  - `assets/papers/Formelsammlung.tex:113` d\tilde s^2 = \frac{ds^2}{1+\sigma_P^{-1}f(\mathcal R,x)},\quad f(\mathcal R,x)=\frac{\ell_P^2\mathcal R}{1+\ell_P^2\mathcal R^2}
+  - `assets/papers/Formelsammlung.tex:117` K_{\sigma_P}(x,y) = \frac{1}{\mathcal N}\exp\Big[-\sigma_+(x,y)/(2\ell_P^2)\Big]
+  - ... 2 more hits in `Formelsammlung.tex`
+- `Formula_Collection_URM.tex` (9 hits)
+  - `assets/papers/Formula_Collection_URM.tex:47` Diese Sammlung definiert die Kerngleichungen des \textit{SigmaP-Lab}-Frameworks (Version 10.0). Sie umfasst die fundamentale Definition der Wirkungszelle $\sigma_P$, die Ableitung ...
+  - `assets/papers/Formula_Collection_URM.tex:53` \boxed{\sigma_{\mathrm P} = \frac{\hbar G}{c^{4}}} \quad [L \cdot T]
+  - `assets/papers/Formula_Collection_URM.tex:65` i &\equiv \frac{\Delta A}{\sigma_{\mathrm P}} \qquad \text{(Tick-Index)} \\
+  - `assets/papers/Formula_Collection_URM.tex:66` i_{\rm max} &= \frac{\hbar}{\sigma_P} = \frac{c^4}{G} \\
+  - `assets/papers/Formula_Collection_URM.tex:73` E_{\rm kin} &= \sigma_P \cdot \frac{i_{\rm kin}}{t_P} \\
+  - `assets/papers/Formula_Collection_URM.tex:79` A_G = \frac{G^2}{c^4}, \qquad Z = \frac{\hbar^2}{c} \quad \Rightarrow \quad Z \cdot A_G = \sigma_P
+  - `assets/papers/Formula_Collection_URM.tex:102` \overline{T}_{\mu\nu}(x) = \int d^4y\sqrt{-g(y)} K_{\sigma_P}(x,y)\Pi_{\mu}{}^{\mu'}\Pi_{\nu}{}^{\nu'}T_{\mu'\nu'}(y)
+  - `assets/papers/Formula_Collection_URM.tex:128` Der Tick-Index $i = \Delta A / \sigma_P$ zeigt:
+  - ... 1 more hits in `Formula_Collection_URM.tex`
+- `MOND_from_Smeared_GR.tex` (6 hits)
+  - `assets/papers/MOND_from_Smeared_GR.tex:31` \newcommand{\sigP}{\sigma_{\mathrm P}} % l_P t_P = \hbar G / c^4
+  - `assets/papers/MOND_from_Smeared_GR.tex:51` We derive the MOND phenomenology from \emph{unchanged} Einstein equations by replacing the microscopic source $T_{\mu\nu}$ with a Lorentz-covariant average over the invariant two-m...
+  - `assets/papers/MOND_from_Smeared_GR.tex:70` \overline{T}_{\mu\nu}(x)=\!\int d^4y\,\sqrt{|g(y)|}\;K_{\sigP}(x,y)\;\Pi_{\mu}{}^{\mu'}(x,y)\Pi_{\nu}{}^{\nu'}(x,y)\;T_{\mu'\nu'}(y),
+  - `assets/papers/MOND_from_Smeared_GR.tex:73` with positive kernel $K_{\sigP}\!\ge0$ and parallel propagator $\Pi$. Local conservation holds up to $\cO(\sigP^2)$.
+  - `assets/papers/MOND_from_Smeared_GR.tex:76` K_{\sigP}(x,y)=\frac{1}{(2\pi\sigP)^2}\exp\!\Big(-\frac{2\,\sigma(x,y)}{\sigP}\Big).
+  - `assets/papers/MOND_from_Smeared_GR.tex:190` \textit{No Dark Energy Needed: The Cosmological Constant Problem solved by $\ell_P t_P = \sigma_{\mathrm P} = \hbar G / c^4 \rightarrow \alpha_{\sigma} = \sigma_{\mathrm P}/(R\cdot...
+- `QFT,GR und SRT.tex` (125 hits)
+  - `assets/papers/QFT,GR und SRT.tex:24` \newcommand{\sigP}{\sigma_{\!P}}
+  - `assets/papers/QFT,GR und SRT.tex:29` \newcommand{\Ksig}{K_{\sigma_P}}
+  - `assets/papers/QFT,GR und SRT.tex:46` \sigma_P = \ell_P\, t_P = \frac{\hbar G}{c^4} \quad (L \cdot T), \qquad
+  - `assets/papers/QFT,GR und SRT.tex:47` \alpha_{\sigma} = \frac{\sigma_P}{R\, t}, \qquad
+  - `assets/papers/QFT,GR und SRT.tex:54` \(\hbar\) (Spin/Wirkung) und \(G\) (Gravitation) stabilisieren sich gegenseitig innerhalb der \(\sigma_P\)-Zelle;
+  - `assets/papers/QFT,GR und SRT.tex:58` die Quelle wird \(\sigma_P\)-kovariant gemittelt.
+  - `assets/papers/QFT,GR und SRT.tex:60` Das Planck’sche Zwei-Maß \(\sigma_P = \ell_P t_P\) quantisiert das Produkt von Raum und Zeit zu einer fundamentalen \emph{Raumzeit-Zelle}.\\
+  - `assets/papers/QFT,GR und SRT.tex:65` sodass \(\sigma_P = \hbar G / c^4\) zwangsläufig folgt.
+  - ... 117 more hits in `QFT,GR und SRT.tex`
+- `QSTF_Hierarchical_Mergers.tex` (16 hits)
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:40` \sigma_{\mathrm P} = \frac{\hbar G}{c^4} = \ell_{\mathrm P}t_{\mathrm P}.
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:59` \sigma_{\mathrm P} = \ell_{\mathrm P} t_{\mathrm P} = \frac{\hbar G}{c^4},
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:74` \sigma_{\mathrm P}=\ell_{\mathrm P}t_{\mathrm P}=\frac{\hbar G}{c^4}.
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:78` \alpha_{\sigma} = \frac{\sigma_{\mathrm P}}{R\,t}, \qquad
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:90` \!\int d^4y\,\sqrt{|g(y)|}\,K_{\sigma_{\mathrm P}}(x,y)\,T_{\mu\nu}(y),
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:92` where \(K_{\sigma_{\mathrm P}}(x,y)\!\propto\!\exp[-\sigma_+(x,y)/(2\ell_{\mathrm P}^2)]\)
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:99` N_\sigma = \frac{R\,t}{\sigma_{\mathrm P}} \approx 10^{122},
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:122` When two BHs approach within Planck-scale separations, their horizons consist of clusters of \(\sigma_{\mathrm P}\)-cells.
+  - ... 8 more hits in `QSTF_Hierarchical_Mergers.tex`
+- `Quantum Gravity aus erster Geometrie.tex` (52 hits)
+  - `assets/papers/Quantum Gravity aus erster Geometrie.tex:28` Die Größe \(\sigma_{\mathrm P} = \hbar G / c^{4} = \ell_{\mathrm P} t_{\mathrm P}\)
+  - `assets/papers/Quantum Gravity aus erster Geometrie.tex:38` entsteht direkt aus der Struktur von \(\sigma_{\mathrm P}\).
+  - `assets/papers/Quantum Gravity aus erster Geometrie.tex:64` \sigma_{\mathrm P} = \ell_{\mathrm P} \, t_{\mathrm P}
+  - `assets/papers/Quantum Gravity aus erster Geometrie.tex:93` \sigma_{\mathrm P}
+  - `assets/papers/Quantum Gravity aus erster Geometrie.tex:115` \ell_{\mathrm P} = \frac{\sigma_{\mathrm P}}{t_{\mathrm P}},
+  - `assets/papers/Quantum Gravity aus erster Geometrie.tex:117` t_{\mathrm P} = \frac{\sigma_{\mathrm P}}{\ell_{\mathrm P}}.
+  - `assets/papers/Quantum Gravity aus erster Geometrie.tex:122` \(\sigma_{\mathrm P} = \hbar G / c^{4}\)
+  - `assets/papers/Quantum Gravity aus erster Geometrie.tex:129` = \sqrt{\sigma_{\mathrm P} \, c},
+  - ... 44 more hits in `Quantum Gravity aus erster Geometrie.tex`
+- `Rediscovering Geometry without SuperMUC.tex` (12 hits)
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:14` \large A $\sigma_{\mathrm P}$-based Counter-Simulation of the Galactic Center Morphology}
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:24` \emph{without} any $N$-body or magneto-hydrodynamical simulations, using only Newtonian gravity, Einsteinian curvature, and the $\sigma_{\mathrm P}$-framework.
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:50` This scale also appears naturally from the $\sigma_{\mathrm P}$ scaling:
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:98` \textbf{Property} & \textbf{Muru et al. (HESTIA)} & \textbf{$\sigma_{\mathrm P}$ analytic} \\
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:115` \sigma_P=\ell_P t_P=\frac{\hbar G}{c^4},\qquad
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:116` \alpha_\sigma=\frac{\sigma_P}{R\,t},\qquad
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:182` K_{\sigma_P}(x,y) = \frac{1}{\mathcal N}\exp\!\left[-\frac{\sigma_+(x,y)}{2s^2}\right],
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:186` \(\int d^4y\,\sqrt{-g}\,K_{\sigma_P}=1\).
+  - ... 4 more hits in `Rediscovering Geometry without SuperMUC.tex`
+- `The Memory of Spacetime.tex` (52 hits)
+  - `assets/papers/The Memory of Spacetime.tex:60` \newcommand{\sigP}{\sigma_{\mathrm P}}
+  - `assets/papers/The Memory of Spacetime.tex:132` \sigma_P = \ell_P\,t_P = \frac{\hbar\,G}{c^4},
+  - `assets/papers/The Memory of Spacetime.tex:381` dem \emph{Raumzeitquantum}~$\sigma_P = \ell_P t_P = \hbar G / c^4$,
+  - `assets/papers/The Memory of Spacetime.tex:395` Es gibt ein kleinstes Maß für Raum und Zeit – das \emph{Raumzeitquantum}~$\sigma_P = \ell_P t_P$.
+  - `assets/papers/The Memory of Spacetime.tex:425` Die Einführung von \(\sigP\) (Sigma Planck) führt zu einer natürlichen Einschränkung:
+  - `assets/papers/The Memory of Spacetime.tex:427` \Delta x\,\Delta t \ge \sigP,
+  - `assets/papers/The Memory of Spacetime.tex:432` d\tilde{s}^2 = \frac{ds^2}{1+\sigP^{-1}f(\mathcal{R},x)},
+  - `assets/papers/The Memory of Spacetime.tex:443` V_{\sigma} = \sigP^{3/2}
+  - ... 44 more hits in `The Memory of Spacetime.tex`
+- `The Paradox Paper.tex` (94 hits)
+  - `assets/papers/The Paradox Paper.tex:131` \sigma_{\mathrm P} = \ell_{\mathrm P} t_{\mathrm P} = \frac{\hbar G}{c^{4}}.
+  - `assets/papers/The Paradox Paper.tex:136` $\sigma_{\mathrm P}$ (Sigma Planck) ist nach Max Planck benannt und entsteht als Produkt aus den beiden kleinsten natürlichen Einheiten von Raum und Zeit — Plancklänge und Planckze...
+  - `assets/papers/The Paradox Paper.tex:149` Die Zeit bleibt real, da $\sigma_{\mathrm P}$ sie untrennbar mit dem Raum verbindet.
+  - `assets/papers/The Paradox Paper.tex:203` \sigma_{\mathrm P}
+  - `assets/papers/The Paradox Paper.tex:228` \Delta x\,\Delta t \ge \sigma_{\mathrm P}.
+  - `assets/papers/The Paradox Paper.tex:234` &= \frac{g_{\mu\nu}(x)}{1+\sigma_{\mathrm P}^{-1}f(\mathcal{R}(x))},\\
+  - `assets/papers/The Paradox Paper.tex:243` \right\rangle_{\sigma_{\mathrm P}}
+  - `assets/papers/The Paradox Paper.tex:248` \right\rangle_{\sigma_{\mathrm P}}^{(W)},\\
+  - ... 86 more hits in `The Paradox Paper.tex`
+- `The Problem of Time.tex` (126 hits)
+  - `assets/papers/The Problem of Time.tex:60` \newcommand{\sigP}{\sigma_{\mathrm P}}
+  - `assets/papers/The Problem of Time.tex:110` \(\sigma_P = \hbar G / c^4\) ersetzt, so entsteht ein Planck-kovarianter Minkowski–Zander-Raum,
+  - `assets/papers/The Problem of Time.tex:117` \Delta x\,\Delta t \;\ge\; \sigma_P.
+  - `assets/papers/The Problem of Time.tex:122` Versuche, Raum und Zeit weiter als \(\sigma_P\) zu teilen, führen nicht zu höherer Präzision,
+  - `assets/papers/The Problem of Time.tex:130` weil jedes Ereignis durch eine minimale, nicht umkehrbare Wirkungszelle \(\sigma_P\) getrennt ist.
+  - `assets/papers/The Problem of Time.tex:203` \sigP = \frac{\hbar G}{c^4}
+  - `assets/papers/The Problem of Time.tex:214` Erst mit der endlichen Raumzeitauflösung \(\sigP\)
+  - `assets/papers/The Problem of Time.tex:244` In einem $\sigP$-quantisierten Raumzeitbild wird Zeit nicht länger als externe Variable betrachtet,
+  - ... 118 more hits in `The Problem of Time.tex`
+- `Universal_Resonance_Model.tex` (4 hits)
+  - `assets/papers/Universal_Resonance_Model.tex:74` G_{\mu\nu} + \left[ R_{ij} \cdot \frac{\sigma_P}{\hbar\sqrt{-g}} \right] = \oint_{\partial\Omega} \left[ \frac{\delta\phi}{\delta x^\alpha} \otimes J^\alpha + \kappa \int \zeta(t) ...
+  - `assets/papers/Universal_Resonance_Model.tex:76` Where $\sigma_P = \ell_P t_P = \frac{\hbar G}{c^4}$ defines the fundamental spacetime quantum.
+  - `assets/papers/Universal_Resonance_Model.tex:234` The URM unifies classical and quantum systems by modeling them as resonant modes in a vibratory medium. However, the final ontological leap of the model—\textbf{Perspective Monism}...
+  - `assets/papers/Universal_Resonance_Model.tex:236` In this view, the cosmological constant $\Lambda = 1/(cRt)$ represents the perceived "thinning" or aging of this single, unique quantum as observed through our temporal and radial ...
+- `Zander_2025_Natural_Structure.tex` (12 hits)
+  - `assets/papers/Zander_2025_Natural_Structure.tex:44` \newcommand{\sigP}{\sigma_{\mathrm P}}
+  - `assets/papers/Zander_2025_Natural_Structure.tex:63` \(\displaystyle \sigma_P = \frac{\hbar G}{c^4}\).
+  - `assets/papers/Zander_2025_Natural_Structure.tex:90` \sigma_P = \ell_P\, t_P = \frac{\hbar G}{c^4},
+  - `assets/papers/Zander_2025_Natural_Structure.tex:97` \item the same \(\sigma_P\) regulates vacuum energy and fixes \(\Lambda = 1/(c R t)\) from first principles,
+  - `assets/papers/Zander_2025_Natural_Structure.tex:115` \sigma_P \;=\; \ell_P\, t_P \;=\; \frac{\hbar G}{c^4},
+  - `assets/papers/Zander_2025_Natural_Structure.tex:117` with units \([\sigma_P] = \mathrm{m\cdot s}\). It can be interpreted as the elementary spacetime cell that links quantum action \(\hbar\) and gravitational coupling \(G\) within a ...
+  - `assets/papers/Zander_2025_Natural_Structure.tex:149` K_{\sigP}(x,y) &= \frac{1}{\mathcal N}\exp\!\Big[-\sigma_+(x,y)/(2s^2)\Big],\qquad s_{\min}^2\equiv \ell_P^2, \\[-2pt]
+  - `assets/papers/Zander_2025_Natural_Structure.tex:150` \overline{T}_{\mu\nu}(x) &= \int d^4y\,\sqrt{-g(y)}\;K_{\sigP}(x,y)\;
+  - ... 4 more hits in `Zander_2025_Natural_Structure.tex`
+- `Zander_2025_Price_of_Love.tex` (33 hits)
+  - `assets/papers/Zander_2025_Price_of_Love.tex:157` \hat{G}_{\mu\nu}[\sigma_P; W] \, |\Psi_W\rangle = \frac{8\pi G}{c^4} \, \overline{T}_{\mu\nu} \, |\Psi_W\rangle.
+  - `assets/papers/Zander_2025_Price_of_Love.tex:171` \begin{tcolorbox}[title={\bf Understanding $\sigma_P$ and Dimensions}]
+  - `assets/papers/Zander_2025_Price_of_Love.tex:172` \textbf{What is $\sigma_P$?}
+  - `assets/papers/Zander_2025_Price_of_Love.tex:175` \sigma_P = \frac{\hbar G}{c^4} \sim L \cdot T
+  - `assets/papers/Zander_2025_Price_of_Love.tex:192` \textbf{Why $\sigma_P$ matters dimensionally:}
+  - `assets/papers/Zander_2025_Price_of_Love.tex:194` - $\sigma_P \sim L \cdot T$ tells us the minimal combination of space and time that a quantum of action occupies.
+  - `assets/papers/Zander_2025_Price_of_Love.tex:196` - Multiply by $c^2$ to get $\sigma_P c^2 \sim L^3 \cdot T$, the effective volume per tick.
+  - `assets/papers/Zander_2025_Price_of_Love.tex:198` - Two masses in this cell give $M^2 \cdot \sigma_P c^2 \sim M^2 L^3 T$, which combined with relative scales reproduces $[\hbar^2] = M^2 L^4 T^{-2}$.
+  - ... 25 more hits in `Zander_2025_Price_of_Love.tex`
+- `Zander_2025_Time_Entropy.tex` (13 hits)
+  - `assets/papers/Zander_2025_Time_Entropy.tex:17` In der etablierten Thermodynamik und der Allgemeinen Relativitätstheorie werden Zeit und Entropie häufig als a priori existente Strukturen oder statistische Emergenzen behandelt. D...
+  - `assets/papers/Zander_2025_Time_Entropy.tex:34` \subsection{Die fundamentale Zelle $\sigma_P$}
+  - `assets/papers/Zander_2025_Time_Entropy.tex:37` \sigma_P = \frac{\hbar G}{c^4} \quad [\text{m} \cdot \text{s}].
+  - `assets/papers/Zander_2025_Time_Entropy.tex:44` G = \frac{\sigma_P c^4}{\hbar} = \frac{\hbar c^3}{W}.
+  - `assets/papers/Zander_2025_Time_Entropy.tex:51` i = \frac{\Delta A}{\sigma_P} = \frac{E \cdot \Delta t}{\sigma_P}.
+  - `assets/papers/Zander_2025_Time_Entropy.tex:53` Dabei ist $i$ streng ganzzahlig zu verstehen ($\Delta A \ge \sigma_P$), im makroskopischen Limes wird es als kontinuierlich genähert.
+  - `assets/papers/Zander_2025_Time_Entropy.tex:77` Betrachten wir ein System mit zwei Basisvorgängen: Einem hochenergetischen Spin-Prozess ($|hf\rangle$) und einem trägen Masse-Zustand ($|mc^2\rangle$). Die Evolution des Erwartungs...
+  - `assets/papers/Zander_2025_Time_Entropy.tex:82` \Delta t = \sigma_P \frac{i}{E}.
+  - ... 5 more hits in `Zander_2025_Time_Entropy.tex`
+- `die natürliche Struktur der Raumzeit.tex` (231 hits)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:73` \newcommand{\sigP}{\sigma_{\mathrm P}} % Planck-Zweimaß
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:108` \sigma_{\mathrm P} = \frac{\hbar G}{c^4}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:128` \alpha_\sigma = \frac{\sigma_P}{R t}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:145` \sigma_{\mathrm P} = \ell_{\mathrm P}\,t_{\mathrm P} = \frac{\hbar G}{c^4}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:151` Das Planck-Zweimaß \(\sigma_{\mathrm P}\) liefert genau dieses fehlende Bindeglied.
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:173` \sigma_{\mathrm P} = \frac{\hbar G}{c^4} = \ell_{\mathrm P} t_{\mathrm P},
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:179` N_\sigma = \frac{R t}{\sigma_{\mathrm P}} \approx 10^{122}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:186` Sowohl Quantenfeldtheorie als auch Einstein’sche Krümmung bestätigen damit \(\sigma_{\mathrm P}\) als fundamentales Invariant der Natur.
+  - ... 223 more hits in `die natürliche Struktur der Raumzeit.tex`
+
+## `lambda_eff` (168 hits)
+
+- `A Requiem for LCDM.tex` (4 hits)
+  - `assets/papers/A Requiem for LCDM.tex:65` \newcommand{\Lambdaeff}{\Lambda_{\mathrm{eff}}}
+  - `assets/papers/A Requiem for LCDM.tex:232` + \Lambda_{\mathrm{eff}}(W)\,g_{\mu\nu}
+  - `assets/papers/A Requiem for LCDM.tex:239` \Lambda_{\mathrm{eff}}(W)
+  - `assets/papers/A Requiem for LCDM.tex:245` G_{\mu\nu} + \Lambda_{\mathrm{eff}}g_{\mu\nu}
+- `Formelsammlung.tex` (6 hits)
+  - `assets/papers/Formelsammlung.tex:21` = \frac{c^3}{16\pi G} \int d^4x \, \sqrt{-g} \, \Big(R - 2\,\Lambda_{\rm eff}(t)\Big)
+  - `assets/papers/Formelsammlung.tex:27` \item $\Lambda_{\rm eff}(t) \sim 1/(c R t)$ die stochastisch-entropische Glättung über die zugängliche Raumzeit beschreibt,
+  - `assets/papers/Formelsammlung.tex:33` G_{\mu\nu} + \Lambda_{\rm eff}(t) \, g_{\mu\nu} = \frac{8 \pi G}{c^4} \, \langle T_{\mu\nu}^{(\sigma)} \rangle \,,
+  - `assets/papers/Formelsammlung.tex:60` \item $\Lambda_{\rm eff}(t)$ ist dynamisch, verschwindet asymptotisch für $t \to \infty$, kein Divergenzproblem.
+  - `assets/papers/Formelsammlung.tex:99` S[g,\Psi] = \frac{c^3}{16\pi G}\int d^4x\sqrt{-g}\,\big(R - 2\Lambda_{\rm eff}(t)\big) + S_{\rm m}^{(\sigma)}[g,\Psi]
+  - `assets/papers/Formelsammlung.tex:103` \Lambda_{\rm eff}(t) = \frac{\alpha_\sigma(t)}{\ell_P^2}
+- `Formula_Collection_URM.tex` (3 hits)
+  - `assets/papers/Formula_Collection_URM.tex:87` S[g,\Psi] = \frac{c^3}{16\pi G}\int d^4x\sqrt{-g}\Big(R - 2\Lambda_{\rm eff}(t)\Big) + S_{\rm m}^{(\sigma)}[g,\Psi]
+  - `assets/papers/Formula_Collection_URM.tex:92` \Lambda_{\rm eff}(t) = \frac{\alpha_\sigma(t)}{\ell_P^2} = \frac{1}{c R(t) t}
+  - `assets/papers/Formula_Collection_URM.tex:98` G_{\mu\nu}[g] + \Lambda_{\rm eff}(t)g_{\mu\nu} = \frac{8\pi G}{c^4}\overline T_{\mu\nu}
+- `QSTF_Hierarchical_Mergers.tex` (4 hits)
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:79` \Lambda_{\mathrm{eff}}(W) = \frac{3\,\alpha_{\sigma}}{\ell_{\mathrm P}^2} = \frac{3}{c\,R\,t}.
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:84` G_{\mu\nu}[g] + \Lambda_{\mathrm{eff}}(t)\,g_{\mu\nu}
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:174` \item The cosmological constant maintains \(\Lambda_{\mathrm{eff}} = 3/(cRt)\) without evolution beyond observational limits.
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:214` \Lambda_{\mathrm{eff}}(W) = \frac{3}{c\,R\,t}
+- `Rediscovering Geometry without SuperMUC.tex` (10 hits)
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:52` \Lambda_{\rm eff}(t) = \frac{3}{c\,R\,t},
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:54` g_\ast = \frac{c^2 \Lambda_{\rm eff}}{3},
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:117` \Lambda_{\rm eff}(t)=\frac{3}{c\,R(t)\,t}=\frac{3\,\alpha_\sigma(t)}{\ell_P^2}.
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:128` Alternatively, one may define $\Lambda_{\rm eff}\equiv \Lambda c^2$ (in $\mathrm{s^{-2}}$)
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:129` and write $H^2 = \Lambda_{\rm eff}/3 + 8\pi G\rho/3$.
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:140` \item and $\Lambda_{\rm eff}\simeq 1.76\times 10^{-52}\,\mathrm{m^{-2}}$ for
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:145` \item $H^2=\Lambda_{\rm eff}/3+8\pi G\rho/3$; reasonable choices of the effective causal radius $R$ only shift these numbers by $\mathcal O(1)$ (no fit parameters).
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:151` S[g,\Psi] = \frac{c^3}{16\pi G}\!\int d^4x\,\sqrt{-g}\,\big(R - 2\,\Lambda_{\rm eff}(t)\big)
+  - ... 2 more hits in `Rediscovering Geometry without SuperMUC.tex`
+- `The Dimensional Structure of Reality.tex` (4 hits)
+  - `assets/papers/The Dimensional Structure of Reality.tex:92` $\Lambda_{\mathrm{eff}} = 1/(c R t)$ without introducing new fields or
+  - `assets/papers/The Dimensional Structure of Reality.tex:155` \Lambda_{\mathrm{eff}} = \frac{1}{c R t},
+  - `assets/papers/The Dimensional Structure of Reality.tex:323` \Lambda_{\mathrm{eff}} = \frac{1}{c R t},
+  - `assets/papers/The Dimensional Structure of Reality.tex:327` G_{\mu\nu} + \Lambda_{\mathrm{eff}} g_{\mu\nu}
+- `The Memory of Spacetime.tex` (5 hits)
+  - `assets/papers/The Memory of Spacetime.tex:601` (\widehat{G}_{\mu\nu}+\Lambda_{\mathrm{eff}}g_{\mu\nu})
+  - `assets/papers/The Memory of Spacetime.tex:604` \Lambda_{\mathrm{eff}}(W)=\frac{3}{cR\,t},
+  - `assets/papers/The Memory of Spacetime.tex:610` = G_{\mu\nu}+\Lambda_{\mathrm{eff}}g_{\mu\nu}
+  - `assets/papers/The Memory of Spacetime.tex:672` G_{\mu\nu}+\Lambda_{\rm eff}(W)g_{\mu\nu}=\frac{8\pi G}{c^4}\overline{T}_{\mu\nu}^{(W)},\quad
+  - `assets/papers/The Memory of Spacetime.tex:673` \Lambda_{\rm eff}(W)=\frac{3}{cRt},
+- `The Paradox Paper.tex` (7 hits)
+  - `assets/papers/The Paradox Paper.tex:62` \newcommand{\Lambdaeff}{\Lambda_{\mathrm{eff}}}
+  - `assets/papers/The Paradox Paper.tex:242` + \Lambda_{\mathrm{eff}}(W)\,g_{\mu\nu}
+  - `assets/papers/The Paradox Paper.tex:249` \Lambda_{\mathrm{eff}}(W)
+  - `assets/papers/The Paradox Paper.tex:255` G_{\mu\nu} + \Lambda_{\mathrm{eff}}g_{\mu\nu}
+  - `assets/papers/The Paradox Paper.tex:1056` + \Lambda_{\mathrm{eff}}(W)\,g_{\mu\nu}
+  - `assets/papers/The Paradox Paper.tex:1555` \Lambda_{\mathrm{eff}}(W) = \frac{3}{c R t}.
+  - `assets/papers/The Paradox Paper.tex:2361` G_{\mu\nu}[g]+\Lambda_{\mathrm eff}(W) g_{\mu\nu}
+- `The Problem of Time.tex` (6 hits)
+  - `assets/papers/The Problem of Time.tex:629` \widehat{G}_{\mu\nu} + \Lambda_{\mathrm{eff}}(W)\,g_{\mu\nu}
+  - `assets/papers/The Problem of Time.tex:641` -2\int d^4x\sqrt{-g}\,\Lambda_{\mathrm{eff}}(W)\big)}
+  - `assets/papers/The Problem of Time.tex:645` -2\int d^4x\sqrt{-g}\,\Lambda_{\mathrm{eff}}(W)\big)}
+  - `assets/papers/The Problem of Time.tex:932` \Lambda_{\mathrm{eff}}
+  - `assets/papers/The Problem of Time.tex:1449` \Lambda_{\mathrm{eff}}
+  - `assets/papers/The Problem of Time.tex:1473` Würde \(\Lambda_{\mathrm{eff}} > 3.1/(c R t)\) gelten,
+- `Zander_2025_Dimensional_Foundations.tex` (4 hits)
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:57` $\Lambda_{\mathrm{eff}} = 1/(c R t)$ without introducing new fields or
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:120` \Lambda_{\mathrm{eff}} = \frac{1}{c R t},
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:288` \Lambda_{\mathrm{eff}} = \frac{1}{c R t},
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:292` G_{\mu\nu} + \Lambda_{\mathrm{eff}} g_{\mu\nu}
+- `Zander_2025_Natural_Structure.tex` (9 hits)
+  - `assets/papers/Zander_2025_Natural_Structure.tex:122` S[g,\Psi] \;=\; \frac{c^3}{16\pi G}\!\int d^4x\,\sqrt{-g}\,\Big(R - 2\,\Lambda_{\rm eff}(t)\Big)\;
+  - `assets/papers/Zander_2025_Natural_Structure.tex:125` \Lambda_{\rm eff}(t) \;=\; \frac{\alpha_\sigma(t)}{\lP^2}
+  - `assets/papers/Zander_2025_Natural_Structure.tex:134` G_{\mu\nu}[g] + \Lambda_{\rm eff}(t)\,g_{\mu\nu}
+  - `assets/papers/Zander_2025_Natural_Structure.tex:140` \(\Lambda_{\rm eff}(t)\) is treated as a global scalar fixed by the cosmic background.
+  - `assets/papers/Zander_2025_Natural_Structure.tex:142` \(\nabla^\mu(\Lambda_{\rm eff}(t) g_{\mu\nu})=0\) in the integral sense,
+  - `assets/papers/Zander_2025_Natural_Structure.tex:163` \Lambda_{\rm eff} = (8\pi G/c^4)\rho_{\rm vac}^{(\sigma)}
+  - `assets/papers/Zander_2025_Natural_Structure.tex:166` consistent with \(\Lambda_{\rm eff}=1/(cRt)\).
+  - `assets/papers/Zander_2025_Natural_Structure.tex:222` \Lambda_{\rm eff} = \frac{3}{c\,R\,t},
+  - ... 1 more hits in `Zander_2025_Natural_Structure.tex`
+- `Zander_2025_Price_of_Love.tex` (5 hits)
+  - `assets/papers/Zander_2025_Price_of_Love.tex:275` \Lambda_{\rm eff}(t) = \frac{1}{c R t}, \quad R = \text{Hubble radius}, \ t = \text{cosmological time}.
+  - `assets/papers/Zander_2025_Price_of_Love.tex:286` \[ \Lambda_{\rm eff}(t) = \frac{1}{c R t} \]
+  - `assets/papers/Zander_2025_Price_of_Love.tex:306` \[ G_{\mu\nu} + \Lambda_{\rm eff} g_{\mu\nu} = \frac{8\pi G}{c^4} \langle T_{\mu\nu} \rangle_{\sigma} \]
+  - `assets/papers/Zander_2025_Price_of_Love.tex:399` \Lambda_{\rm eff}(t) = \frac{1}{c R t}, \quad
+  - `assets/papers/Zander_2025_Price_of_Love.tex:401` \hat{G}_{\mu\nu} + \Lambda_{\rm eff} g_{\mu\nu} = \frac{8\pi G}{c^4} \overline{T}_{\mu\nu}.
+- `die natürliche Struktur der Raumzeit.tex` (101 hits)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:352` Da $\Lambda_{\rm eff}\propto \alphaSigma(W)$ gilt, verschwinden sowohl Quell- als auch kosmologische Terme im Doppellimit, und es bleibt $G_{\mu\nu}=0$ mit der Lösung $g\sim \eta$.
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:439` \mathcal{G}_{\mu\nu}[g;W]\;:=\;G_{\mu\nu}[g]\;+\;\Lambda_{\rm eff}(W)\,g_{\mu\nu}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:442` \Lambda_{\rm eff}(W)\;=\;\frac{3\,\alphaSigma(W)}{\lP^2}\;=\;\frac{3}{c\,R\,t}.
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:469` \Lambda_{\rm eff}(W)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:479` Wird die Einstein–Hilbert-Wirkung mit einem unteren Eigenzeit-Grenzwert $s_{\min}=\lP^2$ auf de~Sitter-Bereiche ausgewertet und die FLRW-Identität $H^2=\Lambda_{\rm eff}/3$ erzwung...
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:513` e^{\tfrac{i}{\hbar}\left(S_{\rm EH}^{(\sigP)}[g]-\int d^4x\sqrt{-g}\,2\Lambda_{\rm eff}(W)\right)}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:516` e^{\tfrac{i}{\hbar}\left(S_{\rm EH}^{(\sigP)}[g]-\int d^4x\sqrt{-g}\,2\Lambda_{\rm eff}(W)\right)}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:527` :=\widehat{G}_{\mu\nu}\;+\;\Lambda_{\rm eff}(W)\,g_{\mu\nu}.
+  - ... 93 more hits in `die natürliche Struktur der Raumzeit.tex`
+
+## `alpha_g` (18 hits)
+
+- `Formelsammlung.tex` (2 hits)
+  - `assets/papers/Formelsammlung.tex:71` \alpha_{G}(M) = \frac{G M}{\hbar c}
+  - `assets/papers/Formelsammlung.tex:123` \item[$\alpha_G(M)$] Gravitationskopplung (Massenskala).
+- `Formula_Collection_URM.tex` (3 hits)
+  - `assets/papers/Formula_Collection_URM.tex:59` \alpha_{G}(M) &= \frac{G M}{\hbar c} \qquad \text{(Lineare Massenkoplung)} \\
+  - `assets/papers/Formula_Collection_URM.tex:125` Spin-2-Felder koppeln quadratisch. Während lineare Kopplung ($\alpha_G$) nur eine Wechselwirkung beschreibt, erlaubt die quadratische Struktur ($\chi \sim G M^2$), dass Energie-Imp...
+  - `assets/papers/Formula_Collection_URM.tex:161` def alpha_G(M):
+- `The Dimensional Structure of Reality.tex` (4 hits)
+  - `assets/papers/The Dimensional Structure of Reality.tex:65` \alpha_{G}(M) = \frac{G M}{\hbar c},
+  - `assets/papers/The Dimensional Structure of Reality.tex:146` \alpha_{G}(M) = \frac{G M}{\hbar c}.
+  - `assets/papers/The Dimensional Structure of Reality.tex:223` = 4\pi\,\alpha_{G}(M)\,M.
+  - `assets/papers/The Dimensional Structure of Reality.tex:226` dimensionless gravitational coupling $\alpha_{G}(M)$, while the factor
+- `Zander_2025_Dimensional_Foundations.tex` (4 hits)
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:30` \alpha_{G}(M) = \frac{G M}{\hbar c},
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:111` \alpha_{G}(M) = \frac{G M}{\hbar c}.
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:188` = 4\pi\,\alpha_{G}(M)\,M.
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:191` dimensionless gravitational coupling $\alpha_{G}(M)$, while the factor
+- `Zander_2025_Natural_Structure.tex` (1 hits)
+  - `assets/papers/Zander_2025_Natural_Structure.tex:68` \((\alpha,\alpha_G,\alpha_\Lambda)\)
+- `die natürliche Struktur der Raumzeit.tex` (4 hits)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:117` \((\alpha, \alpha_G, \alpha_\Lambda)\)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:809` \alpha_G^{(pp)} = \frac{G m_p^2}{\hbar c},
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:815` \frac{\alpha_\Lambda}{\alpha\,\alpha_G^{(pp)}}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:1121` =\log_{10}\!\Big(\frac{\alpha_\Lambda}{\alpha\,\alpha_G^{(pp)}}\Big)
+
+## `chi` (17 hits)
+
+- `Formelsammlung.tex` (3 hits)
+  - `assets/papers/Formelsammlung.tex:75` \chi(M) := \frac{G M^{2}}{\hbar c^{3}}
+  - `assets/papers/Formelsammlung.tex:91` E_{\text{quant}}\cdot t_{\text{quant}} = \hbar,\qquad t_{\text{quant}}\sim t\sqrt{\chi(M)}
+  - `assets/papers/Formelsammlung.tex:124` \item[$\chi(M)$] dimensionsloser Parameter $\propto GM^2/(\hbar c^3)$.
+- `Formula_Collection_URM.tex` (2 hits)
+  - `assets/papers/Formula_Collection_URM.tex:60` \chi(M) &:= \frac{G M^2}{\hbar c^3} \qquad \text{(Quadratische Spin-2-Selbstkopplung)}
+  - `assets/papers/Formula_Collection_URM.tex:74` t_{\text{Kerr}} &:= t \cdot \sqrt{\chi(M)} \qquad \text{(Zeitdilatation als Tick-Dichte)}
+- `The Dimensional Structure of Reality.tex` (2 hits)
+  - `assets/papers/The Dimensional Structure of Reality.tex:70` \chi(M) = \frac{G M^{2}}{\hbar c^{3}} \;\sim\; \frac{1}{v^{2}}.
+  - `assets/papers/The Dimensional Structure of Reality.tex:200` v^{-2} \;\sim\; \chi(M) = \frac{G M^{2}}{\hbar c^{3}}.
+- `Zander_2025_Dimensional_Foundations.tex` (2 hits)
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:35` \chi(M) = \frac{G M^{2}}{\hbar c^{3}} \;\sim\; \frac{1}{v^{2}}.
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:165` v^{-2} \;\sim\; \chi(M) = \frac{G M^{2}}{\hbar c^{3}}.
+- `Zander_2025_Price_of_Love.tex` (1 hits)
+  - `assets/papers/Zander_2025_Price_of_Love.tex:334` $ \chi(M) = \frac{G M^2}{\hbar c^3} = \frac{M^2}{\sigma_P c^3} $
+- `Zander_2025_Time_Entropy.tex` (2 hits)
+  - `assets/papers/Zander_2025_Time_Entropy.tex:107` Für gewöhnliche Materie der Masse $m$ ist die gravitative Kopplung $\chi(m) = G m^2 / (\hbar c^3)$ vernachlässigbar. Der Tick-Index bleibt weit unter dem Sättigungslimit:
+  - `assets/papers/Zander_2025_Time_Entropy.tex:117` N_{\text{ticks}} \approx 4\pi \frac{r_s^2}{\ell_P^2} = 4\pi \chi(M).
+- `die natürliche Struktur der Raumzeit.tex` (5 hits)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:1838` Die Distanzen erfüllen \(\chi_{\sigma_P}(z)=\frac{c}{H_0}\ln(1+z)\) (z.\,B.\ \(\chi(1)=0{,}6931\,c/H_0\));
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:2494` \chi(z)=\int_0^z \frac{c\,dz'}{H(z')}=\frac{c}{H_0}\,\frac{2}{2-p}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:2499` D_A(z)=\frac{\chi(z)}{1+z},\qquad d_L(z)=(1+z)\,\chi(z),\qquad
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:2549` \item Distanzen: \(\chi(z)=\dfrac{c}{H_0}\dfrac{2}{2-p}\!\left[(1+z)^{1-p/2}-1\right]\),
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:2590` P\!\left(k=\frac{\ell}{\chi(z)},z\right).
+
+## `kerr_temp` (72 hits)
+
+- `A Requiem for LCDM.tex` (1 hits)
+  - `assets/papers/A Requiem for LCDM.tex:273` T_H(M) = \frac{\hbar c^3}{8\pi G M k_{\mathrm B}}.
+- `Formelsammlung.tex` (1 hits)
+  - `assets/papers/Formelsammlung.tex:95` T_H^{\text{Kerr}} = \frac{\hbar}{2\pi k_B c}\,\kappa
+- `Formula_Collection_URM.tex` (2 hits)
+  - `assets/papers/Formula_Collection_URM.tex:112` \[ H_{\text{Wechsel}} \sim \kappa_{\mathrm Z}\sum_{i<j} T^{\mu\nu}{(i)}h_{\mu\nu}^{(j)} \]
+  - `assets/papers/Formula_Collection_URM.tex:118` \[ \mathcal M \propto \kappa_{\mathrm Z}^2 \frac{T^{\mu\nu}{(1)}(q)P_{\mu\nu\rho\sigma}(q)T^{\rho\sigma}_{(2)}(-q)}{q^2} \]
+- `MOND_from_Smeared_GR.tex` (3 hits)
+  - `assets/papers/MOND_from_Smeared_GR.tex:34` \newcommand{\kappaE}{\kappa} % 8\pi G / c^4
+  - `assets/papers/MOND_from_Smeared_GR.tex:65` G_{\mu\nu}[g]+\Lambda g_{\mu\nu}=\kappaE\,T_{\mu\nu},
+  - `assets/papers/MOND_from_Smeared_GR.tex:66` \quad \kappaE=\frac{8\pi G}{c^4}.
+- `QFT,GR und SRT.tex` (7 hits)
+  - `assets/papers/QFT,GR und SRT.tex:676` = \kappa\, \hat T^{(\sigma_P)}_{\mu\nu}(x)\,\Psi,
+  - `assets/papers/QFT,GR und SRT.tex:677` \qquad \kappa=\tfrac{8\pi G}{c^4}.
+  - `assets/papers/QFT,GR und SRT.tex:725` \(\hat G^{(\sigP)}_{\mu\nu}\Psi=\kappa\,\hat T^{(\sigP)}_{\mu\nu}\Psi\),
+  - `assets/papers/QFT,GR und SRT.tex:818` \hat G^{(\sigP)}_{\mu\nu}\Psi=\kappa\,\hat T^{(\sigP)}_{\mu\nu}\Psi
+  - `assets/papers/QFT,GR und SRT.tex:1075` \big|\lP^{4}\,\mathcal K\big|\ \lesssim\ C \big(\lP^{4}\Lambda^{2} + \lP^{4}\kappa^{2}T_{\max}^{2}\big)\ \lesssim\ \mathcal O(1)\, ,
+  - `assets/papers/QFT,GR und SRT.tex:1078` mit \(\kappa=8\pi G/c^{4}\).
+  - `assets/papers/QFT,GR und SRT.tex:1082` (i) Spure die Feldgleichung: \(R=4\Lambda - \kappa\,T^{(\sigP)}\) ⇒ \(|R|\) ist beschränkt, falls \(T^{(\sigP)}\) beschränkt ist.
+- `The Dimensional Structure of Reality.tex` (5 hits)
+  - `assets/papers/The Dimensional Structure of Reality.tex:88` \kappa_{\mathrm{QG}} = \frac{G}{\hbar c^{2}},
+  - `assets/papers/The Dimensional Structure of Reality.tex:159` \kappa_{\mathrm{QG}} = \frac{G}{\hbar c^{2}}
+  - `assets/papers/The Dimensional Structure of Reality.tex:314` \kappa_{\mathrm{QG}} = \frac{G}{\hbar c^{2}}
+  - `assets/papers/The Dimensional Structure of Reality.tex:328` = \kappa_{\mathrm{QG}}\, T_{\mu\nu}^{\text{Planck-averaged}}.
+  - `assets/papers/The Dimensional Structure of Reality.tex:339` \Box h_{\mu\nu} = - 2\, \kappa_{\mathrm{QG}}\,
+- `The Memory of Spacetime.tex` (10 hits)
+  - `assets/papers/The Memory of Spacetime.tex:552` T_H = \frac{\hbar c^3}{8\pi G M k_{\mathrm B}},
+  - `assets/papers/The Memory of Spacetime.tex:661` T_H = \frac{\hbar c^3}{8\pi GM k_B}, \quad
+  - `assets/papers/The Memory of Spacetime.tex:704` \bigl\{\,T_H(t),\, M(t),\, \dot{M}(t),\, S(t),\, M_{\rm rem},\, I(t),\, R(r,t),\, \Phi(r,t)\,\bigr\}.
+  - `assets/papers/The Memory of Spacetime.tex:717` \item $M(t)$ und $T_H(t)$ für alle 10 Objekte, semiklassisch vs. vollquantum.
+  - `assets/papers/The Memory of Spacetime.tex:767` \# & Typ & $M_0$ [kg] & $r_s$ [m] & $T_H^{(0)}$ [K] & $\tau$ [Jahre] \\
+  - `assets/papers/The Memory of Spacetime.tex:790` T_H = \frac{\hbar c^3}{8\pi G M k_B},
+  - `assets/papers/The Memory of Spacetime.tex:824` PBH ($10^{12}$ kg) & Total verdampft, $T_H\!\to\!\infty$ & $M_{\rm rem}=M_P$, $T_H^{(\sigma_P)}\!\le\!T_{\max}$ \\
+  - `assets/papers/The Memory of Spacetime.tex:943` T_H = \frac{\hbar c^3}{8\pi G M k_B}
+  - ... 2 more hits in `The Memory of Spacetime.tex`
+- `The Paradox Paper.tex` (3 hits)
+  - `assets/papers/The Paradox Paper.tex:283` T_H(M) = \frac{\hbar c^3}{8\pi G M k_{\mathrm B}}.
+  - `assets/papers/The Paradox Paper.tex:745` T_H(M)=\frac{\hbar c^3}{8\pi G M k_{\mathrm B}},
+  - `assets/papers/The Paradox Paper.tex:761` bis \(T_H\to\infty\) und \(M\to0\).
+- `The Problem of Time.tex` (21 hits)
+  - `assets/papers/The Problem of Time.tex:1068` \subsection{Die Rolle von \texorpdfstring{$\kappa \approx 3{,}3$}{kappa ~ 3.3}
+  - `assets/papers/The Problem of Time.tex:1073` \kappa_{\mathrm{obs}}
+  - `assets/papers/The Problem of Time.tex:1087` \item $\kappa_{\mathrm{geo}} = 3$ ist der \emph{nackte geometrische Faktor}
+  - `assets/papers/The Problem of Time.tex:1090` \item $\kappa_{\mathrm{eff}} \approx 3.3$ ist der \emph{effektive Faktor},
+  - `assets/papers/The Problem of Time.tex:1116` \item Der Faktor $\kappa\approx3.3$ liegt nahe beim geometrischen Grenzwert 3
+  - `assets/papers/The Problem of Time.tex:1156` \addlegendentry{beobachteter Wert $\kappa_{\mathrm{obs}}\approx3.3$};
+  - `assets/papers/The Problem of Time.tex:1165` $\kappa_{\mathrm{obs}} \approx 3.3$
+  - `assets/papers/The Problem of Time.tex:1176` und der beobachtete Wert $\kappa_{\mathrm{obs}}\approx3.3$
+  - ... 13 more hits in `The Problem of Time.tex`
+- `Universal_Resonance_Model.tex` (3 hits)
+  - `assets/papers/Universal_Resonance_Model.tex:49` \Box \phi + \gamma \partial^\mu \phi + \alpha \phi^3 + \beta \phi^5 = q E_{\text{Res}} + \lambda \langle \hat{Q} \rangle + \eta \epsilon^{\mu\nu\rho\sigma} \partial_\mu \phi \parti...
+  - `assets/papers/Universal_Resonance_Model.tex:61` \item \textbf{$\kappa \partial_t \phi$}: Specific temporal damping, defining the arrow of time as a dissipative process.
+  - `assets/papers/Universal_Resonance_Model.tex:74` G_{\mu\nu} + \left[ R_{ij} \cdot \frac{\sigma_P}{\hbar\sqrt{-g}} \right] = \oint_{\partial\Omega} \left[ \frac{\delta\phi}{\delta x^\alpha} \otimes J^\alpha + \kappa \int \zeta(t) ...
+- `Zander_2025_Dimensional_Foundations.tex` (5 hits)
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:53` \kappa_{\mathrm{QG}} = \frac{G}{\hbar c^{2}},
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:124` \kappa_{\mathrm{QG}} = \frac{G}{\hbar c^{2}}
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:279` \kappa_{\mathrm{QG}} = \frac{G}{\hbar c^{2}}
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:293` = \kappa_{\mathrm{QG}}\, T_{\mu\nu}^{\text{Planck-averaged}}.
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:304` \Box h_{\mu\nu} = - 2\, \kappa_{\mathrm{QG}}\,
+- `Zander_2025_Time_Entropy.tex` (1 hits)
+  - `assets/papers/Zander_2025_Time_Entropy.tex:123` Dies reproduziert exakt das Verhalten $T_H \propto 1/M$, jedoch ohne Rückgriff auf statistische Ensembles. Das Schwarze Loch ist ein Kinematik-Transformator, der Masse durch hohe T...
+- `die natürliche Struktur der Raumzeit.tex` (10 hits)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:1778` \subsection*{C.7 Schwache Gravitationslinsen (Tomographische \(C_\ell^\kappa\)): Linearprognosen für \(\sigma_P\) vs.\ \(\Lambda\)CDM}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:1832` Da \(C_\ell^\kappa \propto S_8^2\) auf linearen Skalen gilt,
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:2039` T_H(r) = \frac{\hbar c^3}{8 \pi G\,M(<r)\,k_B}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:2046` Die Regularisierung lässt $T_H$ am Horizont praktisch unverändert
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:2391` Tomographische \(C_\ell^\kappa\)-Spektren zeigen
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:2417` \item keine Abschwächung im \(C_\ell^\kappa\)-Spektrum oder gegenteiliges Vorzeichen,
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:2584` Die tomographischen $C_\ell^\kappa$-Spektren wurden in vier Median-$z$-Bins
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:2588` C_\ell^{\kappa,ij}=\int_0^{\chi_s}\frac{dz}{H(z)}\,
+  - ... 2 more hits in `die natürliche Struktur der Raumzeit.tex`
+
+## `kernel_sigma` (59 hits)
+
+- `Formelsammlung.tex` (2 hits)
+  - `assets/papers/Formelsammlung.tex:45` K_{\sigma_P}(x,y) = \frac{1}{(2\pi)^2 \ell_\ast^3 \tau_\ast}
+  - `assets/papers/Formelsammlung.tex:117` K_{\sigma_P}(x,y) = \frac{1}{\mathcal N}\exp\Big[-\sigma_+(x,y)/(2\ell_P^2)\Big]
+- `Formula_Collection_URM.tex` (1 hits)
+  - `assets/papers/Formula_Collection_URM.tex:102` \overline{T}_{\mu\nu}(x) = \int d^4y\sqrt{-g(y)} K_{\sigma_P}(x,y)\Pi_{\mu}{}^{\mu'}\Pi_{\nu}{}^{\nu'}T_{\mu'\nu'}(y)
+- `MOND_from_Smeared_GR.tex` (3 hits)
+  - `assets/papers/MOND_from_Smeared_GR.tex:70` \overline{T}_{\mu\nu}(x)=\!\int d^4y\,\sqrt{|g(y)|}\;K_{\sigP}(x,y)\;\Pi_{\mu}{}^{\mu'}(x,y)\Pi_{\nu}{}^{\nu'}(x,y)\;T_{\mu'\nu'}(y),
+  - `assets/papers/MOND_from_Smeared_GR.tex:73` with positive kernel $K_{\sigP}\!\ge0$ and parallel propagator $\Pi$. Local conservation holds up to $\cO(\sigP^2)$.
+  - `assets/papers/MOND_from_Smeared_GR.tex:76` K_{\sigP}(x,y)=\frac{1}{(2\pi\sigP)^2}\exp\!\Big(-\frac{2\,\sigma(x,y)}{\sigP}\Big).
+- `QFT,GR und SRT.tex` (16 hits)
+  - `assets/papers/QFT,GR und SRT.tex:29` \newcommand{\Ksig}{K_{\sigma_P}}
+  - `assets/papers/QFT,GR und SRT.tex:563` =\!\!\int d^{4}y\,\sqrt{-g(y)}\ K_{\sigP}(x,y)\,
+  - `assets/papers/QFT,GR und SRT.tex:567` wobei \(K_{\sigP}\) ein skalarer, \emph{retardierter} Bikernel ist mit (i) Normierung
+  - `assets/papers/QFT,GR und SRT.tex:568` \(\int d^{4}y\sqrt{-g}\,K_{\sigP}(x,y)=1\), (ii) kurzer Trägerunterstützung innerhalb von \(J^{-}(x)\)
+  - `assets/papers/QFT,GR und SRT.tex:617` \!\int\! d^{4}y\,\sqrt{-g(y)}\;K_{\sigP}(x,y)\;
+  - `assets/papers/QFT,GR und SRT.tex:621` mit \(K_{\sigP}\) normalisiert, kurzreichweitig (effektive \(L\!T\)-Fläche \(=\sigP\)),
+  - `assets/papers/QFT,GR und SRT.tex:696` Für die Gravitation definiere Planck-kovariante Mittelungen mit lorentzinvarianten Kernen \(K_{\sigma_P}(x,y)\) und Parallelpropagatoren \(\Pi(x,y)\):
+  - `assets/papers/QFT,GR und SRT.tex:699` \int d^4y \sqrt{|g(y)|}\,K_{\sigma_P}(x,y)\,
+  - ... 8 more hits in `QFT,GR und SRT.tex`
+- `Rediscovering Geometry without SuperMUC.tex` (4 hits)
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:182` K_{\sigma_P}(x,y) = \frac{1}{\mathcal N}\exp\!\left[-\frac{\sigma_+(x,y)}{2s^2}\right],
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:186` \(\int d^4y\,\sqrt{-g}\,K_{\sigma_P}=1\).
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:190` = \int d^4y\,\sqrt{-g(y)}\,K_{\sigma_P}(x,y)\,
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:194` $K_{\sigma_P}$ is constructed from geodesic bitensors.
+- `The Memory of Spacetime.tex` (5 hits)
+  - `assets/papers/The Memory of Spacetime.tex:574` K_{\sigma_P}(x,y)\,
+  - `assets/papers/The Memory of Spacetime.tex:579` \int d^4y\,\sqrt{-g}\,K_{\sigma_P}=1.
+  - `assets/papers/The Memory of Spacetime.tex:583` K_{\sigma_P}(x,y)
+  - `assets/papers/The Memory of Spacetime.tex:676` K_{\sigma_P}(x,y)
+  - `assets/papers/The Memory of Spacetime.tex:840` K_{\sigma_P}(x,y)=\frac{1}{\mathcal N}\exp\!\Big[-\frac{\sigma_+(x,y)}{2\ell_P^2}\Big]
+- `The Problem of Time.tex` (10 hits)
+  - `assets/papers/The Problem of Time.tex:376` K_{\sigma_P}\!\propto\!\exp[-\sigma_+/(2\sigma_P)]
+  - `assets/papers/The Problem of Time.tex:592` K_{\sigma_P}(x,y)\,T_{\mu\nu}(y),
+  - `assets/papers/The Problem of Time.tex:594` K_{\sigma_P}(x,y)
+  - `assets/papers/The Problem of Time.tex:601` Der Kernel $K_{\sigma_P}$ glättet Quellen über die kleinste geometrische
+  - `assets/papers/The Problem of Time.tex:663` Im Grenzfall $\alpha_\sigma\to0$ und $K_{\sigma_P}\to\delta^4(x-y)$
+  - `assets/papers/The Problem of Time.tex:1340` K_{\sigma_P}(x,y)\,T_{\mu\nu}(y),
+  - `assets/papers/The Problem of Time.tex:1344` K_{\sigma_P}(x,y)
+  - `assets/papers/The Problem of Time.tex:1355` = \int d^4y\;K_{\sigma_P}(x,y)\;
+  - ... 2 more hits in `The Problem of Time.tex`
+- `Zander_2025_Natural_Structure.tex` (3 hits)
+  - `assets/papers/Zander_2025_Natural_Structure.tex:149` K_{\sigP}(x,y) &= \frac{1}{\mathcal N}\exp\!\Big[-\sigma_+(x,y)/(2s^2)\Big],\qquad s_{\min}^2\equiv \ell_P^2, \\[-2pt]
+  - `assets/papers/Zander_2025_Natural_Structure.tex:150` \overline{T}_{\mu\nu}(x) &= \int d^4y\,\sqrt{-g(y)}\;K_{\sigP}(x,y)\;
+  - `assets/papers/Zander_2025_Natural_Structure.tex:153` \(\int d^4y\sqrt{-g}\,K_{\sigP}(x,y)=1\).
+- `die natürliche Struktur der Raumzeit.tex` (15 hits)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:327` K_{\sigP}(x,y)=\frac{1}{(4\pi \lP^2)^2}\,e^{-\sigma_+(x,y)/2\lP^2}\,
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:430` =\!\int d^4y\,\sqrt{-g(y)}\,K_{\sigP}(x,y)\,
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:433` \int d^4y\,\sqrt{-g}\,K_{\sigP}=1.
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:667` K_{\sigma_P}(x,y) = \frac{1}{\mathcal N}\exp\!\left[-\frac{\sigma_+(x,y)}{2\ell_P^2}\right],
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:671` \(\int d^4y\,\sqrt{-g}\,K_{\sigma_P}=1.\)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:675` = \int d^4y\,\sqrt{-g(y)}\,K_{\sigma_P}(x,y)\,
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:701` K_{\sigma_P}(x_0,y)\propto
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:709` K_{\sigma_P}\,\Pi_\mu{}^{\mu'}\Pi_\nu{}^{\nu'}\,T_{\mu'\nu'}(y)}
+  - ... 7 more hits in `die natürliche Struktur der Raumzeit.tex`
+
+## `field_action` (8 hits)
+
+- `Formelsammlung.tex` (2 hits)
+  - `assets/papers/Formelsammlung.tex:20` S[g, \Psi]
+  - `assets/papers/Formelsammlung.tex:99` S[g,\Psi] = \frac{c^3}{16\pi G}\int d^4x\sqrt{-g}\,\big(R - 2\Lambda_{\rm eff}(t)\big) + S_{\rm m}^{(\sigma)}[g,\Psi]
+- `Formula_Collection_URM.tex` (1 hits)
+  - `assets/papers/Formula_Collection_URM.tex:87` S[g,\Psi] = \frac{c^3}{16\pi G}\int d^4x\sqrt{-g}\Big(R - 2\Lambda_{\rm eff}(t)\Big) + S_{\rm m}^{(\sigma)}[g,\Psi]
+- `QFT,GR und SRT.tex` (2 hits)
+  - `assets/papers/QFT,GR und SRT.tex:593` S[g,\Psi] \;=\; \frac{c^{3}}{16\pi G}\!\int\! d^{4}x\,\sqrt{-g}\,\big(R - 2\Lambda\big)
+  - `assets/papers/QFT,GR und SRT.tex:773` \item \textbf{Aussage.} Die Wirkung \(S[g,\Psi]\) ist diffeomorphismuskovariant; lokale Lorentzsymmetrie gilt.
+- `Rediscovering Geometry without SuperMUC.tex` (1 hits)
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:151` S[g,\Psi] = \frac{c^3}{16\pi G}\!\int d^4x\,\sqrt{-g}\,\big(R - 2\,\Lambda_{\rm eff}(t)\big)
+- `Zander_2025_Natural_Structure.tex` (1 hits)
+  - `assets/papers/Zander_2025_Natural_Structure.tex:122` S[g,\Psi] \;=\; \frac{c^3}{16\pi G}\!\int d^4x\,\sqrt{-g}\,\Big(R - 2\,\Lambda_{\rm eff}(t)\Big)\;
+- `die natürliche Struktur der Raumzeit.tex` (1 hits)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:638` S[g,\Psi] = \frac{c^3}{16\pi G}\!\int d^4x\,\sqrt{-g}\,\big(R - 2\,\Lambda_{\rm eff}(t)\big)
+
+## `einstein_eq` (53 hits)
+
+- `A Requiem for LCDM.tex` (5 hits)
+  - `assets/papers/A Requiem for LCDM.tex:245` G_{\mu\nu} + \Lambda_{\mathrm{eff}}g_{\mu\nu}
+  - `assets/papers/A Requiem for LCDM.tex:372` G_{\mu\nu} + \Lambda g_{\mu\nu}
+  - `assets/papers/A Requiem for LCDM.tex:430` G_{\mu\nu} + \Lambda g_{\mu\nu}
+  - `assets/papers/A Requiem for LCDM.tex:439` G_{\mu\nu}
+  - `assets/papers/A Requiem for LCDM.tex:644` \underbrace{G_{\mu\nu}}_{\text{Geometry}}
+- `Formelsammlung.tex` (1 hits)
+  - `assets/papers/Formelsammlung.tex:33` G_{\mu\nu} + \Lambda_{\rm eff}(t) \, g_{\mu\nu} = \frac{8 \pi G}{c^4} \, \langle T_{\mu\nu}^{(\sigma)} \rangle \,,
+- `Formula_Collection_URM.tex` (1 hits)
+  - `assets/papers/Formula_Collection_URM.tex:98` G_{\mu\nu}[g] + \Lambda_{\rm eff}(t)g_{\mu\nu} = \frac{8\pi G}{c^4}\overline T_{\mu\nu}
+- `MOND_from_Smeared_GR.tex` (1 hits)
+  - `assets/papers/MOND_from_Smeared_GR.tex:65` G_{\mu\nu}[g]+\Lambda g_{\mu\nu}=\kappaE\,T_{\mu\nu},
+- `QFT,GR und SRT.tex` (17 hits)
+  - `assets/papers/QFT,GR und SRT.tex:310` \big(G_{\mu\nu} - \tfrac{8 \pi G}{c^{4}} \, T_{\mu\nu}\big)(\sigma_{P}) \Psi = 0
+  - `assets/papers/QFT,GR und SRT.tex:335` Die Geometrie (\(G_{\mu\nu}+\Lambda g_{\mu\nu}\)) bleibt unverändert;
+  - `assets/papers/QFT,GR und SRT.tex:554` \big(G_{\mu\nu} + \Lambda g_{\mu\nu}\big)(x)
+  - `assets/papers/QFT,GR und SRT.tex:558` \nabla^{\mu} G_{\mu\nu}\equiv 0 .
+  - `assets/papers/QFT,GR und SRT.tex:607` G_{\mu\nu} + \Lambda\, g_{\mu\nu}
+  - `assets/papers/QFT,GR und SRT.tex:610` G_{\mu\nu} \equiv R_{\mu\nu} - \tfrac{1}{2}R\,g_{\mu\nu}.
+  - `assets/papers/QFT,GR und SRT.tex:629` \boxed{\ \big(G_{\mu\nu} + \Lambda g_{\mu\nu}\big)(x)
+  - `assets/papers/QFT,GR und SRT.tex:651` die geometrische Seite \(G_{\mu\nu}+\Lambda g_{\mu\nu}\) bleibt unverändert.
+  - ... 9 more hits in `QFT,GR und SRT.tex`
+- `QSTF_Hierarchical_Mergers.tex` (1 hits)
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:84` G_{\mu\nu}[g] + \Lambda_{\mathrm{eff}}(t)\,g_{\mu\nu}
+- `Quantum Gravity aus erster Geometrie.tex` (2 hits)
+  - `assets/papers/Quantum Gravity aus erster Geometrie.tex:477` G_{\mu\nu}
+  - `assets/papers/Quantum Gravity aus erster Geometrie.tex:488` G_{\mu\nu}
+- `Rediscovering Geometry without SuperMUC.tex` (1 hits)
+  - `assets/papers/Rediscovering Geometry without SuperMUC.tex:162` G_{\mu\nu}[g] + \Lambda_{\rm eff}(t)\,g_{\mu\nu}
+- `The Dimensional Structure of Reality.tex` (1 hits)
+  - `assets/papers/The Dimensional Structure of Reality.tex:327` G_{\mu\nu} + \Lambda_{\mathrm{eff}} g_{\mu\nu}
+- `The Memory of Spacetime.tex` (2 hits)
+  - `assets/papers/The Memory of Spacetime.tex:610` = G_{\mu\nu}+\Lambda_{\mathrm{eff}}g_{\mu\nu}
+  - `assets/papers/The Memory of Spacetime.tex:672` G_{\mu\nu}+\Lambda_{\rm eff}(W)g_{\mu\nu}=\frac{8\pi G}{c^4}\overline{T}_{\mu\nu}^{(W)},\quad
+- `The Paradox Paper.tex` (3 hits)
+  - `assets/papers/The Paradox Paper.tex:255` G_{\mu\nu} + \Lambda_{\mathrm{eff}}g_{\mu\nu}
+  - `assets/papers/The Paradox Paper.tex:1055` G_{\mu\nu}[g]
+  - `assets/papers/The Paradox Paper.tex:2361` G_{\mu\nu}[g]+\Lambda_{\mathrm eff}(W) g_{\mu\nu}
+- `The Problem of Time.tex` (5 hits)
+  - `assets/papers/The Problem of Time.tex:577` G_{\mu\nu} = \frac{8\pi G}{c^4}T_{\mu\nu}.
+  - `assets/papers/The Problem of Time.tex:582` G_{\mu\nu}[g] + \frac{\alpha_\sigma}{\ell_P^2}\,g_{\mu\nu}
+  - `assets/papers/The Problem of Time.tex:614` \item $G_{\mu\nu}$ beschreibt die lokale Krümmung (ART),
+  - `assets/papers/The Problem of Time.tex:667` G_{\mu\nu}=\frac{8\pi G}{c^4}T_{\mu\nu}.
+  - `assets/papers/The Problem of Time.tex:1335` G_{\mu\nu}[g] + \frac{\alpha_\sigma}{\ell_P^2}\,g_{\mu\nu}
+- `Universal_Resonance_Model.tex` (1 hits)
+  - `assets/papers/Universal_Resonance_Model.tex:74` G_{\mu\nu} + \left[ R_{ij} \cdot \frac{\sigma_P}{\hbar\sqrt{-g}} \right] = \oint_{\partial\Omega} \left[ \frac{\delta\phi}{\delta x^\alpha} \otimes J^\alpha + \kappa \int \zeta(t) ...
+- `Zander_2025_Dimensional_Foundations.tex` (1 hits)
+  - `assets/papers/Zander_2025_Dimensional_Foundations.tex:292` G_{\mu\nu} + \Lambda_{\mathrm{eff}} g_{\mu\nu}
+- `Zander_2025_Natural_Structure.tex` (1 hits)
+  - `assets/papers/Zander_2025_Natural_Structure.tex:134` G_{\mu\nu}[g] + \Lambda_{\rm eff}(t)\,g_{\mu\nu}
+- `Zander_2025_Price_of_Love.tex` (1 hits)
+  - `assets/papers/Zander_2025_Price_of_Love.tex:306` \[ G_{\mu\nu} + \Lambda_{\rm eff} g_{\mu\nu} = \frac{8\pi G}{c^4} \langle T_{\mu\nu} \rangle_{\sigma} \]
+- `die natürliche Struktur der Raumzeit.tex` (9 hits)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:352` Da $\Lambda_{\rm eff}\propto \alphaSigma(W)$ gilt, verschwinden sowohl Quell- als auch kosmologische Terme im Doppellimit, und es bleibt $G_{\mu\nu}=0$ mit der Lösung $g\sim \eta$.
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:364` G_{\mu\nu}[g] + \frac{\alpha_\sigma}{\ell_{\mathrm P}^2}\, g_{\mu\nu}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:439` \mathcal{G}_{\mu\nu}[g;W]\;:=\;G_{\mu\nu}[g]\;+\;\Lambda_{\rm eff}(W)\,g_{\mu\nu}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:563` deren mittlere Wirkung wir als Krümmung $G_{\mu\nu}$ wahrnehmen.
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:646` G_{\mu\nu}[g] + \Lambda_{\rm eff}(t)\,g_{\mu\nu}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:908` =G_{\mu\nu}[g]+\Lambda_{\rm eff}(W)g_{\mu\nu}
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:913` Aus \(\nabla^\mu G_{\mu\nu}=0\) folgt:
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:2285` =\widehat G_{\mu\nu}[g]
+  - ... 1 more hits in `die natürliche Struktur der Raumzeit.tex`
+
+## `tick_index` (3 hits)
+
+- `Formelsammlung.tex` (2 hits)
+  - `assets/papers/Formelsammlung.tex:79` i = \frac{E\cdot t}{\sigma_P},\qquad i_{\max} = \frac{\hbar}{\sigma_P} = \frac{c^4}{G}
+  - `assets/papers/Formelsammlung.tex:87` S = k_B \cdot N_{\rm ticks} = k_B \sum_i \frac{\Delta A}{\sigma_P}
+- `Zander_2025_Price_of_Love.tex` (1 hits)
+  - `assets/papers/Zander_2025_Price_of_Love.tex:340` $ S = k_B \cdot N_{\rm ticks}, \quad N_{\rm ticks} = \sum \frac{\Delta A}{\sigma_P} $
+
+## `window_wrt` (22 hits)
+
+- `QSTF_Hierarchical_Mergers.tex` (1 hits)
+  - `assets/papers/QSTF_Hierarchical_Mergers.tex:76` For a cosmic window \(W(R,t)\):
+- `The Memory of Spacetime.tex` (1 hits)
+  - `assets/papers/The Memory of Spacetime.tex:606` gilt in jedem Raumzeit-Fenster \(W(R,t)\).
+- `The Paradox Paper.tex` (5 hits)
+  - `assets/papers/The Paradox Paper.tex:1043` für jedes Beobachtungsfenster \(W(R,t)\) und jeden zugehörigen Zustand \(|\Psi_W\rangle\).
+  - `assets/papers/The Paradox Paper.tex:1337` \item Jeder Beobachter besitzt sein eigenes Fenster \(W(R,t)\).
+  - `assets/papers/The Paradox Paper.tex:1662` für ein bestimmtes Fenster $W(R,t)$.\\
+  - `assets/papers/The Paradox Paper.tex:2126` der Quantenkorrekturen über \(\sigma_{\mathrm P}\) und das Fenster \(W(R,t)\)
+  - `assets/papers/The Paradox Paper.tex:2365` Das Fenster $W(R,t)$ repräsentiert die makroskopische Raumzeit,
+- `The Problem of Time.tex` (3 hits)
+  - `assets/papers/The Problem of Time.tex:920` Für ein kosmisches Fenster $W(R,t)$ mit Radius $R$ und Alter $t$
+  - `assets/papers/The Problem of Time.tex:1093` durch ein kosmisches Fenster $W(R,t)$ mittelt.
+  - `assets/papers/The Problem of Time.tex:1243` und der Anzahl der Raumzeit-Zellen im makroskopischen Fenster~\(W(R,t)\).
+- `die natürliche Struktur der Raumzeit.tex` (12 hits)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:323` Sei $L_\mathcal{R}$ der lokale Krümmungsradius und $W(R,t)$ ein makroskopisches Fenster mit $\alphaSigma(W)\ll 1$ und $\lP\ll L_\mathcal{R}$.
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:335` Sei $g_{\mu\nu}$ eine Lösung von \eqref{eq:window-EZ} in $W(R,t)$.
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:419` Ein \emph{Fenster} \(W(R,t)\) ist ein makroskopischer Bereich der Größe \(R\) (Raum) und Dauer \(t\) (Zeit), über den gemittelt wird.
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:466` Das Grobkörnigkeitsverfahren über ein Fenster $W(R,t)$ verteilt diesen Beitrag über
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:838` {Fenster $W(R,t)$} & {$R$ [m]} & {$t$ [s]} & {$\delta = \log_{10}\!\left(\frac{\lambdabar_p^{\,2}}{\alpha c R t}\right)$} \\
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:873` Jede physikalische Situation ist durch ein makroskopisches Fenster \(W(R,t)\)
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:904` für alle Fenster \(W(R,t)\) und alle physikalischen Zustände \(|\Psi_W\rangle\).
+  - `assets/papers/die natürliche Struktur der Raumzeit.tex:993` \item (iii) Die Bianchi-Identität bleibt lokal erhalten, da \(K_{\sigma_P}\) kovariant normiert ist und nur von \(\sigma(x,y)\) abhängt; globale Variation von \(\Lambda_{\rm eff}\)...
+  - ... 4 more hits in `die natürliche Struktur der Raumzeit.tex`
