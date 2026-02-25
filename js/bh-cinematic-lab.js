@@ -172,6 +172,19 @@
         return (seconds / engine.year).toFixed(3) + " y";
     }
 
+    function rgbaFromRgb(rgb, alpha) {
+        return "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + alpha.toFixed(3) + ")";
+    }
+
+    function mixRgb(a, b, t) {
+        const u = clamp(t, 0, 1);
+        return [
+            Math.round(lerp(a[0], b[0], u)),
+            Math.round(lerp(a[1], b[1], u)),
+            Math.round(lerp(a[2], b[2], u))
+        ];
+    }
+
     function log10Safe(v) {
         return Math.log10(Math.max(Math.abs(v), 1e-300));
     }
@@ -286,6 +299,78 @@
         return { steps: outSteps, S: outS, peak: 1 };
     }
 
+    function toySpinCurve(nSteps, cycleIndex) {
+        const n = Math.max(2, Math.round(nSteps));
+        const out = new Array(n);
+        const signSeed = Math.sin((cycleIndex + 1) * 1.37 + 0.25);
+        const sign = signSeed >= 0 ? 1 : -1;
+        const startMag = clamp(0.22 + 0.58 * (0.5 + 0.5 * Math.sin(cycleIndex * 0.91 + 0.3)), 0.15, 0.9);
+        const endMag = clamp(0.08 + 0.16 * (0.5 + 0.5 * Math.cos(cycleIndex * 1.17 + 0.7)), 0.03, startMag);
+
+        for (let i = 0; i < n; i += 1) {
+            const u = n > 1 ? i / (n - 1) : 1;
+            const slowSpinDown = lerp(startMag, endMag, Math.pow(u, 0.85));
+            const ripple = 0.025 * Math.sin(2 * Math.PI * u + cycleIndex * 0.8);
+            out[i] = sign * clamp(slowSpinDown + ripple, 0.0, 0.95);
+        }
+        return out;
+    }
+
+    function normalizeSpinCurve(aStarRaw, fallbackSteps, cycleIndex) {
+        const src = toFiniteArray(aStarRaw);
+        if (src.length >= 2) {
+            const out = new Array(src.length);
+            let maxAbs = 1e-99;
+            for (let i = 0; i < src.length; i += 1) {
+                const v = clamp(src[i], -0.999, 0.999);
+                out[i] = v;
+                maxAbs = Math.max(maxAbs, Math.abs(v));
+            }
+            return {
+                values: out,
+                source: "imported",
+                maxAbs
+            };
+        }
+
+        const toy = toySpinCurve(fallbackSteps, cycleIndex);
+        let maxAbs = 1e-99;
+        for (let i = 0; i < toy.length; i += 1) {
+            maxAbs = Math.max(maxAbs, Math.abs(toy[i]));
+        }
+        return {
+            values: toy,
+            source: "toy",
+            maxAbs
+        };
+    }
+
+    function cycleSpinEndpoints(cycle, cfg, cycleIndex, nextCycleIndex) {
+        const spin = normalizeSpinCurve(cycle.aStar, cycle.M.length || cfg.evapSteps, cycleIndex);
+        const start = spin.values[0] || 0;
+        const end = spin.values[spin.values.length - 1] || start;
+
+        let nextStart;
+        if (Array.isArray(cycle.nextCycleAStartHint) && cycle.nextCycleAStartHint.length) {
+            nextStart = Number(cycle.nextCycleAStartHint[0]);
+        } else if (Number.isFinite(cycle.nextCycleAStartHint)) {
+            nextStart = Number(cycle.nextCycleAStartHint);
+        } else {
+            const toyNext = toySpinCurve(Math.max(2, cfg.evapSteps || 128), nextCycleIndex == null ? (cycleIndex + 1) : nextCycleIndex);
+            nextStart = toyNext[0];
+        }
+        nextStart = clamp(Number.isFinite(nextStart) ? nextStart : start, -0.999, 0.999);
+
+        return {
+            values: spin.values,
+            source: spin.source,
+            maxAbs: spin.maxAbs,
+            start,
+            end,
+            nextStart
+        };
+    }
+
     function cycleSummary(cycle, cfg, index) {
         const th = cycle.TH || [];
         let thMin = Infinity;
@@ -304,6 +389,13 @@
         const logMrem = log10Safe(cfg.Mrem);
         const logMstart = log10Safe(cycle.M[0] || cfg.cycleStartMass);
         const massSpanLog = Math.max(logMstart - logMrem, 1e-9);
+        const spinMeta = cycleSpinEndpoints(cycle, cfg, index, index + 1);
+        const chiArr = Array.isArray(cycle.chi) ? cycle.chi : [];
+        let chiMax = 1e-99;
+        for (let i = 0; i < chiArr.length; i += 1) {
+            const cv = Number(chiArr[i]);
+            if (Number.isFinite(cv)) chiMax = Math.max(chiMax, Math.abs(cv));
+        }
 
         return {
             cycleIndex: index,
@@ -313,7 +405,9 @@
             thMax: thMax > 0 ? thMax : 1,
             logMrem,
             massSpanLog,
-            qm: normalizeQmCurve(cycle.steps_qm, cycle.S_rad_qm, cfg.qmSteps)
+            qm: normalizeQmCurve(cycle.steps_qm, cycle.S_rad_qm, cfg.qmSteps),
+            spin: spinMeta,
+            chiMax
         };
     }
 
@@ -331,6 +425,14 @@
         const thLogMin = log10Safe(meta.thMin || 1e-99);
         const thLogMax = log10Safe(meta.thMax || 1);
         const tempNorm = clamp((log10Safe(TH) - thLogMin) / Math.max(thLogMax - thLogMin, 1e-9), 0, 1);
+        const spinArr = meta.spin && Array.isArray(meta.spin.values) ? meta.spin.values : [0];
+        const spinIdx = Math.min(stepIndex, Math.max(spinArr.length - 1, 0));
+        const aStar = clamp(Number(spinArr[spinIdx] || 0), -0.999, 0.999);
+        const flagsArr = Array.isArray(cycle.flags) ? cycle.flags : [];
+        const flagVal = Number(flagsArr[Math.min(stepIndex, Math.max(flagsArr.length - 1, 0))] || 0);
+        const chiArr = Array.isArray(cycle.chi) ? cycle.chi : [];
+        const chiVal = Number(chiArr[Math.min(stepIndex, Math.max(chiArr.length - 1, 0))] || 0);
+        const chiNorm = clamp(Math.abs(chiVal) / Math.max(meta.chiMax || 1e-99, 1e-99), 0, 1);
 
         return {
             cycleIndex,
@@ -344,6 +446,13 @@
             sigmaNorm,
             SradQm: qmRaw,
             qmNorm: clamp(qmRaw, 0, 1),
+            aStar,
+            spinNorm: Math.abs(aStar),
+            spinSign: aStar >= 0 ? 1 : -1,
+            spinSource: (meta.spin && meta.spin.source) || "toy",
+            coreFlag: flagVal > 0 ? 1 : 0,
+            chi: chiVal,
+            chiNorm,
             tauEff: cycle.tau_eff,
             Mstart: cycle.M[0] || cfg.cycleStartMass,
             Mrem: cfg.Mrem,
@@ -373,7 +482,8 @@
                 phaseProgress: u,
                 cycleProgress: 1,
                 qmNorm: 0,
-                SradQm: 0
+                SradQm: 0,
+                coreFlag: 1
             });
         }
         return frames;
@@ -387,6 +497,10 @@
         const TH1 = engine.hawkingTemperature(M1);
         const rs0 = engine.schwarzschildRadius(M0);
         const rs1 = engine.schwarzschildRadius(M1);
+        const spinMeta = meta.spin || { end: 0, nextStart: 0, source: "toy", maxAbs: 1 };
+        const a0 = clamp(Number(spinMeta.end || 0), -0.999, 0.999);
+        const a1 = clamp(Number(spinMeta.nextStart || a0), -0.999, 0.999);
+        const chi0 = 0;
 
         for (let i = 0; i < count; i += 1) {
             const u = count > 1 ? i / (count - 1) : 1;
@@ -394,6 +508,7 @@
             const M = lerp(M0, M1, e);
             const TH = lerp(TH0, TH1, e);
             const rs = lerp(rs0, rs1, e);
+            const aStar = lerp(a0, a1, e);
             const massNorm = clamp((log10Safe(M) - meta.logMrem) / meta.massSpanLog, 0, 1);
             const thLogMin = log10Safe(meta.thMin || 1e-99);
             const thLogMax = log10Safe(meta.thMax || 1);
@@ -412,6 +527,13 @@
                 sigmaNorm: lerp(0.18, 0.02, e),
                 SradQm: 0,
                 qmNorm: 0,
+                aStar,
+                spinNorm: Math.abs(aStar),
+                spinSign: aStar >= 0 ? 1 : -1,
+                spinSource: spinMeta.source || "toy",
+                coreFlag: 1,
+                chi: chi0,
+                chiNorm: 0,
                 tauEff: cycle.tau_eff,
                 Mstart: cfg.cycleStartMass,
                 Mrem: cfg.Mrem,
@@ -466,6 +588,7 @@
                 cfg.alpha,
                 cfg.gamma
             );
+            q.aStar = toySpinCurve(q.M.length || cfg.evapSteps, i);
             const meta = cycleSummary(q, cfg, i);
             const cycleEntry = { ...q, meta };
             cycles.push(cycleEntry);
@@ -524,6 +647,14 @@
 
         const stepsQm = toFiniteArray(rawCycle && rawCycle.steps_qm);
         const sQm = toFiniteArray(rawCycle && (rawCycle.S_rad_qm != null ? rawCycle.S_rad_qm : rawCycle.SradQm));
+        const aStar = toFiniteArray(rawCycle && (rawCycle.a_star != null ? rawCycle.a_star : rawCycle.aStar));
+        const chi = toFiniteArray(rawCycle && rawCycle.chi);
+        const flagsRaw = Array.isArray(rawCycle && rawCycle.flags) ? rawCycle.flags : [];
+        const flags = new Array(Math.min(flagsRaw.length, n));
+        for (let i = 0; i < flags.length; i += 1) {
+            const fv = Number(flagsRaw[i]);
+            flags[i] = Number.isFinite(fv) && fv > 0 ? 1 : 0;
+        }
 
         return {
             t: tN,
@@ -533,7 +664,10 @@
             tau_eff: tauEff,
             Srem: srem,
             steps_qm: stepsQm,
-            S_rad_qm: sQm
+            S_rad_qm: sQm,
+            aStar,
+            chi,
+            flags
         };
     }
 
@@ -572,6 +706,13 @@
 
         for (let i = 0; i < srcCycles.length; i += 1) {
             const q = normalizeImportedCycle(srcCycles[i], cfgMerged, i);
+            if (i + 1 < srcCycles.length) {
+                const nextRaw = srcCycles[i + 1];
+                const nextSpinRaw = toFiniteArray(nextRaw && (nextRaw.a_star != null ? nextRaw.a_star : nextRaw.aStar));
+                if (nextSpinRaw.length > 0) {
+                    q.nextCycleAStartHint = nextSpinRaw[0];
+                }
+            }
             const meta = cycleSummary(q, cfgMerged, i);
             const cycleEntry = { ...q, meta };
             cycles.push(cycleEntry);
@@ -699,6 +840,10 @@
         const mood = clamp(log10Safe(frame.heroMass) / 40, 0, 1);
         const lensingStrength = getLiveLensingStrength(frame.lensingStrength);
         const turbulence = getLiveTurbulence(frame.turbulence);
+        const spinSigned = clamp(Number(frame.aStar || 0), -0.999, 0.999);
+        const spinMag = clamp(Math.abs(spinSigned), 0, 0.999);
+        const spinDir = spinSigned >= 0 ? 1 : -1;
+        const spinPulse = 0.5 + 0.5 * Math.sin(state.time * 0.0011 + frame.cycleIndex * 0.9);
 
         const shadowR = lerp(22, Math.min(w, h) * 0.16, Math.pow(massNorm, 0.72));
         const photonR = shadowR * lerp(1.22, 1.48, 0.5 + 0.5 * lensingStrength);
@@ -706,6 +851,10 @@
         const diskOuter = shadowR * (3.6 + 1.8 * turbulence + 0.7 * mood);
         const diskTilt = lerp(0.22, 0.44, 0.45 + 0.35 * Math.sin(state.time * 0.07));
         const glow = lerp(0.35, 1.15, tempNorm);
+        const jetAxisAngle = spinDir * lerp(0.02, 0.22, spinMag) * (0.7 + 0.3 * spinPulse);
+        const beamingBias = spinDir * lerp(0.04, 0.38, spinMag);
+        const coreColorMix = clamp(0.25 + 0.65 * spinMag + 0.12 * frame.sigmaNorm, 0, 1);
+        const coreInCoreTint = frame.coreFlag > 0 ? 1 : 0;
 
         return {
             w,
@@ -722,7 +871,15 @@
             massNorm,
             mood,
             lensingStrength,
-            turbulence
+            turbulence,
+            spinSigned,
+            spinMag,
+            spinDir,
+            spinPulse,
+            jetAxisAngle,
+            beamingBias,
+            coreColorMix,
+            coreInCoreTint
         };
     }
 
@@ -763,7 +920,8 @@
         const cyclePulse = frame.phase === "reload" ? 0.18 + 0.15 * Math.sin(frame.phaseProgress * Math.PI) : 0;
         if (cyclePulse > 0) {
             const reloadGlow = ctx.createRadialGradient(vp.cx, vp.cy, 0, vp.cx, vp.cy, vp.w * 0.6);
-            reloadGlow.addColorStop(0, "rgba(34,211,238," + (0.06 + cyclePulse).toFixed(3) + ")");
+            const reloadColor = vp.spinDir >= 0 ? "34,211,238" : "244,114,182";
+            reloadGlow.addColorStop(0, "rgba(" + reloadColor + "," + (0.06 + cyclePulse).toFixed(3) + ")");
             reloadGlow.addColorStop(1, "rgba(34,211,238,0)");
             ctx.fillStyle = reloadGlow;
             ctx.fillRect(0, 0, vp.w, vp.h);
@@ -803,11 +961,12 @@
         const lensingStrength = vp.lensingStrength;
         const tempBias = 0.45 + 0.55 * vp.tempNorm;
         const turbul = vp.turbulence;
+        const rotSense = vp.spinDir;
 
         for (let i = 0; i < state.disk.length; i += 1) {
             const p = state.disk[i];
             const r = lerp(vp.diskInner, vp.diskOuter, p.rNorm);
-            const ang = p.angle0 + t * p.speed * (0.8 + 1.6 / Math.sqrt(0.35 + p.rNorm));
+            const ang = p.angle0 + rotSense * t * p.speed * (0.8 + 1.6 / Math.sqrt(0.35 + p.rNorm));
             const ca = Math.cos(ang);
             const sa = Math.sin(ang);
             const depthSign = sa * p.lane;
@@ -821,9 +980,11 @@
             const wr = Math.hypot(warped.x - vp.cx, warped.y - vp.cy);
             if (wr < vp.shadowR * 1.02) continue;
 
-            const doppler = clamp(0.55 + 0.75 * ca * p.lane + 0.18 * tempBias, 0.15, 1.45);
+            const spinBoost = vp.beamingBias * ca * p.lane;
+            const doppler = clamp(0.55 + 0.75 * ca * p.lane + 0.18 * tempBias + spinBoost, 0.12, 1.75);
             const heat = clamp(0.25 + 0.85 * p.hot * tempBias + 0.18 * frame.sigmaNorm, 0, 1.6);
-            const hue = lerp(30, 205, 1 - Math.min(heat, 1));
+            const spinHueShift = vp.spinDir < 0 ? 16 * vp.spinMag : -10 * vp.spinMag;
+            const hue = lerp(30, 205, 1 - Math.min(heat, 1)) + spinHueShift;
             const lum = lerp(42, 80, Math.min(heat, 1));
             const alpha = clamp(p.alpha * doppler * (frontLayer ? 1.05 : 0.62), 0.03, 0.95);
             const size = p.size * (frontLayer ? 1.1 : 0.85) * (1 + 0.14 * doppler);
@@ -849,12 +1010,17 @@
     function drawBlackHole(frame, vp) {
         const ringGlow = clamp(vp.glow + 0.4 * frame.sigmaNorm, 0.2, 2.2);
         const photonOuter = vp.photonR * 1.35;
+        const ringWarm = vp.spinDir >= 0 ? [250, 204, 21] : [251, 146, 60];
+        const ringCool = vp.spinDir >= 0 ? [56, 189, 248] : [244, 114, 182];
+        const ringMix = clamp(0.15 + 0.75 * vp.spinMag, 0, 1);
+        const ringMid = mixRgb(ringWarm, ringCool, 0.45 + 0.25 * ringMix);
+        const ringOuterRgb = mixRgb([56, 189, 248], ringCool, ringMix);
 
         const ringGrad = ctx.createRadialGradient(vp.cx, vp.cy, vp.photonR * 0.72, vp.cx, vp.cy, photonOuter);
         ringGrad.addColorStop(0, "rgba(255,255,255,0)");
-        ringGrad.addColorStop(0.52, "rgba(250,204,21," + (0.10 + 0.10 * ringGlow).toFixed(3) + ")");
-        ringGrad.addColorStop(0.72, "rgba(56,189,248," + (0.09 + 0.14 * ringGlow).toFixed(3) + ")");
-        ringGrad.addColorStop(1, "rgba(56,189,248,0)");
+        ringGrad.addColorStop(0.52, rgbaFromRgb(ringMid, 0.10 + 0.10 * ringGlow));
+        ringGrad.addColorStop(0.72, rgbaFromRgb(ringOuterRgb, 0.09 + 0.14 * ringGlow));
+        ringGrad.addColorStop(1, rgbaFromRgb(ringOuterRgb, 0));
         ctx.fillStyle = ringGrad;
         ctx.beginPath();
         ctx.arc(vp.cx, vp.cy, photonOuter, 0, Math.PI * 2);
@@ -880,7 +1046,8 @@
             drawPolarJets(frame, vp);
         }
 
-        ctx.strokeStyle = "rgba(56,189,248," + (0.20 + 0.35 * vp.tempNorm).toFixed(3) + ")";
+        const rimRgb = mixRgb([56, 189, 248], vp.spinDir >= 0 ? [99, 102, 241] : [244, 114, 182], 0.22 + 0.55 * vp.spinMag);
+        ctx.strokeStyle = rgbaFromRgb(rimRgb, 0.20 + 0.35 * vp.tempNorm);
         ctx.lineWidth = 1.2;
         ctx.beginPath();
         ctx.arc(vp.cx, vp.cy, vp.shadowR * 1.02, 0, Math.PI * 2);
@@ -894,18 +1061,25 @@
         const pulse = clamp(pulseBase, 0, 1);
         const coreR = lerp(vp.shadowR * 0.08, vp.shadowR * 0.22, pulse);
         const glowR = vp.shadowR * lerp(0.9, 1.8, pulse);
+        const posCore = [34, 211, 238];
+        const negCore = [244, 114, 182];
+        const phaseCore = frame.phase === "reload" ? [251, 191, 36] : [59, 130, 246];
+        const spinTint = mixRgb(posCore, negCore, vp.spinDir < 0 ? vp.coreColorMix : 0);
+        const coreGlowRgb = mixRgb(phaseCore, spinTint, 0.38 + 0.44 * vp.coreColorMix);
+        const coreHaloRgb = mixRgb([59, 130, 246], spinTint, 0.28 + 0.32 * vp.coreInCoreTint);
 
         const glow = ctx.createRadialGradient(vp.cx, vp.cy, 0, vp.cx, vp.cy, glowR);
         glow.addColorStop(0, "rgba(255,255,255,0.96)");
-        glow.addColorStop(0.2, "rgba(34,211,238,0.85)");
-        glow.addColorStop(0.55, "rgba(59,130,246,0.20)");
-        glow.addColorStop(1, "rgba(59,130,246,0)");
+        glow.addColorStop(0.2, rgbaFromRgb(coreGlowRgb, 0.74 + 0.12 * pulse));
+        glow.addColorStop(0.55, rgbaFromRgb(coreHaloRgb, 0.18 + 0.10 * vp.coreInCoreTint));
+        glow.addColorStop(1, rgbaFromRgb(coreHaloRgb, 0));
         ctx.fillStyle = glow;
         ctx.beginPath();
         ctx.arc(vp.cx, vp.cy, glowR, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = "rgba(255,255,255,0.95)";
+        const coreFillRgb = mixRgb([255, 255, 255], spinTint, 0.18 + 0.22 * vp.spinMag);
+        ctx.fillStyle = rgbaFromRgb(coreFillRgb, 0.95);
         ctx.beginPath();
         ctx.arc(vp.cx, vp.cy, coreR, 0, Math.PI * 2);
         ctx.fill();
@@ -915,18 +1089,20 @@
         const amp = frame.phase === "reload"
             ? 0.3 + 0.9 * Math.sin(Math.PI * frame.phaseProgress)
             : 0.2 + 0.35 * (0.5 + 0.5 * Math.sin(state.time * 0.01));
-        const len = vp.shadowR * (2.3 + 1.7 * amp);
-        const width = vp.shadowR * (0.12 + 0.08 * amp);
+        const len = vp.shadowR * (2.3 + 1.7 * amp + 0.8 * vp.spinMag);
+        const width = vp.shadowR * (0.12 + 0.08 * amp + 0.03 * vp.spinMag);
+        const jetBaseRgb = vp.spinDir >= 0 ? [34, 211, 238] : [244, 114, 182];
+        const jetMidRgb = mixRgb([59, 130, 246], jetBaseRgb, 0.35 + 0.45 * vp.spinMag);
 
         for (let s = -1; s <= 1; s += 2) {
             const grad = ctx.createLinearGradient(vp.cx, vp.cy, vp.cx, vp.cy + s * len);
-            grad.addColorStop(0, "rgba(34,211,238," + (0.22 + 0.22 * amp).toFixed(3) + ")");
-            grad.addColorStop(0.45, "rgba(59,130,246," + (0.08 + 0.12 * amp).toFixed(3) + ")");
-            grad.addColorStop(1, "rgba(59,130,246,0)");
+            grad.addColorStop(0, rgbaFromRgb(jetBaseRgb, 0.18 + 0.24 * amp + 0.10 * vp.spinMag));
+            grad.addColorStop(0.45, rgbaFromRgb(jetMidRgb, 0.07 + 0.13 * amp));
+            grad.addColorStop(1, rgbaFromRgb(jetMidRgb, 0));
 
             ctx.save();
             ctx.translate(vp.cx, vp.cy);
-            ctx.rotate(0.06 * Math.sin(state.time * 0.0016 + s));
+            ctx.rotate(vp.jetAxisAngle + 0.06 * Math.sin(state.time * 0.0016 + s));
             ctx.fillStyle = grad;
             ctx.beginPath();
             ctx.moveTo(-width, 0);
@@ -1008,7 +1184,7 @@
 
         const cycleStr = "Cycle " + (frame.cycleIndex + 1) + " of " + frame.cycleCount;
         if (frame.phase === "evaporation") {
-            return cycleStr + ": sigma_P-regularized evaporation is visualized as shrinking horizon scale, shifting glow, and increasing radiation bookkeeping. The right HUD entropy channel tracks a unitary toy Page-like curve in parallel.";
+            return cycleStr + ": sigma_P-regularized evaporation is visualized as shrinking horizon scale, shifting glow, and increasing radiation bookkeeping. Disk beaming and jet-axis tilt are now also coupled to a spin signal (imported trace if available, otherwise a toy spin track).";
         }
         if (frame.phase === "memory_core") {
             return cycleStr + ": the semi-classical module has reached the effective remnant. In the Zander-2025 picture, this is shown as a finite memory core (not a final terminal endpoint).";
@@ -1041,7 +1217,12 @@
         setText(dom.hudMassSub, "~ " + fmtScalar(mpMass, "M_P", 2) + " | scene preset: " + (PRESET_LABELS[frame.preset] || frame.preset));
 
         setText(dom.hudTemp, fmtExp(frame.TH, 2) + " K");
-        setText(dom.hudTempSub, "norm " + frame.tempNorm.toFixed(3));
+        const spinTag = (frame.spinSource === "imported" ? "spin:import" : "spin:toy");
+        const aStarHud = Number.isFinite(frame.aStar) ? Number(frame.aStar) : 0;
+        setText(
+            dom.hudTempSub,
+            "norm " + frame.tempNorm.toFixed(3) + " | a* " + (aStarHud >= 0 ? "+" : "") + aStarHud.toFixed(3) + " | " + spinTag
+        );
 
         setText(dom.hudRs, fmtExp(frame.rs, 2) + " m");
         setText(dom.hudSigmaEntropy, frame.sigmaNorm.toFixed(3) + " (norm)");

@@ -10,9 +10,10 @@ Philosophy:
 
 import math
 import json
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable, Optional
 
 import numpy as np
 
@@ -518,6 +519,18 @@ def _arr_to_list(values: Any) -> list[float]:
     return [float(x) for x in arr.tolist()]
 
 
+def _maybe_arr_to_list(values: Any) -> list[float] | None:
+    """
+    Convert array-like values to a JSON-safe float list, or return None if absent.
+    """
+    if values is None:
+        return None
+    arr = np.asarray(values)
+    if arr.size == 0:
+        return None
+    return _arr_to_list(arr)
+
+
 def remnant_cycle_json_payload(
     cycles: list[dict[str, Any]],
     *,
@@ -541,19 +554,44 @@ def remnant_cycle_json_payload(
     """
     payload_cycles: list[dict[str, Any]] = []
     for cyc in cycles:
-        payload_cycles.append(
-            {
-                "cycle_index": int(cyc.get("cycle_index", 0)),
-                "t": _arr_to_list(cyc.get("t", [])),
-                "M": _arr_to_list(cyc.get("M", [])),
-                "TH": _arr_to_list(cyc.get("TH", [])),
-                "S_rad_sigmaP": _arr_to_list(cyc.get("S_rad_sigmaP", [])),
-                "tau_eff": float(cyc.get("tau_eff", 0.0)),
-                "Srem": float(cyc.get("Srem", 0.0)),
-                "steps_qm": _arr_to_list(cyc.get("steps_qm", [])),
-                "S_rad_qm": _arr_to_list(cyc.get("S_rad_qm", [])),
-            }
-        )
+        cyc_json: dict[str, Any] = {
+            "cycle_index": int(cyc.get("cycle_index", 0)),
+            "t": _arr_to_list(cyc.get("t", [])),
+            "M": _arr_to_list(cyc.get("M", [])),
+            "TH": _arr_to_list(cyc.get("TH", [])),
+            "S_rad_sigmaP": _arr_to_list(cyc.get("S_rad_sigmaP", [])),
+            "tau_eff": float(cyc.get("tau_eff", 0.0)),
+            "Srem": float(cyc.get("Srem", 0.0)),
+            "steps_qm": _arr_to_list(cyc.get("steps_qm", [])),
+            "S_rad_qm": _arr_to_list(cyc.get("S_rad_qm", [])),
+        }
+
+        # Optional traces used by the BH Cinema renderer (if available).
+        a_star = _maybe_arr_to_list(cyc.get("a_star"))
+        chi = _maybe_arr_to_list(cyc.get("chi"))
+        flags = _maybe_arr_to_list(cyc.get("flags"))
+        if a_star is not None:
+            cyc_json["a_star"] = a_star
+        if chi is not None:
+            cyc_json["chi"] = chi
+        if flags is not None:
+            cyc_json["flags"] = [int(round(v)) for v in flags]
+
+        # Optional diagnostics (exported if present; renderer currently ignores them).
+        J_arr = _maybe_arr_to_list(cyc.get("J"))
+        P_arr = _maybe_arr_to_list(cyc.get("P"))
+        dotM_arr = _maybe_arr_to_list(cyc.get("dotM"))
+        dotJ_arr = _maybe_arr_to_list(cyc.get("dotJ"))
+        if J_arr is not None:
+            cyc_json["J"] = J_arr
+        if P_arr is not None:
+            cyc_json["P"] = P_arr
+        if dotM_arr is not None:
+            cyc_json["dotM"] = dotM_arr
+        if dotJ_arr is not None:
+            cyc_json["dotJ"] = dotJ_arr
+
+        payload_cycles.append(cyc_json)
 
     return {
         "format": "qf.bh_cinema.cycles.v1",
@@ -589,6 +627,122 @@ def remnant_cycle_json_payload(
     }
 
 
+def bh_cinema_payload_from_evolution_trace(
+    out: dict[str, Any],
+    *,
+    label: str,
+    gamma: float | None = None,
+    hero_mass: float | None = None,
+    alpha: float | None = None,
+) -> dict[str, Any]:
+    """
+    Wrap a single evolution trace (e.g. spin / hysteresis solver output) into the
+    BH Cinema JSON schema as a single-cycle payload.
+
+    The renderer primarily requires `t`, `M`, and optional `TH`, `a_star`, `chi`,
+    `flags`. Missing entropy/QM channels are filled with benign placeholders.
+    """
+    t_arr = np.asarray(out.get("t", []), dtype=float)
+    M_arr = np.asarray(out.get("M", []), dtype=float)
+    n = int(min(t_arr.size, M_arr.size))
+    if n < 2:
+        raise ValueError("evolution trace must contain at least 2 points in t and M")
+
+    t_arr = t_arr[:n]
+    M_arr = np.maximum(np.abs(M_arr[:n]), 1e-99)
+    TH_arr = np.asarray(out.get("TH", []), dtype=float)
+    if TH_arr.size >= n:
+        TH_arr = TH_arr[:n]
+    else:
+        TH_arr = np.array([hawking_temperature(float(m)) for m in M_arr], dtype=float)
+
+    Srad_sigma = np.asarray(out.get("S_rad_sigmaP", []), dtype=float)
+    if Srad_sigma.size < n:
+        # Placeholder channel for the renderer (keeps visuals stable if absent).
+        Srad_sigma = np.linspace(0.0, 1.0, n, dtype=float)
+    else:
+        Srad_sigma = Srad_sigma[:n]
+
+    steps_qm = np.asarray(out.get("steps_qm", []), dtype=float)
+    srad_qm = np.asarray(out.get("S_rad_qm", []), dtype=float)
+    if steps_qm.size < 2 or srad_qm.size < 2:
+        steps_qm = np.arange(64, dtype=float)
+        x_qm = np.linspace(0.0, 1.0, 64)
+        srad_qm = np.sin(np.pi * x_qm) ** 1.1
+
+    tau_eff = float(out.get("tau_eff", out.get("t_eft", t_arr[-1])))
+    if not math.isfinite(tau_eff) or tau_eff <= 0.0:
+        tau_eff = float(t_arr[-1])
+
+    m_min = float(np.min(M_arr))
+    m_start = float(M_arr[0])
+    mrem = min(m_min, m_start)
+
+    cyc: dict[str, Any] = {
+        "cycle_index": 0,
+        "t": t_arr,
+        "M": M_arr,
+        "TH": TH_arr,
+        "S_rad_sigmaP": Srad_sigma,
+        "tau_eff": tau_eff,
+        "Srem": float(bh_entropy(mrem)),
+        "steps_qm": steps_qm,
+        "S_rad_qm": srad_qm,
+    }
+
+    # Pass through optional spin/core traces if present.
+    for k in ("a_star", "chi", "flags", "J", "P", "dotM", "dotJ"):
+        if k in out:
+            cyc[k] = out[k]
+
+    cfg_gamma = (
+        float(gamma)
+        if gamma is not None
+        else float(out.get("gamma", 1.0)) if "gamma" in out else 1.0
+    )
+    cfg_alpha = float(alpha) if alpha is not None else 4.0
+    cfg_hero_mass = float(hero_mass) if hero_mass is not None else m_start
+
+    payload = remnant_cycle_json_payload(
+        [cyc],
+        Mrem=mrem,
+        n_cycles=1,
+        nsteps=n,
+        qm_steps=int(np.asarray(steps_qm).size),
+        alpha=cfg_alpha,
+        gamma=cfg_gamma,
+        recycle=False,
+        recycle_start_frac=0.0,
+        recycle_duration_frac=0.0,
+        recycle_rate=0.0,
+        cycle_start_mass=m_start,
+        hero_mass=cfg_hero_mass,
+    )
+    payload["config"]["source_model"] = str(label)
+    payload["config"]["trace_wrapped_single_cycle"] = True
+
+    # Forward selected metadata if available.
+    for k in (
+        "t_eft",
+        "t_core_enter",
+        "t_core_exit",
+        "threshold_in",
+        "threshold_out",
+        "tau0",
+        "eft_criterion",
+    ):
+        if k in out:
+            v = out[k]
+            if v is None:
+                payload["config"][k] = None
+            elif isinstance(v, (int, float, np.floating, np.integer)):
+                payload["config"][k] = float(v)
+            else:
+                payload["config"][k] = v
+
+    return payload
+
+
 def save_remnant_cycle_json(path: str | Path, payload: dict[str, Any]) -> Path:
     """
     Save a BH Cinema Lab payload as UTF-8 JSON and return the resolved path.
@@ -600,6 +754,1386 @@ def save_remnant_cycle_json(path: str | Path, payload: dict[str, Any]) -> Path:
         json.dump(payload, f, ensure_ascii=False, indent=2)
         f.write("\n")
     return out_path.resolve()
+
+
+# ============================================================
+# Experimental: EFT cutoff + Kerr-ish (minimal) + accretion
+# ============================================================
+
+# This section is intentionally a phenomenological extension layer.
+# It is useful for exploratory simulations / visuals, but it does not replace
+# the core sigma_P evaporation functions above.
+
+
+# ---------- EFT cutoff criterion (Schwarzschild proxy) ----------
+
+
+def kretschmann_at_horizon_schwarzschild_proxy(M: float) -> float:
+    """
+    Schwarzschild Kretschmann scalar evaluated at r = r_s(M).
+
+    For Kerr runs this is used only as a conservative proxy criterion.
+    """
+    rs = schwarzschild_radius(M)
+    return kretschmann_scalar(M, rs)
+
+
+def eft_breakdown_by_curvature_schwarzschild_proxy(
+    M: float,
+    threshold: float = 1.0,
+) -> bool:
+    """
+    Proxy EFT breakdown criterion using Schwarzschild horizon curvature:
+      K(r_s) * lP^4 >= threshold
+
+    threshold ~ O(1) is the canonical Planck-curvature proxy.
+    """
+    M_safe = max(abs(M), 1e-99)
+    k_val = kretschmann_at_horizon_schwarzschild_proxy(M_safe)
+    return (k_val * (lP**4)) >= float(threshold)
+
+
+# Compatibility aliases (explicitly proxy-based).
+def kretschmann_at_horizon(M: float) -> float:
+    """Compatibility alias for the Schwarzschild horizon curvature proxy."""
+    return kretschmann_at_horizon_schwarzschild_proxy(M)
+
+
+def eft_breakdown_by_curvature(M: float, threshold: float = 1.0) -> bool:
+    """Compatibility alias for the Schwarzschild-proxy EFT cutoff criterion."""
+    return eft_breakdown_by_curvature_schwarzschild_proxy(M, threshold=threshold)
+
+
+# ---------- Minimal Kerr-ish helpers ----------
+# NOTE: Conservative hook model, not a precision Kerr flux model.
+
+
+def clamp(x: float, lo: float, hi: float) -> float:
+    """Clamp scalar x to [lo, hi]."""
+    return max(lo, min(hi, x))
+
+
+def horizon_radius_kerr(M: float, a_star: float) -> float:
+    """
+    Kerr outer horizon radius r_+ in SI:
+      r_+ = r_g (1 + sqrt(1 - a_*^2)),  r_g = G M / c^2
+
+    For a_* = 0 this reduces to the Schwarzschild radius r_s = 2GM/c^2.
+    """
+    M_safe = max(abs(M), 1e-99)
+    a = clamp(float(a_star), 0.0, 0.999_999_999)
+    r_g = G * M_safe / c**2
+    return r_g * (1.0 + math.sqrt(1.0 - a * a))
+
+
+def horizon_radius_kerr_inner(M: float, a_star: float) -> float:
+    """Kerr inner horizon radius r_- in SI (minimal helper)."""
+    M_safe = max(abs(M), 1e-99)
+    a = clamp(float(a_star), 0.0, 0.999_999_999)
+    r_g = G * M_safe / c**2
+    return r_g * (1.0 - math.sqrt(1.0 - a * a))
+
+
+def surface_gravity_kerr_geometric(M: float, a_star: float) -> float:
+    """
+    Kerr surface gravity in geometric form [1/m].
+
+    We use the standard Kerr dependence in terms of r_+, r_- and a_*:
+      kappa_geo = (r_+ - r_-) / (2 (r_+^2 + a_len^2))
+    where a_len = a_* r_g and r_g = GM/c^2.
+
+    Temperature then follows via:
+      T_H = (hbar * c * kappa_geo) / (2 pi kB)
+    """
+    M_safe = max(abs(M), 1e-99)
+    a = clamp(float(a_star), 0.0, 0.999_999_999)
+    r_g = G * M_safe / c**2
+    a_len = a * r_g
+    rp = horizon_radius_kerr(M_safe, a)
+    rm = horizon_radius_kerr_inner(M_safe, a)
+    denom = 2.0 * (rp * rp + a_len * a_len)
+    return (rp - rm) / max(denom, 1e-99)
+
+
+def surface_gravity_kerr(M: float, a_star: float) -> float:
+    """
+    Compatibility wrapper: returns geometric Kerr surface gravity [1/m].
+
+    (Not acceleration in m/s^2.)
+    """
+    return surface_gravity_kerr_geometric(M, a_star)
+
+
+def hawking_temperature_kerr(M: float, a_star: float) -> float:
+    """
+    Minimal Kerr Hawking temperature using the exact Kerr surface-gravity dependence.
+
+    Uses kappa_geo [1/m]:
+      T_H = hbar * c * kappa_geo / (2 pi kB)
+    """
+    kappa_geo = surface_gravity_kerr_geometric(M, a_star)
+    return hbar * c * kappa_geo / (2.0 * pi * kB)
+
+
+def spin_parameter_from_J(M: float, J: float) -> float:
+    """
+    Dimensionless Kerr spin a_* = c J / (G M^2), clamped to [0, 0.999...].
+    """
+    M_safe = max(abs(M), 1e-99)
+    a = (c * float(J)) / (G * M_safe**2)
+    return clamp(a, 0.0, 0.999_999_999)
+
+
+def J_from_spin_parameter(M: float, a_star: float) -> float:
+    """Angular momentum from dimensionless Kerr spin: J = a_* G M^2 / c."""
+    M_safe = max(abs(M), 1e-99)
+    a = clamp(float(a_star), 0.0, 0.999_999_999)
+    return a * G * M_safe**2 / c
+
+
+# ---------- Power / flux model with conservative caps ----------
+
+
+def hawking_power_schwarzschild(M: float, gamma: float = 1.0) -> float:
+    """
+    Baseline Schwarzschild power consistent with the dM/dt coefficient:
+
+      dM/dt = -K0 / M^2
+      K0 = gamma * hbar c^4 / (15360 pi G^2)
+      P = c^2 |dM/dt| = c^2 K0 / M^2
+    """
+    M_safe = max(abs(M), 1e-99)
+    gamma_eff = max(float(gamma), 0.0)
+    k0 = gamma_eff * hbar * c**4 / (15360.0 * pi * G**2)
+    return (c**2) * k0 / (M_safe**2)
+
+
+def hawking_power_kerr_minimal(M: float, a_star: float, gamma: float = 1.0) -> float:
+    """
+    Minimal Kerr-ish power proxy:
+
+    - start from Schwarzschild baseline
+    - rescale by (T_kerr / T_schw)^4
+
+    This is a toy closure (no greybody factors, no superradiance, no mode sum),
+    but preserves the correct qualitative suppression as a_* -> 1.
+    """
+    M_safe = max(abs(M), 1e-99)
+    a = clamp(float(a_star), 0.0, 0.999_999_999)
+
+    t_s = hawking_temperature(M_safe)
+    t_k = hawking_temperature_kerr(M_safe, a)
+    ratio = (t_k / max(t_s, 1e-300)) ** 4
+
+    return hawking_power_schwarzschild(M_safe, gamma=gamma) * float(ratio)
+
+
+def apply_power_caps(
+    P: float,
+    T: float,
+    cap_planck_power: bool = True,
+    cap_planck_temp: bool = True,
+) -> tuple[float, float]:
+    """
+    Apply conservative EFT-motivated caps:
+    - Planck power scale ~ c^5 / G
+    - Planck temperature scale ~ hbar / (kB tP)
+    """
+    p_eff = float(P)
+    t_eff = float(T)
+
+    if cap_planck_temp:
+        t_max = hbar / (kB * tP)
+        t_eff = min(t_eff, t_max)
+
+    if cap_planck_power:
+        p_max = c**5 / G
+        p_eff = min(p_eff, p_max)
+
+    return p_eff, t_eff
+
+
+# ---------- Accretion models ----------
+
+
+def accretion_constant(rate_kg_s: float) -> Callable[[float, float, float], float]:
+    """Return dotM_acc(t, M, a*) = constant rate [kg/s]."""
+    rate = float(rate_kg_s)
+
+    def _fn(ti: float, Mi: float, ai: float) -> float:
+        _ = ti, Mi, ai
+        return rate
+
+    return _fn
+
+
+def accretion_eddington(
+    eta: float = 0.1,
+    f_edd: float = 1.0,
+) -> Callable[[float, float, float], float]:
+    """
+    Eddington-limited mass accretion rate:
+      L_Edd = 4 pi G M m_p c / sigma_T
+      dotM = f_edd * L_Edd / (eta c^2)
+    """
+    m_p = 1.672_621_923_69e-27     # kg
+    sigma_t = 6.652_458_732_1e-29  # m^2
+
+    eta_eff = max(float(eta), 1e-9)
+    f_eff = max(float(f_edd), 0.0)
+
+    def _fn(ti: float, Mi: float, ai: float) -> float:
+        _ = ti, ai
+        M_safe = max(abs(Mi), 1e-99)
+        l_edd = 4.0 * pi * G * M_safe * m_p * c / sigma_t
+        return f_eff * l_edd / (eta_eff * c**2)
+
+    return _fn
+
+
+# ---------- Main evolution dataclass ----------
+
+
+@dataclass
+class EvoConfig:
+    """
+    Experimental Kerr-ish + EFT cutoff evolution config.
+
+    This is an exploratory/phenomenological layer. It should not be interpreted
+    as a precision Kerr evaporation solver.
+    """
+
+    nsteps: int = 4000
+    t_end: Optional[float] = None  # if None: use semiclassical lifetime scale
+    gamma: float = 1.0
+
+    # EFT proxy criterion
+    curvature_threshold: float = 1.0  # K lP^4 ~ 1 (Schwarzschild-horizon proxy)
+    stop_on_eft_breakdown: bool = True
+
+    # Caps
+    cap_planck_power: bool = True
+    cap_planck_temp: bool = True
+
+    # Core-phase behavior after EFT proxy breakdown (if not stopping)
+    freeze_hawking_in_core: bool = True
+    allow_accretion_in_core: bool = True
+
+    # Numerical safety (prevents pathological jumps during strong accretion)
+    max_frac_mass_change_per_substep: float = 0.02
+    max_substeps_per_step: int = 20000
+
+
+def evolve_bh_kerr_eft(
+    M0: float,
+    a0_star: float = 0.0,
+    dotM_acc: Optional[Callable[[float, float, float], float]] = None,
+    cfg: Optional[EvoConfig] = None,
+) -> dict[str, Any]:
+    """
+    Experimental BH evolution with minimal Kerr-ish evaporation + accretion + EFT proxy cutoff.
+
+    Evolution equation:
+      dM/dt = -P(M, a*) / c^2 + dotM_acc(t, M, a*)
+
+    Notes
+    -----
+    - The EFT cutoff uses a Schwarzschild-horizon curvature proxy K(r_s) lP^4.
+    - Kerr power is a minimal proxy based on (T_kerr/T_schw)^4 scaling.
+    - Spin a_* is held constant in this minimal version (no dotJ model).
+
+    Returns
+    -------
+    dict with arrays:
+      t, M, a_star, TH, P, dotM_acc, dMdt, flags, t_eft, tau0
+    """
+    if cfg is None:
+        cfg = EvoConfig()
+
+    M0_safe = max(abs(float(M0)), 1e-99)
+    a0 = clamp(float(a0_star), 0.0, 0.999_999_999)
+
+    if dotM_acc is None:
+        dotM_acc = accretion_constant(0.0)
+
+    tau0 = lifetime_semiclassical(M0_safe)
+    t_end = float(cfg.t_end) if cfg.t_end is not None else float(tau0)
+    t_end = max(t_end, 1e-30)
+
+    n = max(int(cfg.nsteps), 2)
+    t = np.linspace(0.0, t_end, n, dtype=float)
+    dt = float(t[1] - t[0])
+
+    M = np.empty(n, dtype=float)
+    a_star = np.empty(n, dtype=float)
+    TH = np.empty(n, dtype=float)
+    P = np.empty(n, dtype=float)
+    dotM_acc_arr = np.empty(n, dtype=float)
+    dMdt_arr = np.empty(n, dtype=float)
+    flags = np.zeros(n, dtype=int)  # 0 = normal, 1 = EFT proxy breakdown/core-phase
+
+    M_curr = M0_safe
+    a_curr = a0
+    t_eft: float | None = None
+    in_core = False
+
+    frac_limit = max(float(cfg.max_frac_mass_change_per_substep), 1e-9)
+    max_sub = max(int(cfg.max_substeps_per_step), 1)
+
+    for i, ti in enumerate(t):
+        M[i] = M_curr
+        a_star[i] = a_curr
+
+        # Hawking temperature/power (Kerr-ish proxy), then conservative caps
+        T_curr = hawking_temperature_kerr(M_curr, a_curr)
+        P_curr = hawking_power_kerr_minimal(M_curr, a_curr, gamma=cfg.gamma)
+        P_cap, T_cap = apply_power_caps(
+            P_curr,
+            T_curr,
+            cap_planck_power=cfg.cap_planck_power,
+            cap_planck_temp=cfg.cap_planck_temp,
+        )
+
+        # EFT proxy breakdown at the (Schwarzschild) horizon curvature scale
+        eft_break = eft_breakdown_by_curvature_schwarzschild_proxy(
+            M_curr,
+            threshold=cfg.curvature_threshold,
+        )
+        if eft_break and t_eft is None:
+            t_eft = float(ti)
+
+        if eft_break:
+            flags[i] = 1
+            if cfg.stop_on_eft_breakdown:
+                TH[i] = T_cap
+                P[i] = P_cap
+                dotM_acc_arr[i] = float(dotM_acc(float(ti), float(M_curr), float(a_curr)))
+                dMdt_arr[i] = -P_cap / c**2 + dotM_acc_arr[i]
+                cut = i + 1
+                return {
+                    "t": t[:cut],
+                    "M": M[:cut],
+                    "a_star": a_star[:cut],
+                    "TH": TH[:cut],
+                    "P": P[:cut],
+                    "dotM_acc": dotM_acc_arr[:cut],
+                    "dMdt": dMdt_arr[:cut],
+                    "flags": flags[:cut],
+                    "t_eft": t_eft,
+                    "tau0": float(tau0),
+                    "eft_criterion": "schwarzschild_horizon_kretschmann_proxy",
+                }
+            in_core = True
+
+        if in_core and cfg.freeze_hawking_in_core:
+            P_eff = 0.0
+            TH[i] = T_cap
+        else:
+            P_eff = P_cap
+            TH[i] = T_cap
+
+        # Accretion can optionally continue through the core phase
+        dotM_raw = float(dotM_acc(float(ti), float(M_curr), float(a_curr)))
+        dotM_eff = dotM_raw if ((not in_core) or cfg.allow_accretion_in_core) else 0.0
+
+        dMdt_now = -P_eff / c**2 + dotM_eff
+        P[i] = P_eff
+        dotM_acc_arr[i] = dotM_eff
+        dMdt_arr[i] = dMdt_now
+
+        if i >= n - 1:
+            continue
+
+        # Adaptive sub-stepping for numerical stability (especially with accretion bursts)
+        remaining = dt
+        substeps = 0
+        while remaining > 0.0:
+            if substeps >= max_sub:
+                raise ValueError(
+                    "evolve_bh_kerr_eft: time step too coarse for stable integration "
+                    f"(ti={ti:.3e}s, M={M_curr:.3e}kg). Reduce t_end, increase nsteps, "
+                    "or reduce accretion rate / max_frac_mass_change_per_substep."
+                )
+
+            T_sub = hawking_temperature_kerr(M_curr, a_curr)
+            P_sub = hawking_power_kerr_minimal(M_curr, a_curr, gamma=cfg.gamma)
+            P_sub_cap, _T_sub_cap = apply_power_caps(
+                P_sub,
+                T_sub,
+                cap_planck_power=cfg.cap_planck_power,
+                cap_planck_temp=cfg.cap_planck_temp,
+            )
+
+            eft_sub = eft_breakdown_by_curvature_schwarzschild_proxy(
+                M_curr,
+                threshold=cfg.curvature_threshold,
+            )
+            if eft_sub and t_eft is None:
+                t_eft = float(ti + (dt - remaining))
+            if eft_sub:
+                in_core = True
+
+            if in_core and cfg.freeze_hawking_in_core:
+                P_use = 0.0
+            else:
+                P_use = P_sub_cap
+
+            t_sub = float(ti + (dt - remaining))
+            dotM_sub_raw = float(dotM_acc(t_sub, float(M_curr), float(a_curr)))
+            dotM_sub = (
+                dotM_sub_raw if ((not in_core) or cfg.allow_accretion_in_core) else 0.0
+            )
+            dMdt_sub = -P_use / c**2 + dotM_sub
+
+            rate_abs = abs(dMdt_sub)
+            if rate_abs <= 1e-300:
+                dt_take = remaining
+            else:
+                dt_lim = frac_limit * max(M_curr, 1e-99) / rate_abs
+                dt_take = min(remaining, dt_lim)
+
+            if (not math.isfinite(dt_take)) or dt_take <= 0.0:
+                raise ValueError(
+                    "evolve_bh_kerr_eft: invalid adaptive sub-step encountered. "
+                    "Check rates / configuration."
+                )
+
+            M_next = M_curr + dMdt_sub * dt_take
+            M_curr = max(float(M_next), 1e-99)
+            remaining -= dt_take
+            if remaining < 1e-18 * max(dt, 1.0):
+                remaining = 0.0
+
+            # Minimal model: keep a_* fixed until a torque model is added
+            a_curr = clamp(a_curr, 0.0, 0.999_999_999)
+            substeps += 1
+
+    return {
+        "t": t,
+        "M": M,
+        "a_star": a_star,
+        "TH": TH,
+        "P": P,
+        "dotM_acc": dotM_acc_arr,
+        "dMdt": dMdt_arr,
+        "flags": flags,
+        "t_eft": t_eft,
+        "tau0": float(tau0),
+        "eft_criterion": "schwarzschild_horizon_kretschmann_proxy",
+    }
+
+
+def evolve_with_environment_bursts(
+    M0: float,
+    a0_star: float = 0.0,
+    bursts: Optional[list[tuple[float, float]]] = None,
+    cfg: Optional[EvoConfig] = None,
+) -> dict[str, Any]:
+    """
+    Simple environment model: piecewise-constant accretion bursts.
+
+    Parameters
+    ----------
+    bursts : list[(t_start_frac, rate_kg_s)]
+        `t_start_frac` is a fraction of the integration window t_end.
+        Example: [(0.0, 0.0), (0.2, 1e5), (0.6, 0.0)]
+    """
+    if cfg is None:
+        cfg = EvoConfig()
+
+    if bursts is None or len(bursts) == 0:
+        dotM = accretion_constant(0.0)
+    else:
+        bursts_sorted = sorted(
+            [(float(s), float(r)) for s, r in bursts],
+            key=lambda x: x[0],
+        )
+        t_ref = (
+            float(cfg.t_end)
+            if cfg.t_end is not None
+            else float(lifetime_semiclassical(max(abs(M0), 1e-99)))
+        )
+        t_ref = max(t_ref, 1e-30)
+
+        def dotM(ti: float, Mi: float, ai: float) -> float:
+            _ = Mi, ai
+            x = ti / t_ref
+            rate = bursts_sorted[0][1]
+            for s, r in bursts_sorted:
+                if x >= s:
+                    rate = r
+                else:
+                    break
+            return rate
+
+    return evolve_bh_kerr_eft(M0, a0_star=a0_star, dotM_acc=dotM, cfg=cfg)
+
+
+def demo_eft_feedback() -> dict[str, Any]:
+    """
+    Small demo for the experimental Kerr-ish EFT/accretion layer.
+
+    Uses a PBH-scale mass but an intentionally short integration window (t_end)
+    so the accretion burst is numerically and visually meaningful.
+    """
+    M0 = 1e12  # kg (PBH scale)
+    cfg = EvoConfig(
+        nsteps=6000,
+        t_end=1.0e6,  # s; do not use tau0 here (too large for an environment burst demo)
+        gamma=1.0,
+        curvature_threshold=1.0,
+        stop_on_eft_breakdown=False,  # allow a toy "core phase"
+        freeze_hawking_in_core=True,
+        allow_accretion_in_core=True,
+        cap_planck_power=True,
+        cap_planck_temp=True,
+        max_frac_mass_change_per_substep=0.02,
+    )
+
+    out = evolve_with_environment_bursts(
+        M0,
+        a0_star=0.2,
+        bursts=[(0.0, 0.0), (0.7, 1e6)],  # late accretion burst
+        cfg=cfg,
+    )
+
+    t = np.asarray(out["t"], dtype=float)
+    M = np.asarray(out["M"], dtype=float)
+    flags = np.asarray(out["flags"], dtype=int)
+    eft_idx = np.where(flags == 1)[0]
+
+    if eft_idx.size:
+        i0 = int(eft_idx[0])
+        print(f"EFT proxy breakdown reached at t={t[i0]:.3e} s, M={M[i0]:.3e} kg")
+    else:
+        print("No EFT proxy breakdown within the integration window.")
+
+    print("Experimental Kerr-ish + accretion demo (phenomenological layer)")
+    print(f"Start mass: {M[0]:.3e} kg")
+    print(f"End mass:   {M[-1]:.3e} kg")
+    print(f"t_end:      {t[-1]:.3e} s")
+    return out
+
+
+# ============================================================
+# Experimental extension: spin torque (ISCO) + core hysteresis
+# ============================================================
+
+
+def curvature_measure_horizon_schwarzschild_proxy(M: float) -> float:
+    """
+    Dimensionless curvature proxy at the Schwarzschild horizon:
+      chi = K(r_s) * lP^4
+
+    For Kerr runs this remains an explicit Schwarzschild-horizon proxy.
+    """
+    M_safe = max(abs(M), 1e-99)
+    k_val = kretschmann_at_horizon_schwarzschild_proxy(M_safe)
+    return float(k_val * (lP**4))
+
+
+def curvature_measure_horizon(M: float) -> float:
+    """Compatibility alias for the Schwarzschild-horizon curvature proxy."""
+    return curvature_measure_horizon_schwarzschild_proxy(M)
+
+
+def spin_parameter_from_J_signed(
+    M: float,
+    J: float,
+    a_star_max: float = 0.999_999_999,
+) -> float:
+    """
+    Signed dimensionless Kerr spin:
+      a_* = c J / (G M^2), clamped to [-a_star_max, +a_star_max].
+    """
+    M_safe = max(abs(M), 1e-99)
+    a_raw = (c * float(J)) / (G * M_safe**2)
+    a_lim = clamp(abs(float(a_star_max)), 0.0, 0.999_999_999)
+    return clamp(a_raw, -a_lim, a_lim)
+
+
+def J_from_spin_parameter_signed(
+    M: float,
+    a_star: float,
+    a_star_max: float = 0.999_999_999,
+) -> float:
+    """
+    Signed angular momentum from signed dimensionless Kerr spin:
+      J = a_* G M^2 / c
+    """
+    M_safe = max(abs(M), 1e-99)
+    a_lim = clamp(abs(float(a_star_max)), 0.0, 0.999_999_999)
+    a_signed = clamp(float(a_star), -a_lim, a_lim)
+    return a_signed * G * M_safe**2 / c
+
+
+def _clamp_J_to_kerr_bound(M: float, J: float, a_star_max: float) -> float:
+    """
+    Enforce the Kerr bound on |J|:
+      |J| <= a_star_max * G M^2 / c
+    """
+    M_safe = max(abs(M), 1e-99)
+    a_lim = clamp(abs(float(a_star_max)), 0.0, 0.999_999_999)
+    J_lim = a_lim * G * M_safe**2 / c
+    return clamp(float(J), -J_lim, J_lim)
+
+
+def r_isco_kerr(M: float, a_star: float, prograde: bool = True) -> float:
+    """
+    Kerr ISCO radius in SI meters (analytic Bardeen formula).
+
+    Parameters
+    ----------
+    a_star : float
+        Dimensionless Kerr spin magnitude/sign; only |a_star| enters the radius.
+    prograde : bool
+        Orbit orientation relative to the BH spin axis.
+    """
+    M_safe = max(abs(M), 1e-99)
+    a = clamp(abs(float(a_star)), 0.0, 0.999_999_999)
+    sgn = +1.0 if prograde else -1.0
+    r_g = G * M_safe / c**2
+
+    z1 = 1.0 + (1.0 - a * a) ** (1.0 / 3.0) * (
+        (1.0 + a) ** (1.0 / 3.0) + (1.0 - a) ** (1.0 / 3.0)
+    )
+    z2 = math.sqrt(3.0 * a * a + z1 * z1)
+    r_isco_over_rg = 3.0 + z2 - sgn * math.sqrt(
+        max((3.0 - z1) * (3.0 + z1 + 2.0 * z2), 0.0)
+    )
+
+    return float(r_isco_over_rg) * r_g
+
+
+def specific_angular_momentum_isco(
+    M: float,
+    a_star: float,
+    prograde: bool = True,
+) -> float:
+    """
+    Signed specific angular momentum l = L/m at Kerr ISCO in SI [m^2/s].
+
+    Sign convention:
+    - positive: aligned with the BH spin axis
+    - negative: anti-aligned with the BH spin axis
+
+    The BH spin orientation is encoded by the sign of a_star. Internally the
+    Kerr orbital expressions use |a_star| and the requested orbit orientation
+    (prograde/retrograde) relative to the BH spin axis.
+    """
+    M_safe = max(abs(M), 1e-99)
+    a_signed = float(a_star)
+    a_mag = clamp(abs(a_signed), 0.0, 0.999_999_999)
+    bh_sign = 1.0 if a_signed >= 0.0 else -1.0
+
+    r_g = G * M_safe / c**2
+    rbar = r_isco_kerr(M_safe, a_mag, prograde=prograde) / max(r_g, 1e-99)
+    sqrt_r = math.sqrt(rbar)
+
+    if prograde:
+        num = rbar**2 - 2.0 * a_mag * sqrt_r + a_mag**2
+        den_inside = rbar**2 - 3.0 * rbar + 2.0 * a_mag * sqrt_r
+        orbit_sign_rel_to_bh = +1.0
+    else:
+        num = rbar**2 + 2.0 * a_mag * sqrt_r + a_mag**2
+        den_inside = rbar**2 - 3.0 * rbar - 2.0 * a_mag * sqrt_r
+        orbit_sign_rel_to_bh = -1.0
+
+    den_inside = max(den_inside, 1e-30)
+    den = sqrt_r * math.sqrt(den_inside)
+    lbar_mag = abs(num / max(den, 1e-30))
+
+    # Convert from geometric-units expression (in units of M) to SI:
+    # l_SI = lbar * (G M / c)
+    l_si_mag = float(lbar_mag) * (G * M_safe / c)
+
+    # Map local "relative to BH spin axis" sign into a global axis sign.
+    return bh_sign * orbit_sign_rel_to_bh * l_si_mag
+
+
+def dotJ_accretion_from_dotM(
+    t: float,
+    M: float,
+    a_star: float,
+    dotM_acc: float,
+    mode: str = "isco",
+    l_manual: float = 0.0,
+    prograde: bool = True,
+) -> float:
+    """
+    Accretion torque:
+      dotJ_acc = l * dotM_acc
+
+    mode:
+      - "isco": use Kerr ISCO specific angular momentum (signed)
+      - "manual": use l_manual [m^2/s]
+    """
+    _ = t
+    mdot = float(dotM_acc)
+    if mdot <= 0.0:
+        return 0.0
+
+    if str(mode).lower() == "manual":
+        l_val = float(l_manual)
+    else:
+        l_val = specific_angular_momentum_isco(M, a_star, prograde=prograde)
+
+    return l_val * mdot
+
+
+def dotJ_hawking_parametric(
+    M: float,
+    a_star: float,
+    dotM_rad: float,
+    xi: float = 1.0,
+) -> float:
+    """
+    Parametric Hawking spin-down torque (phenomenological):
+      dotJ_rad ~ - xi * sign(a_*) * |a_*| * (G/c) * M * |dotM_rad|
+
+    where dotM_rad <= 0 is the Hawking mass-loss term.
+    This drives J toward zero.
+    """
+    M_safe = max(abs(M), 1e-99)
+    a_signed = float(a_star)
+    a_mag = clamp(abs(a_signed), 0.0, 0.999_999_999)
+    xi_eff = max(float(xi), 0.0)
+    mdot = float(dotM_rad)
+
+    if mdot >= 0.0 or a_mag <= 0.0:
+        return 0.0
+
+    spin_sign = 1.0 if a_signed >= 0.0 else -1.0
+    return -xi_eff * spin_sign * a_mag * (G / c) * M_safe * abs(mdot)
+
+
+@dataclass
+class SpinEvoConfig(EvoConfig):
+    """
+    Experimental spin-enabled extension of `EvoConfig`.
+
+    Still phenomenological:
+    - Kerr-ish evaporation proxy
+    - ISCO accretion torque
+    - parametric Hawking spin-down
+    """
+
+    evolve_spin: bool = True
+    accretion_torque_mode: str = "isco"  # "isco" | "manual"
+    accretion_l_manual: float = 0.0      # SI [m^2/s], only if mode="manual"
+    prograde: bool = True                # orbit orientation relative to BH spin axis
+
+    hawking_spin_down: bool = True
+    hawking_xi: float = 1.0              # O(1) phenomenological knob
+
+    a_star_max: float = 0.999_999_999
+
+
+@dataclass
+class SpinEvoHysteresisConfig(SpinEvoConfig):
+    """
+    Spin-enabled config with core hysteresis thresholds on the curvature proxy.
+    """
+
+    curvature_threshold_in: float = 1.0
+    curvature_threshold_out: float = 0.3
+    enable_core_exit: bool = True
+
+
+def _kerr_observables_capped(
+    M: float,
+    a_star: float,
+    cfg: EvoConfig,
+) -> tuple[float, float]:
+    """Return (P_cap, T_cap) for the Kerr-ish phenomenological model."""
+    T_curr = hawking_temperature_kerr(M, a_star)
+    P_curr = hawking_power_kerr_minimal(M, a_star, gamma=cfg.gamma)
+    return apply_power_caps(
+        P_curr,
+        T_curr,
+        cap_planck_power=cfg.cap_planck_power,
+        cap_planck_temp=cfg.cap_planck_temp,
+    )
+
+
+def _spin_rhs_kerr_eft(
+    ti: float,
+    M: float,
+    J: float,
+    in_core: bool,
+    dotM_acc_fn: Callable[[float, float, float], float],
+    cfg: SpinEvoConfig,
+) -> dict[str, float]:
+    """
+    Compute instantaneous phenomenological RHS and observables at (t, M, J).
+
+    Returns a dict with:
+      a_star, TH, P_cap, P_eff, dotM_acc_raw, dotM_acc_eff, dotM_rad,
+      dotM_total, dotJ_total
+    """
+    M_safe = max(abs(float(M)), 1e-99)
+    a_lim = clamp(abs(float(cfg.a_star_max)), 0.0, 0.999_999_999)
+    a_signed = spin_parameter_from_J_signed(M_safe, float(J), a_star_max=a_lim)
+
+    P_cap, T_cap = _kerr_observables_capped(M_safe, a_signed, cfg)
+
+    if in_core and cfg.freeze_hawking_in_core:
+        P_eff = 0.0
+        TH_eff = T_cap
+    else:
+        P_eff = P_cap
+        TH_eff = T_cap
+
+    dotM_acc_raw = float(dotM_acc_fn(float(ti), float(M_safe), float(a_signed)))
+    dotM_acc_eff = dotM_acc_raw if ((not in_core) or cfg.allow_accretion_in_core) else 0.0
+
+    dotM_rad = -P_eff / c**2  # <= 0
+    dotM_total = dotM_rad + dotM_acc_eff
+
+    dotJ_total = 0.0
+    if cfg.evolve_spin:
+        dotJ_total += dotJ_accretion_from_dotM(
+            t=float(ti),
+            M=float(M_safe),
+            a_star=float(a_signed),
+            dotM_acc=float(max(dotM_acc_eff, 0.0)),
+            mode=str(cfg.accretion_torque_mode),
+            l_manual=float(cfg.accretion_l_manual),
+            prograde=bool(cfg.prograde),
+        )
+        if cfg.hawking_spin_down and dotM_rad < 0.0:
+            dotJ_total += dotJ_hawking_parametric(
+                M=float(M_safe),
+                a_star=float(a_signed),
+                dotM_rad=float(dotM_rad),
+                xi=float(cfg.hawking_xi),
+            )
+
+    return {
+        "a_star": float(a_signed),
+        "TH": float(TH_eff),
+        "P_cap": float(P_cap),
+        "P_eff": float(P_eff),
+        "dotM_acc_raw": float(dotM_acc_raw),
+        "dotM_acc_eff": float(dotM_acc_eff),
+        "dotM_rad": float(dotM_rad),
+        "dotM_total": float(dotM_total),
+        "dotJ_total": float(dotJ_total),
+    }
+
+
+def _advance_mass_J_adaptive(
+    ti: float,
+    dt: float,
+    M_curr: float,
+    J_curr: float,
+    in_core: bool,
+    dotM_acc_fn: Callable[[float, float, float], float],
+    cfg: SpinEvoConfig,
+    *,
+    hysteresis: bool = False,
+    threshold_in: float = 1.0,
+    threshold_out: float = 0.3,
+    enable_core_exit: bool = True,
+    t_core_enter: float | None = None,
+    t_core_exit: float | None = None,
+) -> tuple[float, float, bool, float | None, float | None]:
+    """
+    Advance (M, J) over one sampled interval using adaptive substepping.
+
+    The step limiter is driven by a maximum fractional mass change per substep
+    (and a soft angular-momentum limiter when spin evolution is enabled).
+    """
+    frac_limit = max(float(cfg.max_frac_mass_change_per_substep), 1e-9)
+    max_sub = max(int(cfg.max_substeps_per_step), 1)
+    a_lim = clamp(abs(float(cfg.a_star_max)), 0.0, 0.999_999_999)
+
+    remaining = max(float(dt), 0.0)
+    substeps = 0
+
+    while remaining > 0.0:
+        if substeps >= max_sub:
+            raise ValueError(
+                "Adaptive spin solver exceeded max_substeps_per_step. "
+                f"ti={ti:.3e}s, M={M_curr:.3e}kg, remaining_dt={remaining:.3e}s. "
+                "Increase nsteps / decrease t_end / lower accretion rate / "
+                "raise max_substeps_per_step."
+            )
+
+        t_sub = float(ti + (dt - remaining))
+        chi_sub = curvature_measure_horizon_schwarzschild_proxy(M_curr)
+
+        if hysteresis:
+            if (not in_core) and (chi_sub >= float(threshold_in)):
+                in_core = True
+                if t_core_enter is None:
+                    t_core_enter = t_sub
+            if in_core and bool(enable_core_exit) and (chi_sub <= float(threshold_out)):
+                in_core = False
+                if t_core_exit is None:
+                    t_core_exit = t_sub
+        else:
+            if chi_sub >= float(cfg.curvature_threshold):
+                in_core = True
+
+        rhs = _spin_rhs_kerr_eft(
+            t_sub,
+            M_curr,
+            J_curr,
+            in_core,
+            dotM_acc_fn,
+            cfg,
+        )
+
+        dotM_total = rhs["dotM_total"]
+        dotJ_total = rhs["dotJ_total"]
+
+        # Mass-based adaptive limiter
+        rate_M_abs = abs(dotM_total)
+        if rate_M_abs <= 1e-300:
+            dt_take = remaining
+        else:
+            dt_lim_M = frac_limit * max(M_curr, 1e-99) / rate_M_abs
+            dt_take = min(remaining, dt_lim_M)
+
+        # Soft J-based limiter to avoid large spin jumps in one substep
+        if cfg.evolve_spin:
+            J_scale = max(abs(J_curr), (G * max(M_curr, 1e-99) ** 2 / c) * 1e-12)
+            rate_J_abs = abs(dotJ_total)
+            if rate_J_abs > 1e-300:
+                dt_lim_J = frac_limit * J_scale / rate_J_abs
+                dt_take = min(dt_take, dt_lim_J)
+
+        if (not math.isfinite(dt_take)) or dt_take <= 0.0:
+            raise ValueError(
+                "Invalid adaptive substep in spin solver. "
+                "Check rates and configuration."
+            )
+
+        M_next = max(M_curr + dotM_total * dt_take, 1e-99)
+        J_next = J_curr + dotJ_total * dt_take
+        J_next = _clamp_J_to_kerr_bound(M_next, J_next, a_star_max=a_lim)
+
+        M_curr = float(M_next)
+        J_curr = float(J_next)
+
+        remaining -= dt_take
+        if remaining < 1e-18 * max(dt, 1.0):
+            remaining = 0.0
+
+        substeps += 1
+
+    return M_curr, J_curr, in_core, t_core_enter, t_core_exit
+
+
+def evolve_bh_kerr_eft_with_spin(
+    M0: float,
+    a0_star: float = 0.0,
+    dotM_acc_fn: Optional[Callable[[float, float, float], float]] = None,
+    cfg: Optional[SpinEvoConfig] = None,
+) -> dict[str, Any]:
+    """
+    Experimental coupled evolution of mass and Kerr spin (via J).
+
+    Equations (phenomenological):
+      dM/dt = -P(M,a*)/c^2 + dotM_acc
+      dJ/dt = dotJ_acc(ISCO/manual) + dotJ_rad(parametric Hawking)
+      a*    = c J / (G M^2)
+
+    Uses:
+    - Kerr-ish evaporation proxy
+    - Schwarzschild-horizon curvature proxy for EFT/core entry
+    - adaptive substepping for numerical stability
+    """
+    if cfg is None:
+        cfg = SpinEvoConfig()
+
+    a_lim = clamp(abs(float(cfg.a_star_max)), 0.0, 0.999_999_999)
+    M0_safe = max(abs(float(M0)), 1e-99)
+    a0_signed = clamp(float(a0_star), -a_lim, a_lim)
+    J_curr = J_from_spin_parameter_signed(M0_safe, a0_signed, a_star_max=a_lim)
+
+    if dotM_acc_fn is None:
+        dotM_acc_fn = accretion_constant(0.0)
+
+    tau0 = lifetime_semiclassical(M0_safe)
+    t_end = float(cfg.t_end) if cfg.t_end is not None else float(tau0)
+    t_end = max(t_end, 1e-30)
+
+    n = max(int(cfg.nsteps), 2)
+    t = np.linspace(0.0, t_end, n, dtype=float)
+    dt = float(t[1] - t[0])
+
+    M = np.empty(n, dtype=float)
+    J = np.empty(n, dtype=float)
+    a_star = np.empty(n, dtype=float)
+    TH = np.empty(n, dtype=float)
+    P = np.empty(n, dtype=float)
+    dotM_arr = np.empty(n, dtype=float)
+    dotJ_arr = np.empty(n, dtype=float)
+    flags = np.zeros(n, dtype=int)  # 0 normal, 1 in core
+    chi_arr = np.empty(n, dtype=float)
+
+    M_curr = M0_safe
+    in_core = False
+    t_eft: float | None = None
+
+    for i, ti in enumerate(t):
+        M[i] = M_curr
+        J[i] = J_curr
+        a_curr = spin_parameter_from_J_signed(M_curr, J_curr, a_star_max=a_lim)
+        a_star[i] = a_curr
+
+        chi = curvature_measure_horizon_schwarzschild_proxy(M_curr)
+        chi_arr[i] = chi
+
+        eft_break = chi >= float(cfg.curvature_threshold)
+        if eft_break and t_eft is None:
+            t_eft = float(ti)
+
+        if eft_break:
+            in_core = True
+            flags[i] = 1
+
+            if cfg.stop_on_eft_breakdown:
+                P_cap, T_cap = _kerr_observables_capped(M_curr, a_curr, cfg)
+                TH[i] = T_cap
+                P[i] = P_cap
+                dotM_acc_raw = float(dotM_acc_fn(float(ti), float(M_curr), float(a_curr)))
+                dotM_rad = -P_cap / c**2
+                dotM_arr[i] = dotM_rad + dotM_acc_raw
+                dotJ_stop = 0.0
+                if cfg.evolve_spin:
+                    dotJ_stop += dotJ_accretion_from_dotM(
+                        t=float(ti),
+                        M=float(M_curr),
+                        a_star=float(a_curr),
+                        dotM_acc=float(max(dotM_acc_raw, 0.0)),
+                        mode=str(cfg.accretion_torque_mode),
+                        l_manual=float(cfg.accretion_l_manual),
+                        prograde=bool(cfg.prograde),
+                    )
+                    if cfg.hawking_spin_down and dotM_rad < 0.0:
+                        dotJ_stop += dotJ_hawking_parametric(
+                            M=float(M_curr),
+                            a_star=float(a_curr),
+                            dotM_rad=float(dotM_rad),
+                            xi=float(cfg.hawking_xi),
+                        )
+                dotJ_arr[i] = dotJ_stop
+
+                cut = i + 1
+                return {
+                    "t": t[:cut],
+                    "M": M[:cut],
+                    "J": J[:cut],
+                    "a_star": a_star[:cut],
+                    "TH": TH[:cut],
+                    "P": P[:cut],
+                    "dotM": dotM_arr[:cut],
+                    "dotJ": dotJ_arr[:cut],
+                    "flags": flags[:cut],
+                    "chi": chi_arr[:cut],
+                    "t_eft": t_eft,
+                    "tau0": float(tau0),
+                    "eft_criterion": "schwarzschild_horizon_kretschmann_proxy",
+                }
+        else:
+            flags[i] = 1 if in_core else 0
+
+        rhs = _spin_rhs_kerr_eft(
+            float(ti),
+            float(M_curr),
+            float(J_curr),
+            bool(in_core),
+            dotM_acc_fn,
+            cfg,
+        )
+        TH[i] = rhs["TH"]
+        P[i] = rhs["P_eff"]
+        dotM_arr[i] = rhs["dotM_total"]
+        dotJ_arr[i] = rhs["dotJ_total"]
+
+        if i >= n - 1:
+            continue
+
+        M_curr, J_curr, in_core, _t_in, _t_out = _advance_mass_J_adaptive(
+            ti=float(ti),
+            dt=dt,
+            M_curr=float(M_curr),
+            J_curr=float(J_curr),
+            in_core=bool(in_core),
+            dotM_acc_fn=dotM_acc_fn,
+            cfg=cfg,
+            hysteresis=False,
+            t_core_enter=t_eft,
+            t_core_exit=None,
+        )
+        if _t_in is not None and t_eft is None:
+            t_eft = _t_in
+
+    return {
+        "t": t,
+        "M": M,
+        "J": J,
+        "a_star": a_star,
+        "TH": TH,
+        "P": P,
+        "dotM": dotM_arr,
+        "dotJ": dotJ_arr,
+        "flags": flags,
+        "chi": chi_arr,
+        "t_eft": t_eft,
+        "tau0": float(tau0),
+        "eft_criterion": "schwarzschild_horizon_kretschmann_proxy",
+    }
+
+
+def evolve_bh_kerr_eft_with_spin_hysteresis(
+    M0: float,
+    a0_star: float = 0.0,
+    dotM_acc_fn: Optional[Callable[[float, float, float], float]] = None,
+    cfg: Optional[SpinEvoHysteresisConfig] = None,
+) -> dict[str, Any]:
+    """
+    Spin-enabled phenomenological solver with EFT-core hysteresis.
+
+    Core entry:
+      chi = K(r_s) lP^4 >= threshold_in
+    Core exit:
+      chi <= threshold_out  (if enable_core_exit=True)
+
+    Uses the same adaptive substep mechanism as `evolve_bh_kerr_eft_with_spin`.
+    """
+    if cfg is None:
+        cfg = SpinEvoHysteresisConfig()
+
+    a_lim = clamp(abs(float(cfg.a_star_max)), 0.0, 0.999_999_999)
+    thr_in = float(cfg.curvature_threshold_in)
+    thr_out = float(cfg.curvature_threshold_out)
+    if thr_out >= thr_in:
+        thr_out = 0.5 * thr_in
+
+    M0_safe = max(abs(float(M0)), 1e-99)
+    a0_signed = clamp(float(a0_star), -a_lim, a_lim)
+    J_curr = J_from_spin_parameter_signed(M0_safe, a0_signed, a_star_max=a_lim)
+
+    if dotM_acc_fn is None:
+        dotM_acc_fn = accretion_constant(0.0)
+
+    tau0 = lifetime_semiclassical(M0_safe)
+    t_end = float(cfg.t_end) if cfg.t_end is not None else float(tau0)
+    t_end = max(t_end, 1e-30)
+
+    n = max(int(cfg.nsteps), 2)
+    t = np.linspace(0.0, t_end, n, dtype=float)
+    dt = float(t[1] - t[0])
+
+    M = np.empty(n, dtype=float)
+    J = np.empty(n, dtype=float)
+    a_star = np.empty(n, dtype=float)
+    TH = np.empty(n, dtype=float)
+    P = np.empty(n, dtype=float)
+    dotM_arr = np.empty(n, dtype=float)
+    dotJ_arr = np.empty(n, dtype=float)
+    flags = np.zeros(n, dtype=int)  # 0 normal, 1 core
+    chi_arr = np.empty(n, dtype=float)
+
+    M_curr = M0_safe
+    in_core = False
+    t_core_enter: float | None = None
+    t_core_exit: float | None = None
+
+    for i, ti in enumerate(t):
+        M[i] = M_curr
+        J[i] = J_curr
+        a_curr = spin_parameter_from_J_signed(M_curr, J_curr, a_star_max=a_lim)
+        a_star[i] = a_curr
+
+        chi = curvature_measure_horizon_schwarzschild_proxy(M_curr)
+        chi_arr[i] = chi
+
+        if (not in_core) and (chi >= thr_in):
+            in_core = True
+            if t_core_enter is None:
+                t_core_enter = float(ti)
+
+        if in_core and bool(cfg.enable_core_exit) and (chi <= thr_out):
+            in_core = False
+            if t_core_exit is None:
+                t_core_exit = float(ti)
+
+        flags[i] = 1 if in_core else 0
+
+        if in_core and cfg.stop_on_eft_breakdown:
+            P_cap, T_cap = _kerr_observables_capped(M_curr, a_curr, cfg)
+            TH[i] = T_cap
+            P[i] = P_cap
+            dotM_arr[i] = 0.0
+            dotJ_arr[i] = 0.0
+            cut = i + 1
+            return {
+                "t": t[:cut],
+                "M": M[:cut],
+                "J": J[:cut],
+                "a_star": a_star[:cut],
+                "TH": TH[:cut],
+                "P": P[:cut],
+                "dotM": dotM_arr[:cut],
+                "dotJ": dotJ_arr[:cut],
+                "flags": flags[:cut],
+                "chi": chi_arr[:cut],
+                "t_core_enter": t_core_enter,
+                "t_core_exit": t_core_exit,
+                "tau0": float(tau0),
+                "threshold_in": thr_in,
+                "threshold_out": thr_out,
+                "eft_criterion": "schwarzschild_horizon_kretschmann_proxy_hysteresis",
+            }
+
+        rhs = _spin_rhs_kerr_eft(
+            float(ti),
+            float(M_curr),
+            float(J_curr),
+            bool(in_core),
+            dotM_acc_fn,
+            cfg,
+        )
+        TH[i] = rhs["TH"]
+        P[i] = rhs["P_eff"]
+        dotM_arr[i] = rhs["dotM_total"]
+        dotJ_arr[i] = rhs["dotJ_total"]
+
+        if i >= n - 1:
+            continue
+
+        M_curr, J_curr, in_core, t_core_enter, t_core_exit = _advance_mass_J_adaptive(
+            ti=float(ti),
+            dt=dt,
+            M_curr=float(M_curr),
+            J_curr=float(J_curr),
+            in_core=bool(in_core),
+            dotM_acc_fn=dotM_acc_fn,
+            cfg=cfg,
+            hysteresis=True,
+            threshold_in=thr_in,
+            threshold_out=thr_out,
+            enable_core_exit=bool(cfg.enable_core_exit),
+            t_core_enter=t_core_enter,
+            t_core_exit=t_core_exit,
+        )
+
+    return {
+        "t": t,
+        "M": M,
+        "J": J,
+        "a_star": a_star,
+        "TH": TH,
+        "P": P,
+        "dotM": dotM_arr,
+        "dotJ": dotJ_arr,
+        "flags": flags,
+        "chi": chi_arr,
+        "t_core_enter": t_core_enter,
+        "t_core_exit": t_core_exit,
+        "tau0": float(tau0),
+        "threshold_in": thr_in,
+        "threshold_out": thr_out,
+        "eft_criterion": "schwarzschild_horizon_kretschmann_proxy_hysteresis",
+    }
+
+
+def demo_spin_feedback() -> dict[str, Any]:
+    """
+    Demo for spin-enabled phenomenological solver (short t_end for meaningful bursts).
+    """
+    M0 = 1e12  # kg
+    cfg = SpinEvoConfig(
+        nsteps=4000,
+        t_end=1.0e6,  # short window; tau0 is too large for burst demos
+        gamma=1.0,
+        stop_on_eft_breakdown=False,
+        freeze_hawking_in_core=True,
+        allow_accretion_in_core=True,
+        evolve_spin=True,
+        accretion_torque_mode="isco",
+        prograde=True,
+        hawking_spin_down=True,
+        hawking_xi=1.0,
+        max_frac_mass_change_per_substep=0.02,
+    )
+
+    def dotM_fn(ti: float, Mi: float, ai: float) -> float:
+        _ = Mi, ai
+        x = ti / max(float(cfg.t_end or 1.0), 1e-99)
+        return 0.0 if x < 0.7 else 1e6
+
+    out = evolve_bh_kerr_eft_with_spin(M0, a0_star=0.4, dotM_acc_fn=dotM_fn, cfg=cfg)
+
+    print("Experimental spin demo (phenomenological layer)")
+    print(f"Start mass: {out['M'][0]:.3e} kg, start a*: {out['a_star'][0]:.4f}")
+    print(f"End mass:   {out['M'][-1]:.3e} kg, end a*:   {out['a_star'][-1]:.4f}")
+    print(f"t_eft:      {out['t_eft']}")
+    return out
+
+
+def demo_spin_hysteresis_feedback() -> dict[str, Any]:
+    """
+    Demo for spin + hysteresis solver.
+
+    Uses a PBH-scale mass (so Hawking is negligible over the chosen short window)
+    and *toy hysteresis thresholds* centered around the initial curvature proxy.
+    This makes the core enter/exit logic observable without stiff near-Planck
+    dynamics dominating the demo.
+    """
+    M0 = 1.0e12  # kg
+    chi0 = curvature_measure_horizon_schwarzschild_proxy(M0)
+    thr_in = 0.95 * chi0
+    thr_out = 0.70 * chi0
+
+    cfg = SpinEvoHysteresisConfig(
+        nsteps=5000,
+        t_end=1.0e6,  # s
+        gamma=1.0,
+        stop_on_eft_breakdown=False,
+        freeze_hawking_in_core=True,
+        allow_accretion_in_core=True,
+        evolve_spin=True,
+        prograde=True,
+        hawking_spin_down=True,
+        hawking_xi=1.0,
+        curvature_threshold_in=thr_in,
+        curvature_threshold_out=thr_out,
+        enable_core_exit=True,
+        max_frac_mass_change_per_substep=0.02,
+    )
+
+    # Toy pulse: no accretion -> sustained burst -> no accretion.
+    def dotM_fn(ti: float, Mi: float, ai: float) -> float:
+        _ = Mi, ai
+        x = ti / max(float(cfg.t_end or 1.0), 1e-99)
+        if x < 0.30:
+            return 0.0
+        if x < 0.80:
+            return 1.0e6  # kg/s
+        return 0.0
+
+    out = evolve_bh_kerr_eft_with_spin_hysteresis(
+        M0,
+        a0_star=0.3,
+        dotM_acc_fn=dotM_fn,
+        cfg=cfg,
+    )
+
+    print("Experimental spin+hysteresis demo (phenomenological layer)")
+    print(f"Start a*: {out['a_star'][0]:.4f}, end a*: {out['a_star'][-1]:.4f}")
+    print(f"chi0:         {chi0:.3e}")
+    print(f"threshold_in: {thr_in:.3e}")
+    print(f"threshold_out:{thr_out:.3e}")
+    print(f"chi_end:      {float(out['chi'][-1]):.3e}")
+    print(f"t_core_enter: {out['t_core_enter']}")
+    print(f"t_core_exit:  {out['t_core_exit']}")
+    return out
 
 
 # ============================================================
@@ -716,6 +2250,42 @@ def main(argv=None):
         type=str,
         default="",
         help="Write remnant_cycle output as JSON for html/bh_cinema_lab.html playback.",
+    )
+    parser.add_argument(
+        "--demo-kerr-eft",
+        action="store_true",
+        help=(
+            "Run the experimental phenomenological module "
+            "(EFT cutoff proxy + minimal Kerr-ish evaporation + accretion bursts)."
+        ),
+    )
+    parser.add_argument(
+        "--demo-spin-kerr-eft",
+        action="store_true",
+        help=(
+            "Run the experimental spin-enabled phenomenological module "
+            "(ISCO accretion torque + parametric Hawking spin-down)."
+        ),
+    )
+    parser.add_argument(
+        "--demo-spin-kerr-json-out",
+        type=str,
+        default="",
+        help="Write the spin-demo trace as BH Cinema JSON (single wrapped cycle with a_star/chi/flags if available).",
+    )
+    parser.add_argument(
+        "--demo-spin-hysteresis",
+        action="store_true",
+        help=(
+            "Run the experimental spin+hysteresis demo "
+            "(EFT-core enter/exit thresholds on curvature proxy)."
+        ),
+    )
+    parser.add_argument(
+        "--demo-spin-hysteresis-json-out",
+        type=str,
+        default="",
+        help="Write the spin+hysteresis demo trace as BH Cinema JSON (single wrapped cycle).",
     )
     args = parser.parse_args(argv)
     gamma_cli = max(args.gamma, 0.0)
@@ -839,6 +2409,53 @@ def main(argv=None):
             out_path = save_remnant_cycle_json(args.cycles_json_out, payload)
             print(f"Saved cycle JSON: {out_path}")
             print()
+
+    if args.demo_kerr_eft:
+        print("=== Experimental Kerr-ish EFT + accretion demo (phenomenological) ===")
+        try:
+            demo_eft_feedback()
+        except Exception as exc:
+            print(f"Demo failed: {exc}")
+        print()
+
+    if args.demo_spin_kerr_eft or args.demo_spin_kerr_json_out:
+        print("=== Experimental spin Kerr-ish EFT demo (phenomenological) ===")
+        spin_demo_out: dict[str, Any] | None = None
+        try:
+            spin_demo_out = demo_spin_feedback()
+            if args.demo_spin_kerr_json_out:
+                payload = bh_cinema_payload_from_evolution_trace(
+                    spin_demo_out,
+                    label="demo_spin_kerr_eft",
+                    gamma=1.0,
+                    hero_mass=float(spin_demo_out["M"][0]) if "M" in spin_demo_out else None,
+                )
+                out_path = save_remnant_cycle_json(args.demo_spin_kerr_json_out, payload)
+                print(f"Saved spin demo JSON: {out_path}")
+        except Exception as exc:
+            print(f"Demo failed: {exc}")
+        print()
+
+    if args.demo_spin_hysteresis or args.demo_spin_hysteresis_json_out:
+        print("=== Experimental spin+hysteresis demo (phenomenological) ===")
+        spin_hyst_out: dict[str, Any] | None = None
+        try:
+            spin_hyst_out = demo_spin_hysteresis_feedback()
+            if args.demo_spin_hysteresis_json_out:
+                payload = bh_cinema_payload_from_evolution_trace(
+                    spin_hyst_out,
+                    label="demo_spin_hysteresis",
+                    gamma=1.0,
+                    hero_mass=float(spin_hyst_out["M"][0]) if "M" in spin_hyst_out else None,
+                )
+                out_path = save_remnant_cycle_json(
+                    args.demo_spin_hysteresis_json_out,
+                    payload,
+                )
+                print(f"Saved spin+hysteresis demo JSON: {out_path}")
+        except Exception as exc:
+            print(f"Demo failed: {exc}")
+        print()
 
     if args.plot:
         import matplotlib.pyplot as plt
