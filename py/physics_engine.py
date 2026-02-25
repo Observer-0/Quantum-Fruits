@@ -1,4 +1,16 @@
+"""
+Zander 2025 BH evaporation framework (sigma_P + GR + QM toys).
+
+Philosophy:
+- Only standard quantum mechanics and QFT in curved spacetime
+  (effective field theory) are assumed.
+- No string-theoretic or loop-quantum-gravity microstate models
+  are used; the remnant is treated as an abstract finite 'memory core'.
+"""
+
 import math
+from typing import Any
+
 import numpy as np
 
 # ============================================================
@@ -181,6 +193,12 @@ def evaporate_sigmaP_quantized(
     - gamma rescales the Hawking prefactor (hook for greybody/dof effects).
     - Radiation entropy S_rad is a heuristic Page-like closure (unitary scenario),
       not derived from microstate counting in this module.
+    - In the Zander 2025 picture, the remnant M_rem is interpreted as a
+      finite "Memory Core" / "Pure Action Core", not as a terminal end state.
+      This function treats the remnant only as the endpoint of the
+      semi-classical evaporation stage.
+    - Any cyclic dynamics (spin-up -> loading -> renewed evaporation) belongs
+      to a higher-level layer and is not modeled here.
     - Optional recycling: if recycle=True and recycle_rate>0, mass can grow
       after the remnant at a fixed rate over a configured time window.
     """
@@ -317,6 +335,175 @@ def singularity_diagnostics(M: float):
 
 
 # ============================================================
+# QM toy helpers (unitary bookkeeping, not microstate physics)
+# ============================================================
+
+
+def partial_trace(
+    rho: np.ndarray,
+    keep: int = 0,
+    dims: tuple[int, int] = (2, 2),
+) -> np.ndarray:
+    """
+    Partial trace for a bipartite density matrix.
+
+    Parameters
+    ----------
+    rho : np.ndarray
+        Density matrix with shape (dA*dB, dA*dB).
+    keep : int
+        Which subsystem to keep (0 or 1).
+    dims : tuple[int, int]
+        Dimensions (dA, dB) of the two subsystems.
+    """
+    d_a, d_b = dims
+    dim_tot = d_a * d_b
+
+    rho_arr = np.asarray(rho, dtype=np.complex128)
+    if rho_arr.shape != (dim_tot, dim_tot):
+        raise ValueError(
+            f"rho must have shape ({dim_tot}, {dim_tot}), got {rho_arr.shape}"
+        )
+
+    rho4 = rho_arr.reshape(d_a, d_b, d_a, d_b)
+    if keep == 0:
+        return np.trace(rho4, axis1=1, axis2=3)
+    if keep == 1:
+        return np.trace(rho4, axis1=0, axis2=2)
+    raise ValueError("keep must be 0 or 1")
+
+
+def von_neumann_entropy(rho: np.ndarray, eps: float = 1e-15) -> float:
+    """
+    Von Neumann entropy S = -Tr(rho log2 rho) for a density matrix.
+    """
+    rho_arr = np.asarray(rho, dtype=np.complex128)
+    # Numerical hygiene for nearly-Hermitian matrices.
+    rho_arr = 0.5 * (rho_arr + rho_arr.conj().T)
+    evals = np.linalg.eigvalsh(rho_arr).real
+    evals = np.clip(evals, 0.0, 1.0)
+    evals = evals[evals > eps]
+    if evals.size == 0:
+        return 0.0
+    return float(-np.sum(evals * np.log2(evals)))
+
+
+def evaporate_qubit_model(n_steps: int = 128) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Unitary 2-qubit toy evaporation / Page-like curve.
+
+    This is a bookkeeping toy only. It builds a pure bipartite state
+    |psi(theta)> = cos(theta)|00> + sin(theta)|11>, traces out one qubit,
+    and records the reduced von Neumann entropy. theta is varied up and down
+    to produce a Page-like rise-and-return profile within one cycle.
+    """
+    n_safe = max(int(n_steps), 2)
+    steps = np.arange(n_safe, dtype=int)
+    x = np.linspace(0.0, 1.0, n_safe)
+    theta = np.where(x <= 0.5, 0.5 * np.pi * x, 0.5 * np.pi * (1.0 - x))
+
+    s_rad = np.empty(n_safe, dtype=float)
+    for i, th in enumerate(theta):
+        psi = np.array(
+            [np.cos(th), 0.0, 0.0, np.sin(th)],
+            dtype=np.complex128,
+        )
+        rho = np.outer(psi, psi.conj())
+        rho_rad = partial_trace(rho, keep=1, dims=(2, 2))
+        s_rad[i] = von_neumann_entropy(rho_rad)
+
+    return steps, s_rad
+
+
+# ============================================================
+# High-level cyclic remnant wrapper
+# ============================================================
+
+
+def remnant_cycle(
+    Mrem: float,
+    n_cycles: int = 3,
+    nsteps: int = 2000,
+    qm_steps: int = 128,
+    alpha: float = 4.0,
+    gamma: float = 1.0,
+    recycle: bool = False,
+    recycle_start_frac: float = 0.0,
+    recycle_duration_frac: float = 0.25,
+    recycle_rate: float = 0.0,
+    cycle_start_mass: float | None = None,
+) -> list[dict[str, Any]]:
+    """
+    High-level cyclic evaporation model in the Zander 2025 picture.
+
+    Interprets the remnant mass Mrem as a finite 'memory core'
+    (Pure Action Core). Each cycle:
+    - starts from a black hole of mass M_start (initially Mrem),
+    - runs sigma_P-regularized evaporation down to an effective remnant,
+    - can optionally include recycling / accretion,
+    - attaches a unitary QM toy model (qubit evaporation) to track
+      von Neumann entanglement entropy S_rad^QM per cycle.
+      The QM toy resolution is controlled by qm_steps.
+    - If cycle_start_mass is provided (>0), each cycle begins from that mass
+      (clamped to at least Mrem). Otherwise the minimal model restarts at Mrem.
+
+    Returns a list of cycles, each entry:
+        {
+          "cycle_index": int,
+          "t": np.ndarray,
+          "M": np.ndarray,
+          "S_rad_sigmaP": np.ndarray,
+          "tau_eff": float,
+          "steps_qm": np.ndarray,
+          "S_rad_qm": np.ndarray,
+        }
+    """
+    cycles: list[dict[str, Any]] = []
+    Mrem_safe = max(abs(Mrem), 1e-99)
+    cycle_start_safe = None
+    if cycle_start_mass is not None and float(cycle_start_mass) > 0.0:
+        cycle_start_safe = max(abs(float(cycle_start_mass)), Mrem_safe)
+
+    M_start = cycle_start_safe if cycle_start_safe is not None else Mrem_safe
+
+    for i in range(max(int(n_cycles), 0)):
+        t, M, TH, S, S_rad, tau_eff, Srem = evaporate_sigmaP_quantized(
+            M_start,
+            nsteps=nsteps,
+            Mrem=Mrem_safe,
+            alpha=alpha,
+            gamma=gamma,
+            recycle=recycle,
+            recycle_start_frac=recycle_start_frac,
+            recycle_duration_frac=recycle_duration_frac,
+            recycle_rate=recycle_rate,
+        )
+
+        steps_qm, S_qm = evaporate_qubit_model(n_steps=qm_steps)
+
+        cycles.append(
+            {
+                "cycle_index": i,
+                "t": t,
+                "M": M,
+                "S_rad_sigmaP": S_rad,
+                "tau_eff": float(tau_eff),
+                "steps_qm": steps_qm,
+                "S_rad_qm": S_qm,
+            }
+        )
+
+        # Minimal cycle model: restart at memory-core scale unless a cycle
+        # start mass is supplied explicitly (demo / higher-level reloading toy).
+        M_start = cycle_start_safe if cycle_start_safe is not None else Mrem_safe
+
+        # Keep references explicit for readability/debugging without changing API.
+        _ = TH, S, Srem
+
+    return cycles
+
+
+# ============================================================
 # Sample set (10 black holes)
 # ============================================================
 
@@ -399,6 +586,32 @@ def main(argv=None):
         default=10.0,
         help="Burden slider value for action/burden balance (0..100)",
     )
+    parser.add_argument(
+        "--cycles",
+        type=int,
+        default=0,
+        help="If >0: run remnant_cycle with the given number of cycles (Zander 2025 cyclic picture).",
+    )
+    parser.add_argument(
+        "--cycle-start-mass",
+        type=float,
+        default=0.0,
+        help=(
+            "Start mass [kg] for each cycle in remnant_cycle. "
+            "If <=0 and --cycles>0, a nontrivial demo value 10*M_P is used."
+        ),
+    )
+    parser.add_argument(
+        "--cycle-qm-steps",
+        type=int,
+        default=128,
+        help="Number of steps in the per-cycle QM toy Page-like curve.",
+    )
+    parser.add_argument(
+        "--cycles-plot",
+        action="store_true",
+        help="Plot per-cycle mass decay and sigma_P/QM entropy curves (requires --cycles > 0).",
+    )
     args = parser.parse_args(argv)
     gamma_cli = max(args.gamma, 0.0)
     balance = action_burden_balance(args.spin, args.burden)
@@ -456,6 +669,46 @@ def main(argv=None):
                 )
             print()
 
+    cycles: list[dict[str, Any]] = []
+
+    if args.cycles > 0:
+        print("=== Zander 2025 cyclic remnant picture ===")
+        # Use a representative remnant mass, e.g. Planck mass.
+        Mrem_demo = MP
+        cycle_start_mass_demo = (
+            float(args.cycle_start_mass)
+            if args.cycle_start_mass > 0.0
+            else 10.0 * MP
+        )
+        cycles = remnant_cycle(
+            Mrem=Mrem_demo,
+            n_cycles=args.cycles,
+            qm_steps=args.cycle_qm_steps,
+            gamma=gamma_cli,
+            recycle=args.recycle,
+            recycle_rate=args.recycle_rate,
+            recycle_start_frac=args.recycle_start_frac,
+            recycle_duration_frac=args.recycle_duration_frac,
+            cycle_start_mass=cycle_start_mass_demo,
+        )
+        print(
+            f"cycle_start_mass = {cycle_start_mass_demo:.3e} kg "
+            f"({cycle_start_mass_demo / MP:.3g} M_P)"
+        )
+        print(f"cycle_qm_steps   = {max(int(args.cycle_qm_steps), 2):d}")
+        if cycle_start_mass_demo <= Mrem_demo:
+            print("Note: cycle_start_mass <= Mrem, so tau_eff may be ~0 in this minimal model.")
+        for cyc in cycles:
+            idx = cyc["cycle_index"]
+            tau_eff = cyc["tau_eff"]
+            S_qm_max = float(np.max(cyc["S_rad_qm"]))
+            print(
+                f"cycle={idx:d}: tau_eff={tau_eff:.3e} s, "
+                f"max S_rad^QM = {S_qm_max:.3f}"
+            )
+        print("Note: Each cycle treats the remnant as a finite 'memory core' and restarts.")
+        print()
+
     if args.plot:
         import matplotlib.pyplot as plt
 
@@ -495,6 +748,66 @@ def main(argv=None):
                 ax.legend(loc="lower left", fontsize="small")
 
         plt.show()
+
+    if args.cycles_plot:
+        if not cycles:
+            print("Note: --cycles-plot requested, but no cycles were computed. Use --cycles > 0.")
+            print()
+        else:
+            import matplotlib.pyplot as plt
+
+            fig, axes = plt.subplots(1, 2, figsize=(12, 4), constrained_layout=True)
+            cmap = plt.cm.get_cmap("tab10", max(len(cycles), 1))
+
+            for j, cyc in enumerate(cycles):
+                color = cmap(j)
+
+                t_cyc = np.asarray(cyc["t"], dtype=float)
+                m_cyc = np.asarray(cyc["M"], dtype=float)
+                s_sigma = np.asarray(cyc["S_rad_sigmaP"], dtype=float)
+                steps_qm = np.asarray(cyc["steps_qm"], dtype=float)
+                s_qm = np.asarray(cyc["S_rad_qm"], dtype=float)
+                idx = int(cyc["cycle_index"])
+
+                t_norm = t_cyc / max(float(t_cyc[-1]), 1e-99)
+                m_norm = m_cyc / max(float(m_cyc[0]), 1e-99)
+                s_sigma_norm = s_sigma / max(float(np.max(s_sigma)), 1e-99)
+                qm_x = steps_qm / max(float(steps_qm[-1]), 1.0)
+                s_qm_norm = s_qm / max(float(np.max(s_qm)), 1e-99)
+
+                axes[0].plot(t_norm, m_norm, color=color, lw=2, label=f"cycle {idx}")
+                axes[1].plot(
+                    t_norm,
+                    s_sigma_norm,
+                    color=color,
+                    lw=2,
+                    label=f"sigma_P cycle {idx}",
+                )
+                axes[1].plot(
+                    qm_x,
+                    s_qm_norm,
+                    color=color,
+                    lw=1.5,
+                    ls="--",
+                    label=f"QM toy cycle {idx}",
+                )
+
+            axes[0].set_title("Cycle Mass Decay")
+            axes[0].set_xlabel(r"$t/\tau_{\rm cycle}$")
+            axes[0].set_ylabel(r"$M/M_{\rm start}$")
+            axes[0].set_xlim(0, 1)
+            axes[0].set_ylim(0, 1.05)
+            axes[0].legend(loc="best", fontsize="small")
+
+            axes[1].set_title("Cycle Radiation Entropy (Normalized)")
+            axes[1].set_xlabel("normalized cycle coordinate")
+            axes[1].set_ylabel("normalized entropy")
+            axes[1].set_xlim(0, 1)
+            axes[1].set_ylim(0, 1.05)
+            axes[1].legend(loc="best", fontsize="small", ncol=2)
+
+            fig.suptitle("Zander 2025 Remnant-Cycle Diagnostics")
+            plt.show()
 
     # Tiny cosmology demo link (optional sanity cross-ref)
     R_demo = 1.0e26  # m, placeholder cosmic scale

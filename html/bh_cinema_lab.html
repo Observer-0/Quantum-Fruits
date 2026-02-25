@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BH Cinema Lab | Quantum Fruits</title>
+    <link rel="icon" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/bh-cinematic-lab.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <script src="../js/unity.js"></script>
+</head>
+
+<body>
+    <script src="../js/sigma-bg.js"></script>
+
+    <nav class="cinema-nav">
+        <a href="../index.html" class="nav-link">Back to Overview</a>
+        <a href="./labs.html" class="nav-link">Simulation Cockpit</a>
+        <a href="./evaporation_lab.html" class="nav-link">Evaporation Lab</a>
+    </nav>
+
+    <main class="cinema-shell">
+        <header class="cinema-hero">
+            <div class="hero-copy">
+                <span class="hero-kicker">Visual Story Prototype</span>
+                <h1>Black Hole Cinema Lab</h1>
+                <p>
+                    A cinematic, physics-inspired visualization driven by the sigma_P evaporation engine.
+                    It is not full GR ray tracing. It is a real-time storytelling renderer that maps
+                    horizon scale, Hawking temperature, entropy flow, and remnant-cycle states into a
+                    visual scene people can feel.
+                </p>
+            </div>
+            <div class="hero-note">
+                <div class="hero-note-label">Goal</div>
+                <p>
+                    Bring people into the topic through images first: lensing, glow, collapse, remnant-memory core,
+                    and restart cycles. Curiosity before equations.
+                </p>
+            </div>
+        </header>
+
+        <section class="cinema-grid">
+            <section class="scene-panel qg-card">
+                <div class="scene-frame">
+                    <canvas id="bhCinemaCanvas" aria-label="Black hole cinematic simulation"></canvas>
+
+                    <div class="scene-overlay-top">
+                        <div class="status-pill">
+                            <span class="pill-label">Cycle</span>
+                            <span class="pill-value" id="hudCycle">0 / 0</span>
+                        </div>
+                        <div class="status-pill phase-pill">
+                            <span class="pill-label">Phase</span>
+                            <span class="pill-value" id="hudPhase">Idle</span>
+                        </div>
+                        <div class="status-pill">
+                            <span class="pill-label">Frame</span>
+                            <span class="pill-value" id="hudFrame">0 / 0</span>
+                        </div>
+                    </div>
+
+                    <div class="scene-overlay-bottom">
+                        <div class="hud-grid">
+                            <article class="hud-card">
+                                <span class="hud-label">Mass</span>
+                                <span class="hud-value" id="hudMass">-</span>
+                                <span class="hud-sub" id="hudMassSub">-</span>
+                            </article>
+                            <article class="hud-card">
+                                <span class="hud-label">Hawking T</span>
+                                <span class="hud-value" id="hudTemp">-</span>
+                                <span class="hud-sub" id="hudTempSub">-</span>
+                            </article>
+                            <article class="hud-card">
+                                <span class="hud-label">r_s</span>
+                                <span class="hud-value" id="hudRs">-</span>
+                                <span class="hud-sub">visualized horizon scale</span>
+                            </article>
+                            <article class="hud-card">
+                                <span class="hud-label">S_rad sigma_P</span>
+                                <span class="hud-value" id="hudSigmaEntropy">-</span>
+                                <span class="hud-sub">normalized per cycle</span>
+                            </article>
+                            <article class="hud-card">
+                                <span class="hud-label">S_rad QM</span>
+                                <span class="hud-value" id="hudQmEntropy">-</span>
+                                <span class="hud-sub">qubit toy entropy</span>
+                            </article>
+                            <article class="hud-card">
+                                <span class="hud-label">tau_eff</span>
+                                <span class="hud-value" id="hudTau">-</span>
+                                <span class="hud-sub">cycle evaporation time</span>
+                            </article>
+                        </div>
+                        <div class="story-caption" id="storyCaption">
+                            Load a cycle sequence to begin the black-hole story view.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-panel">
+                    <div class="timeline-head">
+                        <div class="playback-cluster">
+                            <button id="playPauseBtn" class="action-btn btn-cyan" type="button">Pause</button>
+                            <button id="stepBtn" class="action-btn btn-ghost" type="button">Step</button>
+                            <button id="rebuildBtn" class="action-btn btn-gold" type="button">Rebuild</button>
+                        </div>
+                        <div class="timeline-text" id="timelineReadout">frame 0 / 0</div>
+                    </div>
+                    <input id="timelineSlider" class="timeline-slider" type="range" min="0" max="0" value="0" step="1">
+                </div>
+            </section>
+
+            <aside class="controls-panel qg-card">
+                <section class="control-block">
+                    <h2>Scene Driver</h2>
+                    <p class="block-copy">
+                        These controls feed a browser-side sigma_P evaporation model and remnant-cycle wrapper.
+                        The renderer translates those states into a cinematic black-hole scene.
+                    </p>
+                </section>
+
+                <section class="control-block">
+                    <h3>Mass + Cycle Setup</h3>
+
+                    <label class="field">
+                        <span>Mass preset</span>
+                        <select id="massPreset">
+                            <option value="pbh">Primordial (1e12 kg)</option>
+                            <option value="stellar" selected>Stellar (10 M_sun)</option>
+                            <option value="supermassive">Supermassive (1e6 M_sun)</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </label>
+
+                    <label class="field" id="customMassField" hidden>
+                        <span>Custom M0 [kg]</span>
+                        <input id="customMassInput" type="text" value="1e12" inputmode="decimal">
+                    </label>
+
+                    <label class="field">
+                        <span>Cycles <code id="cyclesVal">3</code></span>
+                        <input id="cyclesInput" type="range" min="1" max="8" step="1" value="3">
+                    </label>
+
+                    <label class="field">
+                        <span>Cycle start mass factor <code id="cycleStartFactorVal">10.0 M_P</code></span>
+                        <input id="cycleStartFactorInput" type="range" min="1" max="200" step="1" value="10">
+                    </label>
+
+                    <label class="field">
+                        <span>Remnant factor <code id="remnantFactorVal">1.00 M_P</code></span>
+                        <input id="remnantFactorInput" type="range" min="0.25" max="5" step="0.05" value="1">
+                    </label>
+                </section>
+
+                <section class="control-block">
+                    <h3>Evaporation Physics (Visual Driver)</h3>
+
+                    <label class="field">
+                        <span>alpha smoothing <code id="alphaVal">4.00</code></span>
+                        <input id="alphaInput" type="range" min="0.1" max="10" step="0.1" value="4">
+                    </label>
+
+                    <label class="field">
+                        <span>gamma flux scale <code id="gammaVal">1.00</code></span>
+                        <input id="gammaInput" type="range" min="0" max="5" step="0.05" value="1">
+                    </label>
+
+                    <label class="field">
+                        <span>Evaporation steps <code id="evapStepsVal">900</code></span>
+                        <input id="evapStepsInput" type="range" min="200" max="2400" step="50" value="900">
+                    </label>
+
+                    <label class="field">
+                        <span>QM toy steps <code id="qmStepsVal">128</code></span>
+                        <input id="qmStepsInput" type="range" min="16" max="512" step="16" value="128">
+                    </label>
+                </section>
+
+                <section class="control-block">
+                    <h3>Playback + Visual Mood</h3>
+
+                    <label class="field">
+                        <span>Playback speed <code id="playbackSpeedVal">1.00x</code></span>
+                        <input id="playbackSpeedInput" type="range" min="0.1" max="4" step="0.1" value="1">
+                    </label>
+
+                    <label class="field">
+                        <span>Lensing strength <code id="lensingVal">1.00</code></span>
+                        <input id="lensingInput" type="range" min="0" max="2" step="0.05" value="1">
+                    </label>
+
+                    <label class="field">
+                        <span>Disk turbulence <code id="turbulenceVal">0.60</code></span>
+                        <input id="turbulenceInput" type="range" min="0" max="1.5" step="0.05" value="0.6">
+                    </label>
+
+                    <label class="toggle-row">
+                        <input id="autoRebuildToggle" type="checkbox" checked>
+                        <span>Auto rebuild when controls move</span>
+                    </label>
+                </section>
+
+                <section class="control-block note-stack">
+                    <article class="note-card note-blue">
+                        <h4>What you are seeing</h4>
+                        <p>
+                            A real-time visual interpretation of the engine state, not a full GR ray-traced image.
+                            It is meant to communicate dynamics, scales, and phase changes.
+                        </p>
+                    </article>
+                    <article class="note-card note-gold">
+                        <h4>Zander cycle interpretation</h4>
+                        <p>
+                            The remnant is shown as a finite memory core. Between cycles, the scene displays a short
+                            reload pulse to mark the transition from remnant-core phase to the next evaporation run.
+                        </p>
+                    </article>
+                </section>
+            </aside>
+        </section>
+    </main>
+
+    <script src="../js/evaporation-engine.js"></script>
+    <script src="../js/bh-cinematic-lab.js"></script>
+</body>
+
+</html>
