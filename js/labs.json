@@ -23,6 +23,18 @@
     "accent": "#fbbf24",
     "textColor": "#000"
   },
+  "bh_cinema": {
+    "id": "LAB-014",
+    "title": "BH Cinema Lab",
+    "lab": "bh_cinema_lab.html",
+    "theory": "theory.html#blackholes",
+    "python": "py/physics_engine.py",
+    "description": "Cinematic black-hole visualization driven by sigma_P evaporation cycles and remnant-memory transitions.",
+    "icon": "BH",
+    "badge": "Visual Story Lab",
+    "accent": "#22d3ee",
+    "textColor": "#001018"
+  },
   "lattice": {
     "id": "LAB-004",
     "title": "URM Lattice",

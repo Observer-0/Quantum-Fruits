@@ -105,6 +105,76 @@
       animation: shimmer 3s infinite;
     }
 
+    .featured-cinema-card {
+      margin-top: 1.5rem;
+      width: min(1200px, 100%);
+      text-align: left;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
+      gap: 1.25rem;
+      align-items: center;
+      padding: 1.4rem;
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      background:
+        radial-gradient(420px 220px at 12% 18%, rgba(56, 189, 248, 0.11), transparent 72%),
+        radial-gradient(360px 220px at 88% 18%, rgba(251, 191, 36, 0.09), transparent 72%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
+        rgba(2, 6, 23, 0.58);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .featured-cinema-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.65rem;
+      color: #a5f3fc;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .featured-cinema-kicker::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #67e8f9, #0891b2);
+      box-shadow: 0 0 14px rgba(103, 232, 249, 0.75);
+    }
+
+    .featured-cinema-card h3 {
+      margin: 0 0 0.6rem;
+      font-size: clamp(1.2rem, 2.4vw, 2rem);
+      letter-spacing: -0.02em;
+    }
+
+    .featured-cinema-card p {
+      margin: 0;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .featured-cinema-actions {
+      display: grid;
+      gap: 0.65rem;
+      justify-items: stretch;
+    }
+
+    .featured-cinema-note {
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(15, 23, 42, 0.52);
+      padding: 0.75rem;
+      color: #dbeafe;
+      font-size: 0.83rem;
+      line-height: 1.35;
+      text-align: left;
+    }
+
     @keyframes shimmer {
       0% {
         background-position: -200% 0;
@@ -112,6 +182,13 @@
 
       100% {
         background-position: 200% 0;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .featured-cinema-card {
+        grid-template-columns: 1fr;
+        text-align: left;
       }
     }
   </style>
@@ -128,43 +205,75 @@
       <div class="animate-fade">
         <span class="pill-blue"
           style="background: rgba(56, 189, 248, 0.1); color: var(--accent-primary); padding: 0.5rem 1rem; border-radius: 100px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; display: inline-block;">
-          Quantized Spacetime Framework � model hypothesis
+          A project exploring quantum gravity from first principles
         </span>
         <h1 class="hero-title">From Quantum to Cosmos</h1>
         <p class="hero-tagline">
-          A unified Vision of Entropy, Mass and Information.
+          We don’t propose a new theory; we ask what happens when you start with the
+          smallest possible spacetime unit and use only established physics.  The labs
+          show familiar puzzles—black holes, cosmology, galaxy rotation—under this
+          lens, emphasising clarity over prediction.
         </p>
 
         <div class="gateway-grid">
           <a href="html/theory.html" class="qg-card gateway-card" style="border-top: 4px solid var(--accent-primary);">
             <div class="card-icon">📖</div>
-            <h3>The Theory</h3>
+            <h3>Core Ideas</h3>
             <p style="font-size: 0.9rem; margin-top: 1rem; color: var(--text-secondary);">
-              Technical overview of assumptions, dimensional checks and effective field equations in the sigma_P framework.
+              A non‑technical summary of the model assumptions and the role of the Planck spacetime cell.
             </p>
           </a>
 
           <a href="#manifesto" class="qg-card gateway-card" style="border-top: 4px solid var(--accent-secondary);">
             <div class="card-icon">📜</div>
-            <h3>The Manifesto</h3>
+            <h3>Why It Matters</h3>
             <p style="font-size: 0.9rem; margin-top: 1rem; color: var(--text-secondary);">
-              Conceptual motivation, scope and limits of the model assumptions used in this project.
+              The motivation behind the project and what we hope you will learn.
             </p>
           </a>
 
           <a href="html/labs.html" class="qg-card gateway-card" style="border-top: 4px solid var(--accent-tertiary);">
             <div class="card-icon">🔬</div>
-            <h3>Simulation Lab</h3>
+            <h3>Try the Labs</h3>
             <p style="font-size: 0.9rem; margin-top: 1rem; color: var(--text-secondary);">
-              Interactive simulation labs for black-hole dynamics, galaxy rotation and cosmology diagnostics.
+              Launch interactive experiments with black holes, galaxies and the expanding universe.
             </p>
           </a>
         </div>
+
+        <a href="html/bh_cinema_lab.html" class="featured-cinema-card animate-fade" style="text-decoration:none; color:inherit;">
+          <div>
+            <span class="featured-cinema-kicker">New visual lab</span>
+            <h3>Black Hole Cinema Lab</h3>
+            <p>
+              A cinematic black-hole visualization driven by sigma_P evaporation cycles, remnant-memory transitions,
+              and a timeline you can scrub. Designed to invite curiosity first, equations second.
+            </p>
+          </div>
+          <div class="featured-cinema-actions">
+            <span class="action-btn" style="background: linear-gradient(135deg, #67e8f9, #38bdf8); color:#001522; width:100%; justify-content:center;">
+              Open BH Cinema Lab &rarr;
+            </span>
+            <div class="featured-cinema-note">
+              Visual story mode: lensing-inspired sky warp, photon ring glow, accretion disk dynamics, memory-core pulse,
+              and cycle restarts.
+            </div>
+          </div>
+        </a>
       </div>
     </section>
 
     <!-- MANIFESTO SECTION -->
     <section id="manifesto" style="padding: 10rem 2rem; max-width: 900px; margin: 0 auto; text-align: center;">
+      <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">What's the goal?</h2>
+      <p style="font-size: 1.25rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto 3rem;">
+        We aim to reconcile general relativity and quantum mechanics using only what is
+        already known—no speculative fields or extra dimensions.  The emphasis is not
+        on making new predictions but on showing how existing puzzles and data might
+        look when you insist on strict unit bookkeeping and a quantized spacetime cell.
+        These pages document the methodology and highlight open questions; the
+        simulations let you play with the consequences.
+      </p>
       <div class="qg-card"
         style="padding: 5rem 3rem; background: radial-gradient(circle at top right, rgba(251, 191, 36, 0.05), transparent);">
         <span

@@ -9,6 +9,9 @@ Philosophy:
 """
 
 import math
+import json
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -486,8 +489,10 @@ def remnant_cycle(
                 "cycle_index": i,
                 "t": t,
                 "M": M,
+                "TH": TH,
                 "S_rad_sigmaP": S_rad,
                 "tau_eff": float(tau_eff),
+                "Srem": float(Srem),
                 "steps_qm": steps_qm,
                 "S_rad_qm": S_qm,
             }
@@ -498,9 +503,103 @@ def remnant_cycle(
         M_start = cycle_start_safe if cycle_start_safe is not None else Mrem_safe
 
         # Keep references explicit for readability/debugging without changing API.
-        _ = TH, S, Srem
+        _ = S
 
     return cycles
+
+
+# ============================================================
+# JSON export helpers (for browser cinema playback)
+# ============================================================
+
+
+def _arr_to_list(values: Any) -> list[float]:
+    arr = np.asarray(values, dtype=float)
+    return [float(x) for x in arr.tolist()]
+
+
+def remnant_cycle_json_payload(
+    cycles: list[dict[str, Any]],
+    *,
+    Mrem: float,
+    n_cycles: int,
+    nsteps: int,
+    qm_steps: int,
+    alpha: float,
+    gamma: float,
+    recycle: bool,
+    recycle_start_frac: float,
+    recycle_duration_frac: float,
+    recycle_rate: float,
+    cycle_start_mass: float | None,
+    hero_mass: float | None = None,
+) -> dict[str, Any]:
+    """
+    Build a JSON-serializable payload for BH Cinema Lab playback.
+
+    The schema is intentionally simple and versioned for browser ingestion.
+    """
+    payload_cycles: list[dict[str, Any]] = []
+    for cyc in cycles:
+        payload_cycles.append(
+            {
+                "cycle_index": int(cyc.get("cycle_index", 0)),
+                "t": _arr_to_list(cyc.get("t", [])),
+                "M": _arr_to_list(cyc.get("M", [])),
+                "TH": _arr_to_list(cyc.get("TH", [])),
+                "S_rad_sigmaP": _arr_to_list(cyc.get("S_rad_sigmaP", [])),
+                "tau_eff": float(cyc.get("tau_eff", 0.0)),
+                "Srem": float(cyc.get("Srem", 0.0)),
+                "steps_qm": _arr_to_list(cyc.get("steps_qm", [])),
+                "S_rad_qm": _arr_to_list(cyc.get("S_rad_qm", [])),
+            }
+        )
+
+    return {
+        "format": "qf.bh_cinema.cycles.v1",
+        "generator": "py/physics_engine.py",
+        "generated_utc": datetime.now(timezone.utc).isoformat(),
+        "config": {
+            "Mrem": float(Mrem),
+            "n_cycles": int(n_cycles),
+            "nsteps": int(nsteps),
+            "qm_steps": int(qm_steps),
+            "alpha": float(alpha),
+            "gamma": float(gamma),
+            "recycle": bool(recycle),
+            "recycle_start_frac": float(recycle_start_frac),
+            "recycle_duration_frac": float(recycle_duration_frac),
+            "recycle_rate": float(recycle_rate),
+            "cycle_start_mass": (
+                None if cycle_start_mass is None else float(cycle_start_mass)
+            ),
+            "hero_mass": None if hero_mass is None else float(hero_mass),
+        },
+        "constants": {
+            "sigmaP": float(sigmaP),
+            "lP": float(lP),
+            "tP": float(tP),
+            "MP": float(MP),
+            "c": float(c),
+            "G": float(G),
+            "hbar": float(hbar),
+            "kB": float(kB),
+        },
+        "cycles": payload_cycles,
+    }
+
+
+def save_remnant_cycle_json(path: str | Path, payload: dict[str, Any]) -> Path:
+    """
+    Save a BH Cinema Lab payload as UTF-8 JSON and return the resolved path.
+    """
+    out_path = Path(path).expanduser()
+    if out_path.parent and not out_path.parent.exists():
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+    with out_path.open("w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+    return out_path.resolve()
 
 
 # ============================================================
@@ -612,6 +711,12 @@ def main(argv=None):
         action="store_true",
         help="Plot per-cycle mass decay and sigma_P/QM entropy curves (requires --cycles > 0).",
     )
+    parser.add_argument(
+        "--cycles-json-out",
+        type=str,
+        default="",
+        help="Write remnant_cycle output as JSON for html/bh_cinema_lab.html playback.",
+    )
     args = parser.parse_args(argv)
     gamma_cli = max(args.gamma, 0.0)
     balance = action_burden_balance(args.spin, args.burden)
@@ -670,6 +775,8 @@ def main(argv=None):
             print()
 
     cycles: list[dict[str, Any]] = []
+    Mrem_demo: float | None = None
+    cycle_start_mass_demo: float | None = None
 
     if args.cycles > 0:
         print("=== Zander 2025 cyclic remnant picture ===")
@@ -708,6 +815,30 @@ def main(argv=None):
             )
         print("Note: Each cycle treats the remnant as a finite 'memory core' and restarts.")
         print()
+
+    if args.cycles_json_out:
+        if not cycles:
+            print("Note: --cycles-json-out requested, but no cycles were computed. Use --cycles > 0.")
+            print()
+        else:
+            payload = remnant_cycle_json_payload(
+                cycles,
+                Mrem=float(Mrem_demo if Mrem_demo is not None else MP),
+                n_cycles=int(args.cycles),
+                nsteps=int(len(cycles[0]["t"])) if cycles else 0,
+                qm_steps=max(int(args.cycle_qm_steps), 2),
+                alpha=4.0,
+                gamma=float(gamma_cli),
+                recycle=bool(args.recycle),
+                recycle_start_frac=float(args.recycle_start_frac),
+                recycle_duration_frac=float(args.recycle_duration_frac),
+                recycle_rate=float(args.recycle_rate),
+                cycle_start_mass=cycle_start_mass_demo,
+                hero_mass=cycle_start_mass_demo,
+            )
+            out_path = save_remnant_cycle_json(args.cycles_json_out, payload)
+            print(f"Saved cycle JSON: {out_path}")
+            print()
 
     if args.plot:
         import matplotlib.pyplot as plt

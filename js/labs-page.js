@@ -9,6 +9,7 @@ const LAB_ORDER = [
     "hubble",
     "lattice",
     "evaporation",
+    "bh_cinema",
     "entropy",
     "answer42",
     "dipole"
@@ -20,6 +21,7 @@ const VISUAL_DEFAULTS = {
     hubble: { badge: "Cosmology Diagnostic", accent: "#fbbf24", textColor: "#000" },
     lattice: { badge: "Lattice Model", accent: "#a855f7", textColor: "#fff" },
     evaporation: { badge: "Evaporation Model", accent: "#fbbf24", textColor: "#000" },
+    bh_cinema: { badge: "Visual Story Lab", accent: "#22d3ee", textColor: "#001018" },
     entropy: { badge: "Entropy Diagnostic", accent: "#f43f5e", textColor: "#fff" },
     answer42: { badge: "Douglas Adams Meme", accent: "#38bdf8", textColor: "#000" },
     dipole: { badge: "Dipole Hypothesis", accent: "#818cf8", textColor: "#fff" }

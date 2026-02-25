@@ -415,6 +415,7 @@ body {
 
 .field input[type="text"],
 .field input[type="number"],
+.field input[type="file"],
 .field select {
     width: 100%;
     border-radius: 10px;
@@ -423,6 +424,21 @@ body {
     color: #fff;
     padding: 0.55rem 0.6rem;
     font: inherit;
+}
+
+.field input[type="file"] {
+    padding: 0.45rem 0.55rem;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.field input[type="file"]::file-selector-button {
+    margin-right: 0.65rem;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    background: rgba(56, 189, 248, 0.12);
+    color: #dbeafe;
+    border-radius: 8px;
+    padding: 0.35rem 0.55rem;
+    cursor: pointer;
 }
 
 .field input[type="range"] {
@@ -441,6 +457,29 @@ body {
 
 .toggle-row input {
     accent-color: #38bdf8;
+}
+
+.inline-btn-row {
+    margin-top: 0.7rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+}
+
+.inline-btn-row .action-btn {
+    width: 100%;
+    justify-content: center;
+}
+
+.data-source-status {
+    margin-top: 0.65rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(15, 23, 42, 0.45);
+    padding: 0.55rem 0.6rem;
+    color: #cbd5e1;
+    font-size: 0.77rem;
+    line-height: 1.35;
 }
 
 .note-stack {

@@ -109,6 +109,7 @@
                             <button id="playPauseBtn" class="action-btn btn-cyan" type="button">Pause</button>
                             <button id="stepBtn" class="action-btn btn-ghost" type="button">Step</button>
                             <button id="rebuildBtn" class="action-btn btn-gold" type="button">Rebuild</button>
+                            <button id="saveFrameBtn" class="action-btn btn-ghost" type="button">Save Frame</button>
                         </div>
                         <div class="timeline-text" id="timelineReadout">frame 0 / 0</div>
                     </div>
@@ -123,6 +124,28 @@
                         These controls feed a browser-side sigma_P evaporation model and remnant-cycle wrapper.
                         The renderer translates those states into a cinematic black-hole scene.
                     </p>
+                </section>
+
+                <section class="control-block">
+                    <h3>Data Source</h3>
+                    <p class="block-copy">
+                        Use the browser model for rapid iteration, or load a JSON export created by
+                        <code>py/physics_engine.py --cycles ... --cycles-json-out ...</code>.
+                    </p>
+
+                    <label class="field">
+                        <span>Import cycle JSON</span>
+                        <input id="jsonImportInput" type="file" accept=".json,application/json">
+                    </label>
+
+                    <div class="inline-btn-row">
+                        <button id="loadJsonBtn" class="action-btn btn-cyan" type="button">Load JSON</button>
+                        <button id="useBrowserModelBtn" class="action-btn btn-ghost" type="button">Browser Model</button>
+                    </div>
+
+                    <div class="data-source-status" id="dataSourceStatus">
+                        Source: Browser model (live sigma_P wrapper)
+                    </div>
                 </section>
 
                 <section class="control-block">
