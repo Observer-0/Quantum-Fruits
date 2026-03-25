@@ -135,3 +135,27 @@ The ZIP archive includes full papers (with separate DOIs):
 
 **Copyright © 2026 Adrian Zander**
 Licensed under the **MIT License**. Feel free to use, modify, and resonate with this theory.
+
+## Local PHP API (Single-Project Backend)
+
+The labs page can now load its configuration from a small PHP + SQLite backend:
+
+- API endpoint: `api/labs.php`
+- Database file (auto-created): `data/quantum_fruits.sqlite`
+- Frontend behavior: `js/labs-page.js` uses API first, then falls back to `js/labs.json`.
+
+Quick start (from project root):
+
+```bash
+php -S localhost:8000
+```
+
+Then open:
+
+- `http://localhost:8000/html/labs.html`
+- `http://localhost:8000/api/labs.php`
+
+Admin helper (local only):
+
+- `http://localhost:8000/html/labs_admin.html`
+- `http://localhost:8000/api/admin/labs_admin.php`

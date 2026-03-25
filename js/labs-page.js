@@ -52,6 +52,10 @@ function cfgPath() {
     return "../js/labs.json";
 }
 
+function apiPath() {
+    return "../api/labs.php";
+}
+
 function getUnityFallback() {
     if (typeof window !== "undefined" && window.QF_DEFAULT_SIM_MAP && typeof window.QF_DEFAULT_SIM_MAP === "object") {
         return window.QF_DEFAULT_SIM_MAP;
@@ -110,6 +114,18 @@ function normalizeLabs(raw) {
 }
 
 async function loadLabs() {
+    try {
+        const apiResponse = await fetch(apiPath(), { cache: "no-store" });
+        if (!apiResponse.ok) throw new Error(`HTTP ${apiResponse.status}`);
+        const apiParsed = await apiResponse.json();
+        if (apiParsed && typeof apiParsed === "object" && !Array.isArray(apiParsed)) {
+            const normalized = normalizeLabs(apiParsed);
+            if (Object.keys(normalized).length > 0) return normalized;
+        }
+    } catch (_) {
+        // fallback below
+    }
+
     try {
         const r = await fetch(cfgPath(), { cache: "no-store" });
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
