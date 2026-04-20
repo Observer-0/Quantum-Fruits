@@ -1,161 +1,167 @@
-# Quantum Fruits: The Σₚ Scaffold
+﻿# Quantum Fruits — The σₚ Scaffold
 
-## Project Vision (Beta)
-
-Quantum Fruits is designed to grow into a fully HTML-based web simulation platform for quantum gravity and cosmology.
-Core modules (TSF cycles, lattice universes, galaxy dynamics) are intended to run directly in the browser.
-
-- Updates are frequent (except weekends) to keep theory, visualizations, and code aligned.
-- Translation help, proofreading, and content feedback (DE/EN) are welcome via Pull Requests or Issues.
-
-> "Entropy is the natural order of the Universe."
-> Every event is binary: it happens, or it does not.
-> The information lies not in what occurred,
-> but in all the paths that were never taken.
-> Reality defines itself through negation.
-> S = 1.
->
-> And yes, the 1/2 R in
->
-> \( G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2} R g_{\mu\nu} \)
->
-> is just the trace.
-> They did this with chalk — Minkowski, Schwarzschild, Lorentz, Planck, Einstein, etc.
-> 109 years later we have Fugaku, JWST, Hubble and AI. What’s our excuse?
-> 26 dimensions and 10^500 vacua?
->
-> The answer was always hidden in plain sight, encoded in the units: σ_P = [L · T] = Space*Time.
-> Space and time are not separate stages; they are the shared currency of causality.
-> Whether I look East or West, North or South, up or down — space and time flow indistinguishably in the same direction:
-> that of the observer.
-> While physics lost itself in twenty‑six dimensions, the simplest truth remained uncounted:
-> we never finished counting the four fundamental vectors of spacetime.
-> We searched for the Theory of Everything in infinity, only to find it was just one line long.
->
-> — Adrian Zander, Quantum Fruits
-
-Σ_P Framework Overview
-A minimal, parameter‑light scaffold for quantum‑gravity and cosmology experiments.
-
-## The Planck Spacetime Cell (σₚ → Universe)
-
-The project uses the concept of a fundamental spacetime action cell σ_P as a minimal grain of the universe’s causal weave.
-It is defined as:
-
-$$
-\sigma_P = \ell_P \cdot t_P = \frac{\hbar G}{c^4}, \quad \text{with } \frac{\ell_P}{t_P} = c.
-$$
-
-Operational consequences in this codebase:
-
-$$
-N_{\sigma} = \frac{R \cdot t}{\sigma_P}
-$$
-
-where R and t are the cosmological radius and age (or scaled fractions thereof).
-
-Holographic relationship (model note):
-If one defines
-$$\alpha_\sigma = \frac{\sigma_P}{R\,t},\qquad \Lambda = \frac{\alpha_\sigma}{\ell_P^2},$$
-then algebraically
-$$\sigma_P = \Lambda\,\ell_P^2\,R\,t.$$
-Dimensional check: $[\Lambda]=L^{-2}$, $[\ell_P^2]=L^2$, $[R\,t]=L\cdot T \Rightarrow [\sigma_P]=L\cdot T$, consistent with $\sigma_P=\ell_P t_P$.
-
-- Simulations in `js/main.js` and `py/quantum_fruits_sim.py` respect this cell by clamping the simulation step count when the
-  available $N_{\sigma}$ ticks would otherwise be smaller than the requested resolution. This avoids sub‑cell numerical resolution
-  and makes the Planck cell an effective lower bound for temporal/spatial sampling.
-
-See `js/main.js` and `py/quantum_fruits_sim.py` for implementation details and example calculations (N_σ is reported in chart subtitles).
-
-## Core Philosophical & Physical Pillars (Model Framing)
-
-### 1. The Planck Spacetime Cell (σₚ → Universe)
-The invariant two‑measure of spacetime:
-$$\sigma_P = \ell_P \cdot t_P = \frac{\hbar G}{c^4}, \quad \text{with } \frac{\ell_P}{t_P} = c$$
-
-Within this model, $c$ is treated as a structural consequence of the granularity.
-
-### 2. The Canonical Energy Chain
-$$E = mc^2 = hf,\qquad E_P = \sqrt{\frac{\hbar c^5}{G}} = \frac{\hbar}{t_P}.$$
-Per‑grain convention:
-$$E = n\,E_P = n\,\frac{\hbar}{t_P}.$$
-This keeps dimensional bookkeeping explicit and avoids mixing σ_P (L·T) directly with energy units.
-
-### 3. The Zander Scaling Function (Z(r))
-$$Z(r) = \frac{\hbar^2}{c \cdot r}$$
-A bridge between quantum action and geometry (model‑level interpretation).
-
-### 4. Spacetime Action (W)
-$$W = m_P T_P k_B = \frac{\hbar c^3}{G}$$
-A structural thermal–inertial action density. Combined with σ_P: $W \cdot \sigma_P = \hbar^2/c$.
-
-### 5. Zander‑Entropy & Arrow of Time (S_Z)
-$$S_Z = k_B \ln \left( \frac{mc^2}{hf} \right)$$
-In this model, the arrow of time is treated as a directed braking process. Entropy growth is the transition from pure quantum
-oscillation (hf) into gravitational mass‑burden (mc^2). Time and entropy are treated as co‑emergent within the framework.
-
-## Key Model Results (To Be Tested)
-
-- Cosmology bridge: $\Lambda \sim \alpha_\sigma/\ell_P^2$ with $\alpha_\sigma = \sigma_P/(R\cdot t)$.
-- Dark‑matter alternatives: rotation‑curve fits via sigma_P coupling in the provided galaxy lab.
-- No singularities (model regularization) via Planck‑covariant averaging: $G_{\mu\nu} = \frac{8\pi G}{c^4} \langle T_{\mu\nu}\rangle_{\sigma_P}$.
-- Hawking resolution (model): unitary evaporation with a Planck‑scale remnant.
-
-## Current Evolution (2026 Update)
-
-The project has evolved beyond static theory into dynamic simulation and a unified UI/UX.
-
-### Roadmap
-See `README_EVOLUTION.md` for the current module plan and milestones.
-
-### New Modules
-1. `html/tsf_sim.html` — Thermal Spacetime Feedback cycle visualization.
-2. `html/theory.html` — expanded theory page with JWST and cosmic‑equation discussion.
-3. `assets/Formulas and code/quantum_fruits_lab.py` — unified Python simulation suite.
-
-## Future Roadmap (Next Steps)
-
-1. Bilingual translation (EN/DE) for `theory.html` and `index.html`.
-2. URME dashboard for the lattice simulation (export + presets).
-3. Mobile optimization across TSF/Lattice/Galaxy labs.
-4. Scientific peer‑review integration (ArXiv/Zenodo links).
-5. Observer‑POV module (VR‑ready visualization of the “One‑Quantum Hypothesis”).
-
-## Scientific Library
-The ZIP archive includes full papers (with separate DOIs):
-- Dark Matter Elimination
-- The Schrödinger–Zander Equation
-- Λ‑Problem & Vacuum Catastrophe Resolution
-- Requiem for ΛCDM
-- The Statistical Price of True Love
+> **Disclaimer:** This repository is primarily a programming exercise.
+> It serves as a sandbox for learning HTML, JS, Python, CSS, and C++
+> through the lens of personal theoretical research.
+> The models presented make no claim to scientific correctness or completeness.
+> They are visualizations of the author's own frameworks, based on dimensional analysis
+> and primary source study (Boltzmann, Einstein, Planck, Minkowski, Schwarzschild et al.).
 
 ---
 
-**Code of Conduct:** `CODE_OF_CONDUCT.md`
+## What is this?
+
+Physics lost itself in 26 dimensions and 10⁵⁰⁰ vacua.
+Minkowski, Schwarzschild, Lorentz, Planck, and Einstein built the foundations with chalk.
+109 years later we have Fugaku, JWST, and AI — and we still haven't finished counting
+the four fundamental vectors of spacetime.
+
+This project explores a simple question:
+**What if spacetime itself has a smallest unit — and that unit solves the cosmological constant problem?**
+
+All simulations run directly in the browser. No installation required.
+
+---
+
+## Core Idea: The Planck Spacetime Cell
+
+Space and time are not separate stages. They are the shared currency of causality.
+The σₚ framework defines a fundamental two-measure of spacetime:
+
+$$
+\sigma_P = \ell_P \cdot t_P = \frac{\hbar G}{c^4}, \qquad \frac{\ell_P}{t_P} = c
+$$
+
+This is not a new constant — it is a structural consequence of combining the constants
+we already have. Its dimension is $[L \cdot T]$: a quantum of spacetime action.
+
+---
+
+## Axiom of Finite Divisibility of Spacetime
+
+**Postulate:** No physical system can be divided without bound.
+Space and time possess a fundamental, finite resolution — the spacetime quantum $\sigma_P$.
+
+This geometric action unit defines the smallest interval in which cause and effect remain distinct.
+Below this limit, the continuum assumption collapses, and with it the classical notion of separability.
+
+**Consequences:**
+
+1. Every physical process occurs in discrete spacetime volumes.
+   Resolving beyond $\sigma_P$ requires infinite energy.
+2. Singularities, infinite densities, and point-like particles are mathematical artifacts.
+   Nature enforces a cutoff.
+3. Spacetime is atomic: $\sigma_P$ sets the minimum geometric extent.
+
+---
+
+## The Λ-Problem — and a Parameter-Free Solution
+
+The cosmological constant problem is often called the worst prediction in physics:
+quantum field theory predicts a vacuum energy density ~10¹²³ times larger than observed.
+
+Within the σₚ framework, the cosmological constant emerges naturally:
+
+$$
+\alpha_\sigma = \frac{\sigma_P}{R \cdot t}, \qquad \alpha_\sigma \approx 4.60 \times 10^{-123}
+$$
+
+$$
+\Lambda_{\text{eff}} = \frac{\alpha_\sigma}{\ell_P^2} \approx 10^{-52} \, \text{m}^{-2}
+$$
+
+No free parameters. No fine-tuning. The observed value of Λ follows directly
+from the ratio of the Planck spacetime cell to the observable universe.
+
+The "vacuum catastrophe" dissolves:
+
+$$
+\Lambda_{\text{cell}} = \frac{3}{\ell_P^2}, \qquad
+\Lambda_{\text{macro}} = \frac{\Lambda_{\text{cell}}}{N_\sigma}, \qquad
+N_\sigma = \frac{R \cdot t}{\sigma_P}
+$$
+
+---
+
+## Key Equations
+
+**Scaling function (Zander scaling):**
+$$Z(r) = \frac{\hbar^2}{c \cdot r}$$
+A dimensional bridge between quantum action and gravitational geometry.
+
+**Modified field equation (classical expectation value):**
+$$G_{\mu\nu} + \Lambda_{\text{eff}} \, g_{\mu\nu} = \frac{8\pi G}{c^4} \, \bar{T}_{\mu\nu}$$
+
+**Full quantum form:**
+$$\langle \hat{G}[\sigma_P] + \Lambda_{\text{eff}} \, g \rangle_{\sigma_P}
+= \frac{8\pi G}{c^4} \langle \hat{T} \rangle_{\sigma_P}$$
+
+where the Planck-covariant averaging operator $A_{\sigma_P}$ integrates
+over a kernel $K_{\sigma_P}(x,y)$ of width $\sigma_P$, replacing the classical point evaluation.
+
+---
+
+## Simulations
+
+All modules run in-browser (HTML/JS). No installation required.
+
+| Module | Description |
+|--------|-------------|
+| `html/tsf_sim.html` | Thermal Spacetime Feedback cycle visualization |
+| `html/theory.html` | Theory overview with cosmological equations |
+| `js/main.js` | Core σₚ simulation engine |
+| `py/quantum_fruits_sim.py` | Python simulation suite (N_σ calculations) |
+
+---
+
+## License
 
 **Copyright © 2026 Adrian Zander**
-Licensed under the **MIT License**. Feel free to use, modify, and resonate with this theory.
+Licensed under the MIT License.
 
-## Local PHP API (Single-Project Backend)
+## The Missing Structure of Spacetime
 
-The labs page can now load its configuration from a small PHP + SQLite backend:
+Minkowski gave spacetime its mathematical definition — the geometric foundation
+of General Relativity. Planck defined the natural scales: mass, length, time,
+temperature. From these, countless derived Planck units were constructed,
+each tailored to the needs of the next theoretical framework.
 
-- API endpoint: `api/labs.php`
-- Database file (auto-created): `data/quantum_fruits.sqlite`
-- Frontend behavior: `js/labs-page.js` uses API first, then falls back to `js/labs.json`.
+But spacetime itself — the thing every framework is built on — was never given
+a natural quantum structure from those same scales.
 
-Quick start (from project root):
+QFT places fields on a continuous spacetime manifold and inherits its divergences
+from that continuum. String theory propagates on a pre-existing background.
+LQG quantizes geometry — but does not arrive at a parameter-free unit of spacetime
+from first principles. Everyone speaks of spacetime. Everyone works with it.
 
-```bash
-php -S localhost:8000
-```
+If Minkowski's mathematical description is insufficient —
+why do you keep using it in your theories?
 
-Then open:
+The σₚ framework closes this gap:
 
-- `http://localhost:8000/html/labs.html`
-- `http://localhost:8000/api/labs.php`
+$$\sigma_P = \ell_P \cdot t_P = \frac{\hbar G}{c^4}$$
 
-Admin helper (local only):
+Not a new postulate. Not a new constant.
+The natural unit of spacetime — assembled from the scales Planck already defined,
+structured by the geometry Minkowski already described.
+The question was never answered because nobody thought to multiply
+the two scales that were always there.
 
-- `http://localhost:8000/html/labs_admin.html`
-- `http://localhost:8000/api/admin/labs_admin.php`
+Einstein's field equations already contain the geometric coupling constant:
+
+$$\kappa = \frac{8\pi G}{c^4}$$
+
+This factor couples spacetime geometry(!) to the energy-momentum tensor T_μν.
+Its correctness is not in question — it works.
+
+But notice: $G/c^4$ is already present in σₚ:
+
+$$\sigma_P = \frac{\hbar G}{c^4}$$
+
+The geometric bridge between curvature and matter was always there.
+What was missing was the quantum — h/2pi.
+Einstein coupled geometry to energy. Planck quantized action.
+σₚ extends this:
+it couples geometry to quantum action.
+
+The resemblance is not coincidental.
