@@ -37,8 +37,17 @@ T_P = \sqrt{\frac{\hbar c^5}{G k_B^2}}$$
 
 Four quanta. Four dimensions. Each irreducible.
 
-But Minkowski showed that space and time are not separate stages —
-they are one: **spacetime**.
+In short: 
+"Below the Planck scale, everything loses its meaning."
+Not because the numbers are small or break down — but because the property disappears.
+A length without extent is not a very small length. It is not a length at all.
+A duration without before and after is not a very short time. It is not time at all.
+The Planck scale is not a limit of measurement.
+It is the last scale at which nature still knows what it is.
+
+
+Minkowski showed that space and time are not separate stages —
+they are one: Spacetime.
 
 So where is the quantum of spacetime?
 
@@ -46,11 +55,8 @@ $$\sigma_P = \ell_P \cdot t_P
 = \sqrt{\frac{\hbar G}{c^3}} \cdot \sqrt{\frac{\hbar G}{c^5}}
 = \frac{\hbar G}{c^4} \quad \text{— a quantum of spacetime?}$$
 
-Planck gave us the natural structure.
+Planck gave us the pieces.
 Minkowski showed they belong together.
-Nobody thought to multiply them.
-
----
 
 ## The Missing Structure of Spacetime
 
@@ -81,54 +87,17 @@ structured by the geometry Minkowski already described.
 The question was never answered because nobody thought to quantify
 the two natural scales that were always there.
 
----
-
-## The Einstein Connection
-
-Einstein's field equations already contain the geometric coupling constant:
-
-$$\kappa = \frac{8\pi G}{c^4}$$
-
-This factor couples spacetime geometry to the energy-momentum tensor $T_{\mu\nu}$.
-Its correctness is not in question — it works.
-
-But notice: $G/c^4$ is already present in σₚ:
-
-$$\sigma_P = \underbrace{\ell_P \cdot t_P}_{\text{Space} \cdot \text{Time}}
-= \sqrt{\frac{\hbar G}{c^3}} \cdot \sqrt{\frac{\hbar G}{c^5}}
-= \sqrt{\frac{\hbar^2 G^2}{c^8}}
-= \frac{\hbar G}{c^4}$$
-
-*A quantum of spacetime? Maybe.*
-
-The geometric bridge between curvature and matter was always there.
-What was missing was the quantum — ħ.
-Einstein coupled geometry to energy. σₚ extends this:
-it couples geometry to quantum action.
-
-The resemblance is not coincidental.
-
----
 
 ## Axiom of Finite Divisibility of Spacetime
 
-**Postulate (A. Zander):** No physical system can be divided without bound.
+Postulate (A. Zander): 
+No physical system can be divided without bound.
 Space and time possess a fundamental, finite resolution — the spacetime quantum
 $\sigma_P = \ell_P \cdot t_P = \hbar G / c^4$.
 
 This unit defines the smallest interval in which cause and effect remain distinct.
 Below this limit, the continuum assumption collapses, and with it the classical
 notion of separability.
-
-**Consequences:**
-
-1. Every physical process occurs in discrete spacetime volumes.
-   Resolving beyond $\sigma_P$ requires infinite energy.
-2. Singularities, infinite densities, and point-like particles are mathematical
-   artifacts. Nature enforces a cutoff.
-3. Spacetime is atomic: $\sigma_P$ sets the minimum geometric extent.
-
----
 
 ## The Λ-Problem — A Parameter-Free Solution
 
@@ -150,45 +119,3 @@ N_\sigma = \frac{R \cdot t}{\sigma_P}$$
 
 The local quantum prediction is correct. The cosmological observation is correct.
 The error was the missing scale factor $N_\sigma$.
-
----
-
-## Key Equations
-
-**Planck spacetime cell:**
-$$\sigma_P = \ell_P \cdot t_P = \frac{\hbar G}{c^4}, \qquad [\sigma_P] = L \cdot T$$
-
-**Zander scaling:**
-$$Z(r) = \frac{\hbar^2}{c \cdot r}$$
-A dimensional bridge between quantum action and gravitational geometry.
-
-**Modified field equation (classical):**
-$$G_{\mu\nu} + \Lambda_{\text{eff}} \, g_{\mu\nu} = \frac{8\pi G}{c^4} \, \bar{T}_{\mu\nu}$$
-
-**Full quantum form:**
-$$\left\langle \hat{G}[\sigma_P] + \Lambda_{\text{eff}} \, g \right\rangle_{\sigma_P}
-= \frac{8\pi G}{c^4} \left\langle \hat{T} \right\rangle_{\sigma_P}$$
-
-where the Planck-covariant averaging operator integrates over a kernel of
-width $\sigma_P$, replacing the classical point evaluation and eliminating
-UV divergences at the Planck scale.
-
----
-
-## Simulations
-
-All modules run in-browser. No installation required.
-
-| Module | Description |
-|--------|-------------|
-| `html/tsf_sim.html` | Thermal Spacetime Feedback cycle |
-| `html/theory.html` | Theory overview with cosmological equations |
-| `js/main.js` | Core σₚ simulation engine |
-| `py/quantum_fruits_sim.py` | Python suite (N_σ calculations) |
-
----
-
-## License
-
-**Copyright © 2026 Adrian Zander**  
-Licensed under the MIT License.
