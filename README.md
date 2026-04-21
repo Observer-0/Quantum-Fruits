@@ -8,7 +8,6 @@
 > analysis and primary source study (Boltzmann, Einstein, Planck, Minkowski,
 > Schwarzschild et al.).
 
----
 
 ## What is a Quantum?
 
@@ -37,7 +36,7 @@ T_P = \sqrt{\frac{\hbar c^5}{G k_B^2}}$$
 
 Four quanta. Four dimensions. Each irreducible.
 
-In short: 
+In short:
 "Below the Planck scale, everything loses its meaning."
 Not because the numbers are small or break down — but because the property disappears.
 A length without extent is not a very small length. It is not a length at all.
@@ -46,7 +45,56 @@ The Planck scale is not a limit of measurement.
 It is the last scale at which nature still knows what it is.
 
 
-Minkowski showed that space and time are not separate stages —
+
+## Planck Scales as the Boundary of Physical Definability
+
+A scale is not merely a number system. It defines the range within which a given
+property still exists as such.
+
+A square meter remains divisible as long as the underlying lengths are still genuine
+lengths. But once a length falls below the Planck scale, the very definition of area
+or volume loses its physical foundation.
+
+The same applies to mass. Planck defined his natural unit of mass using the gram as
+base scale — grounded in weight, the gravitational expression of mass. The Planck mass
+is not simply a very small amount of matter. It is the last scale at which mass still
+*behaves as mass*. Whether measured in Planck units, grams, or tonnes — remove the
+gravitational property, and the concept of mass loses its meaning.
+
+Similarly, the Planck temperature represents the outermost boundary of thermodynamic
+definability. Above it, the framework of thermal excitation itself breaks down.
+
+*Planck scales are the last resolution at which a dimension still retains its defining
+property. Below this threshold, a piece of "length" is no longer physically
+interpretable as length — even if one could continue to subdivide it mathematically.
+
+
+## Entropy — The Perceivable Part of Existence
+
+Entropy is not a thing. It is always a statement about a *system* in a *context*:
+Boltzmann's microstate count, Shannon's information measure, Bekenstein-Hawking's
+horizon area. Always: entropy *of what*?
+
+But at its most fundamental:
+
+*Entropy is the perceivable part of our existence.*
+
+Without entropy, no arrow of time. Without a time arrow, no before and after,
+no causality, nothing happens. Without time, no entropy — no transformation is
+possible in a frozen universe.
+
+They do not cause each other. They emerge together, or not at all:
+Without Entropy → No Arrow of Time
+Without Time    → No Entropy
+∴ Entropy and Time are co-emergent
+
+And c is the mediator. Without c, no transmission. Without transmission,
+no transformation reaches an observer. Without an observer, no perception.
+
+σₚ = ℏG/c⁴ is then the smallest unit in which something can become perceivable.
+
+
+## Minkowski showed that space and time are not separate stages —
 they are one: Spacetime.
 
 So where is the quantum of spacetime?
@@ -57,6 +105,7 @@ $$\sigma_P = \ell_P \cdot t_P
 
 Planck gave us the pieces.
 Minkowski showed they belong together.
+
 
 ## The Missing Structure of Spacetime
 
@@ -87,10 +136,15 @@ structured by the geometry Minkowski already described.
 The question was never answered because nobody thought to quantify
 the two natural scales that were always there.
 
+This highly speculative work is dedicated to the humble task of questioning the
+concept of the meter stick or a wristwatch — in the hope that clarifying what a length actually
+is might, eventually, lend some support to theories that require eleven
+dimensions of it.
+
 
 ## Axiom of Finite Divisibility of Spacetime
 
-Postulate (A. Zander): 
+Postulate (A. Zander):
 No physical system can be divided without bound.
 Space and time possess a fundamental, finite resolution — the spacetime quantum
 $\sigma_P = \ell_P \cdot t_P = \hbar G / c^4$.
@@ -98,6 +152,8 @@ $\sigma_P = \ell_P \cdot t_P = \hbar G / c^4$.
 This unit defines the smallest interval in which cause and effect remain distinct.
 Below this limit, the continuum assumption collapses, and with it the classical
 notion of separability.
+
+
 
 ## The Λ-Problem — A Parameter-Free Solution
 
@@ -119,3 +175,14 @@ N_\sigma = \frac{R \cdot t}{\sigma_P}$$
 
 The local quantum prediction is correct. The cosmological observation is correct.
 The error was the missing scale factor $N_\sigma$.
+
+---
+
+> *"… die Möglichkeit gegeben ist, Einheiten aufzustellen, welche, unabhängig*
+> *von speciellen Körpern oder Substanzen, ihre Bedeutung für alle Zeiten und*
+> *für alle, auch ausserirdische und aussermenschliche Culturen notwendig behalten*
+> *und welche daher als natürliche Maasseinheiten bezeichnet werden können."*
+>
+> — Max Planck, 1899
+
+*In Memory*
