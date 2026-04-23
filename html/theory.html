@@ -1096,6 +1096,136 @@
       </div>
      </div>
     </div>
+
+   <!-- THE INFORMATION PARADOX & PAGE CURVE -->
+   <div class="qg-card" style="margin-top: 4rem; border-top: 2px solid rgba(244,63,94,0.3); padding-top: 3rem;">
+    <h3 style="color: var(--accent-rose); text-align: center; margin-bottom: 0.5rem;">
+     The Information Paradox
+    </h3>
+    <p style="text-align: center; color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+     Bekenstein found the entropy. Hawking found the radiation. Together they produced the deepest open problem in theoretical physics.
+    </p>
+
+    <div class="grid-2" style="gap: 2rem; margin-bottom: 3rem;">
+     <!-- Bekenstein -->
+     <div class="qg-card" style="border-left: 4px solid var(--accent-emerald);">
+      <h4 style="color: var(--accent-emerald);">Bekenstein: Information Has an Address</h4>
+      <p>Imagine throwing a book into a fire. The information is theoretically still there — distributed across ash, smoke, photons. Incomprehensibly complex. But not <em>gone</em>. Quantum mechanics says: information cannot be destroyed.</p>
+      <p style="margin-top: 1rem;">Bekenstein discovered: a black hole stores information on its <strong>surface</strong> — proportional to the area of the event horizon. Not in the volume. On the skin.</p>
+      <div class="formula-block" style="border-color: var(--accent-emerald);">
+       $$S_{BH} = \frac{k_B c^3}{4\hbar G} \cdot A$$
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 1rem;">The information is in there. The question is: does it ever come back out?</p>
+     </div>
+
+     <!-- Hawking -->
+     <div class="qg-card" style="border-left: 4px solid var(--accent-rose);">
+      <h4 style="color: var(--accent-rose);">Hawking: Black Holes Are Not Black</h4>
+      <p>Hawking discovered: a black hole radiates. Slowly, continuously — until it evaporates completely. The radiation arises from quantum effects at the event horizon and gradually drains the hole of mass.</p>
+      <p style="margin-top: 1rem;">The problem: the radiation looks like pure noise. Heat without pattern. No message.</p>
+      <p style="margin-top: 1rem; font-style: italic; color: var(--accent-rose);">When the hole is gone and the radiation is pure noise — where is the book?</p>
+      <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary);">Two options: either nature violates quantum mechanics, or the radiation is not truly random noise.</p>
+     </div>
+    </div>
+
+    <!-- Page Curve -->
+    <div class="qg-card" style="background: rgba(0,0,0,0.5); border: 1px solid rgba(56,189,248,0.2); margin-bottom: 2rem;">
+     <h4 style="color: var(--accent-blue); text-align: center; margin-bottom: 1rem;">The Page Curve: What Would Have to Happen</h4>
+     <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; max-width: 680px; margin-left: auto; margin-right: auto; font-size: 0.95rem;">
+      Don Page asked in 1993: if the universe behaves quantum mechanically — what shape must the entropy of the radiation trace over time?
+     </p>
+
+     <div style="max-width: 680px; margin: 0 auto;">
+      <svg viewBox="0 0 680 290" style="width:100%;">
+       <!-- Axes -->
+       <line x1="55" y1="235" x2="645" y2="235" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+       <line x1="55" y1="235" x2="55" y2="25" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+       <!-- Axis labels -->
+       <text x="350" y="270" fill="rgba(255,255,255,0.4)" text-anchor="middle" font-size="12">Evaporation Time →</text>
+       <text x="18" y="135" fill="rgba(255,255,255,0.4)" text-anchor="middle" font-size="12" transform="rotate(-90,18,135)">Radiation Entropy</text>
+       <!-- Hawking (non-unitary) dashed red -->
+       <path d="M 55 235 Q 220 220 400 130 Q 520 75 635 35" stroke="rgba(244,63,94,0.45)" stroke-width="2" fill="none" stroke-dasharray="8,5"/>
+       <text x="638" y="34" fill="rgba(244,63,94,0.6)" font-size="10">Hawking</text>
+       <text x="638" y="47" fill="rgba(244,63,94,0.6)" font-size="10">(classical)</text>
+       <!-- Page curve (unitary) solid blue -->
+       <path d="M 55 235 C 160 210 270 88 355 72 C 400 64 430 70 460 82 C 545 118 610 200 640 232" stroke="var(--accent-blue)" stroke-width="2.5" fill="none"/>
+       <!-- Page time vertical -->
+       <line x1="355" y1="68" x2="355" y2="235" stroke="rgba(251,191,36,0.55)" stroke-width="1.5" stroke-dasharray="6,4"/>
+       <text x="360" y="252" fill="rgba(251,191,36,0.9)" font-size="11">Page Time</text>
+       <!-- Peak dot -->
+       <circle cx="355" cy="70" r="5" fill="var(--accent-amber)"/>
+       <!-- Phase labels -->
+       <text x="190" y="170" fill="rgba(56,189,248,0.8)" font-size="11" text-anchor="middle">Phase 1</text>
+       <text x="190" y="184" fill="rgba(56,189,248,0.5)" font-size="10" text-anchor="middle">Entropy rising</text>
+       <text x="520" y="170" fill="rgba(56,189,248,0.8)" font-size="11" text-anchor="middle">Phase 3</text>
+       <text x="520" y="184" fill="rgba(56,189,248,0.5)" font-size="10" text-anchor="middle">Entropy falling</text>
+       <!-- Legend -->
+       <line x1="70" y1="28" x2="100" y2="28" stroke="var(--accent-blue)" stroke-width="2.5"/>
+       <text x="108" y="33" fill="rgba(255,255,255,0.65)" font-size="10">Page curve (unitary — information preserved)</text>
+       <line x1="70" y1="46" x2="100" y2="46" stroke="rgba(244,63,94,0.5)" stroke-width="2" stroke-dasharray="8,5"/>
+       <text x="108" y="51" fill="rgba(255,255,255,0.45)" font-size="10">Hawking classical (information lost)</text>
+      </svg>
+     </div>
+
+     <div class="grid-2" style="gap: 1.5rem; margin-top: 2rem;">
+      <div style="padding: 1rem; background: rgba(244,63,94,0.05); border-radius: 8px; border-left: 3px solid var(--accent-rose);">
+       <strong style="color: var(--accent-rose);">If the curve only rises:</strong>
+       <p style="font-size: 0.9rem; margin-top: 0.5rem; color: var(--text-secondary);">The radiation is pure noise. Information was destroyed. Quantum mechanics breaks down.</p>
+      </div>
+      <div style="padding: 1rem; background: rgba(16,185,129,0.05); border-radius: 8px; border-left: 3px solid var(--accent-emerald);">
+       <strong style="color: var(--accent-emerald);">If the curve turns:</strong>
+       <p style="font-size: 0.9rem; margin-top: 0.5rem; color: var(--text-secondary);">The radiation returns information. The universe remains quantum mechanically consistent. The book was never truly gone.</p>
+      </div>
+     </div>
+     <p style="text-align: center; margin-top: 2rem; color: var(--text-secondary); font-style: italic; font-size: 0.9rem;">
+      The Page curve shows the shape information preservation <em>must</em> take. The open question: what is the physical mechanism behind the turning point?
+     </p>
+    </div>
+
+    <!-- Kinematic Transformer as the answer -->
+    <div class="qg-card" style="background: linear-gradient(135deg, rgba(244,63,94,0.07), rgba(0,0,0,0.5)); border: 1px solid rgba(244,63,94,0.2);">
+     <h4 style="color: var(--accent-rose); text-align: center; margin-bottom: 0.5rem;">The Kinematic Transformer as a Physical Picture</h4>
+     <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2.5rem;">
+      The three phases of the motor are the three phases of the Page curve — with a physical meaning for the turning point.
+     </p>
+
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.5rem;">
+      <div style="text-align: center; padding: 1.5rem; background: rgba(56,189,248,0.05); border-radius: 12px; border: 1px solid rgba(56,189,248,0.15);">
+       <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚡</div>
+       <h5 style="color: var(--accent-blue); margin-bottom: 0.75rem;">Phase 1 — Spin-up</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">The Pure Action Core spins freely. It releases energy as Hawking radiation. The entropy of the radiation rises.</p>
+       <p style="font-size: 0.8rem; margin-top: 0.75rem; color: var(--accent-blue); font-style: italic;">→ Rising curve</p>
+      </div>
+
+      <div style="text-align: center; padding: 1.5rem; background: rgba(251,191,36,0.07); border-radius: 12px; border: 2px solid rgba(251,191,36,0.35);">
+       <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚖️</div>
+       <h5 style="color: var(--accent-amber); margin-bottom: 0.75rem;">Phase 2 — Page Time</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">Action potential = braking force. The motor reaches equilibrium. The core shifts from "releasing energy" to "returning information".</p>
+       <p style="font-size: 0.8rem; margin-top: 0.75rem; color: var(--accent-amber); font-style: italic;">→ Peak of the curve</p>
+      </div>
+
+      <div style="text-align: center; padding: 1.5rem; background: rgba(16,185,129,0.05); border-radius: 12px; border: 1px solid rgba(16,185,129,0.15);">
+       <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔄</div>
+       <h5 style="color: var(--accent-emerald); margin-bottom: 0.75rem;">Phase 3 — Return</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">Accreted mass dominates. The core returns stored information back into the universe, structured through the outgoing radiation.</p>
+       <p style="font-size: 0.8rem; margin-top: 0.75rem; color: var(--accent-emerald); font-style: italic;">→ Falling curve</p>
+      </div>
+     </div>
+
+     <blockquote style="margin-top: 2rem; padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 4px solid var(--accent-rose); font-style: italic; color: var(--text-secondary);">
+      "The information paradox is not a paradox. Information is not destroyed — it is classically unreachable. The Kinematic Transformer returns it: slowly, structured, through the braking of the core."
+     </blockquote>
+
+     <p style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.3); font-style: italic;">
+      Heuristic — not a proof. But a physical picture for a mechanism mathematics has so far left open.
+     </p>
+
+     <div style="text-align: center; margin-top: 2rem;">
+      <a class="action-btn" href="bh_cinema_lab.html" style="background: var(--accent-rose);">Open BH Cinema Lab →</a>
+     </div>
+    </div>
+   </div>
+
    </section>
    <!-- SECTION 4: GALACTIC DYNAMICS -->
    <section class="theory-container" id="galaxies" style="background: radial-gradient(circle at top left, rgba(16, 185, 129, 0.05), transparent);">
