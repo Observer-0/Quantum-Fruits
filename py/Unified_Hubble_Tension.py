@@ -40,8 +40,8 @@ MATHEMATICAL FOUNDATION:
     3. THERMAL COUPLING:
        dT/dt = -ηHT + γ(T_c - T)
        
-    4. ENTROPY AS σ_P TICK COUNT:
-       S = V/σ_P³ = a³/ℓ_P³
+    4. ENTROPY AS σ_P TICK COUNT (effective proxy):
+       S_eff = a³/ℓ_P³
        dS/dt = 3a²H/ℓ_P³
 
 Author: Adrian Zander (Quantum Fruits)
@@ -183,8 +183,9 @@ class UnifiedCosmology:
         # Three competing effects:
         # - Adiabatic cooling: -ηHT (expansion cools the universe)
         # - Relaxation to T_c: γ(T_c - T) (thermal equilibration)
-        # - Hawking re-heating: gentle term that decreases with expansion
-        #   Physical motivation: T_Hawking ∝ 1/M ∝ 1/a³
+        # - Hawking-like re-heating: gentle term that decreases with expansion
+        #   Physical motivation (qualitative): T_Hawking ∝ 1/M ∝ 1/a³
+        #   Current status: heuristic closure term for exploratory dynamics.
         #   Early universe (small a): Strong rethermalization
         #   Late universe (large a): Weak Hawking radiation
         heating = 0.05 * np.exp(-a)  # Sanft abnehmender Heizterm
@@ -199,8 +200,8 @@ class UnifiedCosmology:
     
     def compute_entropy(self, a: np.ndarray) -> np.ndarray:
         """
-        Entropy as σ_P tick count.
-        S = a³/ℓ_P³
+        Entropy as σ_P tick-count proxy.
+        S_eff = a³/ℓ_P³
         Tick Density rho_ticks = S / V = 1/ℓ_P³
         """
         return (a**3) / (self.const.l_P**3)
@@ -221,10 +222,13 @@ class UnifiedCosmology:
         Simulates measurement operators for different cosmic phases.
         - CMB/Planck: Samples the Cold phase (Deflation)
         - SNe/SH0ES: Samples the Hot phase (Expansion)
+        
+        Sign convention:
+        Returns measured expansion-rate magnitudes |H| in km/s/Mpc.
         """
         if self.solution is None: return 0.0
         
-        H_phys = self.get_physical_h(self.solution.y[1])
+        H_phys = np.abs(self.get_physical_h(self.solution.y[1]))
         T = self.solution.y[2]
         
         if method == "CMB":
@@ -280,7 +284,12 @@ class UnifiedCosmology:
         
     def analyze_hubble_tension(self) -> Dict[str, float]:
         """
-        Analyze Hubble parameter statistics to explain the tension.
+        Analyze physical Hubble parameter statistics (km/s/Mpc)
+        to explain the tension.
+        
+        Sign convention:
+        Uses |H| for reported phase means to match observational
+        H0 magnitudes (positive by construction).
         
         Returns:
             Dictionary with Hubble statistics
@@ -288,7 +297,8 @@ class UnifiedCosmology:
         if self.solution is None:
             raise RuntimeError("Must run simulate() first")
         
-        H = self.solution.y[1]
+        H_phys_signed = self.get_physical_h(self.solution.y[1])
+        H_phys = np.abs(H_phys_signed)
         T = self.solution.y[2]
         
         # Identify expansion and deflation phases
@@ -296,16 +306,20 @@ class UnifiedCosmology:
         deflation_mask = ~expansion_mask
         
         # Compute phase-averaged Hubble parameters
-        H_exp_mean = np.mean(H[expansion_mask]) if np.any(expansion_mask) else 0.0
-        H_def_mean = np.mean(H[deflation_mask]) if np.any(deflation_mask) else 0.0
-        H_total_mean = np.mean(np.abs(H))
+        H_exp_mean = np.mean(H_phys[expansion_mask]) if np.any(expansion_mask) else 0.0
+        H_def_mean = np.mean(H_phys[deflation_mask]) if np.any(deflation_mask) else 0.0
+        H_total_mean = np.mean(np.abs(H_phys))
+        H_exp_signed = np.mean(H_phys_signed[expansion_mask]) if np.any(expansion_mask) else 0.0
+        H_def_signed = np.mean(H_phys_signed[deflation_mask]) if np.any(deflation_mask) else 0.0
         
         return {
             'H_expansion': H_exp_mean,
             'H_deflation': H_def_mean,
             'H_mean': H_total_mean,
             'tension': np.abs(H_exp_mean - H_def_mean),
-            'expansion_fraction': np.sum(expansion_mask) / len(T)
+            'expansion_fraction': np.sum(expansion_mask) / len(T),
+            'H_expansion_signed': H_exp_signed,
+            'H_deflation_signed': H_def_signed
         }
     
     def plot_results(self, save_path: str = None) -> None:

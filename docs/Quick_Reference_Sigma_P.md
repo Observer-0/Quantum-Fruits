@@ -4,6 +4,8 @@
 **Last Updated:** 2026-01-14  
 **Status:** Dimensionally verified ✓
 
+**See also:** `docs/Vacuum_Catastrophe_SigmaP.md` (window-mapping note for the vacuum-catastrophe claim)
+
 ---
 
 ## 🌟 Core Principle
@@ -48,7 +50,7 @@ c = ℓ_P/t_P
 ```
 - **Dimension:** [L⁻²] ✓
 - **Window-dependent:** Changes with observation scale
-- **Result:** Solves vacuum catastrophe
+- **Result:** Supports the sigma_P window-mapping interpretation of the vacuum-catastrophe mismatch
 
 ### 5. Fine-Structure of Spacetime
 ```
@@ -64,7 +66,7 @@ c = ℓ_P/t_P
 ```
 - **Dimension:** [L⁻²] ✓
 - **Consistency:** Λ_eff = 3/(cRt) = 3α_σ/(ℓ_P²·c·ℓ_P/t_P) = 3α_σ/ℓ_P²
-- **Result:** Λ_QFT/Λ_GR = 1 (no catastrophe!)
+- **Result:** `Lambda_cell/N_sigma -> Lambda_eff` (see vacuum-catastrophe window-mapping note)
 
 ---
 
@@ -212,6 +214,28 @@ All 17 core equations verified:
 
 **Contact:** Adrian Zander  
 **License:** MIT
+
+---
+
+## Vacuum Catastrophe (Window Mapping Note)
+
+Short version:
+
+- `sigma_P` defines a finite spacetime cell scale.
+- `N_sigma(W) = (R t)/sigma_P` counts the cells in a chosen observation window `W=(R,t)`.
+- The framework interprets the usual `~10^122` mismatch as a window mismatch (cell-scale vs cosmological-window quantity).
+
+Window mapping used in the framework:
+
+```text
+Lambda_cell = 3 / l_P^2
+Lambda_eff(W) = Lambda_cell / N_sigma(W) = 3/(cRt)
+```
+
+For derivation vs interpretation hygiene, see:
+
+- `docs/Vacuum_Catastrophe_SigmaP.md`
+- `docs/Assumption_Register.md` (`AS-011`)
 
 ---
 

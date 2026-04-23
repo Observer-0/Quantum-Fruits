@@ -29,7 +29,8 @@ def ticks(total_action: float, hbar: float = HBAR) -> float:
 
 
 def chi(M: float, G_val: float = G, hbar: float = HBAR, c: float = C) -> float:
-    return (G_val * M * M) / (hbar * c**3)
+    ag = (G_val * M * M) / (hbar * c)
+    return ag * ag
 
 
 def hawking_rate(M: float, constants: dict | None = None) -> float:
@@ -40,4 +41,4 @@ def hawking_rate(M: float, constants: dict | None = None) -> float:
 
 
 def alpha_G(M: float, G_val: float = G, hbar: float = HBAR, c: float = C) -> float:
-    return (G_val * M) / (hbar * c)
+    return (G_val * M * M) / (hbar * c)

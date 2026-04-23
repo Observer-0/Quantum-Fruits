@@ -35,9 +35,9 @@ def simulate_page_curve_mechanic(duration=10.0, steps=200, integrator='rk4'):
     entropy_list = []
     
     # Respect fundamental spacetime cell: compute available ticks
-    # N_sigma = c * R * duration / SIGMA_P
+    # N_sigma = R * duration / SIGMA_P
     try:
-        ticks = (c * COSMO_RADIUS_NOW * duration) / SIGMA_P
+        ticks = (COSMO_RADIUS_NOW * duration) / SIGMA_P
     except Exception:
         ticks = float('inf')
 

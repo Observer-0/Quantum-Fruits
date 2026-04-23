@@ -51,11 +51,12 @@ def check_relation():
 # =========================
 def alpha_G(M):
     """Lineare Kopplung"""
-    return G * M / (hbar * c)
+    return G * M**2 / (hbar * c)
 
 def chi(M):
     """Quadratische (Spin-2) Selbstkopplung"""
-    return G * M**2 / (hbar * c**3)
+    ag = alpha_G(M)
+    return ag**2
 
 # =========================
 # Hawking / Tick Mechanik

@@ -75,13 +75,13 @@ Spin-2-Felder koppeln \textbf{quadratisch}:
 
 Deine Kopplungen
 \[
-\alpha_G(M) = \frac{GM}{\hbar c}
+\beta_G(M) = \frac{GM}{\hbar c}
 \qquad
 \chi(M) = \frac{GM^2}{\hbar c^3}
 \]
 zeigen exakt das:
 \begin{itemize}
-    \item $\alpha_G$ misst \textbf{lineare Kopplung}
+    \item $\beta_G$ misst \textbf{lineare Kopplung} (SI-dimensionful proxy)
     \item $\chi$ misst \textbf{Spin-2-Selbstkopplung}
 \end{itemize}
 Dass $\chi \sim 1/v^2$ auftaucht, ist kein Bug.
@@ -146,7 +146,7 @@ Alle fundamentalen Gleichungen als Objekte:
     \item $\sigma_P$
     \item $Z$
     \item $A_G$
-    \item Kopplungen ($\alpha_G, \chi$)
+    \item Kopplungen ($\beta_G, \chi$)
     \item Spin-2-Operatoren
     \item Kernel-Metriken
 \end{itemize}
@@ -205,7 +205,7 @@ Damit ist Entropie \textbf{nicht statistisch}, sondern \textbf{prozessual}.
 \subsection{Gravitation = Spin-2-Tick-Kopplung}
 
 \textbf{Lineare Kopplung (Masse an Wirkung):}
-\[ \alpha_G(M) = \frac{GM}{\hbar c} \]
+\[ \beta_G(M) = \frac{GM}{\hbar c} \]
 $\to$ wie stark Masse \textbf{Ticks absorbiert}.
 
 \textbf{Quadratische Kopplung (Selbstwirkung / Spin-2):}
@@ -302,7 +302,7 @@ def tick_count(E, t):
 def entropy(E, t):
     return kB * tick_count(E, t)
 
-def alpha_G(M):
+def beta_G_proxy(M):
     return G * M / (hbar * c)
 
 def lambda_eff(R, t):

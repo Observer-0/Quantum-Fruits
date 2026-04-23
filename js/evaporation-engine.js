@@ -1,13 +1,13 @@
 /**
- * Evaporation Engine based on the Zander sigmaP Framework.
- * Ports the Python logic to JavaScript for live interactive simulations.
+ * Evaporation Engine based on the sigma_P framework.
+ * Keeps JS simulation logic aligned with current Python kernels.
  */
 
-const Physics = {
-    hbar: 1.054571817e-34,
-    c: 2.99792458e8,
-    G: 6.67430e-11,
-    kB: 1.380649e-23,
+const EvaporationPhysics = {
+    hbar: 1.054_571_817e-34,
+    c: 2.997_924_58e8,
+    G: 6.674_30e-11,
+    kB: 1.380_649e-23,
     pi: Math.PI,
 
     get sigmaP() { return (this.hbar * this.G) / (this.c ** 4); },
@@ -15,131 +15,171 @@ const Physics = {
     get tP() { return Math.sqrt(this.sigmaP / this.c); },
     get MP() { return Math.sqrt((this.hbar * this.c) / this.G); },
     get Z_int() { return (this.hbar ** 2) / this.c; },
+    get year() { return 365.25 * 24 * 3600; },
+
+    clampPositive(v, floor = 1e-99) {
+        if (!Number.isFinite(v)) return floor;
+        return Math.max(Math.abs(v), floor);
+    },
+
+    linspace(start, end, count) {
+        const n = Math.max(2, Math.floor(count));
+        const values = new Array(n);
+        const span = end - start;
+        for (let i = 0; i < n; i += 1) {
+            values[i] = start + (span * i) / (n - 1);
+        }
+        return values;
+    },
 
     schwarzschildRadius(M) {
-        return (2.0 * this.G * M) / (this.c ** 2);
+        const Ms = this.clampPositive(M);
+        return (2.0 * this.G * Ms) / (this.c ** 2);
+    },
+
+    kretschmannScalar(M, r) {
+        const Ms = this.clampPositive(M);
+        const rs = this.clampPositive(r);
+        return (48.0 * this.G ** 2 * Ms ** 2) / ((this.c ** 4) * (rs ** 6));
+    },
+
+    planckCurvatureRadius(M) {
+        const Ms = this.clampPositive(M);
+        const num = 48.0 * this.G ** 2 * Ms ** 2 * this.lP ** 4;
+        return (num / this.c ** 4) ** (1.0 / 6.0);
+    },
+
+    singularityDiagnostics(M) {
+        const rs = this.schwarzschildRadius(M);
+        const rPl = this.planckCurvatureRadius(M);
+        const ratio = rs > 0.0 ? rPl / rs : Infinity;
+        return { rs, rPl, ratio };
     },
 
     hawkingTemperature(M) {
-        if (M <= 0) return Infinity;
-        return (this.hbar * (this.c ** 3)) / (8.0 * this.pi * this.G * M * this.kB);
+        const Ms = this.clampPositive(M);
+        return (this.hbar * this.c ** 3) / (8.0 * this.pi * this.G * Ms * this.kB);
     },
 
     bhEntropy(M) {
-        if (M <= 0) return 0;
-        const rs = this.schwarzschildRadius(M);
-        const A = 4.0 * this.pi * (rs ** 2);
-        return (this.kB * (this.c ** 3) * A) / (4.0 * this.hbar * this.G);
+        const Ms = this.clampPositive(M);
+        const rs = this.schwarzschildRadius(Ms);
+        const area = 4.0 * this.pi * (rs ** 2);
+        return (this.kB * this.c ** 3 * area) / (4.0 * this.hbar * this.G);
     },
 
     lifetimeSemiclassical(M0) {
-        return (5120.0 * this.pi * (this.G ** 2) * (M0 ** 3)) / (this.hbar * (this.c ** 4));
+        const M0s = this.clampPositive(M0);
+        return (5120.0 * this.pi * this.G ** 2 * M0s ** 3) / (this.hbar * this.c ** 4);
     },
 
-    simulateSemiclassical(M0, nsteps = 200) {
-        const tau = this.lifetimeSemiclassical(M0);
-        const timePoints = [];
-        const massPoints = [];
-        const tempPoints = [];
-        const sradPoints = [];
+    simulateSemiclassical(M0, nsteps = 2000) {
+        const M0s = this.clampPositive(M0);
+        const tau = this.lifetimeSemiclassical(M0s);
+        const t = this.linspace(0.0, tau, nsteps);
+        const M = new Array(t.length);
+        const TH = new Array(t.length);
+        const S = new Array(t.length);
+        const Srad = new Array(t.length);
 
-        for (let i = 0; i <= nsteps; i++) {
-            const t = (i / nsteps) * tau;
-            const M = M0 * Math.pow(Math.max(1.0 - t / tau, 0.0), 1.0 / 3.0);
-            const Ms = Math.max(M, 1e-99);
+        const S0 = this.bhEntropy(M0s);
+        const tauSafe = Math.max(tau, 1e-99);
 
-            timePoints.push(t);
-            massPoints.push(M);
-            tempPoints.push(this.hawkingTemperature(Ms));
-            // S_rad as linear proxy for "losing info"
-            sradPoints.push(this.bhEntropy(M0) * (t / tau));
+        for (let i = 0; i < t.length; i += 1) {
+            const frac = Math.max(1.0 - t[i] / tauSafe, 0.0);
+            const Mi = M0s * Math.pow(frac, 1.0 / 3.0);
+            const Ms = this.clampPositive(Mi);
+
+            M[i] = Mi;
+            TH[i] = this.hawkingTemperature(Ms);
+            S[i] = this.bhEntropy(Ms);
+            Srad[i] = S0 * (t[i] / tauSafe);
         }
 
-        return { t: timePoints, M: massPoints, TH: tempPoints, Srad: sradPoints, tau };
+        return { t, M, TH, S, Srad, tau };
     },
 
-    simulateQuantized(M0, nsteps = 200, Mrem = null, alpha = 4.0) {
-        const M_remnant = Mrem || this.MP;
-        const tau0 = this.lifetimeSemiclassical(M0);
-        const dt = tau0 / nsteps;
+    simulateQuantized(M0, nsteps = 2000, Mrem = null, alpha = 4.0, gamma = 1.0) {
+        const M0s = this.clampPositive(M0);
+        const MremEff = Math.max(
+            this.clampPositive(Mrem == null ? this.MP : Number(Mrem)),
+            1e-99
+        );
+        const alphaEff = Number.isFinite(alpha) ? alpha : 4.0;
+        const gammaEff = Math.max(Number.isFinite(gamma) ? gamma : 1.0, 0.0);
 
-        const t = [];
-        const M = [];
-        const TH = [];
-        const S_rad = [];
+        const tau0 = this.lifetimeSemiclassical(M0s);
+        const t = this.linspace(0.0, tau0, nsteps);
+        const dt = t.length > 1 ? t[1] - t[0] : tau0;
 
-        const T_max = this.Z_int / (this.sigmaP * this.kB);
-        let currM = M0;
-        let tau_eff = tau0;
+        const M = new Array(t.length);
+        const TH = new Array(t.length);
+        const S = new Array(t.length);
+        const Srad = new Array(t.length);
 
-        // small RK4 helper
-        function rk4_step(f, y, dt) {
-            const k1 = f(y);
-            const k2 = f(y + 0.5 * dt * k1);
-            const k3 = f(y + 0.5 * dt * k2);
-            const k4 = f(y + dt * k3);
-            return y + (dt / 6.0) * (k1 + 2.0 * k2 + 2.0 * k3 + k4);
-        }
+        const T_max = this.hbar / (this.kB * this.tP);
+        const K0 = gammaEff * this.hbar * this.c ** 4 / (15360.0 * this.pi * this.G ** 2);
 
-        for (let i = 0; i <= nsteps * 1.5; i++) {
-            const currT = i * dt;
-            t.push(currT);
-            M.push(currM);
+        let currM = Math.max(M0s, MremEff);
 
-            const Ms = Math.max(currM, 1e-99);
-            TH.push(Math.min(this.hawkingTemperature(Ms), T_max));
+        for (let i = 0; i < t.length; i += 1) {
+            const Ms = this.clampPositive(currM);
+            M[i] = currM;
+            S[i] = this.bhEntropy(Ms);
+            TH[i] = Math.min(this.hawkingTemperature(Ms), T_max);
 
-            if (currM > M_remnant) {
-                // Incorporate Non-Thermality c0 into the decay rate
-                // c0 creates a "back-reaction" or "smearing" that modulates the flux
-                // We use simplified c0 logic here consistent with bh_kernel_c0_scaffold.py
-                const rs = this.schwarzschildRadius(currM);
-                const kappa_SI = (this.c ** 4) / (4.0 * this.G * currM); // Schwarzschild kappa
-                const eps_t = (this.tP * kappa_SI) / this.c;
-                const eps_s = this.lP / rs;
-                const c0 = (Math.PI * Math.PI / 6.0) * (eps_t * eps_t) + 0.5 * (eps_s * eps_s) * 0.8;
-
-                // Effective flux constant: standard C multiplied by (1 + c0)
-                // c0 > 0 means better information escape, slightly altering the decay profile
-                const C_base = - (this.hbar * (this.c ** 4)) / (15360.0 * this.pi * (this.G ** 2));
-                const C_eff = C_base * (1.0 + c0 * 1e8); // Scaled for observable sim influence
-
-                const denomConst = alpha * (this.MP ** 2);
-                const f = (m) => {
-                    return C_eff / ((m ** 2) + denomConst);
-                };
-                const M_new = rk4_step(f, currM, dt);
-                currM = Math.max(M_new, M_remnant);
-                tau_eff = currT;
+            if (currM > MremEff) {
+                const denom = currM ** 2 + alphaEff * this.MP ** 2;
+                const dMdt = -K0 / Math.max(denom, 1e-99);
+                currM = Math.max(currM + dMdt * dt, MremEff);
             } else {
-                currM = M_remnant;
+                currM = MremEff;
             }
-
-            if (i > nsteps && currM <= M_remnant) break;
         }
 
-        // Page-curve logic
-        const S0 = this.bhEntropy(M0);
-        const Srem = this.bhEntropy(M_remnant);
-        const t_page = 0.5 * tau_eff;
+        let idxRem = t.length - 1;
+        for (let i = 0; i < M.length; i += 1) {
+            if (M[i] <= (MremEff + 1e-40)) {
+                idxRem = i;
+                break;
+            }
+        }
+        const tau_eff = t[idxRem];
 
-        for (let i = 0; i < t.length; i++) {
+        const S0 = this.bhEntropy(M0s);
+        const Srem = this.bhEntropy(MremEff);
+        const tPage = Math.max(0.5 * tau_eff, 1e-99);
+
+        for (let i = 0; i < t.length; i += 1) {
             const ti = t[i];
             let s;
-            if (ti <= t_page) {
-                s = 0.5 * S0 * (ti / t_page);
-            } else if (ti <= tau_eff) {
-                const span = tau_eff - t_page;
-                const frac = (ti - t_page) / span;
-                s = (1.0 - frac) * (0.5 * S0 - Srem) + Srem;
+
+            if (ti <= tPage) {
+                s = 0.5 * S0 * (ti / tPage);
             } else {
-                s = Srem;
+                const span = Math.max(tau_eff - tPage, 1e-99);
+                const frac = (ti - tPage) / span;
+                s = (1.0 - frac) * (0.5 * S0 - Srem) + Srem;
             }
-            S_rad.push(s);
+
+            if (ti >= tau_eff) s = Srem;
+            Srad[i] = s;
         }
 
-        return { t, M, TH, Srad: S_rad, tau_eff, Srem };
+        const cut = idxRem + 1;
+
+        return {
+            t: t.slice(0, cut),
+            M: M.slice(0, cut),
+            TH: TH.slice(0, cut),
+            S: S.slice(0, cut),
+            Srad: Srad.slice(0, cut),
+            tau_eff,
+            Srem,
+            T_max,
+            K0
+        };
     }
 };
 
-window.EvaporationEngine = Physics;
+window.EvaporationEngine = EvaporationPhysics;

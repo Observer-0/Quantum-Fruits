@@ -40,7 +40,7 @@ Every collapse/event should log at least the following:
 - `timestamp` (UTC)
 - `event_id` (UUID)
 - `input_complexity` (e.g., number of distinguishable micro-states or entropy estimators)
-- `zander_bit` (0 or 1)
+- `z_bit` (0 or 1)
 - `payload_summary` (if `bit==1`, short hash/code of the decompressed information)
 
 This log guarantees traceability without information loss — even if only `zander_bit==0` is returned.

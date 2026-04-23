@@ -268,6 +268,7 @@ function runBrakingMC() {
     const results_pot = [];
     let current_potential = i_max;
     let total_force = 0;
+    let processed_steps = 0;
 
     // Normal distribution helper (Box-Muller transform)
     function randomNormal(mean, std) {
@@ -284,12 +285,13 @@ function runBrakingMC() {
         // 2. Jitter (Quantenfluktuationen)
         const jitter = 0.95 + Math.random() * 0.1;
 
-        // 3. Braking Force: G * m / r^2 (with lP-Regularisierung)
-        const force = (G * m_p * jitter) / (rs * rs + lp * lp);
+        // 3. Braking Force: F = G * M_core * m / r^2 (with lP regularization)
+        const force = (G * M_core * m_p * jitter) / (rs * rs + lp * lp);
 
         current_potential -= force;
         results_pot.push(current_potential);
         total_force += force;
+        processed_steps += 1;
 
         // Break if potential is exhausted
         if (current_potential < 0) {
@@ -301,7 +303,8 @@ function runBrakingMC() {
     // Update UI
     document.getElementById('braking-mc-results').style.display = 'block';
     document.getElementById('mc-pot-final').innerText = current_potential.toExponential(3) + " N";
-    document.getElementById('mc-force-avg').innerText = (total_force / n_particles).toExponential(3) + " N";
+    const avg_force = total_force / Math.max(1, processed_steps);
+    document.getElementById('mc-force-avg').innerText = avg_force.toExponential(3) + " N";
 
     // Progress bar
     const percentage = (current_potential / i_max) * 100;

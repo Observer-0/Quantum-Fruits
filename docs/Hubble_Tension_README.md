@@ -11,6 +11,7 @@
 This project resolves the **Hubble Tension** — the ~6 km/s/Mpc discrepancy between early-universe (CMB: 67) and late-universe (SNe Ia: 73) measurements of H₀ — by modeling the universe as a **two-phase thermodynamic system**.
 
 **Key Insight:** Different measurement methods sample the universe at different thermodynamic phases, yielding systematically different values. The "tension" is not an error, but a fundamental feature.
+See `Assumption_Register.md` for `Axiom` vs `Heuristic` vs `Derived` vs `Prediction`.
 
 ### ⚠️ Important: Understanding the Analogy
 
@@ -20,15 +21,15 @@ The **PC cooling analogy** is a **pedagogical tool** to build intuition about ph
 2. **Physical Universality:** Phase transitions (liquid ↔ gas, expansion ↔ deflation) follow universal laws
 3. **Conceptual Clarity:** The PC cooling system is familiar and visualizable
 
-**This does NOT mean:**
-- ❌ The universe is literally a computer or simulation
-- ❌ We live inside a cooling system
-- ❌ The universe is "artificial" or "designed"
+This does NOT mean:
+The universe is literally a computer or simulation
+We live inside a cooling system
+The universe is "artificial" or "designed"
 
-**What it DOES mean:**
-- ✅ The universe follows thermodynamic laws (like all physical systems)
-- ✅ Phase transitions are a universal phenomenon in nature
-- ✅ Familiar examples help us understand abstract cosmology
+What it DOES mean:
+The universe follows thermodynamic laws (like all physical systems)
+Phase transitions are a universal phenomenon in nature
+Familiar examples help us understand abstract cosmology
 
 **Think of it like:** Saying "the atom is like a solar system" doesn't mean atoms ARE solar systems. It's a useful mental model that captures key features (central nucleus, orbiting electrons) while being fundamentally different in nature (quantum vs. classical).
 
@@ -36,7 +37,7 @@ Similarly, the PC cooling analogy captures the **essence of phase transitions** 
 
 ---
 
-## 🎯 Two Complementary Approaches
+wo Complementary Approaches
 
 ### 1. The Thought Experiment (`Hubble_Tension.py`)
 
@@ -59,7 +60,7 @@ Similarly, the PC cooling analogy captures the **essence of phase transitions** 
 **Approach:**
 - Continuous phase transition: `w(T) = tanh[α(T - Tc)]`
 - Modified Friedmann equation with Planck-scale repulsion
-- Thermal coupling with Hawking re-heating
+- Thermal coupling with a Hawking-like re-heating term (heuristic)
 
 **Best for:**
 - Publications
@@ -68,7 +69,7 @@ Similarly, the PC cooling analogy captures the **essence of phase transitions** 
 
 ---
 
-## 🔬 Core Physics
+## Core Physics
 
 ### Equation of State (Phase Transition)
 ```
@@ -94,6 +95,8 @@ dT/dt = -ηHT + γ(Tc - T) + 0.05·exp(-a)
 - Relaxation to critical temperature
 - **Hawking re-heating** (decreases with scale factor)
 
+> **Model status:** The re-heating term is currently a heuristic closure for exploration.
+
 ### Entropy as σ_P Tick Count
 ```
 S = a³/ℓ_P³
@@ -117,7 +120,7 @@ Tension: ΔH ≈ 6 km/s/Mpc
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Run the Thought Experiment
 ```bash
@@ -150,7 +153,7 @@ Quantum-Fruits/
 ├── docs/
 │   ├── Hubble_Tension_Explanation.md  # Full technical explanation
 │   ├── Code_Comparison.md             # Side-by-side code comparison
-│   ├── Executive_Summary_DE.md        # German executive summary
+│   ├── Executive_Summary.md           # Executive summary
 │   └── README.md                      # This file
 └── assets/
     └── hubble_tension_concept.png     # Visual infographic
@@ -176,9 +179,9 @@ Unlike traditional water cooling (AiO or custom loops), the **Aqua Exhalare** is
 **Watch it in action:** [der8auer's Aqua Exhalare Demo](https://www.youtube.com/watch?v=j1Ew2rVVTAE)
 
 This is fundamentally different from:
-- ❌ **AiO (All-in-One):** Sealed pump + radiator, no phase change
-- ❌ **Custom Loop:** Pump circulates liquid, no boiling
-- ✅ **Two-Phase Immersion:** Natural convection via boiling/condensation
+- **AiO (All-in-One):** Sealed pump + radiator, no phase change
+- **Custom Loop:** Pump circulates liquid, no boiling
+- **Two-Phase Immersion:** Natural convection via boiling/condensation
 
 ---
 
@@ -212,7 +215,7 @@ We model the universe using the same thermodynamic principles:
 
 ---
 
-## 🔬 Testable Predictions
+##  Testable Predictions
 
 1. **H(z) Oscillations**
    - Hubble parameter should vary systematically with redshift
@@ -232,7 +235,7 @@ We model the universe using the same thermodynamic principles:
 
 ---
 
-## 💡 Philosophical Implications
+##  Philosophical Implications
 
 ### 1. The Universe Breathes
 Not linearly expanding, but **cyclically pulsating**
@@ -249,7 +252,7 @@ Entropy = number of ticks
 
 ---
 
-## 📚 Documentation
+##  Documentation
 
 ### Full Technical Explanation
 See [`Hubble_Tension_Explanation.md`](Hubble_Tension_Explanation.md) for:
@@ -266,8 +269,8 @@ See [`Code_Comparison.md`](Code_Comparison.md) for:
 - Conceptual mapping
 - Validation strategy
 
-### Executive Summary (German)
-See [`Executive_Summary_DE.md`](Executive_Summary_DE.md) for:
+### Executive Summary
+See [`Executive_Summary.md`](Executive_Summary.md) for:
 - Kernidee in 3 Sätzen
 - Visuelle Zusammenfassung
 - Numerische Ergebnisse
@@ -321,12 +324,12 @@ The thermal dynamics includes a **scale-factor-dependent re-heating term**:
 heating = 0.05 * np.exp(-a)
 ```
 
-**Physical motivation:**
+**Physical motivation (qualitative):**
 - Hawking temperature: T_H ∝ ℏc³/(8πGMk_B) ∝ 1/M ∝ 1/a³
 - Early universe (small a): Strong rethermalization
 - Late universe (large a): Weak Hawking radiation
 
-This prevents the universe from cooling to absolute zero and maintains cyclic behavior.
+This prevents the universe from cooling to absolute zero and maintains cyclic behavior in the current exploratory model.
 
 ---
 
@@ -369,7 +372,7 @@ GitHub: [Quantum-Fruits](https://github.com/yourusername/Quantum-Fruits)
 
 ---
 
-## 🔗 Related Work
+## 🔗Related Work
 
 - **σ_P Framework:** See `assets/papers/Zander_2025_Natural_Structure.tex`
 - **Black Hole Physics:** See `theory.html` (Action Core model)

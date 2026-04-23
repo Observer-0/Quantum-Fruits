@@ -1,0 +1,110 @@
+{
+  "hubble": {
+    "id": "LAB-011",
+    "title": "Cosmic Breathing",
+    "lab": "hubble_flow_lab.html",
+    "theory": "theory.html#cosmology",
+    "python": "py/Unified_Hubble_Tension.py",
+    "description": "Explores Hubble-tension diagnostics with phase sampling and observed |H0| magnitudes.",
+    "icon": "🪐",
+    "badge": "Cosmology Diagnostic",
+    "accent": "#fbbf24",
+    "textColor": "#000"
+  },
+  "evaporation": {
+    "id": "LAB-006",
+    "title": "Evaporation Lab",
+    "lab": "evaporation_lab.html",
+    "theory": "theory.html#blackholes",
+    "python": "py/sigmaP_evaporation_refined.py",
+    "description": "Models unitary black-hole decay and its implications for information retention.",
+    "icon": "🕳️",
+    "badge": "Evaporation Model",
+    "accent": "#fbbf24",
+    "textColor": "#000"
+  },
+  "bh_cinema": {
+    "id": "LAB-014",
+    "title": "BH Cinema Lab",
+    "lab": "bh_cinema_lab.html",
+    "theory": "theory.html#blackholes",
+    "python": "py/physics_engine.py",
+    "description": "Cinematic black-hole visualization driven by sigma_P evaporation cycles and remnant-memory transitions.",
+    "icon": "BH",
+    "badge": "Visual Story Lab",
+    "accent": "#22d3ee",
+    "textColor": "#001018"
+  },
+  "lattice": {
+    "id": "LAB-004",
+    "title": "URM Lattice",
+    "lab": "lattice_lab.html",
+    "theory": "theory.html#quantum",
+    "python": "py/quantum_fruits_sim.py",
+    "description": "Discrete spacetime-action lattice model used as a numerical framework.",
+    "icon": "🕸️",
+    "badge": "Lattice Model",
+    "accent": "#a855f7",
+    "textColor": "#fff"
+  },
+  "galaxy": {
+    "id": "LAB-002",
+    "title": "Galaxy Rotation",
+    "lab": "galaxy_lab.html",
+    "theory": "theory.html#galaxies",
+    "python": "py/physics_engine.py",
+    "description": "Galaxy-rotation fits in a sigma_P coupling model (without a dark-matter term in this setup).",
+    "icon": "🌀",
+    "badge": "Rotation Fit",
+    "accent": "#10b981",
+    "textColor": "#000"
+  },
+  "entropy": {
+    "id": "LAB-008",
+    "title": "Entropy Holo-Lab",
+    "lab": "entropy_lab.html",
+    "theory": "theory.html#blackholes",
+    "python": "py/Info_Paradox2.py",
+    "description": "Visualizes holographic entropy proxies and information-density scaling.",
+    "icon": "📊",
+    "badge": "Entropy Diagnostic",
+    "accent": "#f43f5e",
+    "textColor": "#fff"
+  },
+  "motor": {
+    "id": "LAB-001",
+    "title": "Kinematic Motor",
+    "lab": "motor.html",
+    "theory": "theory.html#quantum",
+    "python": "py/kinematic_motor_sim.py",
+    "description": "Action-tick dynamics (N=E*t/hbar) linking quantum action flow to macroscopic braking in the model.",
+    "icon": "⚙️",
+    "badge": "Kinematic Model",
+    "accent": "#38bdf8",
+    "textColor": "#000"
+  },
+  "answer42": {
+    "id": "INF-042",
+    "title": "The Answer is 42",
+    "lab": "theory.html#library",
+    "theory": "theory.html#library",
+    "python": "py/answer_42.py",
+    "description": "Douglas Adams easter egg (The Answer is 42), not a physics model.",
+    "icon": "🌌",
+    "badge": "Douglas Adams Meme",
+    "accent": "#38bdf8",
+    "textColor": "#000"
+  },
+  "dipole": {
+    "id": "LAB-013",
+    "title": "Cosmic Dipole",
+    "lab": "dipole_lab.html",
+    "theory": "theory.html#cosmology",
+    "python": "py/UTC_Redshift_Validation.py",
+    "description": "Examines a reported 3.7x velocity excess under a spacetime-grid friction hypothesis.",
+    "icon": "🧭",
+    "badge": "Dipole Hypothesis",
+    "accent": "#818cf8",
+    "textColor": "#fff"
+  }
+}

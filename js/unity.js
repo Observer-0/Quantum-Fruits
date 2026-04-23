@@ -3,16 +3,15 @@
  * Connects Theory, Labs, and Python source code.
  */
 
-const PROJECT_ROOT = '/'; // Adjust if hosted in a subdirectory
-
-const SIM_MAP = {
+// Minimal fallback for offline/file:// usage.
+// Rich metadata is maintained in js/labs.json.
+const DEFAULT_SIM_MAP = {
     hubble: {
         id: "LAB-011",
         title: "Cosmic Breathing",
         lab: "hubble_flow_lab.html",
         theory: "theory.html#cosmology",
         python: "py/Unified_Hubble_Tension.py",
-        description: "Resolving the Hubble Tension through thermodynamic phase transitions.",
         icon: "🪐"
     },
     evaporation: {
@@ -21,7 +20,6 @@ const SIM_MAP = {
         lab: "evaporation_lab.html",
         theory: "theory.html#blackholes",
         python: "py/sigmaP_evaporation_refined.py",
-        description: "Unitary decay of black holes and the resolution of the Information Paradox.",
         icon: "🕳️"
     },
     lattice: {
@@ -30,7 +28,6 @@ const SIM_MAP = {
         lab: "lattice_lab.html",
         theory: "theory.html#quantum",
         python: "py/quantum_fruits_sim.py",
-        description: "The fundamental fabric of discrete spacetime action.",
         icon: "🕸️"
     },
     galaxy: {
@@ -39,7 +36,6 @@ const SIM_MAP = {
         lab: "galaxy_lab.html",
         theory: "theory.html#galaxies",
         python: "py/physics_engine.py",
-        description: "Dark Matter-free rotation curves via Sigma-P coupling.",
         icon: "🌀"
     },
     entropy: {
@@ -48,7 +44,6 @@ const SIM_MAP = {
         lab: "entropy_lab.html",
         theory: "theory.html#blackholes",
         python: "py/Info_Paradox2.py",
-        description: "Visualizing holographic entropy and information density.",
         icon: "📊"
     },
     motor: {
@@ -57,7 +52,6 @@ const SIM_MAP = {
         lab: "motor.html",
         theory: "theory.html#quantum",
         python: "py/kinematic_motor_sim.py",
-        description: "The mechanical coupling between quantum action and classical gravity.",
         icon: "⚙️"
     },
     answer42: {
@@ -66,28 +60,51 @@ const SIM_MAP = {
         lab: "theory.html#library",
         theory: "theory.html#library",
         python: "py/answer_42.py",
-        description: "The numerical signature of the cosmic scale ratio.",
         icon: "🌌"
-    },
-    spectrum: {
-        id: "LAB-012",
-        title: "Particle Spectrum",
-        lab: "particle_spectrum_lab.html",
-        theory: "theory.html#quantum",
-        python: "py/particle_spectrum.py",
-        description: "The geometric origin of particle masses via the q-ratio.",
-        icon: "⚛️"
     },
     dipole: {
         id: "LAB-013",
         title: "Cosmic Dipole",
         lab: "dipole_lab.html",
         theory: "theory.html#cosmology",
-        python: "py/cosmo-lab.js",
-        description: "The 3.7x velocity excess as a sign of spacetime grid friction.",
+        python: "py/UTC_Redshift_Validation.py",
         icon: "🧭"
     }
 };
+
+let SIM_MAP = { ...DEFAULT_SIM_MAP };
+
+if (typeof window !== 'undefined') {
+    window.QF_DEFAULT_SIM_MAP = { ...DEFAULT_SIM_MAP };
+}
+
+function getLabsConfigUrl() {
+    const path = window.location.pathname.replace(/\\/g, '/');
+    return path.includes('/html/') ? '../js/labs.json' : 'js/labs.json';
+}
+
+async function loadLabsConfig() {
+    try {
+        const response = await fetch(getLabsConfigUrl(), { cache: 'no-store' });
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        const parsed = await response.json();
+        if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+            SIM_MAP = parsed;
+            if (typeof window !== 'undefined') {
+                window.QF_SIM_MAP = SIM_MAP;
+            }
+        }
+    } catch (err) {
+        // file:// and restricted environments may block fetch; keep fallback map.
+        console.warn('Unity config fallback active:', err);
+        SIM_MAP = { ...DEFAULT_SIM_MAP };
+        if (typeof window !== 'undefined') {
+            window.QF_SIM_MAP = SIM_MAP;
+        }
+    }
+}
 
 /**
  * Injects a unified navigation bar into the page.
@@ -195,13 +212,14 @@ function injectLabUnity() {
     if (simEntry) {
         const unityPanel = document.createElement('div');
         unityPanel.className = 'unity-panel';
+        const icon = simEntry.icon || "*";
 
         // Find relative path for python
         const prefix = '../';
 
         unityPanel.innerHTML = `
             <div class="unity-badge">
-                <span class="unity-icon">${simEntry.icon}</span>
+                <span class="unity-icon">${icon}</span>
                 <div class="unity-info">
                     <strong>INTEGRATED VIEW</strong>
                     <div class="unity-links">
@@ -268,7 +286,8 @@ function injectLabUnity() {
 }
 
 // Auto-run on load
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadLabsConfig();
     injectNavigation();
     if (window.location.pathname.includes('_lab') ||
         window.location.pathname.includes('sim') ||
@@ -276,3 +295,4 @@ document.addEventListener('DOMContentLoaded', () => {
         injectLabUnity();
     }
 });
+
