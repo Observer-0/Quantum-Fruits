@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
  <head>
   <meta charset="utf-8"/>
@@ -16,117 +16,117 @@
   <link href="../css/theory_modern.css" rel="stylesheet"/>
   <style>
    /* Sticky scroll behavior */
-                                                        html {
-                                                                    scroll-behavior: smooth;
-                                                                            }
-                                                                            
-                                                                                    /* KaTeX rendering tweaks */
-                                                                                            .katex-display {
-                                                                                                        margin: 1em 0;
-                                                                                                                    overflow-x: auto;
-                                                                                                                                overflow-y: hidden;
-                                                                                                                                        }
-                                                                                                                                        
-                                                                                                                                                /* Layout overrides for theory_modern */
-                                                                                                                                                        .theory-content {
-                                                                                                                                                                    padding-top: 60px;
-                                                                                                                                                                            }
-                                                                                                                                                                            
-                                                                                                                                                                                    .section-tag {
-                                                                                                                                                                                                font-size: 0.75rem;
-                                                                                                                                                                                                            font-weight: 800;
-                                                                                                                                                                                                                        color: var(--accent-blue);
-                                                                                                                                                                                                                                    text-transform: uppercase;
-                                                                                                                                                                                                                                                letter-spacing: 0.2em;
-                                                                                                                                                                                                                                                            margin-bottom: 1rem;
-                                                                                                                                                                                                                                                                        display: block;
-                                                                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                        .section-title-modern {
-                                                                                                                                                                                                                                                                                                    font-size: 3rem;
-                                                                                                                                                                                                                                                                                                                margin-bottom: 2rem;
-                                                                                                                                                                                                                                                                                                                            background: linear-gradient(to right, #fff, #64748b);
-                                                                                                                                                                                                                                                                                                                                        background-clip: text;
-                                                                                                                                                                                                                                                                                                                                                    -webkit-background-clip: text;
-                                                                                                                                                                                                                                                                                                                                                                -webkit-text-fill-color: transparent;
-                                                                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                                                                                        
-                                                                                                                                                                                                                                                                                                                                                                                /* Tooltip styles */
-                                                                                                                                                                                                                                                                                                                                                                                        .qg-tooltip {
-                                                                                                                                                                                                                                                                                                                                                                                                    position: relative;
-                                                                                                                                                                                                                                                                                                                                                                                                                cursor: help;
-                                                                                                                                                                                                                                                                                                                                                                                                                            border-bottom: 1px dashed var(--accent-blue);
-                                                                                                                                                                                                                                                                                                                                                                                                                                        color: var(--accent-blue);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    transition: color 0.3s ease;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .qg-tooltip:hover {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: #fff;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .qg-tooltip::after {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            content: attr(data-tooltip);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        position: absolute;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    bottom: 125%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                left: 50%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: translateX(-50%);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        background: rgba(15, 23, 42, 0.98);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    color: #fff;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding: 0.6rem 1rem;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-radius: 8px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        font-size: 0.8rem;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    font-weight: 400;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                line-height: 1.4;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            white-space: pre-wrap;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: max-content;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    max-width: 250px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                opacity: 0;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            visibility: hidden;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 1px solid var(--accent-blue);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            z-index: 1000;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        text-align: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .qg-tooltip:hover::after {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    opacity: 1;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                visibility: visible;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            bottom: 140%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+   html {
+    scroll-behavior: smooth;
+   }
+
+   /* KaTeX rendering tweaks */
+   .katex-display {
+    margin: 1em 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+   }
+
+   /* Layout overrides for theory_modern */
+   .theory-content {
+    padding-top: 60px;
+   }
+
+   .section-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--accent-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+    display: block;
+   }
+
+   .section-title-modern {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    background: linear-gradient(to right, #fff, #64748b);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+   }
+
+   /* Tooltip styles */
+   .qg-tooltip {
+    position: relative;
+    cursor: help;
+    border-bottom: 1px dashed var(--accent-blue);
+    color: var(--accent-blue);
+    transition: color 0.3s ease;
+   }
+
+   .qg-tooltip:hover {
+    color: #fff;
+   }
+
+   .qg-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.98);
+    color: #fff;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    width: max-content;
+    max-width: 250px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--accent-blue);
+    z-index: 1000;
+    text-align: center;
+   }
+
+   .qg-tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+    bottom: 140%;
+   }
   </style>
   <script>
    document.addEventListener("DOMContentLoaded", function () {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                renderMathInElement(document.body, {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                delimiters: [
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    { left: "$$", right: "$$", display: true },
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        { left: "$", right: "$", display: false },
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            { left: "\\(", right: "\\)", display: false },
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                { left: "\\[", right: "\\]", display: true }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            });
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        // Intersection Observer for Nav Highlighting
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    const sections = document.querySelectorAll("section[id]");
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                const navLinks = document.querySelectorAll(".top-nav-fixed a");
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            window.addEventListener("scroll", () => {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            let current = "";
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            sections.forEach(section => {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                const sectionTop = section.offsetTop;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    if (pageYOffset >= sectionTop - 150) {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            current = section.getAttribute("id");
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                });
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                navLinks.forEach(link => {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    link.classList.remove("active");
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        if (link.getAttribute("href").includes(current)) {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                link.classList.add("active");
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    });
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                });
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        });
+    renderMathInElement(document.body, {
+     delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "$", right: "$", display: false },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "\\[", right: "\\]", display: true }
+     ]
+    });
+
+    // Intersection Observer for Nav Highlighting
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll(".top-nav-fixed a");
+
+    window.addEventListener("scroll", () => {
+     let current = "";
+     sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (pageYOffset >= sectionTop - 150) {
+       current = section.getAttribute("id");
+      }
+     });
+
+     navLinks.forEach(link => {
+      link.classList.remove("active");
+      if (link.getAttribute("href").includes(current)) {
+       link.classList.add("active");
+      }
+     });
+    });
+   });
   </script>
   <script src="../js/unity.js">
   </script>
@@ -136,7 +136,7 @@
    <div class="theory-container" style="text-align: center;">
     <a class="back-link" href="../index.html" style="color: var(--text-secondary); text-decoration: none; opacity: 0.6; transition: opacity 0.3s;">
      ←
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Back to Overview
+     Back to Overview
     </a>
     <div style="margin-top: 3rem;">
      <span class="pill pill-blue" style="margin-bottom: 1rem;">
@@ -147,13 +147,6 @@
      </h1>
      <p class="tagline" style="font-size: 1.25rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto;">
       From the discrete grain of local action to the holographic structure of the global cosmos.
-     </p>
-     <!-- plain language intro -->
-     <p style="font-size:1.1rem; max-width:700px; margin:2rem auto 0; color:var(--text-secondary);">
-       <strong>Plain language summary:</strong> Imagine space and time as made of tiny building blocks. 
-       This page explains one simple rule for those blocks and shows how it can lead to familiar
-       ideas like black holes, entropy, and an expanding universe.  You don't need advanced math
-       to follow the main story; the equations are here for those who want to dig deeper.
      </p>
     </div>
    </div>
@@ -265,169 +258,6 @@
      <p style="color: var(--text-secondary); font-size: 0.9rem; max-width: 720px; margin: 0 auto;">The smallest unit in which something can <em>become perceivable</em>. Without $\sigma_P$: no entropy, no time arrow, no causality, no observer. It does not emerge from a new assumption — it is what you get when you take Minkowski and Planck at their word.</p>
     </div>
 
-   </section>
-   <!-- SECTION 2: QUANTUM REALISM -->
-   <section class="theory-container" id="quantum" style="background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.05), transparent);">
-    <span class="section-tag">
-     The Binary Floor
-    </span>
-    <h2 class="section-title-modern">
-     Quantum Realism
-    </h2>
-    <div class="grid-2">
-     <div class="qg-card">
-      <h3 style="color: var(--accent-blue);">
-       The 50/50 Lotto Principle ($S=1$)
-      </h3>
-      <p>
-       In the macroscopic world, winning the lottery is a 1 in 140,000,000 event. On the quantum floor,
-                        there is no such complexity. Every event is binary: it happens, or it does not.
-      </p>
-      <blockquote style="background: rgba(56, 189, 248, 0.05); padding: 1.5rem; border-radius: 8px; font-style: italic; margin: 1rem 0;">
-       "Reality defines itself through negation — the information lies in all the paths that were never
-                        taken."
-      </blockquote>
-     </div>
-     <div class="qg-card">
-      <h3 style="color: var(--accent-purple);">
-       The Myth of Reversibility
-      </h3>
-      <p>
-       Mathematics can be reversed; time cannot. The
-       <em>
-        Zander Frame
-       </em>
-       distinguishes between
-       <strong>
-        Mathematical Symmetry
-       </strong>
-       and
-       <strong>
-        Temporal Integrity
-       </strong>
-       . Being able to
-                        reconstruct a broken cup doesn't delete the history of it breaking.
-      </p>
-     </div>
-    </div>
-    <!-- Lotto Interaction -->
-    <div class="qg-card" style="margin-top: 3rem; text-align: center;">
-     <h4 style="color: var(--accent-blue);">
-      Interactive: The Quantum Lotto
-     </h4>
-     <div style="display: flex; align-items: center; justify-content: center; gap: 4rem; padding: 2rem;">
-      <div id="ball-box-modern" style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--accent-blue); display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: 800; color: var(--accent-blue); transition: all 0.5s;">
-       ?
-      </div>
-      <div style="text-align: left;">
-       <button class="btn-sim" onclick="drawQuantumReality()" style="background: var(--accent-blue); color: #000; font-weight: 700;">
-        Draw Reality
-       </button>
-       <p id="lotto-result-modern" style="margin-top: 1rem; font-family: monospace; color: var(--text-secondary);">
-        State:
-                            Superposition
-       </p>
-      </div>
-     </div>
-     <script>
-      function drawQuantumReality() {
-                        const box = document.getElementById('ball-box-modern');
-                        const res = document.getElementById('lotto-result-modern');
-                        const isWin = Math.random() > 0.5;
-                        box.style.transform = 'scale(1.1) rotate(360deg)';
-                        setTimeout(() => {
-                            box.innerText = isWin ? '1' : '0';
-                            box.style.borderColor = isWin ? 'var(--accent-emerald)' : 'var(--accent-rose)';
-                            box.style.color = isWin ? 'var(--accent-emerald)' : 'var(--accent-rose)';
-                            box.style.boxShadow = `0 0 30px ${isWin ? 'var(--accent-emerald)' : 'var(--accent-rose)'}`;
-                            res.innerText = isWin ? "State: Reality 1 (Win) - Information Recorded." : "State: Reality 0 (Null) - Structure Stabilized.";
-                            box.style.transform = 'scale(1)';
-                        }, 200);
-                    }
-     </script>
-    </div>
-    <div class="grid-2" style="margin-top: 4rem; gap: 2rem;">
-     <div class="qg-card" style="border-left: 4px solid var(--accent-amber);">
-      <h3 style="color: var(--accent-amber);">
-       Einstein’s $\frac{1}{2}$
-      </h3>
-      <p>
-       The mysterious $\frac{1}{2}$ in the Ricci Scalar ($G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2} R
-                        g_{\mu\nu}$) is the fundamental binarity of geometry. At every point, spacetime decides:
-       <em>
-        "To
-                            curve or not to curve?"
-       </em>
-      </p>
-     </div>
-     <div class="qg-card" style="border-left: 4px solid var(--accent-emerald);">
-      <h3 style="color: var(--accent-emerald);">
-       Inverse Scaling
-      </h3>
-      <p>
-       The
-       <strong>
-        Spacetime Quantum
-       </strong>
-       ($\sigma_P \sim 10^{-104}$) and the
-       <strong>
-        Cosmological
-                            Constant
-       </strong>
-       ($\Lambda \sim 10^{-123}$) are perfectly balanced. This
-       <em>
-        autofocus
-                            system
-       </em>
-       of physics ensures that the pixels (Quantum) and the image (Relativity) describe
-                        the same reality.
-      </p>
-     </div>
-    </div>
-    <!-- The Universe's Toolbox -->
-    <div style="margin-top: 6rem;">
-     <h3 style="text-align: center; margin-bottom: 3rem;">
-      The Universe’s Toolbox
-     </h3>
-     <div class="grid-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-      <div class="qg-box" style="border-left: 4px solid var(--accent-rose); padding: 1.5rem; background: rgba(244, 63, 94, 0.05);">
-       <h4 style="color: var(--accent-rose);">
-        $c$ – Causality
-       </h4>
-       <p style="font-size: 0.85rem;">
-        The conversion factor between Space and Time. $c$ says: "1 hour
-                            of time corresponds to 1 billion kilometers of space."
-       </p>
-      </div>
-      <div class="qg-box" style="border-left: 4px solid var(--accent-blue); padding: 1.5rem; background: rgba(56, 189, 248, 0.05);">
-       <h4 style="color: var(--accent-blue);">
-        $\hbar$ – Pixel of Action
-       </h4>
-       <p style="font-size: 0.85rem;">
-        A resolution scale in this model. Processes are represented in quanta of action ($\hbar$);
-                            below that scale, this effective description is not assumed to hold.
-       </p>
-      </div>
-      <div class="qg-box" style="border-left: 4px solid var(--accent-emerald); padding: 1.5rem; background: rgba(16, 185, 129, 0.05);">
-       <h4 style="color: var(--accent-emerald);">
-        $G$ – Geometric Softness
-       </h4>
-       <p style="font-size: 0.85rem;">
-        The inverse of thermal-geometric stiffness. $G$ is the result of
-                            informational pressure ($k_B$) across the grid.
-       </p>
-      </div>
-      <div class="qg-box" style="border-left: 4px solid var(--accent-amber); padding: 1.5rem; background: rgba(251, 191, 36, 0.05);">
-       <h4 style="color: var(--accent-amber);">
-        $k_B$ – Exchange Rate
-       </h4>
-       <p style="font-size: 0.85rem;">
-        The price of a Bit. $k_B$ connects the abstract world of
-                            information with the physical floor of energy.
-       </p>
-      </div>
-     </div>
-    </div>
    </section>
    <section class="theory-container" id="blackholes" style="background: radial-gradient(circle at bottom right, rgba(225, 29, 72, 0.05), transparent);">
     <span class="section-tag">Extreme Geometry</span>
@@ -626,15 +456,6 @@
         </strong>
         and converting it into classical gravitational parameters ($G, M,
                             r_s$).
-        <div class="qg-card" style="grid-column: span 2; text-align: center; font-style: italic; background: rgba(255,255,255,0.02);">
-         <p style="font-size: 1.1rem; color: var(--text-secondary);">
-          Imagine the universe as a **giant carpet of $\sigma_P$ tiles**. Press on it → curvature;
-                                vibrate
-                                it → quantum ticking at $f = mc^2 / h$.
-                                Signals travel at constant $c$. Far away, the fine weave defines $\Lambda_{\text{eff}}$.
-                                Dark energy? Just the geometry of the carpet itself.
-         </p>
-        </div>
        </p>
       </div>
       <div style="margin-top: 4rem; text-align: center;">
@@ -961,14 +782,14 @@
        )
       </h3>
       <p>
-       The central object of this framework is the **Planck two-measure**—the fundamental unit of
+       The central object of this framework is the <strong>Planck two-measure</strong>—the fundamental unit of
                         observable reality.
       </p>
       <div class="formula-block">
        $$\sigma_P = \ell_P \cdot t_P \quad [\text{L}\cdot\text{T}]$$
       </div>
       <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.95rem;">
-       This is the **elementary quantum of spacetime**. All observable distances, durations, and
+       This is the <strong>elementary quantum of spacetime</strong>. All observable distances, durations, and
                         volumes emerge from the packing and flow of these $\sigma_P$ units.
                         Unlike in string theory or loop quantum gravity, $\sigma_P$ defines the fabric of the observable
                         universe itself, rather than being just one of many Planck units.
@@ -989,8 +810,8 @@
        $$\alpha_\sigma = \frac{\sigma_P}{R \cdot t}$$
       </div>
       <p style="margin-top: 0.5rem; opacity: 0.8;">
-       Here, $R$ and $t$ are the scale and age of the universe. This ratio captures the **granular
-                        filling** of spacetime, from the Planck scale to the cosmic horizon.
+       Here, $R$ and $t$ are the scale and age of the universe. This ratio captures the <strong>granular
+filling</strong> of spacetime, from the Planck scale to the cosmic horizon.
       </p>
      </div>
      <div class="qg-card">
@@ -1002,7 +823,7 @@
        )
       </h3>
       <p>
-       From the fine-structure $\alpha_\sigma$ follows a **dynamic cosmological term**:
+       From the fine-structure $\alpha_\sigma$ follows a <strong>dynamic cosmological term</strong>:
       </p>
       <div class="formula-block">
        $$\Lambda_{\text{eff}} \sim \frac{\alpha_\sigma}{\ell_P^2} \sim \frac{1}{c \, R \, t}$$
@@ -1018,8 +839,8 @@
        Covariant Windowing
       </h3>
       <p>
-       A covariant averaging over $\sigma_P$ cells replaces point singularities with a **finite causal
-                        domain**. Spacetime fluctuations are always bounded:
+       A covariant averaging over $\sigma_P$ cells replaces point singularities with a <strong>finite causal
+domain</strong>. Spacetime fluctuations are always bounded:
       </p>
       <div class="formula-block">
        $$\rho_{\text{vac}}^{(\sigma)} \sim \alpha_\sigma \frac{\hbar c}{\ell_P^4}$$
@@ -1075,7 +896,7 @@
      </div>
      <div class="qg-card" style="grid-column: span 2; text-align: center; font-style: italic; background: rgba(255,255,255,0.02);">
       <p style="font-size: 1.1rem; color: var(--text-secondary);">
-       Imagine the universe as a **giant carpet of $\sigma_P$ tiles**. Press on it → curvature; vibrate
+       Imagine the universe as a <strong>giant carpet of $\sigma_P$ tiles</strong>. Press on it → curvature; vibrate
                         it → quantum ticking at $f = mc^2 / h$.
                         Signals travel at constant $c$. Far away, the fine weave defines $\Lambda_{\text{eff}}$.
                         Dark energy? Just the geometry of the carpet itself.
@@ -1083,7 +904,86 @@
      </div>
     </div>
    </section>
-   <!-- SECTION 7: THE JWST CHALLENGE -->
+   <!-- SECTION 7: THE VACUUM CATASTROPHE — AN INSTRUMENT ERROR -->
+   <section class="theory-container" id="vacuum-catastrophe" style="background: linear-gradient(to bottom, rgba(139, 92, 246, 0.03), rgba(56, 189, 248, 0.03));">
+    <span class="section-tag">
+     Dimensional Instrument Error
+    </span>
+    <h2 class="section-title-modern">
+     The Vacuum Catastrophe: Wrong Instrument, Not Wrong Theory
+    </h2>
+    <div class="grid-2">
+     <div class="qg-card" style="grid-column: span 2; border-left: 4px solid var(--accent-purple);">
+      <h3 style="color: var(--accent-purple);">
+       A Discrepancy of 10<sup>122</sup> — and Why It Isn't One
+      </h3>
+      <p>
+       Quantum field theory predicts a vacuum energy density roughly 10<sup>122</sup> times larger than
+       the cosmological constant $\Lambda$ we observe. This is routinely called the worst prediction in
+       physics. But the size of the discrepancy is a clue, not a failure: it matches
+       $N_\sigma = R_U \cdot t_U / \sigma_P \approx 10^{122}$ — the count of minimal spacetime quanta
+       $\sigma_P = \ell_P t_P$ that fit inside the observable universe.
+      </p>
+     </div>
+     <div class="qg-card">
+      <h3 style="color: var(--accent-blue);">
+       The Planck Scale Floor
+      </h3>
+      <p>
+       $\sigma_P = \ell_P \cdot t_P = \hbar G / c^4$ carries the units $[\text{L} \cdot \text{T}]$.
+       It is the irreducible quantum of spacetime: divide it further and you lose either
+       its spatial or its temporal character. It is a genuine Planck scale — the last
+       rung of the ladder before spacetime loses its meaning.
+      </p>
+      <p style="margin-top: 0.8rem; font-size: 0.9rem; color: var(--text-secondary);">
+       $\ell_P^2$ is <em>not</em> such a scale. $\sqrt{\ell_P^2} = \ell_P$ — a length.
+       The defining property survives the division. $\ell_P^2$ is an area, not a floor.
+      </p>
+     </div>
+     <div class="qg-card">
+      <h3 style="color: var(--accent-emerald);">
+       The Dimension of $\Lambda$
+      </h3>
+      <p>
+       $\Lambda$ has dimension $[1/\text{L}^2]$. Quantum field theory supplies it via
+       $1/\ell_P^2$ — a purely spatial, two-dimensional quantity. But the cosmological
+       constant is a property of <em>spacetime</em>, not of space alone. Its natural
+       denominator is
+      </p>
+      <p style="text-align: center; font-size: 1.1rem; margin: 1rem 0; font-family: var(--font-mono);">
+       $\dfrac{1}{\sigma_P \cdot c} = \dfrac{1}{\ell_P^2}$
+      </p>
+      <p style="font-size: 0.9rem; color: var(--text-secondary);">
+       Numerically identical — but $\sigma_P \cdot c$ factors as $[\text{L}\cdot\text{T}] \cdot [\text{L}/\text{T}] = [\text{L}^2]$.
+       The time dimension was never absent from the universe. It was absent from the instrument.
+      </p>
+     </div>
+     <div class="qg-card" style="grid-column: span 2; background: rgba(139, 92, 246, 0.05); border-left: 4px solid var(--accent-purple);">
+      <h3 style="color: var(--accent-purple);">
+       Wrong Instrument
+      </h3>
+      <p>
+       A measuring instrument extracts a numerical value from a property of a thing.
+       Which instrument you choose depends on the nature of the thing.
+       Age and mass both accept a number — but measuring age with a scale and mass with
+       a clock produces a number, not an answer.
+      </p>
+      <p style="margin-top: 0.8rem;">
+       QFT measured $\Lambda$ — a property of spacetime structure — using $\ell_P^2$,
+       a purely spatial area. The result is not wrong <em>in magnitude</em>; it is wrong
+       <em>in kind</em>. The factor $10^{122}$ is not a prediction error. It is the ratio
+       between the spatial instrument and the spacetime property it was used to measure:
+       $N_\sigma$, the total count of $\sigma_P$ cells in the observable universe.
+      </p>
+      <p style="margin-top: 0.8rem; font-style: italic; color: var(--text-secondary);">
+       The vacuum catastrophe is not a contradiction between quantum theory and gravity.
+       It is a <strong>Messfehler</strong> — an instrument error: a structural property of
+       spacetime, measured with a purely spatial tool.
+      </p>
+     </div>
+    </div>
+   </section>
+   <!-- SECTION 8: THE JWST CHALLENGE -->
    <section class="theory-container" id="jwst" style="background: linear-gradient(to bottom, rgba(56, 189, 248, 0.02), rgba(244, 63, 94, 0.02));">
     <span class="section-tag">
      Observation vs. Dogma
@@ -1215,34 +1115,34 @@
     </div>
     <script>
      const range = document.getElementById('redshiftRange');
-                const lcdm = document.getElementById('lcdmStatus');
-                const infoFlow = document.getElementById('infoFlowStatus');
-                const expl = document.getElementById('scaleExplanation');
+     const lcdm = document.getElementById('lcdmStatus');
+     const infoFlow = document.getElementById('infoFlowStatus');
+     const expl = document.getElementById('scaleExplanation');
 
-                range.addEventListener('input', (e) => {
-                    const z = parseFloat(e.target.value);
-                    if (z < 1) {
-                        lcdm.innerText = "Normal";
-                        infoFlow.innerText = "Mature";
-                        expl.innerText = "Local universe structures match expectations.";
-                    } else if (z < 5) {
-                        lcdm.innerText = "Expected";
-                        infoFlow.innerText = "Saturated";
-                        expl.innerText = "LCDM expects young stars; galaxies are already coupled.";
-                    } else if (z < 10) {
-                        lcdm.innerText = "Tension";
-                        infoFlow.innerText = "Stable";
-                        expl.innerText = "LCDM struggles with galaxy sizes at $z=" + z + "$.";
-                    } else if (z < 15) {
-                        lcdm.innerText = "Impossible!";
-                        infoFlow.innerText = "Coupled";
-                        expl.innerText = "LCDM requires extreme parameter tuning; the geometry suggests older structures.";
-                    } else {
-                        lcdm.innerText = "Model Break";
-                        infoFlow.innerText = "Unity";
-                        expl.innerText = "At $z=" + z + "$, LCDM predictions collapse. Observations remain consistent.";
-                    }
-                });
+     range.addEventListener('input', (e) => {
+      const z = parseFloat(e.target.value);
+      if (z < 1) {
+       lcdm.innerText = "Normal";
+       infoFlow.innerText = "Mature";
+       expl.innerText = "Local universe structures match expectations.";
+      } else if (z < 5) {
+       lcdm.innerText = "Expected";
+       infoFlow.innerText = "Saturated";
+       expl.innerText = "LCDM expects young stars; galaxies are already coupled.";
+      } else if (z < 10) {
+       lcdm.innerText = "Tension";
+       infoFlow.innerText = "Stable";
+       expl.innerText = "LCDM struggles with galaxy sizes at $z=" + z + "$.";
+      } else if (z < 15) {
+       lcdm.innerText = "Impossible!";
+       infoFlow.innerText = "Coupled";
+       expl.innerText = "LCDM requires extreme parameter tuning; the geometry suggests older structures.";
+      } else {
+       lcdm.innerText = "Model Break";
+       infoFlow.innerText = "Unity";
+       expl.innerText = "At $z=" + z + "$, LCDM predictions collapse. Observations remain consistent.";
+      }
+     });
     </script>
     <div style="margin-top: 4rem; text-align: center;">
      <blockquote style="font-size: 1.5rem; font-family: 'Outfit', sans-serif; color: #fff;">
@@ -1498,102 +1398,7 @@
       </a>
      </div>
     </div>
-    <!-- SECTION 7: RESEARCH LIBRARY -->
-    <section class="theory-container" id="library" style="background: rgba(15, 23, 42, 0.2);">
-     <span class="section-tag">
-      Archives
-     </span>
-     <h2 class="section-title-modern">
-      Research Library
-     </h2>
-     <div class="grid-2">
-      <div class="qg-card">
-       <h3 style="color: var(--accent-primary);">
-        The Anthony Thesis
-       </h3>
-       <p>
-        Exploring the correlation between star density and conscious observers across the
-                                galactic
-                                manifold.
-       </p>
-       <a class="btn-sim" href="../assets/papers/Anthony_Thesis.tex" style="text-decoration: none; display: inline-block; margin-top: 1rem;">
-        View LaTeX
-       </a>
-      </div>
-      <div class="qg-card">
-       <h3 style="color: var(--accent-secondary);">
-        Universal Resonance Model
-       </h3>
-       <p>
-        The core framework defining the geometric coupling between quantum fields and spacetime.
-       </p>
-       <a class="btn-sim" href="../assets/papers/Universal_Resonance_Model.tex" style="text-decoration: none; display: inline-block; margin-top: 1rem;">
-        View LaTeX
-       </a>
-      </div>
-      <div class="qg-card">
-       <h3 style="color: var(--accent-blue);">
-        Dimensional Foundations
-       </h3>
-       <p>
-        Revisiting the structural link between Quantum Mechanics and General Relativity via
-                                $\sigma_P$.
-       </p>
-       <a class="btn-sim" href="../assets/papers/Zander_2025_Dimensional_Foundations.tex" style="text-decoration: none; display: inline-block; margin-top: 1rem;">
-        View LaTeX
-       </a>
-      </div>
-      <div class="qg-card">
-       <h3 style="color: var(--accent-rose);">
-        A Requiem for LCDM
-       </h3>
-       <p>
-        Critical analysis of the failures of the standard cosmological model and the transition
-                                to
-                                $\sigma_P$.
-       </p>
-       <a class="btn-sim" href="../assets/papers/A%20Requiem%20for%20LCDM.tex" style="text-decoration: none; display: inline-block; margin-top: 1rem;">
-        View LaTeX
-       </a>
-      </div>
-      <div class="qg-card">
-       <h3 style="color: var(--accent-amber);">
-        Formula Collection
-       </h3>
-       <p>
-        A comprehensive compilation of all fundamental URM equations and constants.
-       </p>
-       <a class="btn-sim" href="../assets/papers/Formula_Collection_URM.tex" style="text-decoration: none; display: inline-block; margin-top: 1rem;">
-        View LaTeX
-       </a>
-      </div>
-      <div class="qg-card">
-       <h3 style="color: var(--accent-emerald);">
-        Hierarchical BH Mergers
-       </h3>
-       <p>
-        Geometric necessity of discretised spacetime and the prediction of sequential black hole
-                                collisions.
-       </p>
-       <a class="btn-sim" href="../assets/papers/QSTF_Hierarchical_Mergers.tex" style="text-decoration: none; display: inline-block; margin-top: 1rem;">
-        View LaTeX
-       </a>
-      </div>
-     </div>
-     <div class="qg-card" style="margin-top: 2rem; border-color: rgba(255,255,255,0.1);">
-      <h3 style="color: var(--accent-rose);">
-       The Price of Ignorance
-      </h3>
-      <p>
-       Analysis of traditional Quantum Gravity research costs (~$190Bn) vs the $\sigma_P$ model.
-      </p>
-      <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #94a3b8; margin-top: 1rem;">
-       "Humanity spent roughly 170 billion dollars proving that the Planck cubes exist. The
-                            correct answer is a one-line dimensional observation of a frequency that costs less than
-                            a pizza."
-      </div>
-     </div>
-    </section>
+   </section>
     <div class="qg-box" style="margin-bottom: 2rem; border-left: 4px solid var(--accent-rose); background: rgba(244, 63, 94, 0.05);">
      <h3 style="color: var(--accent-rose);">
       The Master Action ($S$)
@@ -1637,56 +1442,6 @@
      <h2 class="section-title-modern">
       Formula Collection
      </h2>
-     <div class="qg-box" style="margin-bottom: 2rem; border-left: 4px solid var(--accent-purple); background: rgba(122, 46, 204, 0.05);">
-      <h3 style="color: var(--accent-purple);">
-       Outlook: The Riemann Resonance
-      </h3>
-      <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">
-       The deep structure of the vacuum is not random; it follows the distribution of the
-       <strong>
-        Riemann Zeta zeros
-       </strong>
-       . The spectral statistics of the $\sigma_P$ cells match
-                            the Gaussian Unitary Ensemble (GUE):
-      </p>
-      <div class="grid-2" style="gap: 2rem;">
-       <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px;">
-        <h4 style="color: var(--accent-purple); font-size: 0.85rem;">
-         1. Convergence to the
-                                    Critical Line
-        </h4>
-        <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
-         Measurements within the spacetime grid naturally converge toward the $Re(s) = 1/2$
-                                    state—the point of minimal entropy production and perfect holographic balance.
-        </p>
-       </div>
-       <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px;">
-        <h4 style="color: var(--accent-blue); font-size: 0.85rem;">
-         2. Prime Number Information
-                                    Flow
-        </h4>
-        <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
-         The distribution of prime numbers is a direct mapping of how information couples
-                                    across the infinite hierarchy of $\sigma_P$ pulses ($n \ln n$).
-        </p>
-       </div>
-       <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; grid-column: span 2;">
-        <h4 style="color: var(--accent-rose); font-size: 0.85rem;">
-         3. Heuristic Evidence for RH
-        </h4>
-        <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
-         Our GUE-simulation suggests that the "stiffness" of the vacuum (the Polya-Hilbert
-                                    operator)
-                                    requires all non-trivial resonances to lie on the critical line for stability and
-                                    minimal entropy production. In this framework, the Riemann Hypothesis is the
-         <strong>
-          Geometric Stability Condition
-         </strong>
-         of the observable universe.
-        </p>
-       </div>
-      </div>
-     </div>
      <div class="qg-box" style="margin-bottom: 2rem; border-left: 4px solid var(--accent-blue);">
       <h3 style="color: var(--accent-blue);">
        Unified Field Equation
@@ -1790,20 +1545,7 @@
        </p>
       </div>
      </div>
-     <div class="qg-box" style="margin-top: 2rem; border: 1px dashed var(--accent-amber);">
-      <h4 style="color: var(--accent-amber); text-align: center;">
-       Master Wave Command
-      </h4>
-      <div class="math-content" style="font-size: 1.1rem; padding: 1.5rem 0;">
-       $$ \Box \phi + \gamma \partial^\mu \phi + \alpha \phi^3 + \beta \phi^5 = qE_{\text{Res}}
-                            + \lambda \langle \hat{Q} \rangle $$
-      </div>
-      <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary); opacity: 0.8;">
-       Where $\Box = g^{\mu\nu} \partial_\mu \partial_\nu$ is the discrete D'Alembertian operator.
-      </p>
-     </div>
     </section>
-   </section>
   </main>
   <script src="../js/main.js">
   </script>
