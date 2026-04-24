@@ -430,118 +430,155 @@
     </div>
    </section>
    <section class="theory-container" id="blackholes" style="background: radial-gradient(circle at bottom right, rgba(225, 29, 72, 0.05), transparent);">
-    <span class="section-tag">
-     Extreme Geometry
-    </span>
-    <h2 class="section-title-modern">
-     Black Holes: The Kinematic Motor
-    </h2>
+    <span class="section-tag">Extreme Geometry</span>
+    <h2 class="section-title-modern">Black Holes</h2>
+
+    <!-- Animated black hole visual opener -->
+    <div style="position: relative; margin-bottom: 1.5rem; border-radius: 16px; overflow: hidden; background: #000; border: 1px solid rgba(255,255,255,0.07);">
+     <canvas id="bhOpenerCanvas" style="width: 100%; display: block;"></canvas>
+    </div>
+    <script>
+    (function () {
+      var cv = document.getElementById("bhOpenerCanvas");
+      if (!cv) return;
+      var ctx = cv.getContext("2d");
+      var W, H, cx, cy, R;
+
+      function resize() {
+        W = cv.offsetWidth || 800;
+        H = Math.min(Math.round(W * 0.48), 400);
+        cv.width = W; cv.height = H;
+        cx = W / 2; cy = H / 2;
+        R = Math.min(W, H) * 0.17;
+      }
+
+      var stars = [];
+      for (var i = 0; i < 200; i++) {
+        stars.push({ x: Math.random(), y: Math.random(), r: 0.4 + Math.random() * 1.1, b: 0.2 + Math.random() * 0.8 });
+      }
+
+      var parts = [], pTimer = 0, frame = 0;
+
+      function spawn() {
+        var a = Math.random() * Math.PI * 2;
+        var sr = R * 1.22 + Math.random() * R * 0.18;
+        var sp = 0.4 + Math.random() * 0.5;
+        parts.push({
+          x: cx + Math.cos(a) * sr, y: cy + Math.sin(a) * sr * 0.4,
+          vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * 0.4,
+          life: 1, decay: 0.003 + Math.random() * 0.004,
+          sz: 1.5 + Math.random() * 1.5,
+          col: Math.random() > 0.5 ? "160,210,255" : "255,200,160"
+        });
+      }
+
+      function draw() {
+        if (cv.offsetWidth && cv.offsetWidth !== W) resize();
+        ctx.fillStyle = "#00000a"; ctx.fillRect(0, 0, W, H);
+
+        for (var i = 0; i < stars.length; i++) {
+          var s = stars[i];
+          var tw = 0.6 + 0.4 * Math.sin(frame * 0.018 + s.x * 80);
+          ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, 6.283);
+          ctx.fillStyle = "rgba(255,255,255," + (s.b * tw) + ")"; ctx.fill();
+        }
+
+        ctx.save(); ctx.translate(cx, cy); ctx.scale(1, 0.38);
+        var dg = ctx.createRadialGradient(0,0,R*1.1,0,0,R*3.0);
+        dg.addColorStop(0,   "rgba(255,220,90,0.8)");
+        dg.addColorStop(0.2, "rgba(255,115,30,0.55)");
+        dg.addColorStop(0.5, "rgba(165,40,12,0.27)");
+        dg.addColorStop(0.8, "rgba(60,5,20,0.08)");
+        dg.addColorStop(1,   "rgba(0,0,0,0)");
+        ctx.beginPath();
+        ctx.arc(0,0,R*3.0,Math.PI,0,false);
+        ctx.arc(0,0,R*1.1,0,Math.PI,true);
+        ctx.closePath(); ctx.fillStyle = dg; ctx.fill(); ctx.restore();
+
+        var og = ctx.createRadialGradient(cx,cy,R*1.1,cx,cy,R*2.2);
+        og.addColorStop(0,"rgba(255,180,30,0.25)");
+        og.addColorStop(0.5,"rgba(220,80,10,0.07)");
+        og.addColorStop(1,"rgba(0,0,0,0)");
+        ctx.beginPath(); ctx.arc(cx,cy,R*2.2,0,6.283);
+        ctx.fillStyle=og; ctx.fill();
+
+        ctx.beginPath(); ctx.arc(cx,cy,R,0,6.283);
+        ctx.fillStyle="#000000"; ctx.fill();
+
+        ctx.beginPath(); ctx.arc(cx,cy,R*1.17,0,6.283);
+        ctx.strokeStyle="rgba(255,200,55,0.9)";
+        ctx.lineWidth=R*0.07;
+        ctx.shadowColor="rgba(255,155,20,0.65)";
+        ctx.shadowBlur=R*0.5;
+        ctx.stroke(); ctx.shadowBlur=0;
+
+        ctx.save(); ctx.translate(cx,cy); ctx.scale(1,0.38);
+        var df = ctx.createRadialGradient(0,0,R*1.1,0,0,R*3.0);
+        df.addColorStop(0,   "rgba(255,220,90,0.92)");
+        df.addColorStop(0.2, "rgba(255,115,30,0.65)");
+        df.addColorStop(0.5, "rgba(165,40,12,0.32)");
+        df.addColorStop(0.8, "rgba(60,5,20,0.1)");
+        df.addColorStop(1,   "rgba(0,0,0,0)");
+        ctx.beginPath();
+        ctx.arc(0,0,R*3.0,0,Math.PI,false);
+        ctx.arc(0,0,R*1.1,Math.PI,0,true);
+        ctx.closePath(); ctx.fillStyle=df; ctx.fill(); ctx.restore();
+
+        pTimer++;
+        if (pTimer > 55) { spawn(); pTimer = 0; }
+        for (var j = parts.length - 1; j >= 0; j--) {
+          var p = parts[j];
+          p.x+=p.vx; p.y+=p.vy; p.life-=p.decay;
+          if (p.life <= 0) { parts.splice(j,1); continue; }
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.sz * p.life, 0, 6.283);
+          ctx.fillStyle = "rgba("+p.col+","+(p.life*0.8)+")";
+          ctx.shadowColor = "rgba("+p.col+",0.35)";
+          ctx.shadowBlur = 5; ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+        frame++;
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      window.addEventListener("resize", function() { resize(); });
+      draw();
+    })();
+    </script>
+
+    <!-- Three reframes -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+     <div class="qg-card" style="border-left: 4px solid var(--accent-emerald);">
+      <h4 style="color: var(--accent-emerald); margin-bottom: 0.75rem;">Not a vacuum cleaner.</h4>
+      <p style="color: var(--text-secondary); font-size: 0.9rem;">Gravity drops with distance exactly as it does for any object of the same mass. If the Sun became a black hole right now, Earth's orbit would not change. Nothing is sucked in &#8212; things fall in only if they get close enough, just as with any mass.</p>
+     </div>
+     <div class="qg-card" style="border-left: 4px solid var(--accent-amber);">
+      <h4 style="color: var(--accent-amber); margin-bottom: 0.75rem;">From outside: the horizon freezes.</h4>
+      <p style="color: var(--text-secondary); font-size: 0.9rem;">From a safe distance, you never see anything cross the event horizon. The infalling image redshifts and freezes at the boundary. The drama you imagine happens where no signal can reach you &#8212; by definition.</p>
+     </div>
+     <div class="qg-card" style="border-left: 4px solid var(--accent-blue);">
+      <h4 style="color: var(--accent-blue); margin-bottom: 0.75rem;">No end &#8212; a transformation.</h4>
+      <p style="color: var(--text-secondary); font-size: 0.9rem;">Over ~10<sup>67</sup> years a stellar black hole evaporates completely via Hawking radiation. Information is not destroyed &#8212; it is returned, encoded in the outgoing radiation. Not annihilation. A slow, complete return.</p>
+     </div>
+    </div>
+
     <div class="grid-2">
-     <div class="qg-card" style="grid-column: span 2; border-left: 4px solid var(--accent-rose);">
-      <h3 style="color: var(--accent-rose);">
-       The Challenge: Infinite Density
-      </h3>
-      <p>
-       Classical General Relativity (GR) predicts that matter collapses into a
-       <strong>
-        singularity
-       </strong>
-       —a point of infinite density. Infinites do not exist in nature; they
-                        are a signal that our mathematical models have reached their limit. The $\sigma_P$ framework
-                        resolves this by enforcing the
-       <strong>
-        Planck Force Limit
-       </strong>
-       ($c^4/G$).
-      </p>
-     </div>
      <div class="qg-card">
-      <h3 style="color: var(--accent-blue);">
-       The $\Sigma_P$ Resolution
-      </h3>
-      <p>
-       Spacetime is quantized. You cannot pack more action into a region than the $\sigma_P$ lattice
-                        allows. The classical singularity is replaced by a high-frequency
-       <strong>
-        Action Core
-       </strong>
-       :
-      </p>
+      <h3 style="color: var(--accent-blue);">The $\sigma_P$ Resolution</h3>
+      <p>Spacetime is quantized. You cannot pack more action into a region than the $\sigma_P$ lattice allows. The classical singularity is replaced by a high-frequency <strong>Action Core</strong>:</p>
       <div class="formula-block" style="border-color: var(--accent-blue);">
-       $$\text{Max Action Density} = \frac{1}{\sigma_P} = \frac{c^4}{\hbar G} \approx 10^{78} \,
-                        \text{(SI units)}$$
+       $$\frac{1}{\sigma_P} = \frac{c^4}{\hbar G} \approx 10^{78} \, \text{(SI units)}$$
       </div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 1rem;">$L = 0$ divides its own substrate away. Below $\sigma_P$ there is no $[L \cdot T]$ &#8212; therefore no spacetime. The singularity is not a place. It is the equation running out of floor.</p>
      </div>
      <div class="qg-card">
-      <h3 style="color: var(--accent-emerald);">
-       The Unitary Transformer
-      </h3>
-      <p>
-       A black hole functions like a motor, transforming quantum action into structured gravitational
-                        fields. This preserves
-       <strong>
-        Unitarity
-       </strong>
-       : information is not lost; it is
-       <strong>
-        transformed
-       </strong>
-       from discrete high-frequency spin into classical geometry.
-      </p>
+      <h3 style="color: var(--accent-rose);">No free $L$ left.</h3>
+      <p style="color: var(--text-secondary);">Mass occupies the spatial component of spacetime. Enough mass: no free $L$ remains. $c$ needs $L$ to propagate. Without it, no signal reaches an observer.</p>
+      <p style="margin-top: 1rem; color: var(--text-secondary);">Information is not annihilated. The transmission channel is absent. The apartment is not burning. You just cannot get in.</p>
+      <p style="margin-top: 1rem; font-style: italic; color: var(--accent-rose); font-size: 0.9rem;">The information paradox is not a paradox. Information is unreachable &#8212; not lost.</p>
      </div>
     </div>
-    <!-- The Kinematic Analogy Table -->
-    <div class="qg-card" style="margin-top: 3rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);">
-     <h4 style="color: var(--accent-rose); margin-bottom: 2rem; text-align: center;">
-      The Kinematic Motor
-                    Analogy
-     </h4>
-     <div style="overflow-x: auto;">
-      <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
-       <thead>
-        <tr style="border-bottom: 2px solid rgba(255,255,255,0.1); text-align: left;">
-         <th style="padding: 1rem; color: var(--accent-blue);">
-          Motor Component
-         </th>
-         <th style="padding: 1rem; color: var(--accent-rose);">
-          Black Hole Analogy
-         </th>
-         <th style="padding: 1rem; color: var(--text-secondary);">
-          Function
-         </th>
-        </tr>
-       </thead>
-       <tbody>
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-         <td style="padding: 1rem; font-weight: bold;">
-          Stator / Field Coil
-         </td>
-         <td style="padding: 1rem;">
-          Pure Action Core
-         </td>
-         <td style="padding: 1rem; color: var(--text-secondary);">
-          Generates "torque"
-                                    (spin/action) without mass load. High-frequency spin stores energy as ordered
-                                    angular momentum.
-         </td>
-        </tr>
-        <tr>
-         <td style="padding: 1rem; font-weight: bold;">
-          Rotor with Load
-         </td>
-         <td style="padding: 1rem;">
-          Accreted Mass
-         </td>
-         <td style="padding: 1rem; color: var(--text-secondary);">
-          Coupling to mass "loads" the
-                                    core, braking the spin and converting quantum action into classical gravity, heat,
-                                    and radiation.
-         </td>
-        </tr>
-       </tbody>
-      </table>
-     </div>
-    </div>
+
     <!-- Anatomy of the Black Hole / Simulation -->
     <div class="qg-card" style="margin-top: 3rem; border-color: rgba(56, 189, 248, 0.2);">
      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
