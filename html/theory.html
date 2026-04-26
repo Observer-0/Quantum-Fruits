@@ -151,6 +151,18 @@
     </div>
    </div>
   </header>
+  <nav class="top-nav-fixed">
+   <a href="#intro">Foundation</a>
+   <a href="#blackholes">Black Holes</a>
+   <a href="#galaxies">Galaxies</a>
+   <a href="#cosmology">Cosmology</a>
+   <a href="#vacuum-catastrophe">Vacuum</a>
+   <a href="#jwst">JWST</a>
+   <a href="#light">Causality</a>
+   <a href="#entropy">Entropy</a>
+   <a href="#cosmology-breathing">Hubble</a>
+   <a href="#formulas">Formulas</a>
+  </nav>
   <main class="theory-content">
    <section class="theory-container" id="intro" style="padding-top: 2rem;">
     <span class="section-tag">
@@ -163,8 +175,33 @@
     <!-- Disclaimer -->
     <div class="qg-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); margin-bottom: 3rem;">
      <p style="font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; max-width: 860px;">
-      This framework does not propose a new theory of physics. It is a dimensional argument — an attempt to ask what Minkowski and Planck already gave us, taken seriously to their logical end. The goal is not to replace existing models. The question is simpler: what is the natural structure of spacetime if we do nothing more than multiply the natural scales Planck already defined?
+      This is not a new theory of physics. To put that in perspective: we have explored less than 20% of our own ocean floor. We have never dug below the Martian surface. We have sent exactly five probes past the edge of the solar system — the furthest is roughly 25 light-hours away. The nearest star is 4.2 light-years. The observable universe is 46 billion light-years across. Perhaps a touch of humility is appropriate before making strong claims about the fundamental structure of spacetime. This is a dimensional argument: an attempt to ask what Minkowski and Planck already gave us, taken to their logical end. The question is simpler than it sounds — what is the natural structure of spacetime if you do nothing more than multiply the natural scales Planck already defined?
      </p>
+    </div>
+
+    <!-- Cause and Effect -->
+    <div class="qg-card" style="background: linear-gradient(135deg, rgba(244,63,94,0.04), rgba(139,92,246,0.04)); border: 1px solid rgba(255,255,255,0.08); margin-bottom: 3rem;">
+     <h3 style="margin-bottom: 0.5rem;">Einstein gave us the cause. Planck gave us the effect.</h3>
+     <p style="color: var(--text-secondary); font-size: 0.9rem; font-style: italic; margin-bottom: 1.5rem;">In every sense of the word.</p>
+
+     <p>Einstein's field equations describe how the geometry of spacetime responds to energy and mass — and how that geometry in turn dictates how everything moves. Gravity is not a force. It is the shape of the arena. One of the most precisely verified theories in the history of physics.</p>
+
+     <p style="margin-top: 1rem;">Planck gave us $\hbar$ — the <em>Wirkungsquantum</em>. The quantum of action. The smallest unit in which something can happen. In German, <em>Wirkung</em> means both <strong>effect</strong> and <strong>action</strong> — and Planck's constant is both: the smallest discrete effect the universe permits.</p>
+
+     <div style="margin: 1.5rem 0; padding: 1.25rem; background: rgba(0,0,0,0.25); border-radius: 8px; font-family: monospace; font-size: 0.9rem; line-height: 2.4;">
+      <span style="color: var(--accent-purple);">Einstein</span> &nbsp;→ geometry of spacetime &nbsp;→ the <strong>Ursache</strong> (cause)<br/>
+      <span style="color: var(--accent-blue);">Planck</span> &nbsp;&nbsp;→ quantum of action &nbsp;&nbsp;&nbsp;&nbsp;→ the <strong>Wirkung</strong> (effect)
+     </div>
+
+     <p style="color: var(--text-secondary);">Most approaches to quantum gravity take GR's continuous spacetime as the pre-given foundation and attempt to build quantum mechanics on top of it. This works — until it doesn't. Infinities appear. The vacuum energy comes out $10^{122}$ times too large. The background refuses to be quantized cleanly.</p>
+
+     <p style="margin-top: 1rem; color: var(--text-secondary);">This framework reverses the order of questions: what is the natural structure of the arena, derived from Planck's original scales alone — <em>before</em> assuming GR's geometry? The answer to that question is $\sigma_P = \ell_P \cdot t_P$. No new constants. No new postulates. Just the product of the two scales Planck already gave us.</p>
+
+     <p style="margin-top: 1rem; color: var(--text-secondary);">GR is then not the foundation. It is the result — the large-scale limit that emerges from averaging over the discrete $\sigma_P$ structure. Einstein stays correct. The order of questions changes.</p>
+
+     <blockquote style="margin-top: 1.5rem; padding: 1rem 1.5rem; background: rgba(244,63,94,0.04); border-radius: 8px; font-style: italic; color: var(--text-secondary); font-size: 0.95rem; border-left: 3px solid var(--accent-rose);">
+      We don't install GR's foundation as a given background — only to discover later that it causes problems.
+     </blockquote>
     </div>
 
     <!-- Minkowski + Einstein -->
@@ -392,33 +429,110 @@
      </div>
     </div>
 
-    <div class="grid-2">
-     <div class="qg-card">
-      <h3 style="color: var(--accent-blue);">The $\sigma_P$ Resolution</h3>
-      <p>Spacetime is quantized. You cannot pack more action into a region than the $\sigma_P$ lattice allows. The classical singularity is replaced by a high-frequency <strong>Action Core</strong>:</p>
-      <div class="formula-block" style="border-color: var(--accent-blue);">
-       $$\frac{1}{\sigma_P} = \frac{c^4}{\hbar G} \approx 10^{78} \, \text{(SI units)}$$
+    <!-- σ_P and black holes: cause, effect, export -->
+    <div class="qg-card" style="background: linear-gradient(135deg, rgba(244,63,94,0.05), rgba(0,0,0,0.5)); border: 1px solid rgba(244,63,94,0.15); margin-bottom: 2rem;">
+     <h3 style="color: var(--accent-rose); margin-bottom: 0.5rem;">Cause and effect — maximally bound</h3>
+     <p style="color: var(--text-secondary); font-style: italic; font-size: 0.9rem; margin-bottom: 2rem;">$c$ still works inside. The export doesn't.</p>
+
+     <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">In free spacetime, $c$ performs the separation: $\sigma_P \rightarrow \ell_P^2 + t_P^2$. The spatial footprint ($\ell_P^2$) travels outward and reaches an observer. Cause stays at the source. Effect arrives. Causality completes.</p>
+
+     <p style="color: var(--text-secondary); margin-bottom: 2rem;">Inside a black hole, $c$ still operates. Locally, cause and effect still separate. Physics does not break. What breaks is the <strong>export</strong> — the outward journey of $\ell_P^2$. The curvature is so extreme that no free $L$ remains for $c$ to propagate through. The spatial footprints are produced — and immediately pulled back.</p>
+
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-emerald);">
+       <h5 style="color: var(--accent-emerald); margin-bottom: 0.5rem;">Outside the horizon</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">$c$ separates $\sigma_P$, and the $\ell_P^2$ footprint escapes. You receive information. Causality completes between source and observer.</p>
       </div>
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 1rem;">$L = 0$ divides its own substrate away. Below $\sigma_P$ there is no $[L \cdot T]$ &#8212; therefore no spacetime. The singularity is not a place. It is the equation running out of floor.</p>
+      <div style="padding: 1.25rem; background: rgba(244,63,94,0.06); border-radius: 8px; border-left: 3px solid var(--accent-rose);">
+       <h5 style="color: var(--accent-rose); margin-bottom: 0.5rem;">At the horizon</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">The escape velocity equals $c$. The $\ell_P^2$ footprint is produced but cannot leave. The export ability of $c$ hits exactly zero. This surface is the event horizon.</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-purple);">
+       <h5 style="color: var(--accent-purple); margin-bottom: 0.5rem;">Inside the horizon</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">$c$ separates $\sigma_P$ locally. Cause and effect are distinct — for anyone inside. But no $\ell_P^2$ reaches the outside. The separations happen in silence.</p>
+      </div>
      </div>
-     <div class="qg-card">
-      <h3 style="color: var(--accent-rose);">No free $L$ left.</h3>
-      <p style="color: var(--text-secondary);">Mass occupies the spatial component of spacetime. Enough mass: no free $L$ remains. $c$ needs $L$ to propagate. Without it, no signal reaches an observer.</p>
-      <p style="margin-top: 1rem; color: var(--text-secondary);">Information is not annihilated. The transmission channel is absent. The apartment is not burning. You just cannot get in.</p>
-      <p style="margin-top: 1rem; font-style: italic; color: var(--accent-rose); font-size: 0.9rem;">The information paradox is not a paradox. Information is unreachable &#8212; not lost.</p>
+
+     <div style="padding: 1.25rem; background: rgba(0,0,0,0.25); border-radius: 8px; font-family: monospace; font-size: 0.88rem; line-height: 2.4; margin-bottom: 2rem;">
+      <span style="color: var(--accent-emerald);">Outside</span> &nbsp;→ $\sigma_P \xrightarrow{c} \ell_P^2$ escapes &nbsp;→ observer receives effect<br/>
+      <span style="color: var(--accent-rose);">Horizon</span> &nbsp;→ $\sigma_P \xrightarrow{c} \ell_P^2$ stalls &nbsp;&nbsp;&nbsp;→ export = 0<br/>
+      <span style="color: var(--accent-purple);">Inside</span> &nbsp;&nbsp;→ $\sigma_P \xrightarrow{c} \ell_P^2$ trapped &nbsp;&nbsp;→ local causality only
      </div>
+
+     <p style="color: var(--text-secondary);">From outside, you never see anything cross the horizon — because the last $\ell_P^2$ you could receive was emitted just before the threshold. The infalling object appears frozen, redshifted, eternal. Not because it stopped. Because its spatial footprints stopped reaching you.</p>
+    </div>
+
+    <!-- Singularity -->
+    <div class="grid-2" style="margin-bottom: 2rem;">
+     <div class="qg-card" style="border-left: 4px solid var(--accent-purple);">
+      <h3 style="color: var(--accent-purple);">The singularity is not a place.</h3>
+      <p style="color: var(--text-secondary);">It is where $\sigma_P$ itself runs out. Below $\sigma_P = \ell_P \cdot t_P$, there is no $[\text{L} \cdot \text{T}]$ — therefore no spacetime. The classical singularity is the equation demanding sub-Planck resolution from a fabric that has none to give.</p>
+      <div class="formula-block" style="border-color: var(--accent-purple); margin: 1rem 0;">
+       $$\frac{1}{\sigma_P} = \frac{c^4}{\hbar G} \approx 10^{78}$$
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary);">This is the maximum action density — the last rung before the ladder ends. Not a point of infinite density. The floor of what spacetime can be.</p>
+     </div>
+     <div class="qg-card" style="border-left: 4px solid var(--accent-amber);">
+      <h3 style="color: var(--accent-amber);">The information paradox is an export problem.</h3>
+      <p style="color: var(--text-secondary);">Information is not destroyed inside a black hole. Every $\sigma_P$ cell that fell in still carries its full state — encoded in the $t_P^2$ component that $c$ separated locally. The information exists. It simply cannot be exported.</p>
+      <p style="color: var(--text-secondary); margin-top: 1rem;">The apartment is not on fire. The door is locked — from the geometry of spacetime itself.</p>
+      <p style="font-style: italic; color: var(--accent-amber); font-size: 0.9rem; margin-top: 1rem;">Hawking radiation is $c$ slowly forcing the export — one $\sigma_P$ cell at a time, at the only place it still can: the edge.</p>
+     </div>
+    </div>
+
+    <!-- Hawking as slow export -->
+    <!-- Quantum fluctuation = σ_P/c -->
+    <div class="qg-card" style="margin-bottom: 2rem; background: linear-gradient(135deg, rgba(56,189,248,0.04), rgba(139,92,246,0.04)); border: 1px solid rgba(255,255,255,0.08);">
+     <h3 style="color: var(--accent-purple); margin-bottom: 0.5rem;">Quantum fluctuation = $\sigma_P / c$</h3>
+     <p style="font-style: italic; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">The horizon is the geometry that makes the temporary permanent.</p>
+
+     <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">The Heisenberg uncertainty relation $\Delta E \cdot \Delta t \geq \hbar/2$ says you can borrow energy from the vacuum — if you pay it back fast enough. In $\sigma_P$ terms: a quantum fluctuation is a $\sigma_P$ cell where the <strong>temporal component</strong> briefly takes the lead. $\sigma_P/c = t_P^2$ is the borrowed time. The duration of the loan. The fluctuation exists for exactly as long as its temporal component allows.</p>
+
+     <p style="color: var(--text-secondary); margin-bottom: 2rem;">Its counterpart — the <strong>spatial component</strong> $\sigma_P \cdot c = \ell_P^2$ — is what could carry information outward. The spatial footprint. But in free space, there is nowhere for it to go that its temporal partner cannot follow. They recombine. The fluctuation vanishes. Nothing is radiated.</p>
+
+     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-blue);">
+       <h5 style="color: var(--accent-blue); margin-bottom: 0.75rem;">Free vacuum</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">A $\sigma_P$ cell flickers into existence. $\sigma_P/c$ borrows time. $\sigma_P \cdot c$ has no escape route. Both partners find each other and annihilate. The fluctuation is virtual — real for a Planck moment, then gone.</p>
+       <div style="margin-top: 1rem; font-family: monospace; font-size: 0.82rem; color: rgba(255,255,255,0.4); text-align: center;">
+        $\sigma_P/c \;+\; \sigma_P \cdot c \;\rightarrow\; \sigma_P \;\rightarrow\; 0$
+       </div>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(244,63,94,0.06); border-radius: 8px; border-left: 3px solid var(--accent-rose);">
+       <h5 style="color: var(--accent-rose); margin-bottom: 0.75rem;">At the event horizon</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">The same fluctuation — but the geometry splits it. $\sigma_P/c$ has somewhere to go: the time-dominated interior. $\sigma_P \cdot c$ has somewhere to go: free space outside. They cannot recombine. The split is permanent.</p>
+       <div style="margin-top: 1rem; font-family: monospace; font-size: 0.82rem; text-align: center; line-height: 2;">
+        <span style="color: var(--accent-purple);">$\sigma_P/c$</span> $\rightarrow$ inward &nbsp;(temporal, feeds core)<br/>
+        <span style="color: var(--accent-emerald);">$\sigma_P \cdot c$</span> $\rightarrow$ outward (spatial, escapes)
+       </div>
+      </div>
+     </div>
+
+     <div style="padding: 1.25rem; background: rgba(0,0,0,0.25); border-radius: 8px; margin-bottom: 1.5rem;">
+      <p style="font-size: 0.9rem; color: var(--text-secondary);">Inside a black hole, the temporal component dominates completely — no free $L$, maximum $\omega$. When a fluctuation forms at the horizon, $\sigma_P/c$ naturally falls inward: it has a time-dominated home. $\sigma_P \cdot c$ — the spatial footprint — is left with no partner to recombine with. It must escape. It becomes a real particle. Hawking radiation.</p>
+     </div>
+
+     <blockquote style="padding: 1rem 1.5rem; background: rgba(139,92,246,0.05); border-left: 4px solid var(--accent-purple); border-radius: 0 8px 8px 0; font-style: italic; color: var(--text-secondary);">
+      Hawking radiation is not mysterious. It is $\sigma_P$, split by geometry — the temporal half absorbed by a region that runs on time, the spatial half released into a region that runs on space.
+     </blockquote>
+    </div>
+
+    <div class="qg-card" style="background: rgba(244,63,94,0.04); border: 1px solid rgba(244,63,94,0.15);">
+     <h3 style="color: var(--accent-rose); margin-bottom: 1rem;">Hawking radiation — slow-motion $\sigma_P$ export</h3>
+     <p style="color: var(--text-secondary);">At the event horizon, quantum fluctuations create $\sigma_P$ cell pairs right at the boundary — the last place where $c$ can still export. One partner escapes as radiation ($\ell_P^2$ footprint, outward). The other falls inward ($t_P^2$ component, deeper).</p>
+     <p style="color: var(--text-secondary); margin-top: 1rem;">The escaping radiation looks thermal at first — because you receive $\ell_P^2$ footprints without their $t_P^2$ context. Spatial imprints without their causal history. Random-seeming noise. But the correlations between successive footprints encode everything. Over $\sim 10^{67}$ years, the full story of what fell in is returned — structured, complete, in the outgoing radiation.</p>
+     <p style="color: var(--text-secondary); margin-top: 1rem;">This is the Page curve. Not a coincidence of quantum information theory. The natural consequence of $c$ spending $10^{67}$ years exporting $\sigma_P$ cells from the only place it can still reach.</p>
+     <blockquote style="margin-top: 1.5rem; padding: 1rem 1.5rem; background: rgba(0,0,0,0.2); border-left: 3px solid var(--accent-rose); border-radius: 0 8px 8px 0; font-style: italic; color: var(--text-secondary);">
+      A black hole does not destroy information. It holds cause and effect together — in a region where $c$ cannot separate them for you. Until it can. Slowly. At the edge.
+     </blockquote>
     </div>
 
     <!-- Anatomy of the Black Hole / Simulation -->
     <div class="qg-card" style="margin-top: 3rem; border-color: rgba(56, 189, 248, 0.2);">
-     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+     <div style="margin-bottom: 2rem;">
       <h4 style="color: var(--accent-blue);">
        Visualization: Action Core vs. Mass Load
       </h4>
-      <a class="action-btn" href="evaporation_lab.html" style="background: var(--accent-rose); font-size: 0.7rem; padding: 0.4rem 0.8rem;">
-       Open
-                        Evaporation Lab →
-      </a>
      </div>
      <div class="bh-container">
       <canvas id="bhCanvas" style="width: 100%; min-height: 400px; border-radius: 12px; background: #000;">
@@ -702,13 +816,78 @@
      <p style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.3); font-style: italic;">
       Heuristic — not a proof. But a physical picture for a mechanism mathematics has so far left open.
      </p>
-
-     <div style="text-align: center; margin-top: 2rem;">
-      <a class="action-btn" href="bh_cinema_lab.html" style="background: var(--accent-rose);">Open BH Cinema Lab →</a>
-     </div>
     </div>
-   </div>
 
+    <!-- Time inside a black hole -->
+    <div class="qg-card" style="margin-top: 2rem; background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(0,0,0,0.5)); border: 1px solid rgba(139,92,246,0.2);">
+     <h3 style="color: var(--accent-purple); margin-bottom: 0.5rem;">Does time stop inside a black hole?</h3>
+     <p style="font-style: italic; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">It depends entirely on who is asking.</p>
+
+     <div class="grid-2" style="gap: 2rem; margin-bottom: 2rem;">
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-rose);">
+       <h5 style="color: var(--accent-rose); margin-bottom: 0.75rem;">From outside: effectively yes.</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">Gravitational time dilation becomes infinite at the event horizon. No $\ell_P^2$ footprint escapes. The infalling observer appears to freeze, redshift, and fade. You receive the last signal before the threshold — and then nothing. From outside, the interior is silent and eternal.</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(139,92,246,0.06); border-radius: 8px; border-left: 3px solid var(--accent-purple);">
+       <h5 style="color: var(--accent-purple); margin-bottom: 0.75rem;">From inside: the opposite.</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">The Pure Action Core spins at the Planck limit — $\omega_\text{max} = 1/t_P$. This is the fastest possible clock in the universe. The densest temporal process $\sigma_P$ allows. Time does not stop inside. It runs at maximum rate.</p>
+       <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(0,0,0,0.2); border-radius: 6px; font-family: monospace; font-size: 0.85rem; color: var(--accent-purple);">
+        $E_\text{core} = \hbar \cdot \omega_\text{max} = \hbar / t_P$
+       </div>
+      </div>
+     </div>
+
+     <div style="padding: 1.25rem; background: rgba(0,0,0,0.25); border-radius: 8px; margin-bottom: 2rem;">
+      <p style="font-size: 0.9rem; color: var(--text-secondary); text-align: center; margin-bottom: 1.25rem;">Back-of-napkin picture:</p>
+      <div style="font-family: monospace; font-size: 0.83rem; line-height: 2.3; color: var(--text-secondary);">
+       <span style="color: var(--accent-emerald);">Free space</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ &nbsp;$\sigma_P$ ticks normally &nbsp;&nbsp;— $c$ exports freely<br/>
+       <span style="color: var(--accent-amber);">Accretion disk</span> &nbsp;&nbsp;&nbsp;→ &nbsp;$\sigma_P$ ticks fast &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— $c$ exports under strain &nbsp;&nbsp;<span style="opacity:0.5;">← observable</span><br/>
+       <span style="color: var(--accent-rose);">Event horizon</span> &nbsp;&nbsp;&nbsp;&nbsp;→ &nbsp;$\sigma_P$ ticks faster &nbsp;&nbsp;&nbsp;&nbsp;— export = 0 exactly here &nbsp;&nbsp;<span style="opacity:0.5;">← boundary</span><br/>
+       <span style="color: var(--accent-purple);">Core (inside)</span> &nbsp;&nbsp;&nbsp;&nbsp;→ &nbsp;$\omega_\text{max} = 1/t_P$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— fastest clock anywhere &nbsp;&nbsp;&nbsp;<span style="opacity:0.5;">← invisible</span><br/>
+       <span style="color: rgba(255,255,255,0.3);">Singularity</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ &nbsp;$\sigma_P$ runs out &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— no floor below this &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.5;">← end</span>
+      </div>
+     </div>
+
+     <blockquote style="padding: 1rem 1.5rem; background: rgba(139,92,246,0.05); border-left: 4px solid var(--accent-purple); border-radius: 0 8px 8px 0; font-style: italic; color: var(--text-secondary);">
+      The fastest clock in the universe is hidden inside the object that looks most frozen from outside. The export is blocked — not the clock.
+     </blockquote>
+    </div>
+
+    <!-- Page Time — possibilities -->
+    <div class="qg-card" style="margin-top: 2rem; background: rgba(251,191,36,0.03); border: 1px solid rgba(251,191,36,0.15);">
+     <h3 style="color: var(--accent-amber); margin-bottom: 0.5rem;">The Page Time — a turning point without a mechanism</h3>
+     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">Mathematics tells us <em>when</em> the curve must turn. It does not tell us <em>why</em>. The Page time is the moment when the entropy of the outgoing radiation equals the remaining entropy of the black hole — roughly the halfway point of evaporation. After this, the radiation stops adding entropy and starts returning it.</p>
+
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-top: 3px solid var(--accent-blue);">
+       <h5 style="color: var(--accent-blue); margin-bottom: 0.75rem;">Standard interpretation</h5>
+       <p style="font-size: 0.83rem; color: var(--text-secondary);">Half the information has been radiated. The entanglement between interior and radiation is maximal. Subsequent Hawking quanta must carry correlations — otherwise unitarity breaks.</p>
+       <p style="font-size: 0.78rem; margin-top: 0.75rem; color: rgba(255,255,255,0.3); font-style: italic;">When: $S_\text{rad} = S_\text{BH}$</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(251,191,36,0.05); border-radius: 8px; border-top: 3px solid var(--accent-amber);">
+       <h5 style="color: var(--accent-amber); margin-bottom: 0.75rem;">Kinematic Transformer</h5>
+       <p style="font-size: 0.83rem; color: var(--text-secondary);">The turning point is where $\hbar\omega$ equals the gravitational braking force $GM/r_s^2$. The core transitions from quantum-dominated to mass-dominated. The export character changes from thermal to structured.</p>
+       <p style="font-size: 0.78rem; margin-top: 0.75rem; color: rgba(255,255,255,0.3); font-style: italic;">When: $\hbar\omega = F_\text{brake}$</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-top: 3px solid var(--accent-emerald);">
+       <h5 style="color: var(--accent-emerald); margin-bottom: 0.75rem;">$\sigma_P$ export parity</h5>
+       <p style="font-size: 0.83rem; color: var(--text-secondary);">Half of all $\sigma_P$ cells have been exported. The inside and outside carry equal amounts of information. The subsequent exports necessarily encode correlations with all previous ones.</p>
+       <p style="font-size: 0.78rem; margin-top: 0.75rem; color: rgba(255,255,255,0.3); font-style: italic;">When: $N_\text{exported} = N_\sigma / 2$</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-top: 3px solid var(--accent-rose);">
+       <h5 style="color: var(--accent-rose); margin-bottom: 0.75rem;">Scrambling horizon</h5>
+       <p style="font-size: 0.83rem; color: var(--text-secondary);">The black hole has had time to fully scramble all infallen information across its horizon. After scrambling is complete, each outgoing quantum is entangled with the full record — not just the local state.</p>
+       <p style="font-size: 0.78rem; margin-top: 0.75rem; color: rgba(255,255,255,0.3); font-style: italic;">When: $t \sim r_s \log r_s / \ell_P$</p>
+      </div>
+     </div>
+
+     <blockquote style="padding: 1rem 1.5rem; background: rgba(251,191,36,0.04); border-left: 4px solid var(--accent-amber); border-radius: 0 8px 8px 0; font-style: italic; color: var(--text-secondary);">
+      All four agree on the shape of the curve. None can fully explain the physical mechanism at the turning point. The Page time is one of the cleanest open questions in theoretical physics — the curve demands an answer the equations haven't given yet.
+      <span style="display: block; margin-top: 0.75rem; font-size: 0.8rem; opacity: 0.5; font-style: normal;">Nobody knows yet. But the curve insists.</span>
+     </blockquote>
+    </div>
+
+   </div>
    </section>
    <!-- SECTION 4: GALACTIC DYNAMICS -->
    <section class="theory-container" id="galaxies" style="background: radial-gradient(circle at top left, rgba(16, 185, 129, 0.05), transparent);">
@@ -716,7 +895,7 @@
      Large Scale Structure
     </span>
     <h2 class="section-title-modern">
-     Galaxies &amp; The Dark Matter Myth
+     Galaxies &amp; The Dark Matter Problem
     </h2>
     <div class="grid-2">
      <div class="qg-card">
@@ -748,14 +927,10 @@
      </div>
     </div>
     <div class="qg-card" style="margin-top: 3rem; background: rgba(16, 185, 129, 0.05);">
-     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+     <div style="margin-bottom: 1rem;">
       <h4 style="color: var(--accent-emerald);">
        The Result: No Dark Matter Needed
       </h4>
-      <a class="action-btn" href="galaxy_lab.html" style="background: var(--accent-emerald); color: #000; font-size: 0.7rem; padding: 0.4rem 0.8rem;">
-       Open
-                        Galaxy Lab →
-      </a>
      </div>
      <p>
       Einstein's equations remain untouched. By simply recognizing that matter cannot be
@@ -1061,10 +1236,9 @@ domain</strong>. Spacetime fluctuations are always bounded:
        </div>
        <div style="margin-bottom: 0.8rem; border-left: 2px solid var(--accent-amber); padding-left: 0.8rem;">
         <strong>
-         "Dusty Gaslighting":
+         "The Dust Defense":
         </strong>
-        Dismissing massive galaxies as "dust-obscured," even
-                            when JWST can see through it.
+        Attributing anomalously massive early galaxies to dust obscuration — even when JWST was specifically built to see through it.
        </div>
        <div style="border-left: 2px solid var(--accent-amber); padding-left: 0.8rem;">
         <strong>
@@ -1094,7 +1268,7 @@ domain</strong>. Spacetime fluctuations are always bounded:
                                 Status
         </span>
         <div id="lcdmStatus" style="font-size: 1.2rem; font-weight: bold; margin-top: 0.5rem; color: var(--accent-rose);">
-         "Impossible"
+         Implausible
         </div>
        </div>
        <div style="background: rgba(56, 189, 248, 0.1); padding: 1.5rem; border-radius: 8px;">
@@ -1132,15 +1306,15 @@ domain</strong>. Spacetime fluctuations are always bounded:
       } else if (z < 10) {
        lcdm.innerText = "Tension";
        infoFlow.innerText = "Stable";
-       expl.innerText = "LCDM struggles with galaxy sizes at $z=" + z + "$.";
+       expl.innerText = "At z = " + z.toFixed(1) + ", LCDM struggles to explain the observed galaxy sizes. The structures look older than the model allows.";
       } else if (z < 15) {
-       lcdm.innerText = "Impossible!";
+       lcdm.innerText = "Implausible";
        infoFlow.innerText = "Coupled";
-       expl.innerText = "LCDM requires extreme parameter tuning; the geometry suggests older structures.";
+       expl.innerText = "At z = " + z.toFixed(1) + ", LCDM requires extreme fine-tuning to match observations. The geometry suggests these structures are older than expected.";
       } else {
-       lcdm.innerText = "Model Break";
+       lcdm.innerText = "Extrapolation";
        infoFlow.innerText = "Unity";
-       expl.innerText = "At $z=" + z + "$, LCDM predictions collapse. Observations remain consistent.";
+       expl.innerText = "At z = " + z.toFixed(1) + ", the model reaches its limits. Whether this is a calibration issue or something more fundamental — nobody knows yet.";
       }
      });
     </script>
@@ -1233,20 +1407,117 @@ domain</strong>. Spacetime fluctuations are always bounded:
       </blockquote>
      </div>
     </div>
-    <div class="qg-card" style="margin-top: 3rem; background: rgba(56, 189, 248, 0.05); border-left: 4px solid var(--accent-blue);">
-     <h4 style="color: var(--accent-blue);">
-      The Kinetic Reality
-     </h4>
-     <p style="font-size: 0.95rem;">
-      Within this framework, mass and radiation are modeled via coupling structure with fixed constants.
-      The proposal is complementary to standard Higgs phenomenology and tested against consistency constraints through a
-      <strong>
-       coupling
-      </strong>
-      that dictates how much information fits into one fundamental unit. The
-                    speed of light
-                    is treated here as a consistency condition for a discrete-event description.
-     </p>
+    <!-- σ_P · c: information conservation mechanism -->
+    <div class="qg-card" style="margin-top: 3rem; background: linear-gradient(135deg, rgba(56,189,248,0.06), rgba(0,0,0,0.5)); border: 1px solid rgba(56,189,248,0.2);">
+     <h3 style="color: var(--accent-blue); margin-bottom: 0.5rem;">$\sigma_P \cdot c$ — Why Information Arrives Undistorted</h3>
+     <p style="color: var(--text-secondary); margin-bottom: 2rem;">Every signal that reaches us from the universe has traveled at $c$. Not approximately. Exactly. That is not a coincidence — it is the mechanism.</p>
+
+     <div class="grid-2" style="gap: 2rem; margin-bottom: 2rem;">
+      <div style="padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-purple);">
+       <h4 style="color: var(--accent-purple); margin-bottom: 1rem;">Massive carrier — $v &lt; c$</h4>
+       <p style="font-size: 0.9rem; color: var(--text-secondary);">A massive particle moves through σ_P cells fully — spatial <em>and</em> temporal component. Its proper time accumulates. It has an internal clock, a phase, a Compton frequency. It lives inside the time dimension of each cell it passes through.</p>
+       <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.75rem;">Because it lives in time, it can interact, decohere, be disturbed. Information carried this way degrades.</p>
+      </div>
+      <div style="padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-blue);">
+       <h4 style="color: var(--accent-blue); margin-bottom: 1rem;">Photon — $v = c$</h4>
+       <p style="font-size: 0.9rem; color: var(--text-secondary);">A photon carries only the spatial footprint of each cell it crosses. Its proper time is zero. From its own reference frame, emission and absorption are the same moment.</p>
+       <div class="formula-block" style="font-size: 0.95rem; margin: 1rem 0; border-color: var(--accent-blue);">
+        $$\sigma_P \cdot c = \ell_P \cdot t_P \cdot \frac{\ell_P}{t_P} = \ell_P^2$$
+       </div>
+       <p style="font-size: 0.9rem; color: var(--text-secondary);">The $t_P$ cancels exactly. No temporal coupling. No distortion.</p>
+      </div>
+     </div>
+
+     <div style="padding: 1.5rem; background: rgba(56,189,248,0.04); border-radius: 8px; border: 1px solid rgba(56,189,248,0.12); margin-bottom: 2rem;">
+      <h4 style="color: var(--accent-blue); margin-bottom: 1rem;">The mechanism</h4>
+      <p style="color: var(--text-secondary); font-size: 0.95rem;">$c = \ell_P / t_P$ is the structural ratio of spacetime itself. Traveling at $c$ means the temporal extent of every σ_P cell is cancelled precisely by the traversal rate. The photon never "settles" into the time dimension of the fabric it crosses — it skims its spatial surface only.</p>
+      <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.75rem;">This is why a photon from 4.2 billion light-years away arrives carrying an exact, unaltered record of its source. Not because space is a gentle medium. Because $c$ is the one ratio that eliminates temporal coupling from $\sigma_P$ entirely.</p>
+     </div>
+
+     <div style="padding: 1.5rem; background: rgba(139,92,246,0.05); border-radius: 8px; border-left: 3px solid var(--accent-purple);">
+      <h4 style="color: var(--accent-purple); margin-bottom: 0.75rem;">And one step further: holography</h4>
+      <p style="font-size: 0.9rem; color: var(--text-secondary);">The Bekenstein bound states that the maximum information in any region is proportional to its <em>surface area</em> in Planck units — not its volume. The surface is $[\text{L}^2]$. And $\sigma_P \cdot c = \ell_P^2$ is exactly one Planck area.</p>
+      <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.75rem;">All fundamental information transport happens at $c$, on null surfaces — 2D, not 3D. The holographic principle may not be an independent postulate. It may be a direct consequence of $c$ projecting the time dimension out of $\sigma_P$, leaving a two-dimensional footprint as the only channel through which information can travel undistorted.</p>
+     </div>
+    </div>
+
+    <!-- Ausblick: Λ and the numbers -->
+    <div class="qg-card" style="margin-top: 2rem; background: linear-gradient(135deg, rgba(251,191,36,0.04), rgba(139,92,246,0.04)); border: 1px solid rgba(255,255,255,0.07);">
+     <span class="section-tag" style="color: var(--accent-amber);">Open Question</span>
+     <h3 style="color: var(--accent-amber); margin-bottom: 1rem;">Why do the numbers match?</h3>
+     <p style="color: var(--text-secondary); margin-bottom: 2rem;">Follow this logic one step further. If $\sigma_P$ is the natural unit of spacetime and $\ell_P^2 = \sigma_P \cdot c$ is its spatial footprint — what does that imply for the cosmological constant?</p>
+
+     <div class="grid-2" style="gap: 2rem; margin-bottom: 2rem;">
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-rose);">
+       <h5 style="color: var(--accent-rose); margin-bottom: 0.75rem;">QFT predicts — locally, correctly:</h5>
+       <div class="formula-block" style="font-size: 0.95rem; border-color: var(--accent-rose);">
+        $$\Lambda_{\text{cell}} = \frac{3}{\ell_P^2}$$
+       </div>
+       <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.75rem;">At the Planck scale, the vacuum curvature is $\sim 1/\ell_P^2$. This is not wrong. It is the correct local answer.</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-emerald);">
+       <h5 style="color: var(--accent-emerald); margin-bottom: 0.75rem;">Observation — globally:</h5>
+       <div class="formula-block" style="font-size: 0.95rem; border-color: var(--accent-emerald);">
+        $$\Lambda_{\text{obs}} \approx 10^{-52}\,\text{m}^{-2}$$
+       </div>
+       <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.75rem;">The measured cosmological constant. $10^{122}$ times smaller than the QFT prediction. The "worst prediction in physics."</p>
+      </div>
+     </div>
+
+     <div style="padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 2rem;">
+      <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.25rem;">The scale factor between them is $N_\sigma$ — the total count of $\sigma_P$ cells in the observable universe. Not a fit parameter. A measured quantity.</p>
+      $$N_\sigma = \frac{R \cdot t}{\sigma_P} \approx 10^{122}, \qquad \alpha_\sigma = \frac{\sigma_P}{R \cdot t} \approx 4.60 \times 10^{-123}$$
+      $$\Lambda_{\text{macro}} = \frac{\Lambda_{\text{cell}}}{N_\sigma} = \frac{\alpha_\sigma}{\ell_P^2} \approx 10^{-52}\,\text{m}^{-2}$$
+      <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 1.25rem;">No free parameters. No fine-tuning. The local prediction is correct. The cosmological observation is correct. The missing piece was the scale factor $N_\sigma$ — the number of spacetime quanta between the Planck floor and the observable universe.</p>
+     </div>
+
+     <blockquote style="padding: 1.25rem 1.5rem; background: rgba(251,191,36,0.04); border-left: 4px solid var(--accent-amber); border-radius: 0 8px 8px 0; font-style: italic; color: var(--text-secondary);">
+      Either this is the most spectacular numerical coincidence in the history of physics — or the instrument was wrong all along, and $\sigma_P$ was always the right denominator.
+      <span style="display: block; margin-top: 0.75rem; font-size: 0.8rem; opacity: 0.5; font-style: normal;">Nobody knows yet. But the numbers fit.</span>
+     </blockquote>
+    </div>
+
+    <!-- σ_P: cause and effect / wavefunction collapse -->
+    <div class="qg-card" style="margin-top: 2rem; background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(56,189,248,0.03)); border: 1px solid rgba(139,92,246,0.2);">
+     <h3 style="color: var(--accent-purple); margin-bottom: 0.5rem;">$\sigma_P$ connects. $c$ separates.</h3>
+     <p style="color: var(--text-secondary); font-style: italic; font-size: 0.9rem; margin-bottom: 2rem;">And the separation is causality.</p>
+
+     <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">In $\sigma_P = \ell_P \cdot t_P$, space and time are one. An event and its consequence share the same fabric — cause and effect not yet unfolded. The spacetime quantum is whole.</p>
+
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-purple);">
+       <h5 style="color: var(--accent-purple); margin-bottom: 0.5rem;">Before $c$ arrives</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">$\sigma_P$ is intact. The event happened — but has not reached you. Cause and effect are still connected. The outcome is real but not yet separated.</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-blue);">
+       <h5 style="color: var(--accent-blue); margin-bottom: 0.5rem;">$c$ arrives — the separation</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">$\sigma_P$ splits. $c$ does not merely carry information — it performs the separation of spacetime into its two projections. This act is irreversible.</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-emerald);">
+       <h5 style="color: var(--accent-emerald); margin-bottom: 0.5rem;">After $c$ arrives</h5>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">You hold $\ell_P^2$ — the spatial footprint, the frozen effect. The source keeps $t_P^2$ — the temporal context, the cause. Definitively separated.</p>
+      </div>
+     </div>
+
+     <div style="padding: 1.25rem; background: rgba(0,0,0,0.25); border-radius: 8px; font-family: monospace; font-size: 0.88rem; line-height: 2.4; margin-bottom: 2rem;">
+      <span style="color: var(--accent-purple);">$\sigma_P$</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ unified — cause and effect still one<br/>
+      <span style="color: var(--accent-blue);">$\sigma_P \cdot c$</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ $\ell_P^2$ &nbsp;&nbsp;— effect arrives at observer<br/>
+      <span style="color: var(--accent-amber);">$\sigma_P \,/\, c$</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ $t_P^2$ &nbsp;&nbsp;— cause remains at source
+     </div>
+
+     <p style="color: var(--text-secondary); margin-bottom: 2rem;">Without $\sigma_P$ there is no minimum grain of causal connection — causality has no floor. Without $c$ there is no separation — cause and effect never become distinct. Without the separation, there is no observer, no received information, nothing perceivable at all.</p>
+
+     <!-- Wavefunction collapse connection -->
+     <div style="padding: 1.5rem; background: rgba(139,92,246,0.06); border-radius: 8px; border: 1px solid rgba(139,92,246,0.2);">
+      <h4 style="color: var(--accent-purple); margin-bottom: 1rem;">A picture for the measurement problem</h4>
+      <p style="font-size: 0.9rem; color: var(--text-secondary);">In quantum mechanics, a system exists in superposition until measured — at which point the wavefunction "collapses" to a definite state. Why? The standard answer involves either accepting it as a postulate, invoking parallel universes, or appealing to decoherence. None of these feel like a mechanism.</p>
+      <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 1rem;">In the $\sigma_P$ picture, superposition is simply the unresolved state — $\sigma_P$ intact, spatial and temporal components not yet projected. The system has not been reached by $c$. It is real, but undivided.</p>
+      <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 1rem;">Measurement is $c$ performing the separation. Not an abstract update of knowledge. A physical act: $\sigma_P \rightarrow \ell_P^2 + t_P^2$. The spatial projection arrives at the detector. The temporal context remains at the source. The outcome is definite — because the separation is irreversible.</p>
+      <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 1rem;">No observer needed. No consciousness. No parallel branches. Just $c$ doing what $c$ always does — splitting the unified spacetime quantum into cause and effect.</p>
+      <blockquote style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: rgba(0,0,0,0.2); border-left: 3px solid var(--accent-purple); border-radius: 0 8px 8px 0; font-style: italic; color: var(--text-secondary); font-size: 0.9rem;">
+       This is not a proof. It is a physical picture — and one that requires no quantum voodoo.
+      </blockquote>
+     </div>
     </div>
    </section>
    <!-- SECTION 6: ENTROPY & TIME -->
@@ -1274,6 +1545,98 @@ domain</strong>. Spacetime fluctuations are always bounded:
       </div>
      </div>
      <p style="margin-top: 1.5rem; font-style: italic; color: var(--text-secondary); text-align: center;">Always: entropy <em>of what?</em></p>
+    </div>
+
+    <!-- Energy always thermalizes -->
+    <div class="qg-card" style="margin-bottom: 2rem; background: linear-gradient(135deg, rgba(251,191,36,0.05), rgba(244,63,94,0.03)); border: 1px solid rgba(251,191,36,0.15);">
+     <h3 style="color: var(--accent-amber); margin-bottom: 0.5rem;">Energy always thermalizes.</h3>
+     <p style="font-style: italic; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">That is not a coincidence. That is what entropy is.</p>
+
+     <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">These are not three different equations. They are one thing — <strong>energy</strong> — described from three angles:</p>
+
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-top: 3px solid var(--accent-purple);">
+       <h5 style="color: var(--accent-purple); margin-bottom: 0.5rem;">Einstein</h5>
+       <div style="font-family: monospace; font-size: 1rem; text-align: center; margin: 0.75rem 0; color: var(--accent-purple);">$E = mc^2$</div>
+       <p style="font-size: 0.82rem; color: var(--text-secondary);">Mass and energy are the same thing. Mass is frozen energy. Energy is mobile mass.</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-top: 3px solid var(--accent-blue);">
+       <h5 style="color: var(--accent-blue); margin-bottom: 0.5rem;">Planck</h5>
+       <div style="font-family: monospace; font-size: 1rem; text-align: center; margin: 0.75rem 0; color: var(--accent-blue);">$E = hf$</div>
+       <p style="font-size: 0.82rem; color: var(--text-secondary);">Energy comes in discrete quanta. Each quantum oscillates at frequency $f$. The quantum of action $h$ is the exchange rate.</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-top: 3px solid var(--accent-amber);">
+       <h5 style="color: var(--accent-amber); margin-bottom: 0.5rem;">Boltzmann</h5>
+       <div style="font-family: monospace; font-size: 1rem; text-align: center; margin: 0.75rem 0; color: var(--accent-amber);">$E = k_B T$</div>
+       <p style="font-size: 0.82rem; color: var(--text-secondary);">Energy distributes across degrees of freedom. Temperature is the measure of that distribution. Entropy is the count.</p>
+      </div>
+     </div>
+
+     <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Energy does not care how it is described. It seeks maximum entropy — always. A hot coffee, a nuclear explosion, a black hole: all thermalize. The question is never <em>whether</em>. Only <em>how fast</em> and <em>through which channel</em>.</p>
+
+     <div style="padding: 1.25rem; background: rgba(0,0,0,0.25); border-radius: 8px; font-family: monospace; font-size: 0.88rem; text-align: center; line-height: 2.2; margin-bottom: 1.5rem;">
+      $mc^2 \;=\; hf \;=\; k_B T$<br/>
+      <span style="font-size: 0.75rem; opacity: 0.5; font-family: sans-serif;">mass-energy = quantum energy = thermal energy — same thing</span>
+     </div>
+
+     <p style="color: var(--text-secondary); font-size: 0.9rem;">This is why Hawking radiation is thermal — not because of a special mechanism, but because it cannot be anything else. A black hole has mass. Mass is energy. Energy thermalizes. The only available channel at the horizon is the $\sigma_P$ fluctuation split. So it radiates at temperature $T_H = \hbar c^3 / (8\pi G M k_B)$. Of course it does.</p>
+    </div>
+
+    <!-- k_B: the quantum of perceivability -->
+    <div class="qg-card" style="margin-bottom: 2rem; border: 1px solid rgba(251,191,36,0.2); background: rgba(0,0,0,0.2);">
+     <h3 style="color: var(--accent-amber); margin-bottom: 0.5rem;">$k_B$ — the quantum of perceivability</h3>
+     <p style="color: var(--text-secondary); font-style: italic; font-size: 0.9rem; margin-bottom: 2rem;">Assembled from the same four Planck scales as $\sigma_P$.</p>
+
+     <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Entropy has dimension $[\text{M} \cdot \text{L}^2 \cdot \text{T}^{-2} \cdot \Theta^{-1}]$. Every piece of that can be built from $\sigma_P$'s projections:</p>
+
+     <div style="overflow-x: auto; margin-bottom: 2rem;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+       <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);">
+        <td style="padding: 0.75rem 1rem; color: var(--accent-blue); font-family: monospace;">$\sigma_P \cdot c = \ell_P^2$</td>
+        <td style="padding: 0.75rem 1rem; color: var(--text-secondary);">spatial projection</td>
+        <td style="padding: 0.75rem 1rem; color: var(--accent-blue); font-family: monospace;">$[\text{L}^2]$</td>
+       </tr>
+       <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);">
+        <td style="padding: 0.75rem 1rem; color: var(--accent-purple); font-family: monospace;">$1/(\sigma_P/c) = 1/t_P^2$</td>
+        <td style="padding: 0.75rem 1rem; color: var(--text-secondary);">inverse temporal projection</td>
+        <td style="padding: 0.75rem 1rem; color: var(--accent-purple); font-family: monospace;">$[\text{T}^{-2}]$</td>
+       </tr>
+       <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);">
+        <td style="padding: 0.75rem 1rem; color: var(--accent-emerald); font-family: monospace;">$m_P$</td>
+        <td style="padding: 0.75rem 1rem; color: var(--text-secondary);">Planck mass</td>
+        <td style="padding: 0.75rem 1rem; color: var(--accent-emerald); font-family: monospace;">$[\text{M}]$</td>
+       </tr>
+       <tr>
+        <td style="padding: 0.75rem 1rem; color: var(--accent-rose); font-family: monospace;">$1/T_P$</td>
+        <td style="padding: 0.75rem 1rem; color: var(--text-secondary);">inverse Planck temperature</td>
+        <td style="padding: 0.75rem 1rem; color: var(--accent-rose); font-family: monospace;">$[\Theta^{-1}]$</td>
+       </tr>
+      </table>
+     </div>
+
+     <div class="formula-block" style="border-color: var(--accent-amber); margin-bottom: 1.5rem;">
+      $$k_B = \frac{\sigma_P \cdot c}{\sigma_P / c} \cdot \frac{m_P}{T_P} = c^2 \cdot \frac{m_P}{T_P} = \frac{m_P c^2}{T_P} = \frac{\text{Planck energy}}{\text{Planck temperature}}$$
+     </div>
+
+     <div class="grid-2" style="gap: 1.5rem; margin-bottom: 1.5rem;">
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-blue);">
+       <p style="font-size: 0.88rem; color: var(--text-secondary);">$\sigma_P$ is the quantum of <strong>spacetime</strong> — the minimum unit of existence. Below it: no space, no time, no arena.</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-amber);">
+       <p style="font-size: 0.88rem; color: var(--text-secondary);">$k_B$ is the quantum of <strong>perceivability</strong> — the minimum unit of entropy. Below it: no thermodynamics, no observation, no experience.</p>
+      </div>
+     </div>
+
+     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">$k_B$ is not an independent constant of nature. It is the expression of how much perceivability costs in terms of the four Planck scales. Both $\sigma_P$ and $k_B$ contain $\ell_P$, $t_P$, $m_P$, $T_P$ — they are two faces of the same structure.</p>
+
+     <div style="padding: 1.25rem; background: rgba(251,191,36,0.05); border-radius: 8px; border: 1px solid rgba(251,191,36,0.15);">
+      <h5 style="color: var(--accent-amber); margin-bottom: 0.75rem;">Bekenstein — in $\sigma_P$ language</h5>
+      <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem;">The entropy of a black hole horizon is:</p>
+      <div class="formula-block" style="font-size: 0.95rem; border-color: var(--accent-amber);">
+       $$S_{BH} = k_B \cdot \frac{A}{4\,\ell_P^2} = k_B \cdot \frac{A}{4\,\sigma_P \cdot c}$$
+      </div>
+      <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 1rem;">Each $\ell_P^2 = \sigma_P \cdot c$ on the surface carries exactly $k_B$ of entropy. One spatial $\sigma_P$ footprint — one quantum of perceivability. The holographic bound is not a coincidence. It is $k_B$ counting $\sigma_P \cdot c$ tiles.</p>
+     </div>
     </div>
 
     <!-- Co-emergence + c as mediator -->
@@ -1306,14 +1669,91 @@ domain</strong>. Spacetime fluctuations are always bounded:
      <p style="color: var(--text-secondary); font-size: 0.9rem; max-width: 720px; margin: 0 auto;">No entropy below $\sigma_P$. No time below $\sigma_P$. No observer below $\sigma_P$. It is not the grain of spacetime in the abstract. It is the grain of experience.</p>
     </div>
 
-    <!-- Counting cells: simple version of the action formula -->
-    <div class="qg-card" style="border-left: 4px solid var(--accent-blue);">
-     <h3 style="color: var(--accent-blue); margin-bottom: 1rem;">Counting cells</h3>
-     <p>Every physical process with energy $E$ running for duration $\Delta t$ occupies a number of spacetime cells:</p>
+    <!-- Counting action quanta -->
+    <div class="qg-card" style="border-left: 4px solid var(--accent-blue); margin-bottom: 2rem;">
+     <h3 style="color: var(--accent-blue); margin-bottom: 1rem;">Counting action quanta</h3>
+     <p>Every physical process with energy $E$ running for duration $\Delta t$ expends a number of quanta of action:</p>
      <div class="formula-block" style="margin: 1rem 0;">
-      $$N = \frac{E \cdot \Delta t}{\sigma_P}$$
+      $$N = \frac{E \cdot \Delta t}{\hbar}$$
      </div>
-     <p style="color: var(--text-secondary); font-size: 0.95rem;">Time exists only where $N > 0$. A system with no action occupies no cells and has no time. This is not a postulate — it is what the formula says when you take $\sigma_P$ seriously as a minimum.</p>
+     <p style="color: var(--text-secondary); font-size: 0.95rem;">$E \cdot \Delta t$ has units of action [M·L²·T⁻¹]. $\hbar$ is the minimum unit of action — one Planck event. $N$ counts how many of those events the process involves. Time exists only where $N > 0$. A system with no action occupies no cells and has no time.</p>
+    </div>
+
+    <!-- Why entropy only increases -->
+    <div class="qg-card" style="margin-bottom: 2rem; background: linear-gradient(135deg, rgba(251,191,36,0.04), rgba(244,63,94,0.04)); border: 1px solid rgba(251,191,36,0.15);">
+     <h3 style="color: var(--accent-amber); margin-bottom: 0.5rem;">Why entropy only increases.</h3>
+     <p style="font-style: italic; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">Not a law imposed from outside. A consequence of irreversibility baked into the structure.</p>
+
+     <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">A $\sigma_P$ cell, once occupied, is a realized event. The wavefunction collapsed. The before and after are distinct. There is no operation that un-occupies a cell — because to undo it you would need to perform an action, which occupies another cell.</p>
+
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-top: 3px solid var(--accent-emerald);">
+       <h5 style="color: var(--accent-emerald); margin-bottom: 0.5rem;">Reversible?</h5>
+       <p style="font-size: 0.82rem; color: var(--text-secondary);">A process looks reversible in theory. Flip every momentum. Run time backwards. But the $N$ cells already occupied still count. The past isn't erased — it is encoded.</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-top: 3px solid var(--accent-rose);">
+       <h5 style="color: var(--accent-rose); margin-bottom: 0.5rem;">Erasure</h5>
+       <p style="font-size: 0.82rem; color: var(--text-secondary);">Landauer's principle: erasing one bit of information costs at least $k_B T \ln 2$ of energy — which occupies new cells. You can compress a record. You cannot eliminate its cell-count without paying more.</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-top: 3px solid var(--accent-amber);">
+       <h5 style="color: var(--accent-amber); margin-bottom: 0.5rem;">The Second Law</h5>
+       <p style="font-size: 0.82rem; color: var(--text-secondary);">$N$ is monotonically non-decreasing. That <em>is</em> the second law. Entropy increases because $\sigma_P$ cells accumulate and are never subtracted — only ever added to the tally.</p>
+      </div>
+     </div>
+
+     <div style="padding: 1.25rem; background: rgba(0,0,0,0.25); border-radius: 8px; font-style: italic; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; text-align: center;">
+      "The arrow of time is not a mystery needing an explanation.<br/>
+      It is $N$ — a counter that was never given a decrement button."
+     </div>
+    </div>
+
+    <!-- Maxwell's Demon: resolved -->
+    <div class="qg-card" style="margin-bottom: 2rem; border-left: 4px solid var(--accent-purple);">
+     <h3 style="color: var(--accent-purple); margin-bottom: 1rem;">Maxwell's Demon — resolved</h3>
+     <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Maxwell's thought experiment: a tiny demon watches molecules and sorts them by speed, apparently decreasing entropy for free. The resolution has been known since Szilard (1929) and Landauer (1961):</p>
+
+     <div class="grid-2" style="gap: 1.5rem; margin-bottom: 1.5rem;">
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px;">
+       <h5 style="color: var(--accent-purple); margin-bottom: 0.5rem;">The demon must remember</h5>
+       <p style="font-size: 0.83rem; color: var(--text-secondary);">To sort molecules, the demon stores information: "this one was fast, that one was slow." Each measurement occupies $\sigma_P$ cells. Memory is not free.</p>
+      </div>
+      <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px;">
+       <h5 style="color: var(--accent-purple); margin-bottom: 0.5rem;">The demon must forget</h5>
+       <p style="font-size: 0.83rem; color: var(--text-secondary);">Eventually the demon's memory fills. It must erase. Each erasure costs $k_B T \ln 2$ — exactly enough to restore the entropy it had appeared to subtract. The second law survives.</p>
+      </div>
+     </div>
+
+     <p style="color: var(--text-secondary); font-size: 0.9rem;">In $\sigma_P$ language: the demon cannot reduce $N$. Every act of measurement, memory, and erasure adds cells. The demon is not outside the universe — it runs on the same spacetime substrate. Its own existence is an entropic process.</p>
+
+     <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(120,50,255,0.07); border-radius: 8px; font-size: 0.88rem; color: var(--text-secondary); text-align: center; font-style: italic;">
+      Information and entropy are not analogies of each other. They are the same thing, counted from different vantage points.
+     </div>
+    </div>
+
+    <!-- Closing synthesis -->
+    <div class="qg-card" style="background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(56,189,248,0.05)); border: 1px solid rgba(251,191,36,0.25); text-align: center;">
+     <h3 style="color: var(--accent-amber); margin-bottom: 1.5rem;">The full picture</h3>
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; text-align: left;">
+      <div style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px; border-top: 2px solid var(--accent-blue);">
+       <div style="font-family: monospace; color: var(--accent-blue); margin-bottom: 0.5rem;">$\sigma_P$</div>
+       <p style="font-size: 0.8rem; color: var(--text-secondary);">Minimum arena. One event, one cell. Below this: nothing happens.</p>
+      </div>
+      <div style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px; border-top: 2px solid var(--accent-purple);">
+       <div style="font-family: monospace; color: var(--accent-purple); margin-bottom: 0.5rem;">$N = E\Delta t / \sigma_P$</div>
+       <p style="font-size: 0.8rem; color: var(--text-secondary);">Cell count. Grows with every process. Never decreases. This is the second law.</p>
+      </div>
+      <div style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px; border-top: 2px solid var(--accent-amber);">
+       <div style="font-family: monospace; color: var(--accent-amber); margin-bottom: 0.5rem;">$k_B$</div>
+       <p style="font-size: 0.8rem; color: var(--text-secondary);">One $\sigma_P \cdot c$ footprint = one $k_B$ bit. Entropy is $\sigma_P$ tiles counted in perception units.</p>
+      </div>
+      <div style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px; border-top: 2px solid var(--accent-emerald);">
+       <div style="font-family: monospace; color: var(--accent-emerald); margin-bottom: 0.5rem;">$mc^2 = hf = k_BT$</div>
+       <p style="font-size: 0.8rem; color: var(--text-secondary);">Energy always thermalizes. How fast and through which channel is physics. That it does is thermodynamics.</p>
+      </div>
+     </div>
+     <p style="color: var(--text-secondary); font-size: 0.95rem; max-width: 680px; margin: 0 auto;">
+      Time, entropy, information, and temperature are not four separate things that happen to be related. They are four names for one underlying process: spacetime cells being realized, one $\sigma_P$ at a time.
+     </p>
     </div>
 
    </section>
@@ -1391,49 +1831,34 @@ domain</strong>. Spacetime fluctuations are always bounded:
        The return is already written in the thermodynamics of spacetime."
       </p>
      </div>
-     <div style="text-align: center; margin-top: 2rem;">
-      <a class="btn-sim" href="hubble_flow_lab.html" style="font-size: 0.9rem; padding: 0.6rem 1.2rem; background: rgba(56, 189, 248, 0.1); border-color: var(--accent-primary); color: var(--accent-primary);">
-       View
-                            Cosmic Breathing Simulation →
-      </a>
+     <div class="qg-box" style="margin-top: 2rem; border-left: 4px solid var(--accent-rose); background: rgba(244, 63, 94, 0.05);">
+      <h3 style="color: var(--accent-rose);">
+       The Master Action ($S$)
+      </h3>
+      <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">
+       The universe emerges from the
+       <strong>optimal projection</strong>
+       of the $\sigma_P$ network. The total action balances the maximum flow
+       against the holographic residue:
+      </p>
+      <div class="math-content" style="font-size: 1.2rem; padding: 2rem 0; background: rgba(0,0,0,0.3); border-radius: 8px;">
+       $$ S = \underbrace{A_{\text{max}} \cdot \sigma_P \cdot N_\sigma}_{\text{Information Flow}} -
+       \underbrace{\Lambda_{\text{eff}}(t) \cdot V_{\text{obs}}}_{\text{Horizon Pressure}} $$
+      </div>
+      <div class="grid-2" style="margin-top: 1.5rem;">
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">
+        <strong>1. Time Modulation $f(t)$:</strong>
+        The term $\Lambda_{\text{eff}} \sim \frac{f(t)}{cRt}$ allows for the "Cosmic Breathing" (Exhalation/Inhalation) by modulating the holographic residue.
+       </p>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">
+        <strong>2. Discrete Summation:</strong>
+        $N_\sigma$ is the total count of spacetime cells.
+        The universe is a finite-state machine where every "Now" is a re-computation of this sum.
+       </p>
+      </div>
      </div>
     </div>
    </section>
-    <div class="qg-box" style="margin-bottom: 2rem; border-left: 4px solid var(--accent-rose); background: rgba(244, 63, 94, 0.05);">
-     <h3 style="color: var(--accent-rose);">
-      The Master Action ($S$)
-     </h3>
-     <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">
-      The universe emerges from the
-      <strong>
-       optimal
-                            projection
-      </strong>
-      of the $\sigma_P$ network. The total action balances the maximum flow
-                        against the holographic residue:
-     </p>
-     <div class="math-content" style="font-size: 1.2rem; padding: 2rem 0; background: rgba(0,0,0,0.3); border-radius: 8px;">
-      $$ S = \underbrace{A_{\text{max}} \cdot \sigma_P \cdot N_\sigma}_{\text{Information Flow}} -
-                        \underbrace{\Lambda_{\text{eff}}(t) \cdot V_{\text{obs}}}_{\text{Horizon Pressure}} $$
-     </div>
-     <div class="grid-2" style="margin-top: 1.5rem;">
-      <p style="font-size: 0.85rem; color: var(--text-secondary);">
-       <strong>
-        1. Time Modulation $f(t)$:
-       </strong>
-       The term $\Lambda_{\text{eff}} \sim
-                            \frac{f(t)}{cRt}$ allows for the "Cosmic Breathing" (Exhalation/Inhalation) by modulating
-                            the holographic residue.
-      </p>
-      <p style="font-size: 0.85rem; color: var(--text-secondary);">
-       <strong>
-        2. Discrete Summation:
-       </strong>
-       $N_\sigma$ is the total count of spacetime cells.
-                            The universe is a finite-state machine where Every "Now" is a re-computation of this sum.
-      </p>
-     </div>
-    </div>
     <!-- SECTION 8: CALCULATED REALITY -->
     <section class="theory-container" id="formulas" style="margin-bottom: 5rem;">
      <span class="section-tag">
@@ -1466,7 +1891,7 @@ domain</strong>. Spacetime fluctuations are always bounded:
                                     \frac{c^4}{\hbar G} $$
         </div>
         <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">
-         Max Action Density $[M^{-1}L^{-1}S^{-1}]$
+         Max Action Density $[M^{-1}L^{-1}T^{-1}]$
         </p>
        </div>
        <div>
@@ -1506,12 +1931,6 @@ domain</strong>. Spacetime fluctuations are always bounded:
         </p>
        </div>
       </div>
-      <div style="text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(120, 50, 255, 0.1);">
-       <a class="btn-sim" href="zander_scaling_lab.html" style="font-size: 0.85rem; background: rgba(120, 50, 255, 0.1); border-color: var(--accent-purple); color: var(--accent-purple);">
-        Launch
-                                Scaling Lab →
-       </a>
-      </div>
      </div>
      <div class="grid-2" style="gap: 2rem;">
       <div class="qg-card">
@@ -1547,17 +1966,7 @@ domain</strong>. Spacetime fluctuations are always bounded:
      </div>
     </section>
   </main>
-  <script src="../js/main.js">
-  </script>
-  <script src="../js/galaxy-sim.js">
-  </script>
-  <script src="../js/black-hole-sim.js">
-  </script>
-  <script src="../js/gce-morphology-sim.js">
-  </script>
-  <script src="../js/entropy-operator-sim.js">
-  </script>
-  <script src="../js/urm-lattice-sim.js">
-  </script>
+  <script src="../js/main.js"></script>
+  <script src="../js/black-hole-sim.js"></script>
  </body>
 </html>
