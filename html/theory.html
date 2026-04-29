@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
  <head>
   <meta charset="utf-8"/>
@@ -154,14 +154,10 @@
   <nav class="top-nav-fixed">
    <a href="#intro">Foundation</a>
    <a href="#blackholes">Black Holes</a>
-   <a href="#galaxies">Galaxies</a>
    <a href="#cosmology">Cosmology</a>
    <a href="#vacuum-catastrophe">Vacuum</a>
-   <a href="#jwst">JWST</a>
    <a href="#light">Causality</a>
    <a href="#entropy">Entropy</a>
-   <a href="#cosmology-breathing">Hubble</a>
-   <a href="#formulas">Formulas</a>
   </nav>
   <main class="theory-content">
    <section class="theory-container" id="intro" style="padding-top: 2rem;">
@@ -434,29 +430,34 @@
      <h3 style="color: var(--accent-rose); margin-bottom: 0.5rem;">Cause and effect — maximally bound</h3>
      <p style="color: var(--text-secondary); font-style: italic; font-size: 0.9rem; margin-bottom: 2rem;">$c$ still works inside. The export doesn't.</p>
 
-     <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">In free spacetime, $c$ performs the separation: $\sigma_P \rightarrow \ell_P^2 + t_P^2$. The spatial footprint ($\ell_P^2$) travels outward and reaches an observer. Cause stays at the source. Effect arrives. Causality completes.</p>
+     <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">$\sigma_P$ has two projections — one spatial, one temporal. $c$ does not split $\sigma_P$ into a sum; it selects which projection is operative given the geometry:</p>
 
-     <p style="color: var(--text-secondary); margin-bottom: 2rem;">Inside a black hole, $c$ still operates. Locally, cause and effect still separate. Physics does not break. What breaks is the <strong>export</strong> — the outward journey of $\ell_P^2$. The curvature is so extreme that no free $L$ remains for $c$ to propagate through. The spatial footprints are produced — and immediately pulled back.</p>
+     <div style="padding: 1rem 1.5rem; background: rgba(0,0,0,0.25); border-radius: 8px; font-family: monospace; font-size: 0.92rem; line-height: 2.4; margin-bottom: 1.5rem; text-align: center;">
+      $\sigma_P \cdot c = \ell_P^2$ &nbsp;&nbsp; <span style="color: var(--accent-blue); font-family: sans-serif; font-size: 0.82rem;">spatial projection — the footprint that can travel</span><br/>
+      $\sigma_P \,/\, c = t_P^2$ &nbsp;&nbsp; <span style="color: var(--accent-purple); font-family: sans-serif; font-size: 0.82rem;">temporal projection — the minimum time variance of an event</span>
+     </div>
+
+     <p style="color: var(--text-secondary); margin-bottom: 2rem;">Outside: $\ell_P^2$ is operative. $c$ carries the spatial footprint outward — cause at the source, effect arriving at the observer. Causality completes. Inside: the geometry changes. In Schwarzschild spacetime, the radial coordinate $r$ becomes <em>timelike</em> and $t$ becomes <em>spacelike</em> below the horizon — the roles literally exchange. $t_P^2$ is now the operative projection. $c$ still acts locally. What it can no longer do is export $\ell_P^2$ outward — there is no free $L$ for it to propagate through.</p>
 
      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
       <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-emerald);">
        <h5 style="color: var(--accent-emerald); margin-bottom: 0.5rem;">Outside the horizon</h5>
-       <p style="font-size: 0.85rem; color: var(--text-secondary);">$c$ separates $\sigma_P$, and the $\ell_P^2$ footprint escapes. You receive information. Causality completes between source and observer.</p>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">$\ell_P^2$ is operative. $c$ carries the spatial picture outward. You receive information. Causality completes between source and observer.</p>
       </div>
       <div style="padding: 1.25rem; background: rgba(244,63,94,0.06); border-radius: 8px; border-left: 3px solid var(--accent-rose);">
        <h5 style="color: var(--accent-rose); margin-bottom: 0.5rem;">At the horizon</h5>
-       <p style="font-size: 0.85rem; color: var(--text-secondary);">The escape velocity equals $c$. The $\ell_P^2$ footprint is produced but cannot leave. The export ability of $c$ hits exactly zero. This surface is the event horizon.</p>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">Neither projection dominates. Spatial and temporal are equally critical — which is exactly why $\sigma_P$ fluctuations can split permanently here. Export hits zero. The threshold.</p>
       </div>
       <div style="padding: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid var(--accent-purple);">
        <h5 style="color: var(--accent-purple); margin-bottom: 0.5rem;">Inside the horizon</h5>
-       <p style="font-size: 0.85rem; color: var(--text-secondary);">$c$ separates $\sigma_P$ locally. Cause and effect are distinct — for anyone inside. But no $\ell_P^2$ reaches the outside. The separations happen in silence.</p>
+       <p style="font-size: 0.85rem; color: var(--text-secondary);">$t_P^2$ is operative. In GR, the radial coordinate becomes timelike here — this is not a picture, it is Schwarzschild geometry. $c$ still separates $\sigma_P$ locally, but no $\ell_P^2$ escapes. The separations happen in silence.</p>
       </div>
      </div>
 
      <div style="padding: 1.25rem; background: rgba(0,0,0,0.25); border-radius: 8px; font-family: monospace; font-size: 0.88rem; line-height: 2.4; margin-bottom: 2rem;">
-      <span style="color: var(--accent-emerald);">Outside</span> &nbsp;→ $\sigma_P \xrightarrow{c} \ell_P^2$ escapes &nbsp;→ observer receives effect<br/>
-      <span style="color: var(--accent-rose);">Horizon</span> &nbsp;→ $\sigma_P \xrightarrow{c} \ell_P^2$ stalls &nbsp;&nbsp;&nbsp;→ export = 0<br/>
-      <span style="color: var(--accent-purple);">Inside</span> &nbsp;&nbsp;→ $\sigma_P \xrightarrow{c} \ell_P^2$ trapped &nbsp;&nbsp;→ local causality only
+      <span style="color: var(--accent-emerald);">Outside</span> &nbsp;→ $\sigma_P \cdot c = \ell_P^2$ operative &nbsp;→ observer receives effect<br/>
+      <span style="color: var(--accent-rose);">Horizon</span> &nbsp;→ neither dominates &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ permanent split possible<br/>
+      <span style="color: var(--accent-purple);">Inside</span> &nbsp;&nbsp;→ $\sigma_P / c = t_P^2$ operative &nbsp;&nbsp;→ time runs, space collapsed
      </div>
 
      <p style="color: var(--text-secondary);">From outside, you never see anything cross the horizon — because the last $\ell_P^2$ you could receive was emitted just before the threshold. The infalling object appears frozen, redshifted, eternal. Not because it stopped. Because its spatial footprints stopped reaching you.</p>
@@ -889,56 +890,6 @@
 
    </div>
    </section>
-   <!-- SECTION 4: GALACTIC DYNAMICS -->
-   <section class="theory-container" id="galaxies" style="background: radial-gradient(circle at top left, rgba(16, 185, 129, 0.05), transparent);">
-    <span class="section-tag">
-     Large Scale Structure
-    </span>
-    <h2 class="section-title-modern">
-     Galaxies &amp; The Dark Matter Problem
-    </h2>
-    <div class="grid-2">
-     <div class="qg-card">
-      <h3 style="color: var(--accent-emerald);">
-       Distribution of Inertia
-      </h3>
-      <p>
-       Inertia is not a point-like property. Due to the $\sigma_P$ resolution limit, mass is
-                        "distributed" across the local spacetime fabric. On galactic scales, this mimics the
-                        gravitational effect of additional mass.
-      </p>
-      <div class="formula-block" style="border-color: var(--accent-emerald);">
-       $$\overline{T}_{\mu\nu}(x) = \int K_{\sigma_P}(x,y) \, T_{\mu\nu}(y) \, \sqrt{-g} \,
-                        d^4y$$
-      </div>
-     </div>
-     <div class="qg-card">
-      <h3 style="color: var(--accent-amber);">
-       The Galactic Constant ($a_0$)
-      </h3>
-      <p>
-       Flat rotation curves are the natural result of the Planck-geometry surfacing in weak
-                        fields. The characteristic acceleration $a_0$ is not a free parameter, but a
-                        signature of the global cosmic age.
-      </p>
-      <div class="formula-block" style="border-color: var(--accent-amber);">
-       $$a_0 = \frac{c}{2\pi \cdot t} \approx 1.2 \times 10^{-10} \text{ m/s}^2$$
-      </div>
-     </div>
-    </div>
-    <div class="qg-card" style="margin-top: 3rem; background: rgba(16, 185, 129, 0.05);">
-     <div style="margin-bottom: 1rem;">
-      <h4 style="color: var(--accent-emerald);">
-       The Result: No Dark Matter Needed
-      </h4>
-     </div>
-     <p>
-      Einstein's equations remain untouched. By simply recognizing that matter cannot be
-                    compressed into an infinitely small point, the need for invisible particles vanishes.
-                    The galaxy rotates exactly as its visible geometry dictates.
-     </p>
-    </div>
-   </section>
    <!-- SECTION 5: COSMOLOGY -->
    <section class="theory-container" id="cosmology" style="padding-top: 2rem;">
     <span class="section-tag">
@@ -1156,176 +1107,6 @@ domain</strong>. Spacetime fluctuations are always bounded:
        spacetime, measured with a purely spatial tool.
       </p>
      </div>
-    </div>
-   </section>
-   <!-- SECTION 8: THE JWST CHALLENGE -->
-   <section class="theory-container" id="jwst" style="background: linear-gradient(to bottom, rgba(56, 189, 248, 0.02), rgba(244, 63, 94, 0.02));">
-    <span class="section-tag">
-     Observation vs. Dogma
-    </span>
-    <h2 class="section-title-modern">
-     The JWST "Universe Breaker" Crisis
-    </h2>
-    <div class="grid-2">
-     <div class="qg-card" style="grid-column: span 2; border-left: 4px solid var(--accent-rose);">
-      <h3 style="color: var(--accent-rose);">
-       Nature Does Not Ask for Permission
-      </h3>
-      <p>
-       JWST reported candidate massive, well-structured galaxies at high redshift that may be in
-                        tension with baseline LCDM expectations. These observations motivate model refinement and
-                        tighter uncertainty accounting.
-      </p>
-     </div>
-     <div class="qg-card">
-      <h3 style="color: var(--accent-blue);">
-       1. Relativity of Information
-      </h3>
-      <p>
-       In standard cosmology, distance is often equated with look-back time ($d = t$), so early light
-                        is assumed
-                        to come from young structures. This perspective misses a key point:
-      </p>
-      <ul style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 1rem; list-style-type: none;">
-       <li>
-        • The mass of a galaxy reflects its
-        <strong>
-         local information flow
-        </strong>
-        per fundamental
-                            spacetime unit.
-       </li>
-       <li>
-        • Galaxies with large mass have already completed their internal information-coupling.
-       </li>
-       <li>
-        • These galaxies are not necessarily
-        <em>
-         young
-        </em>
-        ; they are
-        <strong>
-         mature and
-                                saturated
-        </strong>
-        in their structure.
-       </li>
-      </ul>
-     </div>
-     <div class="qg-card">
-      <h3 style="color: var(--accent-amber);">
-       2. The Model Patchwork
-      </h3>
-      <p>
-       Modern astrophysics often introduces emergency parameters to preserve LCDM:
-      </p>
-      <div style="font-size: 0.85rem; margin-top: 1rem;">
-       <div style="margin-bottom: 0.8rem; border-left: 2px solid var(--accent-amber); padding-left: 0.8rem;">
-        <strong>
-         "Pop III" Ghosts:
-        </strong>
-        Hypothetical early stars that supposedly explode
-                            instantly to explain missing growth.
-       </div>
-       <div style="margin-bottom: 0.8rem; border-left: 2px solid var(--accent-amber); padding-left: 0.8rem;">
-        <strong>
-         "Burstiness":
-        </strong>
-        Claiming galaxies form enormous structures in unrealistically
-                            short times.
-       </div>
-       <div style="margin-bottom: 0.8rem; border-left: 2px solid var(--accent-amber); padding-left: 0.8rem;">
-        <strong>
-         "The Dust Defense":
-        </strong>
-        Attributing anomalously massive early galaxies to dust obscuration — even when JWST was specifically built to see through it.
-       </div>
-       <div style="border-left: 2px solid var(--accent-amber); padding-left: 0.8rem;">
-        <strong>
-         "DM-Halo Tuning":
-        </strong>
-        Suggesting invisible halos somehow accelerated early
-                            galaxy growth.
-       </div>
-      </div>
-     </div>
-    </div>
-    <!-- The Inverse Age Scale Interaction -->
-    <div class="qg-card" style="margin-top: 3rem; text-align: center; border-color: var(--accent-primary);">
-     <h4 style="color: var(--accent-primary);">
-      Interactive: The Inverse Age Scale
-     </h4>
-     <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 2rem;">
-      Adjust the Redshift
-                    ($z$) to see the tension between LCDM predictions and observed information saturation.
-     </p>
-     <div style="max-width: 600px; margin: 0 auto;">
-      <input id="redshiftRange" max="20" min="0" step="0.1" style="width: 100%; margin-bottom: 2rem;" type="range" value="10"/>
-      <div class="grid-2">
-       <div style="background: rgba(244, 63, 94, 0.1); padding: 1.5rem; border-radius: 8px;">
-        <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--accent-rose);">
-         LCDM
-                                Status
-        </span>
-        <div id="lcdmStatus" style="font-size: 1.2rem; font-weight: bold; margin-top: 0.5rem; color: var(--accent-rose);">
-         Implausible
-        </div>
-       </div>
-       <div style="background: rgba(56, 189, 248, 0.1); padding: 1.5rem; border-radius: 8px;">
-        <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--accent-blue);">
-         Information
-                                Flow
-        </span>
-        <div id="infoFlowStatus" style="font-size: 1.2rem; font-weight: bold; margin-top: 0.5rem; color: var(--accent-blue);">
-         Saturated
-        </div>
-       </div>
-      </div>
-      <p id="scaleExplanation" style="margin-top: 1.5rem; font-size: 0.9rem; font-style: italic; color: var(--text-secondary);">
-       At $z=10$, LCDM predicts nearly 100% star formation efficiency. Observed information flow
-                        remains stable.
-      </p>
-     </div>
-    </div>
-    <script>
-     const range = document.getElementById('redshiftRange');
-     const lcdm = document.getElementById('lcdmStatus');
-     const infoFlow = document.getElementById('infoFlowStatus');
-     const expl = document.getElementById('scaleExplanation');
-
-     range.addEventListener('input', (e) => {
-      const z = parseFloat(e.target.value);
-      if (z < 1) {
-       lcdm.innerText = "Normal";
-       infoFlow.innerText = "Mature";
-       expl.innerText = "Local universe structures match expectations.";
-      } else if (z < 5) {
-       lcdm.innerText = "Expected";
-       infoFlow.innerText = "Saturated";
-       expl.innerText = "LCDM expects young stars; galaxies are already coupled.";
-      } else if (z < 10) {
-       lcdm.innerText = "Tension";
-       infoFlow.innerText = "Stable";
-       expl.innerText = "At z = " + z.toFixed(1) + ", LCDM struggles to explain the observed galaxy sizes. The structures look older than the model allows.";
-      } else if (z < 15) {
-       lcdm.innerText = "Implausible";
-       infoFlow.innerText = "Coupled";
-       expl.innerText = "At z = " + z.toFixed(1) + ", LCDM requires extreme fine-tuning to match observations. The geometry suggests these structures are older than expected.";
-      } else {
-       lcdm.innerText = "Extrapolation";
-       infoFlow.innerText = "Unity";
-       expl.innerText = "At z = " + z.toFixed(1) + ", the model reaches its limits. Whether this is a calibration issue or something more fundamental — nobody knows yet.";
-      }
-     });
-    </script>
-    <div style="margin-top: 4rem; text-align: center;">
-     <blockquote style="font-size: 1.5rem; font-family: 'Outfit', sans-serif; color: #fff;">
-      "A model with 20 parameters is not a law of nature;
-      <strong>
-       it is a confession.
-      </strong>
-      "
-     </blockquote>
     </div>
    </section>
    <!-- SECTION 8: THE INFORMATION STREAM -->
@@ -1739,7 +1520,7 @@ domain</strong>. Spacetime fluctuations are always bounded:
        <p style="font-size: 0.8rem; color: var(--text-secondary);">Minimum arena. One event, one cell. Below this: nothing happens.</p>
       </div>
       <div style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px; border-top: 2px solid var(--accent-purple);">
-       <div style="font-family: monospace; color: var(--accent-purple); margin-bottom: 0.5rem;">$N = E\Delta t / \sigma_P$</div>
+       <div style="font-family: monospace; color: var(--accent-purple); margin-bottom: 0.5rem;">$N = E\Delta t / \hbar$</div>
        <p style="font-size: 0.8rem; color: var(--text-secondary);">Cell count. Grows with every process. Never decreases. This is the second law.</p>
       </div>
       <div style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px; border-top: 2px solid var(--accent-amber);">
@@ -1757,214 +1538,6 @@ domain</strong>. Spacetime fluctuations are always bounded:
     </div>
 
    </section>
-   <!-- SECTION X: COSMIC BREATHING (HUBBLE RESOLUTION) -->
-   <section class="theory-container" id="cosmology-breathing" style="background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(56, 189, 248, 0.05) 100%); border-top: 1px solid rgba(255,255,255,0.05);">
-    <span class="section-tag">
-     Thermodynamics
-    </span>
-    <h2 class="section-title-modern">
-     Cosmic Breathing &amp; The Hubble Tension
-    </h2>
-    <div class="qg-box" style="margin: 3rem 0; border: 1px solid var(--accent-primary); padding: 2.5rem;">
-     <h3 style="text-align: center; color: var(--accent-primary);">
-      Resolution of the Hubble Crisis
-     </h3>
-     <p style="text-align: center; max-width: 800px; margin: 1rem auto; line-height: 1.7; color: var(--text-secondary);">
-      The
-      <strong>
-       Hubble Tension
-      </strong>
-      is not a conflict, but the natural difference between
-                    measurements
-                    taken in different phases of a self-regulating thermodynamic cycle.
-     </p>
-     <div class="grid-2" style="margin-top: 2rem; gap: 2rem;">
-      <!-- Hot Phase -->
-      <div class="qg-card" style="background: rgba(239, 68, 68, 0.1); border-color: #ef4444;">
-       <h4 style="color: #ef4444; margin-bottom: 0.5rem;">
-        Hot Phase (Dark Energy)
-       </h4>
-       <div class="formula-block-small" style="font-size: 0.9rem;">
-        $$ T &gt; T_c \implies H \approx 73
-                            \text{ km/s/Mpc} $$
-       </div>
-       <p style="font-size: 0.85rem; margin-top: 1rem;">
-        High temperature, high entropy. The universe expands rapidly. This mimics "Dark Energy".
-                            We currently inhabit this phase (SNe Ia measurements).
-       </p>
-      </div>
-      <!-- Cold Phase -->
-      <div class="qg-card" style="background: rgba(56, 189, 248, 0.1); border-color: #38bdf8;">
-       <h4 style="color: #38bdf8; margin-bottom: 0.5rem;">
-        Cold Phase (Dark Matter)
-       </h4>
-       <div class="formula-block-small" style="font-size: 0.9rem;">
-        $$ T &lt; T_c \implies H \approx 67
-                                \text{ km/s/Mpc} $$
-       </div>
-       <p style="font-size: 0.85rem; margin-top: 1rem;">
-        Low temperature, low entropy. Gravity dominates, causing gentle contraction. This
-                                    mimics "Dark Matter".
-                                    Seen in the early universe (CMB).
-       </p>
-      </div>
-     </div>
-     <div class="qg-card" style="margin-top: 2rem; border-left: 4px solid var(--accent-emerald);">
-      <h3 style="color: var(--accent-emerald);">
-       Antigravity &amp; The Patience of Light
-      </h3>
-      <p>
-       No antigravity has ever been observed. All known forces are attractive. The apparent
-                            acceleration
-                            is merely our limited window into the current "Exhalation" phase of the cosmos.
-      </p>
-      <p style="margin-top: 1rem;">
-       As time passes, our observable horizon grows. Eventually, light from regions currently in
-                            the
-                            contraction phase will reach us, revealing the full rhythmic nature of the cosmos.
-      </p>
-     </div>
-     <div style="text-align: center; margin-top: 3rem; font-style: italic; color: var(--accent-primary); opacity: 0.9;">
-      <p style="font-size: 1.2rem; line-height: 1.6;">
-       "The universe is not racing apart indefinitely — it breathes.
-       <br/>
-       The return is already written in the thermodynamics of spacetime."
-      </p>
-     </div>
-     <div class="qg-box" style="margin-top: 2rem; border-left: 4px solid var(--accent-rose); background: rgba(244, 63, 94, 0.05);">
-      <h3 style="color: var(--accent-rose);">
-       The Master Action ($S$)
-      </h3>
-      <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">
-       The universe emerges from the
-       <strong>optimal projection</strong>
-       of the $\sigma_P$ network. The total action balances the maximum flow
-       against the holographic residue:
-      </p>
-      <div class="math-content" style="font-size: 1.2rem; padding: 2rem 0; background: rgba(0,0,0,0.3); border-radius: 8px;">
-       $$ S = \underbrace{A_{\text{max}} \cdot \sigma_P \cdot N_\sigma}_{\text{Information Flow}} -
-       \underbrace{\Lambda_{\text{eff}}(t) \cdot V_{\text{obs}}}_{\text{Horizon Pressure}} $$
-      </div>
-      <div class="grid-2" style="margin-top: 1.5rem;">
-       <p style="font-size: 0.85rem; color: var(--text-secondary);">
-        <strong>1. Time Modulation $f(t)$:</strong>
-        The term $\Lambda_{\text{eff}} \sim \frac{f(t)}{cRt}$ allows for the "Cosmic Breathing" (Exhalation/Inhalation) by modulating the holographic residue.
-       </p>
-       <p style="font-size: 0.85rem; color: var(--text-secondary);">
-        <strong>2. Discrete Summation:</strong>
-        $N_\sigma$ is the total count of spacetime cells.
-        The universe is a finite-state machine where every "Now" is a re-computation of this sum.
-       </p>
-      </div>
-     </div>
-    </div>
-   </section>
-    <!-- SECTION 8: CALCULATED REALITY -->
-    <section class="theory-container" id="formulas" style="margin-bottom: 5rem;">
-     <span class="section-tag">
-      Mathematics
-     </span>
-     <h2 class="section-title-modern">
-      Formula Collection
-     </h2>
-     <div class="qg-box" style="margin-bottom: 2rem; border-left: 4px solid var(--accent-blue);">
-      <h3 style="color: var(--accent-blue);">
-       Unified Field Equation
-      </h3>
-      <div class="math-content" style="font-size: 1.1rem; padding: 1.5rem 0;">
-       $$ \Big\langle \hat G_{\mu\nu} + \Lambda_{\text{eff}} g_{\mu\nu} \Big\rangle_{\sigma_P} =
-                            \frac{8\pi G}{c^4} \Big\langle \hat T_{\mu\nu} \Big\rangle_{\sigma_P} $$
-      </div>
-      <p style="text-align: center; color: #94a3b8; font-style: italic; margin-top: 1rem;">
-       "Spacetime does not exist prior to the equation; it emerges as its unique solution."
-      </p>
-     </div>
-     <div class="qg-box" style="margin-bottom: 2rem; border-left: 4px solid var(--accent-purple); background: rgba(120, 50, 255, 0.05);">
-      <h3 style="color: var(--accent-purple);">
-       Dimensional Invariants
-      </h3>
-      <div class="grid-2" style="gap: 2rem; margin-top: 1rem;">
-       <div>
-        <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">
-         $$
-                                    \frac{1}{\sigma_P} =
-                                    \frac{c^4}{\hbar G} $$
-        </div>
-        <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">
-         Max Action Density $[M^{-1}L^{-1}T^{-1}]$
-        </p>
-       </div>
-       <div>
-        <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">
-         $$ \alpha_{G}(M) =
-                                    \frac{G M}{\hbar
-                                    c} $$
-        </div>
-        <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">
-         Grav.
-                                    Fine-Structure
-        </p>
-       </div>
-       <div>
-        <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">
-         $$ \chi(M) =
-                                    \frac{G M^{2}}{\hbar
-                                    c^{3}} $$
-        </div>
-        <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">
-         Dynamical
-                                    Invariant $\sim 1/v^2$
-        </p>
-       </div>
-       <div>
-        <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">
-         $$
-                                    \kappa_{\mathrm{QG}} =
-                                    \frac{G}{\hbar
-                                    c^{2}} $$
-        </div>
-        <p style="font-size: 0.8rem; text-align: center; color: var(--text-secondary);">
-         <span class="qg-tooltip" data-tooltip="Quantum Gravity Coupling: The fundamental constant of information-mass interaction.">
-          QG
-                                        Coupling
-         </span>
-        </p>
-       </div>
-      </div>
-     </div>
-     <div class="grid-2" style="gap: 2rem;">
-      <div class="qg-card">
-       <h4 style="color: var(--accent-secondary);">
-        The Vacuum Function
-       </h4>
-       <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">
-        $$\Lambda_{\rm eff} =
-                                \frac{1}{c R t}$$
-       </div>
-       <p style="font-size: 0.85rem;">
-        Parameter-free solution to the
-        <span class="qg-tooltip" data-tooltip="The 10^120 discrepancy between QM and GR vacuum energy predictions.">
-         Vacuum
-                                    Catastrophe
-        </span>
-        .
-       </p>
-      </div>
-      <div class="qg-card">
-       <h4 style="color: var(--accent-emerald);">
-        The Metric Coupling
-       </h4>
-       <div class="math-content" style="font-size: 1.1rem; padding: 1rem 0;">
-        $$G_{\mu\nu} + \beta
-                                \langle \phi^2 \rangle_{\sigma_P} g_{\mu\nu} =
-                                \frac{8\pi G}{c^4} \sum_i T_{\mu\nu}^{(i)}$$
-       </div>
-       <p style="font-size: 0.85rem;">
-        Information becomes geometry.
-       </p>
-      </div>
-     </div>
-    </section>
   </main>
   <script src="../js/main.js"></script>
   <script src="../js/black-hole-sim.js"></script>
