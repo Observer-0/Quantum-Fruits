@@ -32,7 +32,7 @@ def sigma_P():
     return hbar * G / c**4
 
 def Z():
-    """Quadratische Wirkungs-Skala [J²·s/m]"""
+    """Quadratische Wirkungs-Skala [J²·s³/m]"""
     return hbar**2 / c
 
 def A_G():
@@ -40,7 +40,7 @@ def A_G():
     return G**2 / c**4
 
 def check_relation():
-    """Z * A_G = sigma_P ?"""
+    """Verhältnis Z * A_G / sigma_P = ħG/c (≈ 2.34e-53 m²·s⁻¹); kein Einheitstest"""
     # Specifically: (hbar^2/c) * (G^2/c^4) = (hbar^2 G^2 / c^5)
     # sigma_P = hbar G / c^4.
     # So Z * A_G / sigma_P should be hbar G / c
@@ -85,8 +85,8 @@ def bh_entropy(M):
     return A / (4 * planck_length()**2)
 
 def info_index_from_action(delta_A):
-    """Info-Index als Anzahl Planck-Wirkungszellen"""
-    return delta_A / sigma_P()
+    """Info-Index als Anzahl Planck-Wirkungsquanten (delta_A in [J·s])"""
+    return delta_A / hbar
 
 # =========================
 # Sanity Checks
