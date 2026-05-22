@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BH Evaporation Lab | Quantum Fruits</title>
+    <link rel="icon" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="../js/bh_evaporation.js"></script>
+    <style>
+        body { background: var(--bg-deep); color: var(--text-primary); font-family: var(--font-sans); }
+
+        .lab-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .lab-nav a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+        .lab-nav a:hover { color: var(--accent-primary); }
+        .lab-nav .nav-title { color: var(--accent-primary); font-weight: 700; margin-left: auto; font-size: 0.85rem; font-family: var(--font-mono); }
+
+        .lab-header {
+            padding: 3rem 2rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .lab-kicker { font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent-primary); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .lab-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; letter-spacing: -1px; }
+        .lab-subtitle { color: var(--text-secondary); margin-top: 0.5rem; max-width: 680px; font-size: 0.95rem; line-height: 1.6; }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 1.5rem;
+            padding: 0 2rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (max-width: 900px) {
+            .lab-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Controls Panel */
+        .controls-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: sticky;
+            top: 60px;
+            align-self: start;
+        }
+
+        .ctrl-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: 1.25rem;
+        }
+
+        .ctrl-card h3 {
+            font-size: 0.7rem;
+            font-family: var(--font-mono);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .ctrl-row {
+            margin-bottom: 1rem;
+        }
+        .ctrl-row:last-child { margin-bottom: 0; }
+
+        .ctrl-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.35rem;
+        }
+        .ctrl-label span:last-child {
+            font-family: var(--font-mono);
+            color: var(--accent-primary);
+            font-size: 0.78rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent-primary);
+            cursor: pointer;
+            height: 4px;
+        }
+
+        .run-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--accent-primary);
+            color: #000;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+            font-family: var(--font-sans);
+        }
+        .run-btn:hover { opacity: 0.85; }
+        .run-btn:active { transform: scale(0.98); }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+        .toggle-row input[type="checkbox"] { accent-color: var(--accent-primary); width: 14px; height: 14px; cursor: pointer; }
+
+        /* Readout */
+        .readout-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem;
+        }
+        .readout-item {
+            background: rgba(0,0,0,0.25);
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem;
+        }
+        .readout-label { font-size: 0.65rem; color: var(--text-secondary); font-family: var(--font-mono); letter-spacing: 0.05em; }
+        .readout-value { font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-primary); margin-top: 0.15rem; }
+
+        /* Charts */
+        .charts-col {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chart-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: 1.25rem 1.25rem 1rem;
+        }
+
+        .chart-title {
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .chart-wrap {
+            position: relative;
+            height: 200px;
+        }
+
+        .formula-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 0.6rem;
+        }
+        .formula-pill {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            padding: 0.25rem 0.6rem;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--text-secondary);
+        }
+        .formula-pill em { color: var(--accent-primary); font-style: normal; }
+
+        .legend-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+        .legend-dot {
+            width: 10px;
+            height: 3px;
+            border-radius: 2px;
+        }
+        .legend-dot.dashed {
+            background: repeating-linear-gradient(90deg, currentColor 0, currentColor 3px, transparent 3px, transparent 6px);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="lab-nav">
+    <a href="../index.html">← Overview</a>
+    <a href="theory.html">Theory</a>
+    <span class="nav-title">BH Evaporation Lab · σₚ Framework</span>
+</nav>
+
+<div class="lab-header">
+    <div class="lab-kicker">Simulation Lab · Physics Engine</div>
+    <h1 class="lab-title">Black Hole Evaporation</h1>
+    <p class="lab-subtitle">
+        σₚ-regularized Hawking evaporation. The grain σₚ = ħG/c⁴ suppresses mass loss near the Planck scale,
+        producing a stable remnant instead of a singularity. All time axes are normalized to τ₀ (semiclassical lifetime).
+    </p>
+</div>
+
+<div class="lab-grid">
+
+    <!-- Controls -->
+    <aside class="controls-panel">
+
+        <div class="ctrl-card">
+            <h3>Parameters</h3>
+
+            <div class="ctrl-row">
+                <div class="ctrl-label">
+                    <span>Initial Mass M₀</span>
+                    <span id="labelMass">10 Mₚ</span>
+                </div>
+                <input type="range" id="sliderMass" min="0" max="20" step="0.05" value="1">
+            </div>
+
+            <div class="ctrl-row">
+                <div class="ctrl-label">
+                    <span>Alpha α (grain suppressor)</span>
+                    <span id="labelAlpha">4.0</span>
+                </div>
+                <input type="range" id="sliderAlpha" min="0.5" max="12" step="0.5" value="4">
+            </div>
+
+            <div class="ctrl-row">
+                <div class="ctrl-label">
+                    <span>Gamma γ (Hawking prefactor)</span>
+                    <span id="labelGamma">1.0</span>
+                </div>
+                <input type="range" id="sliderGamma" min="0.1" max="3" step="0.1" value="1">
+            </div>
+
+            <div class="ctrl-row" style="margin-top:0.5rem">
+                <label class="toggle-row">
+                    <input type="checkbox" id="toggleSemiclassical" checked>
+                    Show semiclassical comparison
+                </label>
+            </div>
+
+            <div class="ctrl-row">
+                <label class="toggle-row">
+                    <input type="checkbox" id="toggleQM" checked>
+                    Show QM qubit toy model
+                </label>
+            </div>
+
+            <button class="run-btn" id="btnRun">Run Simulation</button>
+        </div>
+
+        <div class="ctrl-card">
+            <h3>Derived Values</h3>
+            <div class="readout-grid">
+                <div class="readout-item">
+                    <div class="readout-label">M₀</div>
+                    <div class="readout-value" id="rdM0">—</div>
+                </div>
+                <div class="readout-item">
+                    <div class="readout-label">τ₀ (lifetime)</div>
+                    <div class="readout-value" id="rdTau">—</div>
+                </div>
+                <div class="readout-item">
+                    <div class="readout-label">r_s(0)</div>
+                    <div class="readout-value" id="rdRs">—</div>
+                </div>
+                <div class="readout-item">
+                    <div class="readout-label">T_H(0)</div>
+                    <div class="readout-value" id="rdTH">—</div>
+                </div>
+                <div class="readout-item">
+                    <div class="readout-label">S_BH(0)</div>
+                    <div class="readout-value" id="rdS0">—</div>
+                </div>
+                <div class="readout-item">
+                    <div class="readout-label">M_rem / M₀</div>
+                    <div class="readout-value" id="rdMrem">—</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ctrl-card">
+            <h3>Fundamental Constants</h3>
+            <div class="readout-grid">
+                <div class="readout-item">
+                    <div class="readout-label">σₚ [m·s]</div>
+                    <div class="readout-value" id="cSigmaP">—</div>
+                </div>
+                <div class="readout-item">
+                    <div class="readout-label">lₚ [m]</div>
+                    <div class="readout-value" id="cLP">—</div>
+                </div>
+                <div class="readout-item">
+                    <div class="readout-label">tₚ [s]</div>
+                    <div class="readout-value" id="cTP">—</div>
+                </div>
+                <div class="readout-item">
+                    <div class="readout-label">Mₚ [kg]</div>
+                    <div class="readout-value" id="cMP">—</div>
+                </div>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- Charts -->
+    <section class="charts-col">
+
+        <!-- Chart 1: Mass -->
+        <div class="chart-card">
+            <div class="chart-title">Mass Evolution &nbsp; M(t) / M₀</div>
+            <div class="chart-wrap"><canvas id="chartMass"></canvas></div>
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-dot" style="background:#38bdf8"></div>σₚ quantized</div>
+                <div class="legend-item" id="lgScMass"><div class="legend-dot" style="background:#64748b; opacity:.6"></div>semiclassical</div>
+            </div>
+            <div class="formula-bar">
+                <div class="formula-pill">dM/dt = <em>−K₀ / (M² + α Mₚ²)</em></div>
+                <div class="formula-pill">K₀ = <em>γ ħc⁴ / (15360π G²)</em></div>
+            </div>
+        </div>
+
+        <!-- Chart 2: Hawking Temperature -->
+        <div class="chart-card">
+            <div class="chart-title">Hawking Temperature &nbsp; T_H(t) / T_Planck</div>
+            <div class="chart-wrap"><canvas id="chartTemp"></canvas></div>
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-dot" style="background:#f43f5e"></div>σₚ capped at T_P</div>
+                <div class="legend-item" id="lgScTemp"><div class="legend-dot" style="background:#64748b; opacity:.6"></div>semiclassical (uncapped)</div>
+            </div>
+            <div class="formula-bar">
+                <div class="formula-pill">T_H = <em>ħc³ / (8πGMk_B)</em></div>
+                <div class="formula-pill">T_max = <em>ħ / (k_B t_P)</em></div>
+            </div>
+        </div>
+
+        <!-- Chart 3: Page Curve -->
+        <div class="chart-card">
+            <div class="chart-title">Page Curve &nbsp; Entropy S(t) / S₀</div>
+            <div class="chart-wrap"><canvas id="chartEntropy"></canvas></div>
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>S_BH (horizon)</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#fbbf24"></div>S_rad σₚ (radiation)</div>
+                <div class="legend-item" id="lgQM"><div class="legend-dot" style="background:#a855f7; opacity:.7"></div>S_rad QM toy</div>
+            </div>
+            <div class="formula-bar">
+                <div class="formula-pill">S_BH = <em>k_B c³ A / (4 ħ G)</em></div>
+                <div class="formula-pill">Page time ≈ <em>τ_eff / 2</em></div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+<script>
+// ─── Chart helpers ────────────────────────────────────────────────────────────
+
+function fmt(x) {
+    if (x === null || x === undefined || !isFinite(x)) return '—';
+    const a = Math.abs(x);
+    if (a === 0) return '0';
+    const e = Math.floor(Math.log10(a));
+    const m = x / Math.pow(10, e);
+    return m.toFixed(2) + ' ×10' + superscript(e);
+}
+
+function superscript(n) {
+    const map = { '-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹' };
+    return String(n).split('').map(c => map[c] ?? c).join('');
+}
+
+function fmtTime(seconds) {
+    const abs = Math.abs(seconds);
+    if (abs < 1e-40) return fmt(seconds) + ' s';
+    if (abs < 1e-6)  return fmt(seconds) + ' s';
+    if (abs < 60)    return fmt(seconds) + ' s';
+    const yr = seconds / (365.25 * 86400);
+    if (yr < 1e6)    return fmt(yr) + ' yr';
+    return fmt(yr) + ' yr';
+}
+
+const CHART_DEFAULTS = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: { duration: 400 },
+    plugins: {
+        legend: { display: false },
+        tooltip: { enabled: true, mode: 'index', intersect: false },
+    },
+    scales: {
+        x: {
+            type: 'linear',
+            title: { display: true, text: 't / τ₀', color: '#94a3b8', font: { size: 11 } },
+            ticks: { color: '#64748b', maxTicksLimit: 8, font: { size: 10 } },
+            grid:  { color: 'rgba(255,255,255,0.04)' },
+        },
+        y: {
+            title: { display: true, color: '#94a3b8', font: { size: 11 } },
+            ticks: { color: '#64748b', maxTicksLimit: 6, font: { size: 10 } },
+            grid:  { color: 'rgba(255,255,255,0.04)' },
+        },
+    },
+};
+
+function makeChart(id, yLabel, datasets) {
+    const cfg = JSON.parse(JSON.stringify(CHART_DEFAULTS));
+    cfg.scales.y.title.text = yLabel;
+    return new Chart(document.getElementById(id), {
+        type: 'line',
+        data: { datasets },
+        options: cfg,
+    });
+}
+
+function makeDataset(label, pts, color, dashed = false, width = 2) {
+    return {
+        label,
+        data: pts,
+        borderColor: color,
+        backgroundColor: 'transparent',
+        borderWidth: width,
+        borderDash: dashed ? [5, 4] : [],
+        pointRadius: 0,
+        tension: 0.1,
+    };
+}
+
+// ─── Init charts (empty) ─────────────────────────────────────────────────────
+
+const chartMass    = makeChart('chartMass',    'M / M₀',     []);
+const chartTemp    = makeChart('chartTemp',    'T / T_Planck',[]);
+const chartEntropy = makeChart('chartEntropy', 'S / S₀',     []);
+
+// ─── Populate constants display ───────────────────────────────────────────────
+
+document.getElementById('cSigmaP').textContent = fmt(PHYS.SIGMA_P);
+document.getElementById('cLP').textContent     = fmt(PHYS.LP);
+document.getElementById('cTP').textContent     = fmt(PHYS.TP);
+document.getElementById('cMP').textContent     = fmt(PHYS.MP);
+
+// ─── Slider state ─────────────────────────────────────────────────────────────
+
+const sliderMass  = document.getElementById('sliderMass');
+const sliderAlpha = document.getElementById('sliderAlpha');
+const sliderGamma = document.getElementById('sliderGamma');
+const chkSC       = document.getElementById('toggleSemiclassical');
+const chkQM       = document.getElementById('toggleQM');
+
+function getMass() {
+    // M₀ = Mₚ × 10^(slider value)
+    return PHYS.MP * Math.pow(10, parseFloat(sliderMass.value));
+}
+
+function updateLabels() {
+    const exp    = parseFloat(sliderMass.value);
+    const M0     = getMass();
+    const alpha  = parseFloat(sliderAlpha.value);
+    const gamma  = parseFloat(sliderGamma.value);
+    const expStr = exp < 0.05 ? '1' : '10' + superscript(Math.round(exp * 10) / 10);
+    document.getElementById('labelMass').textContent  = expStr + ' Mₚ';
+    document.getElementById('labelAlpha').textContent = alpha.toFixed(1);
+    document.getElementById('labelGamma').textContent = gamma.toFixed(1);
+
+    const tau = PHYS.lifetime_semiclassical(M0);
+    document.getElementById('rdM0').textContent   = fmt(M0) + ' kg';
+    document.getElementById('rdTau').textContent  = fmtTime(tau);
+    document.getElementById('rdRs').textContent   = fmt(PHYS.schwarzschild_radius(M0)) + ' m';
+    document.getElementById('rdTH').textContent   = fmt(PHYS.hawking_temperature(M0)) + ' K';
+    document.getElementById('rdS0').textContent   = fmt(PHYS.bh_entropy(M0)) + ' J/K';
+    document.getElementById('rdMrem').textContent = fmt(PHYS.MP / M0);
+}
+
+sliderMass.addEventListener('input',  updateLabels);
+sliderAlpha.addEventListener('input', updateLabels);
+sliderGamma.addEventListener('input', updateLabels);
+
+// ─── Simulation & chart update ────────────────────────────────────────────────
+
+function downsample(arr, maxPts) {
+    if (arr.length <= maxPts) return arr;
+    const step = arr.length / maxPts;
+    const out  = [];
+    for (let i = 0; i < maxPts; i++) out.push(arr[Math.round(i * step)]);
+    return out;
+}
+
+function toXY(tNorm, yArr) {
+    return tNorm.map((x, i) => ({ x, y: yArr[i] }));
+}
+
+function runSim() {
+    const M0    = getMass();
+    const alpha = parseFloat(sliderAlpha.value);
+    const gamma = parseFloat(sliderGamma.value);
+    const showSC = chkSC.checked;
+    const showQM = chkQM.checked;
+
+    // sigma_P run
+    const sp = PHYS.evaporate_sigmaP_quantized(M0, 1500, PHYS.MP, alpha, gamma);
+    const S0 = sp.S[0];
+
+    // normalize time to tau0
+    const tNorm_sp = sp.t.map(ti => ti / sp.tau0);
+
+    const maxPts = 600;
+    const tD   = downsample(tNorm_sp, maxPts);
+    const MD   = downsample(sp.M.map(m => m / M0), maxPts);
+    const THD  = downsample(sp.TH.map(t => t / PHYS.T_MAX), maxPts);
+    const SD   = downsample(sp.S.map(s => s / S0), maxPts);
+    const SrD  = downsample(sp.S_rad.map(s => s / S0), maxPts);
+
+    // Build datasets — Mass chart
+    const mDatasets = [
+        makeDataset('σₚ model', toXY(tD, MD), '#38bdf8'),
+    ];
+    if (showSC) {
+        const sc  = PHYS.evaporate_semiclassical(M0, 1200);
+        const tNorm_sc = sc.t.map(ti => ti / sc.tau);
+        const tDS = downsample(tNorm_sc, maxPts);
+        const MDS = downsample(sc.M.map(m => m / M0), maxPts);
+        mDatasets.push(makeDataset('semiclassical', toXY(tDS, MDS), '#64748b', true));
+    }
+    chartMass.data.datasets = mDatasets;
+    chartMass.update();
+
+    // Temperature chart
+    const tDatasets = [
+        makeDataset('σₚ capped', toXY(tD, THD), '#f43f5e'),
+    ];
+    if (showSC) {
+        const sc   = PHYS.evaporate_semiclassical(M0, 1200);
+        const tNorm_sc = sc.t.map(ti => ti / sc.tau);
+        const tDS  = downsample(tNorm_sc, maxPts);
+        const THDS = downsample(sc.TH.map(t => t / PHYS.T_MAX), maxPts);
+        tDatasets.push(makeDataset('uncapped', toXY(tDS, THDS), '#64748b', true));
+    }
+    chartTemp.data.datasets = tDatasets;
+    chartTemp.update();
+
+    // Entropy / Page curve
+    const eDatasets = [
+        makeDataset('S_BH', toXY(tD, SD), '#10b981'),
+        makeDataset('S_rad σₚ', toXY(tD, SrD), '#fbbf24'),
+    ];
+    if (showQM) {
+        const qm   = PHYS.evaporate_qubit_model(120);
+        // normalize qm steps to [0, tau_eff/tau0] x-range
+        const tauRatio = sp.tau_eff / sp.tau0;
+        const qmX  = qm.steps.map(s => s * tauRatio);
+        const qmY  = qm.s_rad;  // already [0,1] bits
+        eDatasets.push(makeDataset('S_rad QM', toXY(qmX, qmY), '#a855f7', true, 1.5));
+    }
+    chartEntropy.data.datasets = eDatasets;
+    chartEntropy.update();
+
+    // Update legend visibility
+    document.getElementById('lgScMass').style.opacity = showSC ? '1' : '0.25';
+    document.getElementById('lgScTemp').style.opacity = showSC ? '1' : '0.25';
+    document.getElementById('lgQM').style.opacity     = showQM ? '1' : '0.25';
+
+    // Update remnant ratio
+    document.getElementById('rdMrem').textContent = fmt(PHYS.MP / M0);
+}
+
+document.getElementById('btnRun').addEventListener('click', runSim);
+chkSC.addEventListener('change', runSim);
+chkQM.addEventListener('change', runSim);
+
+// ─── Initial run ──────────────────────────────────────────────────────────────
+updateLabels();
+runSim();
+</script>
+
+</body>
+</html>
